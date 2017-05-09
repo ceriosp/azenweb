@@ -1,12 +1,12 @@
-class ZRecurso
+class ZRecursoModel
 {
-    ven: ZVentana;
-    camps: Array<ZCampo>;
-    doms: Array<ZDominio>;
-    refs: Array<ZReferencia>;
+    ven: ZVentanaModel;
+    camps: Array<ZCampoModel>;
+    doms: Array<ZDominioModel>;
+    refs: Array<ZReferenciaModel>;
 }
 
-class ZVentana
+class ZVentanaModel
 {   
     descr: string;
     nomTbl: string;
@@ -25,7 +25,7 @@ class ZVentana
     ncolsrx: number;
 }
 
-class ZCampo
+class ZCampoModel
 {
     etq: string;
     filEtq: number;
@@ -43,7 +43,7 @@ class ZCampo
     numDec: number; 
 }
 
-class ZDominio
+class ZDominioModel
 {
     nom: string;
     minimo: string;
@@ -54,18 +54,18 @@ class ZDominio
     siMemoriza: number;
 }
 
-class ZReferencia
+class ZReferenciaModel
 {
     public nomTblFor: string;
     public alias: string;
     public nomRcrZoom: string;
     public debil: number;
 
-    public junt:Array<ZJuntura>;
-    public descs: Array<ZDescripcionReferencia>;    
+    public junt:Array<ZJunturaModel>;
+    public descs: Array<ZDescripcionReferenciaModel>;    
 }
 
-class ZDescripcionReferencia
+class ZDescripcionReferenciaModel
 {
     etq: string;
     filEtq: number;
@@ -77,18 +77,18 @@ class ZDescripcionReferencia
     modo: number;
 }
 
-class ZJuntura
+class ZJunturaModel
 {
     public nomCmp: string;
 }
 
 export 
 { 
-    ZRecurso,
-    ZVentana,
-    ZCampo,
-    ZDominio,
-    ZReferencia,
-    ZJuntura,
-    ZDescripcionReferencia
+    ZRecursoModel,
+    ZVentanaModel,
+    ZCampoModel,
+    ZDominioModel,
+    ZReferenciaModel,
+    ZJunturaModel,
+    ZDescripcionReferenciaModel
 }

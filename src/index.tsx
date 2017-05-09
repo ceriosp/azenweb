@@ -7,12 +7,12 @@ import thunk, {ThunkAction} from 'redux-thunk';
 import {Button} from 'react-bootstrap';
 
 import {
-    ZCampo,
-    ZInput
+    ZVentanaModel,
+    ZCampoModel,
+    ZCampo
 } from "./modules/recursos/";
 
-
 ReactDOM.render(
-    <ZInput zCampo={ {etq:"Código"} as ZCampo }/>,
+    <ZCampo zCampoModel={ {etq:"Código"} as ZCampoModel }/>,
     document.getElementById("app-container")
 );

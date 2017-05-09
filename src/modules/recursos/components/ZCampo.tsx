@@ -8,23 +8,23 @@ import {
 } from 'react-bootstrap';
 
 import {
-    ZCampo
+    ZCampoModel
 } from "../model";
 
 interface OwnProperties
 {
-    zCampo:ZCampo;
+    zCampoModel:ZCampoModel;
 }
 
-export class ZInput extends React.Component<OwnProperties, void>
+export default class ZCampo extends React.Component<OwnProperties, void>
 {
     render(){
         return (
             <FormGroup>
                 <Col componentClass={ControlLabel} sm={10}>
-                    {this.props.zCampo.etq}
+                    {this.props.zCampoModel.etq}
                 </Col>
-                <Col componentClass={ControlLabel} sm={10}>
+                <Col componentClass={ControlLabel} sm={5}>
                     <FormControl type="text"/>
                 </Col>
             </FormGroup>

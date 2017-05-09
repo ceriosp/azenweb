@@ -1,13 +1,13 @@
 import {
-    ZCampo
+    ZVentanaModel,
+    ZCampoModel,    
 } from './model';
 
-import {
-    ZInput
-} from './components/ZInput';
+import ZCampo from './components/ZCampo';
 
 export 
 {
-    ZCampo,
-    ZInput
+    ZVentanaModel,    
+    ZCampoModel,
+    ZCampo
 }
