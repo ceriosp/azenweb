@@ -1,0 +1,85 @@
+# Technical docs:
+
+------------------------- Init project -------------------------
+Iniciar nuevo proyecto:
+npm init
+
+------------------------- Install core libraries/types -------------------------
+npm install --save-dev react react-dom react-redux @types/react @types/react-dom @types/react-redux
+
+------------------------- Configure Typescript -------------------------
+Add tsconfig.json file
+
+------------------------- Install UX libraries -------------------------
+npm install --save bootstrap react-bootstrap @types/react-bootstrap
+
+------------------------- Git versioning -------------------------
+1. Git Ignore:
+    create .gitignore file with this initial content:    
+        
+2. Init repository, run next commands:
+    git init
+    git add README.md
+    git commit -m "first commit"
+    git remote add origin https://github.com/joseucarvajal/azenweb.git
+    git push -u origin master
+
+------------------------- Typescript + Webpack + ReactJS + hotreload + watch -------------------------
+Install local Webpack:
+    npm install webpack
+
+Install dependencies:
+    npm install --save-dev typescript awesome-typescript-loader source-map-loader webpack-livereload-plugin
+
+Add webpack.config.js file
+
+Edit package.json to use webpack watch:
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack -w"
+  },
+
+Run command:
+	npm run dev
+
+Generar dist:
+    webpack -p
+
+----------------------------- Dev tooling -----------------------------
+React dev tools install:
+	https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en
+	
+Redux dev tool install:
+	https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd
+	npm uninstall --save-dev redux-devtools-extension @types/redux-devtools	
+
+
+------------------------------ Async actions ------------------------------
+npm install --save isomorphic-fetch redux-thunk es6-promise
+npm install --save-dev @types/isomorphic-fetch @types/redux-thunk
+
+Fetch documentation: https://github.github.io/fetch/
+
+Avoid XHR E11 cache:
+http://stackoverflow.com/questions/32261000/how-to-avoid-ajax-caching-in-internet-explorer-11-when-additional-query-string-p
+
+IMPORTANT:
+    Isomorphic-fetch typings, download and replace from: https://github.com/nozzlegear/isomorphic-fetch.d.ts
+
+
+------------------------------ Utils ------------------------------
+JSON Formatter:
+http://www.freeformatter.com/json-formatter.html#ad-output
+
+JSON Analyzer:
+http://www.jsoneditoronline.org/
+
+Typescript from JSON:
+http://json2ts.com/
+
+JSON to Typescript object:
+https://github.com/JohnWeisz/TypedJSON
+
+Typescript to UML:
+https://github.com/joaompneves/tsviz
+
