@@ -18,6 +18,7 @@ import {
 interface OwnProperties
 {
     zCampoModel:ZCampoModel;
+    index:number;
 }
 
 export default class ZCampo extends React.Component<OwnProperties, void>

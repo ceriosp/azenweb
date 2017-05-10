@@ -1,8 +1,11 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
 import {
     Row,    
     Col,
+    Form,
+    Button, 
 } from 'react-bootstrap';
 
 import {
@@ -28,17 +31,30 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
 
     renderZCampo(zCampoModel:ZCampoModel, index:number){          
         return (
-            <ZCampo zCampoModel={zCampoModel} />
+            <ZCampo key={index} zCampoModel={zCampoModel} index={index} />
         );
+    }
+
+    formSubmitted(e: React.SyntheticEvent<HTMLButtonElement>){
+        e.preventDefault();
+        let sourceEventButton:HTMLButtonElement = e.target as HTMLButtonElement;
+        console.log(sourceEventButton);
+        // + ReactDOM.findDOMNode<HTMLInputElement>(this.refs.cmp_1).value
+        alert("Form submitted: " + sourceEventButton.name + " ");
     }
 
     render(){
 
         let { zRecursoModel } = this.props;
 
-        return (
+        return (            
             <div>
-                {zRecursoModel.camps.map(this.renderZCampo)}
+                <Form onSubmit={this.formSubmitted.bind(this)}>
+                    {zRecursoModel.camps.map(this.renderZCampo)}
+                    <hr/>
+                    <Button name="guardar" type="submit"> Guardar </Button>
+                    <Button name="nuevo" type="submit"> Nuevo </Button>
+                </Form>                
             </div>
         );
     }
