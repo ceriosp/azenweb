@@ -1,13 +1,26 @@
 import {
-    ZVentanaModel,
+    ZRecursoModel,
     ZCampoModel,    
 } from './model';
 
+import
+{
+    RecursosConstants 
+} from './constants';
+
+import ZRecurso from './components/ZRecurso';
 import ZCampo from './components/ZCampo';
 
 export 
 {
-    ZVentanaModel,    
+    //Models
+    ZRecursoModel,
     ZCampoModel,
-    ZCampo
+
+    //Components
+    ZRecurso,
+    ZCampo,
+
+    //Constants
+    RecursosConstants
 }

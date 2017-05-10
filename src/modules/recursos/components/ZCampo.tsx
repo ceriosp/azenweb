@@ -11,6 +11,10 @@ import {
     ZCampoModel
 } from "../model";
 
+import {
+    RecursosConstants
+} from "../constants";
+
 interface OwnProperties
 {
     zCampoModel:ZCampoModel;
@@ -19,15 +23,42 @@ interface OwnProperties
 export default class ZCampo extends React.Component<OwnProperties, void>
 {
     render(){
+        const { zCampoModel } = this.props;        
+
+        let zCampoComponent = this.getZCampoComponent();
+
         return (
-            <FormGroup>
+            <FormGroup>                
                 <Col componentClass={ControlLabel} sm={10}>
-                    {this.props.zCampoModel.etq}
+                    {zCampoModel.etq} - {zCampoModel.claseInd}
                 </Col>
                 <Col componentClass={ControlLabel} sm={5}>
-                    <FormControl type="text"/>
+                    {zCampoComponent}
                 </Col>
             </FormGroup>
         );
     }
+
+    getZCampoComponent():any
+    {
+        const { zCampoModel } = this.props;        
+
+        let zCampoComponent:any = null;        
+        switch(zCampoModel.claseInd)
+        {
+            case RecursosConstants.CAMPO_TEXTO:
+                zCampoComponent = <FormControl type="text"/>;
+            break;
+
+            case RecursosConstants.CAMPO_RADIO:
+                zCampoComponent = <FormControl type="radio"/>;
+            break;
+
+            case RecursosConstants.CAMPO_CHECKBOX:
+                zCampoComponent = <FormControl type="checkbox"/>;
+            break;
+        }
+
+        return zCampoComponent;        
+    }    
 }
