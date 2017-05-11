@@ -21,23 +21,23 @@ import ZCheckbox from './ZCheckbox';
 interface OwnProperties
 {
     zCampoRegion:ZCampoModel;
-    zcamposModelEnRegionList:Array<ZCampoModel>
+    zcamposEnRegionList:Array<ZCampoModel>
 }
 
 
 export default class ZRegion extends React.Component<OwnProperties, void>
 {
     public static defaultProps: Partial<OwnProperties> = {
-        zcamposModelEnRegionList : new Array<ZCampoModel>()
+        zcamposEnRegionList : new Array<ZCampoModel>()
     };
 
     render(){
 
-        const { zCampoRegion, zcamposModelEnRegionList } = this.props;
+        const { zCampoRegion, zcamposEnRegionList } = this.props;
         
         return (            
             <Panel header={zCampoRegion.etq.replace("@R", "")} bsStyle="info">                
-                {zcamposModelEnRegionList.map((zcampoEnRegion:ZCampoModel, index:number) => {
+                {zcamposEnRegionList.map((zcampoEnRegion:ZCampoModel, index:number) => {
 
                     let zCampoComponent = null;
 

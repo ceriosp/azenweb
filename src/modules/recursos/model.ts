@@ -5,7 +5,7 @@ class ZRecursoModel
     doms: Array<ZDominioModel>;
     refs: Array<ZReferenciaModel>;
 
-    sayHello(){
+    public sayHello(){
         alert("hello  i am " + this.ven.descr);
     }
 }
@@ -45,6 +45,10 @@ class ZCampoModel
     noEnTabla: number;
     modo: number;
     numDec: number; 
+
+    public sayHello(){
+        console.log("hello zcampo: " + this.nomCmp);
+    }
 }
 
 class ZDominioModel

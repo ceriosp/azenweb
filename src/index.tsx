@@ -6,6 +6,12 @@ import { Provider } from 'react-redux';
 import thunk, {ThunkAction} from 'redux-thunk';
 import {Button} from 'react-bootstrap';
 import "es6-string-polyfills";
+require('es6-object-assign').polyfill();
+
+/*
+import * as $ from "jquery";
+import 'bootstrap';
+*/
 
 import {
 
@@ -1323,9 +1329,10 @@ const ter = `{
    "refs": []
 }`;
 
-let recursoARenderizar = JSON.parse(doc) as ZRecursoModel;
+
+let zrecursoModel = JSON.parse(ter) as ZRecursoModel;
 
 ReactDOM.render(
-    <ZRecurso zRecursoModel={recursoARenderizar}/>,
+    <ZRecurso zRecursoModel={zrecursoModel}/>,
     document.getElementById("app-container")
 );

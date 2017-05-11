@@ -20,15 +20,16 @@ export default class ZTextbox extends React.Component<OwnProperties, void>
 {
     render(){
         const { zCampoModel } = this.props;
-
         return (
             <FormGroup controlId={zCampoModel.nomCmp} bsSize="small">
-                <Col componentClass={ControlLabel} md={3}>
-                    {zCampoModel.etq}
-                </Col>                
-                <Col md={9}>
-                    <FormControl type="text"/>
-                </Col>                
+                <Col md={12}>
+                    <Col componentClass={ControlLabel}>
+                        {zCampoModel.etq}
+                    </Col>
+                    <Col>
+                        <FormControl type="text"/>
+                    </Col>                
+                </Col>
             </FormGroup>
         );
     }

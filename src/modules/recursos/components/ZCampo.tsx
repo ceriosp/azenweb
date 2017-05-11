@@ -22,12 +22,10 @@ import ZRegion from './ZRegion';
 
 interface OwnProperties
 {
-    zCampoModel:ZCampoModel;
-    index:number;
+    zCampoModel:ZCampoModel;    
 
-    esCheckBoxGroup?:boolean; //Si es checkbox group = true, sirve un sólo checkbox = false. Ej. ter.noActivo
-    claseInd:number;
-    zcamposEnGrupoList?:Array<ZCampoModel>;    
+    esCheckBoxGroup?:boolean; //Si es checkbox group = true, sirve un sólo checkbox = false. Ej. ter.noActivo    
+    zcamposEnRegionList?:Array<ZCampoModel>;    
 }
 
 export default class ZCampo extends React.Component<OwnProperties, void>
@@ -35,31 +33,10 @@ export default class ZCampo extends React.Component<OwnProperties, void>
     private claseInd:number = RecursosConstants.CAMPO_TEXTO;
 
     render(){
-        const { zCampoModel, claseInd, esCheckBoxGroup } = this.props;        
+        const { zCampoModel, esCheckBoxGroup } = this.props;        
+        const claseInd:number = zCampoModel.claseInd;
 
         let zCampoComponent = this.getZCampoComponent();
-        
-        if(claseInd == RecursosConstants.CAMPO_TEXTO){
-            zCampoComponent = (
-                <Row>
-                    <Col md={3}></Col>
-                    <Col md={9} xs={12}>
-                        {zCampoComponent}
-                    </Col>                    
-                </Row>                
-            );
-        }
-        else
-        {
-            zCampoComponent = (
-                <Row>
-                    <Col md={3}></Col>
-                    <Col md={9} xs={12}>
-                        {zCampoComponent}
-                    </Col>                    
-                </Row>                
-            );
-        }
         
         return (
                 <div>
@@ -72,19 +49,19 @@ export default class ZCampo extends React.Component<OwnProperties, void>
     {
         const { 
             zCampoModel, 
-            claseInd,
             esCheckBoxGroup,
-            zcamposEnGrupoList } = this.props;
+            zcamposEnRegionList } = this.props;
 
+        const claseInd:number = zCampoModel.claseInd;
 
         if(claseInd == RecursosConstants.CAMPO_RADIO && !esCheckBoxGroup){
             return <ZCheckbox zCampoModel={zCampoModel}/>;
         }
 
-        if(claseInd == RecursosConstants.CAMPO_TEXTO && zcamposEnGrupoList.length > 0){            
+        if(claseInd == RecursosConstants.CAMPO_TEXTO && zcamposEnRegionList.length > 0){            
             return <ZRegion
                         zCampoRegion={zCampoModel} 
-                        zcamposModelEnRegionList={zcamposEnGrupoList} />;
+                        zcamposEnRegionList={zcamposEnRegionList} />;
         }
 
         switch(claseInd)
@@ -95,12 +72,12 @@ export default class ZCampo extends React.Component<OwnProperties, void>
             case RecursosConstants.CAMPO_RADIO:
                 return <ZRegion 
                             zCampoRegion={zCampoModel} 
-                            zcamposModelEnRegionList={zcamposEnGrupoList} />;
+                            zcamposEnRegionList={zcamposEnRegionList} />;
 
             case RecursosConstants.CAMPO_CHECKBOX:
                 return <ZRegion 
                             zCampoRegion={zCampoModel} 
-                            zcamposModelEnRegionList={zcamposEnGrupoList} />;
+                            zcamposEnRegionList={zcamposEnRegionList} />;
         }
     }    
 }

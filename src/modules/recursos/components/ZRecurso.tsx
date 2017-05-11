@@ -36,7 +36,7 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
 
         return (
             <div className="container" style={{marginTop:"20px"}}>
-                 <Panel header={this.zRecursoModel.ven.descr} bsStyle="primary">
+                 <Panel header={this.zRecursoModel.ven.descr} bsStyle="primary">                     
                     <Form onSubmit={this.formSubmitted.bind(this)} horizontal>                    
                         {
                             this.zRecursoModel.camps.map(this.renderZCampo.bind(this))
@@ -56,44 +56,47 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
             return;
         }
 
-        let { camps } = this.zRecursoModel;
-
-        let zcamposEnGrupoList : Array<ZCampoModel> = new Array<ZCampoModel>();
-        let claseInd:number = zcampoAPintar.claseInd;
+        let zcamposEnRegionList : Array<ZCampoModel> = new Array<ZCampoModel>();        
         let esCheckBoxGroup:boolean = true;
-        if(zcampoAPintar.etq.startsWith("@R"))
+        if(zcampoAPintar.etq.startsWith("@R")) //REgion
         {
-            this.currentzCampoRegion = zcampoAPintar;
-
-            zcamposEnGrupoList = camps.filter((zCampoModelFilter:ZCampoModel)=>{
-                return this.estaCampoEnCurrentRegion(zCampoModelFilter);
-            });  
-
-            claseInd = camps[index+1].claseInd;
-
-            /*
-            if(camps[index+1].claseInd == RecursosConstants.CAMPO_RADIO){
-                claseInd = RecursosConstants.CAMPO_RADIO;
-            }else{
-                claseInd = RecursosConstants.CAMPO_CHECKBOX;
-            } 
-            */           
+            zcamposEnRegionList = this.getCamposEnRegion(zcampoAPintar, index);
         } 
         else if(zcampoAPintar.claseInd == RecursosConstants.CAMPO_RADIO){            
             esCheckBoxGroup = false;
-        } else if(zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B"))
+        } else if(zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B")) //Botón
         {
             return;
         }
 
         return (
-            <ZCampo key={index} 
-                    zCampoModel={zcampoAPintar}
-                    claseInd={claseInd}
-                    esCheckBoxGroup={esCheckBoxGroup}
-                    zcamposEnGrupoList={zcamposEnGrupoList} 
-                    index={index} />
+                <Col md={6}>
+                    <ZCampo key={index} 
+                        zCampoModel={zcampoAPintar}
+                        esCheckBoxGroup={esCheckBoxGroup}
+                        zcamposEnRegionList={zcamposEnRegionList} />
+                </Col>
         );
+    }
+
+    getCamposEnRegion(zcampoRegion:ZCampoModel, zcampoRegionIndex:number):Array<ZCampoModel>{
+
+        let { camps } = this.zRecursoModel;
+    
+        this.currentzCampoRegion = zcampoRegion;
+
+        let zcamposEnGrupoList : Array<ZCampoModel> = new Array<ZCampoModel>();
+        let campsSlice = camps.slice(zcampoRegionIndex+1, camps.length-1);
+        for(let i=0; i<campsSlice.length; i++){
+            if(this.estaCampoEnCurrentRegion(campsSlice[i])){
+                zcamposEnGrupoList.push(campsSlice[i]);
+            }
+            else{
+                break;
+            }                
+        }
+
+        return zcamposEnGrupoList;
     }
 
     estaCampoEnCurrentRegion(zcampoModel: ZCampoModel):boolean{        
