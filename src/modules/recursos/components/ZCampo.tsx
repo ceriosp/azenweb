@@ -3,6 +3,7 @@ import * as React from 'react';
 import {
     FormGroup,
     FormControl,
+    Row,
     Col,
     ControlLabel
 } from 'react-bootstrap';
@@ -15,10 +16,9 @@ import {
     RecursosConstants
 } from "../constants";
 
-import ZCampoText from './ZCampoText';
-import ZCampoCheckbox from './ZCampoCheckbox';
-import ZCampoRadioGroup from './ZCampoRadioGroup';
-import ZCampoCheckboxGroup from './ZCampoCheckboxGroup';
+import ZTextbox from './ZTextbox';
+import ZCheckbox from './ZCheckbox';
+import ZRegion from './ZRegion';
 
 interface OwnProperties
 {
@@ -27,7 +27,7 @@ interface OwnProperties
 
     esCheckBoxGroup?:boolean; //Si es checkbox group = true, sirve un sólo checkbox = false. Ej. ter.noActivo
     claseInd:number;
-    zcamposModelCheckRadioOptions?:Array<ZCampoModel>;
+    zcamposEnGrupoList?:Array<ZCampoModel>;    
 }
 
 export default class ZCampo extends React.Component<OwnProperties, void>
@@ -41,32 +41,30 @@ export default class ZCampo extends React.Component<OwnProperties, void>
         
         if(claseInd == RecursosConstants.CAMPO_TEXTO){
             zCampoComponent = (
-                <div>
-                    <Col componentClass={ControlLabel} md={3}>
-                        {zCampoModel.etq}
-                    </Col>
+                <Row>
+                    <Col md={3}></Col>
                     <Col md={9} xs={12}>
                         {zCampoComponent}
                     </Col>                    
-                </div>
+                </Row>                
             );
         }
         else
         {
             zCampoComponent = (
-                <div>
+                <Row>
                     <Col md={3}></Col>
                     <Col md={9} xs={12}>
                         {zCampoComponent}
                     </Col>                    
-                </div>                
+                </Row>                
             );
         }
-
+        
         return (
-            <FormGroup controlId={zCampoModel.nomCmp} bsSize="small">
-                {zCampoComponent}
-            </FormGroup>
+                <div>
+                    {zCampoComponent}
+                </div>            
         );
     }
 
@@ -76,30 +74,33 @@ export default class ZCampo extends React.Component<OwnProperties, void>
             zCampoModel, 
             claseInd,
             esCheckBoxGroup,
-            zcamposModelCheckRadioOptions } = this.props;        
-
-        let zCampoComponent:any = <ZCampoCheckbox zCampoModel={zCampoModel}/>;
+            zcamposEnGrupoList } = this.props;
 
 
-        if(claseInd == RecursosConstants.CAMPO_RADIO && !esCheckBoxGroup){            
-            return zCampoComponent;
+        if(claseInd == RecursosConstants.CAMPO_RADIO && !esCheckBoxGroup){
+            return <ZCheckbox zCampoModel={zCampoModel}/>;
+        }
+
+        if(claseInd == RecursosConstants.CAMPO_TEXTO && zcamposEnGrupoList.length > 0){            
+            return <ZRegion
+                        zCampoRegion={zCampoModel} 
+                        zcamposModelEnRegionList={zcamposEnGrupoList} />;
         }
 
         switch(claseInd)
         {
             case RecursosConstants.CAMPO_TEXTO:
-                zCampoComponent = <ZCampoText zCampoModel={zCampoModel}/>;
-            break;
+                return <ZTextbox zCampoModel={zCampoModel}/>;
 
             case RecursosConstants.CAMPO_RADIO:
-                zCampoComponent = <ZCampoRadioGroup zCampoModel={zCampoModel} zCamposModelRadioOptions={zcamposModelCheckRadioOptions} />;
-            break;
+                return <ZRegion 
+                            zCampoRegion={zCampoModel} 
+                            zcamposModelEnRegionList={zcamposEnGrupoList} />;
 
             case RecursosConstants.CAMPO_CHECKBOX:
-                zCampoComponent = <ZCampoCheckboxGroup zCampoModel={zCampoModel} zCamposModelCheckboxOptions={zcamposModelCheckRadioOptions} />;
-            break;
+                return <ZRegion 
+                            zCampoRegion={zCampoModel} 
+                            zcamposModelEnRegionList={zcamposEnGrupoList} />;
         }
-
-        return zCampoComponent;        
     }    
 }

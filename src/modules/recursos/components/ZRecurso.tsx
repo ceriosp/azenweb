@@ -27,8 +27,8 @@ interface OwnProperties
 
 export default class ZRecurso extends React.Component<OwnProperties, void>
 {
-    private zRecursoModel:ZRecursoModel;
-    private currentZModelRadioName:string;
+    private zRecursoModel:ZRecursoModel;    
+    private currentzCampoRegion:ZCampoModel;
 
     render(){
 
@@ -50,45 +50,63 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
         );
     }
 
-    renderZCampo(zCampoModel:ZCampoModel, index:number){
+    renderZCampo(zcampoAPintar:ZCampoModel, index:number){
         
-        if(zCampoModel.nomCmp == this.currentZModelRadioName){
+        if(this.estaCampoEnCurrentRegion(zcampoAPintar)){
             return;
         }
 
         let { camps } = this.zRecursoModel;
 
-        let zcamposModelCheckRadioOptions : Array<ZCampoModel> = new Array<ZCampoModel>();
-        let claseInd:number = zCampoModel.claseInd;
+        let zcamposEnGrupoList : Array<ZCampoModel> = new Array<ZCampoModel>();
+        let claseInd:number = zcampoAPintar.claseInd;
         let esCheckBoxGroup:boolean = true;
-        if(zCampoModel.etq.startsWith("@R"))
-        {            
-            this.currentZModelRadioName = camps[index+1].nomCmp;
+        if(zcampoAPintar.etq.startsWith("@R"))
+        {
+            this.currentzCampoRegion = zcampoAPintar;
 
-            zcamposModelCheckRadioOptions = camps.filter((zCampoModelFilter:ZCampoModel)=>{
-                return zCampoModelFilter.nomCmp == this.currentZModelRadioName;
+            zcamposEnGrupoList = camps.filter((zCampoModelFilter:ZCampoModel)=>{
+                return this.estaCampoEnCurrentRegion(zCampoModelFilter);
             });  
 
+            claseInd = camps[index+1].claseInd;
+
+            /*
             if(camps[index+1].claseInd == RecursosConstants.CAMPO_RADIO){
                 claseInd = RecursosConstants.CAMPO_RADIO;
             }else{
                 claseInd = RecursosConstants.CAMPO_CHECKBOX;
-            }            
+            } 
+            */           
         } 
-        else if(zCampoModel.claseInd == RecursosConstants.CAMPO_RADIO){
+        else if(zcampoAPintar.claseInd == RecursosConstants.CAMPO_RADIO){            
             esCheckBoxGroup = false;
-        } else if(zCampoModel.etq.startsWith("@@B") || zCampoModel.etq.startsWith("@B"))
+        } else if(zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B"))
         {
             return;
         }
 
         return (
             <ZCampo key={index} 
-                    zCampoModel={zCampoModel}
+                    zCampoModel={zcampoAPintar}
                     claseInd={claseInd}
                     esCheckBoxGroup={esCheckBoxGroup}
-                    zcamposModelCheckRadioOptions={zcamposModelCheckRadioOptions} 
+                    zcamposEnGrupoList={zcamposEnGrupoList} 
                     index={index} />
+        );
+    }
+
+    estaCampoEnCurrentRegion(zcampoModel: ZCampoModel):boolean{        
+
+        if(this.currentzCampoRegion == null){
+            return false;
+        }
+
+        return (            
+            (this.currentzCampoRegion.filEtq < zcampoModel.filEtq && 
+            zcampoModel.filEtq < this.currentzCampoRegion.filCmp) &&
+            (this.currentzCampoRegion.colEtq < zcampoModel.colEtq &&
+            zcampoModel.colEtq < this.currentzCampoRegion.colCmp)
         );
     }
 
