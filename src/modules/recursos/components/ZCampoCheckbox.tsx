@@ -1,10 +1,8 @@
 import * as React from 'react';
 
 import {
-    FormGroup,
-    FormControl,
     Col,
-    ControlLabel
+    Checkbox
 } from 'react-bootstrap';
 
 import {
@@ -16,13 +14,18 @@ interface OwnProperties
     zCampoModel:ZCampoModel;
 }
 
-export default class ZCampoText extends React.Component<OwnProperties, void>
+export default class ZCampoCheckbox extends React.Component<OwnProperties, void>
 {
     render(){
+
         const { zCampoModel } = this.props;
 
-        return (
-            <FormControl type="text"/>
+        return (            
+                <Checkbox>
+                    {zCampoModel.etq.replace("[ ]", "")}
+                </Checkbox>
         );
     }
 }
+
+

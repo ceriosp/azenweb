@@ -4,6 +4,10 @@ class ZRecursoModel
     camps: Array<ZCampoModel>;
     doms: Array<ZDominioModel>;
     refs: Array<ZReferenciaModel>;
+
+    sayHello(){
+        alert("hello  i am " + this.ven.descr);
+    }
 }
 
 class ZVentanaModel
@@ -30,9 +34,9 @@ class ZCampoModel
     etq: string;
     filEtq: number;
     colEtq: number;
-    nomCam: string;
-    filCam: number;
-    colCam: number;
+    nomCmp: string;
+    filCmp: number;
+    colCmp: number;
     lonv: number;
     posbit: number;
     claseInd: number;

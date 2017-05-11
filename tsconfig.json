@@ -7,7 +7,12 @@
         "module": "commonjs",
         "preserveConstEnums": true,
         "target": "es5",
-        "jsx": "react"
+        "jsx": "react",
+        "lib": [
+            "es2015.core",
+            "dom",            
+            "es5"
+        ]
     },
     "include": [
         "./src/**/*"
