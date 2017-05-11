@@ -6,7 +6,8 @@ import {
     Col,
     Form,
     Button, 
-    Panel
+    Modal,
+    Panel 
 } from 'react-bootstrap';
 
 import {
@@ -22,59 +23,74 @@ import ZCampo from './ZCampo';
 
 interface OwnProperties
 {
+    show?:boolean;
+    onHide?:()=>void;
     zRecursoModel:ZRecursoModel;
 }
 
 export default class ZRecurso extends React.Component<OwnProperties, void>
 {
-    private zRecursoModel:ZRecursoModel;    
-    private currentzCampoRegion:ZCampoModel;
+    private zRecursoModel:ZRecursoModel;
+    private zcampoRegionActual:ZCampoModel;
+
+    private zcamposForma:Array<ZCampoModel> = [];
+    private zcamposComando: Array<ZCampoModel> = [];
 
     render(){
-
+        
         this.zRecursoModel = this.props.zRecursoModel;        
+        this.clasificarCamposAPintar();        
 
         return (
-            <div className="container" style={{marginTop:"20px"}}>
-                 <Panel header={this.zRecursoModel.ven.descr} bsStyle="primary">                     
-                    <Form onSubmit={this.formSubmitted.bind(this)} horizontal>                    
-                        {
-                            this.zRecursoModel.camps.map(this.renderZCampo.bind(this))
-                        }
-                        <hr/>
-                        <Button name="guardar" type="submit"> Guardar </Button>
-                        <Button name="nuevo" type="submit"> Nuevo </Button>
-                    </Form>      
-                </Panel>
-            </div>
+            
+                <Modal 
+                    onHide={this.props.onHide} 
+                    show={this.props.show}
+                    bsSize="large"
+                    aria-labelledby="contained-modal-title-lg">
+                    <Modal.Header closeButton>
+                        <Modal.Title>{this.zRecursoModel.ven.descr}</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <Panel>
+                            <Form onSubmit={this.formSubmitted.bind(this)} horizontal>
+                                {this.zcamposForma.map(this.renderZCampo.bind(this))}
+                            </Form>      
+                        </Panel>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button>Close</Button>
+                        <Button bsStyle="primary">Save changes</Button>
+                    </Modal.Footer>
+                </Modal>                
+
         );
     }
 
     renderZCampo(zcampoAPintar:ZCampoModel, index:number){
         
-        if(this.estaCampoEnCurrentRegion(zcampoAPintar)){
+        if(this.estaCampoEnRegionActual(zcampoAPintar)){
             return;
         }
 
-        let zcamposEnRegionList : Array<ZCampoModel> = new Array<ZCampoModel>();        
+        let zcamposEnRegionActualList : Array<ZCampoModel> = new Array<ZCampoModel>();        
         let esCheckboxAislado:boolean = false;
         if(zcampoAPintar.etq.startsWith("@R")) //Region
         {
-            zcamposEnRegionList = this.getCamposEnRegion(zcampoAPintar, index);
+            zcamposEnRegionActualList = this.getCamposEnRegion(zcampoAPintar, index);
         } 
         else if(zcampoAPintar.claseInd == RecursosConstants.CAMPO_RADIO){            
             esCheckboxAislado = true;
-        } else if(zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B")) //Botón
-        {
-            return;
-        }
+        }                
 
         return (
                 <Col key={index} md={6}>
                     <ZCampo key={index} 
                         zCampoModel={zcampoAPintar}
                         esCheckboxAislado={esCheckboxAislado}
-                        zcamposEnRegionList={zcamposEnRegionList} />
+                        zcamposEnRegionList={zcamposEnRegionActualList} />
                 </Col>
         );
     }
@@ -83,12 +99,12 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
 
         let { camps } = this.zRecursoModel;
     
-        this.currentzCampoRegion = zcampoRegion;
+        this.zcampoRegionActual = zcampoRegion;
 
         let zcamposEnGrupoList : Array<ZCampoModel> = new Array<ZCampoModel>();
         let campsSlice = camps.slice(zcampoRegionIndex+1, camps.length-1);
         for(let i=0; i<campsSlice.length; i++){
-            if(this.estaCampoEnCurrentRegion(campsSlice[i])){
+            if(this.estaCampoEnRegionActual(campsSlice[i])){
                 zcamposEnGrupoList.push(campsSlice[i]);
             }
             else{
@@ -99,18 +115,38 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
         return zcamposEnGrupoList;
     }
 
-    estaCampoEnCurrentRegion(zcampoModel: ZCampoModel):boolean{        
+    estaCampoEnRegionActual(zcampoModel: ZCampoModel):boolean{        
 
-        if(this.currentzCampoRegion == null){
+        if(this.zcampoRegionActual == null){
             return false;
         }
 
         return (            
-            (this.currentzCampoRegion.filEtq < zcampoModel.filEtq && 
-            zcampoModel.filEtq < this.currentzCampoRegion.filCmp) &&
-            (this.currentzCampoRegion.colEtq < zcampoModel.colEtq &&
-            zcampoModel.colEtq < this.currentzCampoRegion.colCmp)
+            (this.zcampoRegionActual.filEtq < zcampoModel.filEtq && 
+            zcampoModel.filEtq < this.zcampoRegionActual.filCmp) &&
+            (this.zcampoRegionActual.colEtq < zcampoModel.colEtq &&
+            zcampoModel.colEtq < this.zcampoRegionActual.colCmp)
         );
+    }
+
+    clasificarCamposAPintar(){
+        
+        let zcampoAPintar:ZCampoModel;
+        for(let i=0; i<this.props.zRecursoModel.camps.length; i++){
+
+            zcampoAPintar = this.props.zRecursoModel.camps[i];
+            if(zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B")) //Botón
+            {
+                this.zcamposComando.push(zcampoAPintar);
+                continue;
+            }
+            if(zcampoAPintar.etq.startsWith("@@H"))//Línea horizontal
+            {                
+                continue;
+            }
+
+            this.zcamposForma.push(zcampoAPintar);
+        }
     }
 
     formSubmitted(e: React.SyntheticEvent<HTMLButtonElement>){

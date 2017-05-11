@@ -8,8 +8,8 @@ import
     RecursosConstants 
 } from './constants';
 
-import ZRecurso from './components/ZRecurso';
-import ZCampo from './components/ZCampo';
+import ZAreaTrabajo from './components/ZAreaTrabajo';
+
 
 export 
 {
@@ -18,8 +18,7 @@ export
     ZCampoModel,
 
     //Components
-    ZRecurso,
-    ZCampo,
+    ZAreaTrabajo,
 
     //Constants
     RecursosConstants
