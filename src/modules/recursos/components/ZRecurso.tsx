@@ -39,7 +39,7 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
     render(){
         
         this.zRecursoModel = this.props.zRecursoModel;        
-        this.clasificarCamposAPintar();        
+        this.clasificarCamposAPintar();
 
         return (
             
@@ -141,6 +141,11 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
                 continue;
             }
             if(zcampoAPintar.etq.startsWith("@@H"))//Línea horizontal
+            {                
+                continue;
+            }
+
+            if(zcampoAPintar.etq.startsWith("@L"))//Botones línea comandos
             {                
                 continue;
             }

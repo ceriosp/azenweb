@@ -58,8 +58,8 @@ export default class ZCampo extends React.Component<OwnProperties, void>
 
         if(esRegion){
             return <ZRegion
-                            zCampoRegion={zCampoModel} 
-                            zcamposEnRegionList={zcamposEnRegionList} />;
+                        zCampoRegion={zCampoModel} 
+                        zcamposEnRegionList={zcamposEnRegionList} />;
         }
         else if(claseInd == RecursosConstants.CAMPO_TEXTO){
             return <ZTextbox zCampoModel={zCampoModel}/>;
