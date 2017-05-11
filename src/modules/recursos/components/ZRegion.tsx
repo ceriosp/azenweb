@@ -24,6 +24,7 @@ interface OwnProperties
     zcamposEnRegionList:Array<ZCampoModel>
 }
 
+import ZCampo from './ZCampo';
 
 export default class ZRegion extends React.Component<OwnProperties, void>
 {
@@ -38,30 +39,9 @@ export default class ZRegion extends React.Component<OwnProperties, void>
         return (            
             <Panel header={zCampoRegion.etq.replace("@R", "")} bsStyle="info">                
                 {zcamposEnRegionList.map((zcampoEnRegion:ZCampoModel, index:number) => {
-
-                    let zCampoComponent = null;
-
-                    switch(zcampoEnRegion.claseInd){
-
-                        case RecursosConstants.CAMPO_TEXTO:
-                            zCampoComponent = <ZTextbox zCampoModel={zcampoEnRegion}/>;
-                        break;
-
-                        case RecursosConstants.CAMPO_RADIO:
-                            zCampoComponent = <ZRadio zCampoModel={zcampoEnRegion}/>;
-                        break;
-
-                        case RecursosConstants.CAMPO_CHECKBOX:
-                            zCampoComponent = <ZCheckbox zCampoModel={zcampoEnRegion}/>;
-                        break;                                                
-
-                        default:
-                            zCampoComponent = <ZTextbox zCampoModel={zcampoEnRegion}/>;
-                    }
-
                     return (
-                        <Col xs={12} sm={4} md={3} key={index}>
-                            {zCampoComponent}
+                        <Col xs={12} sm={4} md={4} key={index}>
+                            <ZCampo zCampoModel={zcampoEnRegion}/>
                         </Col>
                     );
                 })}

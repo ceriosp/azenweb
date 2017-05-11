@@ -17,6 +17,7 @@ import {
 } from "../constants";
 
 import ZTextbox from './ZTextbox';
+import ZRadio from './ZRadio';
 import ZCheckbox from './ZCheckbox';
 import ZRegion from './ZRegion';
 
@@ -24,16 +25,16 @@ interface OwnProperties
 {
     zCampoModel:ZCampoModel;    
 
-    esCheckBoxGroup?:boolean; //Si es checkbox group = true, sirve un sólo checkbox = false. Ej. ter.noActivo    
+    esCheckboxAislado?:boolean; //Si es checkbox group = true, sirve un sólo checkbox = false. Ej. ter.noActivo    
     zcamposEnRegionList?:Array<ZCampoModel>;    
 }
 
 export default class ZCampo extends React.Component<OwnProperties, void>
-{
-    private claseInd:number = RecursosConstants.CAMPO_TEXTO;
+{    
+    private isRegion:boolean = false;
 
     render(){
-        const { zCampoModel, esCheckBoxGroup } = this.props;        
+        const { zCampoModel, esCheckboxAislado } = this.props;        
         const claseInd:number = zCampoModel.claseInd;
 
         let zCampoComponent = this.getZCampoComponent();
@@ -49,35 +50,28 @@ export default class ZCampo extends React.Component<OwnProperties, void>
     {
         const { 
             zCampoModel, 
-            esCheckBoxGroup,
+            esCheckboxAislado,
             zcamposEnRegionList } = this.props;
 
         const claseInd:number = zCampoModel.claseInd;
+        const esRegion:boolean = zcamposEnRegionList && zcamposEnRegionList.length > 0;        
 
-        if(claseInd == RecursosConstants.CAMPO_RADIO && !esCheckBoxGroup){
-            return <ZCheckbox zCampoModel={zCampoModel}/>;
-        }
-
-        if(claseInd == RecursosConstants.CAMPO_TEXTO && zcamposEnRegionList.length > 0){            
+        if(esRegion){
             return <ZRegion
-                        zCampoRegion={zCampoModel} 
-                        zcamposEnRegionList={zcamposEnRegionList} />;
-        }
-
-        switch(claseInd)
-        {
-            case RecursosConstants.CAMPO_TEXTO:
-                return <ZTextbox zCampoModel={zCampoModel}/>;
-
-            case RecursosConstants.CAMPO_RADIO:
-                return <ZRegion 
-                            zCampoRegion={zCampoModel} 
-                            zcamposEnRegionList={zcamposEnRegionList} />;
-
-            case RecursosConstants.CAMPO_CHECKBOX:
-                return <ZRegion 
                             zCampoRegion={zCampoModel} 
                             zcamposEnRegionList={zcamposEnRegionList} />;
         }
+        else if(claseInd == RecursosConstants.CAMPO_TEXTO){
+            return <ZTextbox zCampoModel={zCampoModel}/>;
+        }    
+        else if(claseInd == RecursosConstants.CAMPO_RADIO && esCheckboxAislado){
+            return <ZCheckbox zCampoModel={zCampoModel}/>;
+        }            
+        else if(claseInd == RecursosConstants.CAMPO_RADIO){
+            return <ZRadio zCampoModel={zCampoModel}/>;
+        }
+        else if(claseInd == RecursosConstants.CAMPO_CHECKBOX){
+            return <ZCheckbox zCampoModel={zCampoModel}/>;
+        }        
     }    
 }

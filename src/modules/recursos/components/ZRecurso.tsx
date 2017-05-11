@@ -57,23 +57,23 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
         }
 
         let zcamposEnRegionList : Array<ZCampoModel> = new Array<ZCampoModel>();        
-        let esCheckBoxGroup:boolean = true;
-        if(zcampoAPintar.etq.startsWith("@R")) //REgion
+        let esCheckboxAislado:boolean = false;
+        if(zcampoAPintar.etq.startsWith("@R")) //Region
         {
             zcamposEnRegionList = this.getCamposEnRegion(zcampoAPintar, index);
         } 
         else if(zcampoAPintar.claseInd == RecursosConstants.CAMPO_RADIO){            
-            esCheckBoxGroup = false;
+            esCheckboxAislado = true;
         } else if(zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B")) //Botón
         {
             return;
         }
 
         return (
-                <Col md={6}>
+                <Col key={index} md={6}>
                     <ZCampo key={index} 
                         zCampoModel={zcampoAPintar}
-                        esCheckBoxGroup={esCheckBoxGroup}
+                        esCheckboxAislado={esCheckboxAislado}
                         zcamposEnRegionList={zcamposEnRegionList} />
                 </Col>
         );
