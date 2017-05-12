@@ -77,7 +77,7 @@ export default class ZAreaTrabajo extends React.Component<any, OwnState>
                             <ZRecurso                         
                                 zRecursoModel={JSON.parse(recursosList[this.state.recursoAMostrar]) as ZRecursoModel} 
                                 show={this.state.recursoAMostrar >= 0}
-                                onHide={this.cerrarVentanaRecurso.bind(this)}/>
+                                onHide={this.cerrarVentanaRecurso.bind(this)}/>                                
                         : null
                     }
                     </Col>

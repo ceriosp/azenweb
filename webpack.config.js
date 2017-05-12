@@ -1,5 +1,8 @@
-const LiveReloadPlugin = require('webpack-livereload-plugin');
 const webpack = require('webpack');
+
+const LiveReloadPlugin = require('webpack-livereload-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+
 
 module.exports = {
     entry: ["./src/index.tsx"],
@@ -40,8 +43,16 @@ module.exports = {
         new webpack.DefinePlugin({
             __DEV__: true
         }),
-        new LiveReloadPlugin({appendScriptTag: true}),         
-        //new webpack.optimize.UglifyJsPlugin({sourceMap:true})
+
+/*
+        new CompressionPlugin({
+            asset: "[path].gz[query]",
+            algorithm: "gzip",
+            test: /\.js$|\.css$|\.html$/,
+            threshold: 10240,
+            minRatio: 0.8
+        })        
+*/        
     ],
 
     // When importing a module whose path matches one of the following, just
