@@ -5,8 +5,13 @@ import {
     Row,    
     Col,
     Form,
-    Button, 
-    Modal    
+    Modal,
+    Glyphicon,
+    Navbar,
+    Nav,
+    MenuItem,
+    NavItem,
+    NavDropdown
 } from 'react-bootstrap';
 
 import {
@@ -64,14 +69,37 @@ export default class ZAreaTrabajo extends React.Component<any, OwnState>
             <div className="container">
                 <Row>
                     <Col md={12}>
-                        <Button bsStyle="primary" onClick={this.mostrarRecurso.bind(this, 0)}>Doc.</Button>
-                        <Button bsStyle="primary" onClick={this.mostrarRecurso.bind(this, 1)}>Ter</Button>
-                        <Button bsStyle="primary" onClick={this.mostrarRecurso.bind(this, 2)}>Cta</Button>
+
+                        <Navbar collapseOnSelect>
+                            <Navbar.Header>
+                            <Navbar.Brand>
+                                <a href="#">Azen contabilidad web</a>
+                            </Navbar.Brand>
+                            <Navbar.Toggle />
+                            </Navbar.Header>
+                            <Navbar.Collapse>
+                                <Nav>
+                                    <NavItem eventKey={1} href="#">Ayuda</NavItem>
+                                    <NavDropdown eventKey={2} title="Entidades" id="basic-nav-dropdown">
+                                        <MenuItem eventKey={2.1} onClick={this.mostrarRecurso.bind(this, 0)}>Documento</MenuItem>
+                                        <MenuItem eventKey={2.2} onClick={this.mostrarRecurso.bind(this, 1)}>Tercero</MenuItem>
+                                        <MenuItem eventKey={2.3} onClick={this.mostrarRecurso.bind(this, 2)}>Cuenta</MenuItem>
+                                        <MenuItem divider />
+                                        <MenuItem eventKey={3.3}>Ayuda</MenuItem>
+                                    </NavDropdown>
+                                </Nav>
+                                <Nav pullRight>
+                                    <NavItem eventKey={1} href="#">
+                                        <Glyphicon glyph="user" /> Usuario: Carlos Ríos
+                                    </NavItem>
+                                    <NavItem eventKey={2} href="#"> </NavItem>
+                                </Nav>
+                            </Navbar.Collapse>
+                        </Navbar>                    
                     </Col>    
                 </Row>
                 <Row>        
                     <Col md={12}>
-                    {this.state.recursoAMostrar}
                     {
                         this.state.recursoAMostrar >= 0 ?
                             <ZRecurso                         

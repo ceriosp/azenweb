@@ -1,3 +1,13 @@
+namespace Recurso
+{
+    export enum TipoBoton
+    {
+        Comando,
+        Linea
+    }
+
+}
+
 class RecursosConstants
 {
     public static readonly CAMPO_RADIO:number = 2;
@@ -7,5 +17,6 @@ class RecursosConstants
 
 export 
 {
+    Recurso,
     RecursosConstants
 }

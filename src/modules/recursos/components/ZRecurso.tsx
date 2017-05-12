@@ -20,6 +20,7 @@ import {
 } from "../constants";
 
 import ZCampo from './ZCampo';
+import ZBarraBotones from './ZBarraBotones';
 
 interface OwnProperties
 {
@@ -34,42 +35,43 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
     private zcampoRegionActual:ZCampoModel;
 
     private zcamposForma:Array<ZCampoModel> = [];
-    private zcamposComando: Array<ZCampoModel> = [];
+    private zcamposBotonesComandos: Array<ZCampoModel> = [];
+    private zcamposBotonesLineaList: Array<ZCampoModel> = [];    
 
     render(){
         
         this.zRecursoModel = this.props.zRecursoModel;        
         this.clasificarCamposAPintar();
 
-        return (
-            
+        return (                            
                 <Modal 
                     onHide={this.props.onHide} 
                     show={this.props.show}
                     bsSize="large"
                     aria-labelledby="contained-modal-title-lg">
-                    <Modal.Header closeButton>
+                    <Modal.Header className="bg-primary" closeButton>
                         <Modal.Title>{this.zRecursoModel.ven.descr}</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
                         <Panel>
                             <Form onSubmit={this.formSubmitted.bind(this)} horizontal>
-                                {this.zcamposForma.map(this.renderZCampo.bind(this))}
+                                {this.zcamposForma.map(this.pintarZCampoEnRecurso.bind(this))}
                             </Form>      
                         </Panel>
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <Button>Close</Button>
-                        <Button bsStyle="primary">Save changes</Button>
+                        <ZBarraBotones
+                            zcamposBotonesComandosList={this.zcamposBotonesComandos}
+                            zcamposBotonesLineaList={this.zcamposBotonesLineaList}/>
                     </Modal.Footer>
                 </Modal>                
 
         );
     }
 
-    renderZCampo(zcampoAPintar:ZCampoModel, index:number){
+    pintarZCampoEnRecurso(zcampoAPintar:ZCampoModel, index:number){
         
         if(this.estaCampoEnRegionActual(zcampoAPintar)){
             return;
@@ -137,18 +139,18 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
             zcampoAPintar = this.props.zRecursoModel.camps[i];
             if(zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B")) //Botón
             {
-                this.zcamposComando.push(zcampoAPintar);
+                this.zcamposBotonesComandos.push(zcampoAPintar);
+                continue;
+            }
+            if(zcampoAPintar.etq.startsWith("@L"))//Botones línea comandos
+            {            
+                this.zcamposBotonesLineaList.push(zcampoAPintar);
                 continue;
             }
             if(zcampoAPintar.etq.startsWith("@@H"))//Línea horizontal
             {                
                 continue;
-            }
-
-            if(zcampoAPintar.etq.startsWith("@L"))//Botones línea comandos
-            {                
-                continue;
-            }
+            }            
 
             this.zcamposForma.push(zcampoAPintar);
         }

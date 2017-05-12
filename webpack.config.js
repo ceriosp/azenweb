@@ -39,12 +39,14 @@ module.exports = {
         ]
     },
 
-    plugins: [        
+    plugins: [      
+
         new webpack.DefinePlugin({
             __DEV__: true
         }),
 
-/*
+        new LiveReloadPlugin({appendScriptTag: true}),
+
         new CompressionPlugin({
             asset: "[path].gz[query]",
             algorithm: "gzip",
@@ -52,7 +54,6 @@ module.exports = {
             threshold: 10240,
             minRatio: 0.8
         })        
-*/        
     ],
 
     // When importing a module whose path matches one of the following, just

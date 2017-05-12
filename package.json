@@ -53,6 +53,7 @@
     "react-redux": "^5.0.4",
     "source-map-loader": "^0.2.1",
     "typescript": "^2.3.2",
+    "webpack": "^2.5.1",
     "webpack-livereload-plugin": "^0.11.0"
   },
   "dependencies": {
