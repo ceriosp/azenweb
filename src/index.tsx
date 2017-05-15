@@ -20,13 +20,13 @@ import {
     ZCampoModel,
 
     //Components
-    ZAreaTrabajo,
+    ZAplicacion,
 
     //Constants
     RecursosConstants
 } from "./modules/recursos/";
 
 ReactDOM.render(
-    <ZAreaTrabajo/>,
+    <ZAplicacion/>,
     document.getElementById("app-container")
 );

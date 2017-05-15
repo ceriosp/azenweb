@@ -11,6 +11,7 @@ import {
 } from 'react-bootstrap';
 
 import {
+    ZRecursoModelWeb,
     ZRecursoModel,
     ZCampoModel
 } from "../model";
@@ -23,42 +24,60 @@ import ZCampo from './ZCampo';
 import ZBarraBotones from './ZBarraBotones';
 
 interface OwnProperties
-{
-    show?:boolean;
+{    
     onHide?:()=>void;
-    zRecursoModel:ZRecursoModel;
+    container?:any;
+    zRecursoModelWeb:ZRecursoModelWeb;    
 }
 
 export default class ZRecurso extends React.Component<OwnProperties, void>
 {
     private zRecursoModel:ZRecursoModel;
-    private zcampoRegionActual:ZCampoModel;
+    private zcampoRegionEnProceso:ZCampoModel;
 
+    private recursosYaRenderizado:boolean = false;
     private zcamposForma:Array<ZCampoModel> = [];
     private zcamposBotonesComandos: Array<ZCampoModel> = [];
     private zcamposBotonesLineaList: Array<ZCampoModel> = [];    
 
+    constructor(props:OwnProperties){        
+        super(props);
+        console.log("constructor recurso " + this.props.zRecursoModelWeb.ven.nomTbl);
+    }
+
     render(){
         
-        this.zRecursoModel = this.props.zRecursoModel;        
-        this.clasificarCamposAPintar();
+        if(!this.props.zRecursoModelWeb.activo){
+            return <div></div>;
+        }
 
+        if(this.recursosYaRenderizado){
+            return;
+        }
+
+        this.zRecursoModel = this.props.zRecursoModelWeb;     
+        this.clasificarCamposAPintar();
+                
         return (                            
                 <Modal 
+                    style={{top:50}}
                     onHide={this.props.onHide} 
-                    show={this.props.show}
+                    show={true}
+                    container={this.props.container}
+                    backdrop={false}
+                    enforceFocus={false}
+                    autoFocus={false}                    
                     bsSize="large"
-                    aria-labelledby="contained-modal-title-lg">
+                    aria-labelledby="contained-modal-title">    
+
                     <Modal.Header className="bg-primary" closeButton>
                         <Modal.Title>{this.zRecursoModel.ven.descr}</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
-                        <Panel>
-                            <Form onSubmit={this.formSubmitted.bind(this)} horizontal>
-                                {this.zcamposForma.map(this.pintarZCampoEnRecurso.bind(this))}
-                            </Form>      
-                        </Panel>
+                        <Form onSubmit={this.formSubmitted.bind(this)} horizontal>
+                            {this.zcamposForma.map(this.pintarZCampoEnRecurso.bind(this))}
+                        </Form>      
                     </Modal.Body>
 
                     <Modal.Footer>
@@ -71,9 +90,13 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
         );
     }
 
-    pintarZCampoEnRecurso(zcampoAPintar:ZCampoModel, index:number){
-        
-        if(this.estaCampoEnRegionActual(zcampoAPintar)){
+    componentDidMount(){        
+        this.recursosYaRenderizado = true;
+    }
+
+    pintarZCampoEnRecurso(zcampoAPintar:ZCampoModel, index:number){        
+
+        if(this.estaCampoEnRegionEnProceso(zcampoAPintar)){
             return;
         }
 
@@ -89,7 +112,7 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
 
         return (
                 <Col key={index} md={6}>
-                    <ZCampo key={index} 
+                    <ZCampo key={zcampoAPintar.nomCmp} 
                         zCampoModel={zcampoAPintar}
                         esCheckboxAislado={esCheckboxAislado}
                         zcamposEnRegionList={zcamposEnRegionActualList} />
@@ -101,12 +124,12 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
 
         let { camps } = this.zRecursoModel;
     
-        this.zcampoRegionActual = zcampoRegion;
+        this.zcampoRegionEnProceso = zcampoRegion;
 
         let zcamposEnGrupoList : Array<ZCampoModel> = new Array<ZCampoModel>();
         let campsSlice = camps.slice(zcampoRegionIndex+1, camps.length-1);
         for(let i=0; i<campsSlice.length; i++){
-            if(this.estaCampoEnRegionActual(campsSlice[i])){
+            if(this.estaCampoEnRegionEnProceso(campsSlice[i])){
                 zcamposEnGrupoList.push(campsSlice[i]);
             }
             else{
@@ -117,26 +140,26 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
         return zcamposEnGrupoList;
     }
 
-    estaCampoEnRegionActual(zcampoModel: ZCampoModel):boolean{        
+    estaCampoEnRegionEnProceso(zcampoModel: ZCampoModel):boolean{        
 
-        if(this.zcampoRegionActual == null){
+        if(this.zcampoRegionEnProceso == null){
             return false;
         }
 
         return (            
-            (this.zcampoRegionActual.filEtq < zcampoModel.filEtq && 
-            zcampoModel.filEtq < this.zcampoRegionActual.filCmp) &&
-            (this.zcampoRegionActual.colEtq < zcampoModel.colEtq &&
-            zcampoModel.colEtq < this.zcampoRegionActual.colCmp)
+            (this.zcampoRegionEnProceso.filEtq < zcampoModel.filEtq && 
+            zcampoModel.filEtq < this.zcampoRegionEnProceso.filCmp) &&
+            (this.zcampoRegionEnProceso.colEtq < zcampoModel.colEtq &&
+            zcampoModel.colEtq < this.zcampoRegionEnProceso.colCmp)
         );
     }
 
     clasificarCamposAPintar(){
         
         let zcampoAPintar:ZCampoModel;
-        for(let i=0; i<this.props.zRecursoModel.camps.length; i++){
+        for(let i=0; i<this.props.zRecursoModelWeb.camps.length; i++){
 
-            zcampoAPintar = this.props.zRecursoModel.camps[i];
+            zcampoAPintar = this.props.zRecursoModelWeb.camps[i];
             if(zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B")) //Botón
             {
                 this.zcamposBotonesComandos.push(zcampoAPintar);

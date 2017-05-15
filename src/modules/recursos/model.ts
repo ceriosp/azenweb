@@ -4,10 +4,12 @@ class ZRecursoModel
     camps: Array<ZCampoModel>;
     doms: Array<ZDominioModel>;
     refs: Array<ZReferenciaModel>;
+}
 
-    public sayHello(){
-        alert("hello  i am " + this.ven.descr);
-    }
+class ZRecursoModelWeb extends ZRecursoModel
+{
+    px:number;
+    activo:boolean;
 }
 
 class ZVentanaModel
@@ -93,6 +95,7 @@ class ZJunturaModel
 export 
 { 
     ZRecursoModel,
+    ZRecursoModelWeb,
     ZVentanaModel,
     ZCampoModel,
     ZDominioModel,

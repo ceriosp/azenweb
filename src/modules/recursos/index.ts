@@ -1,5 +1,6 @@
 import {
     ZRecursoModel,
+    ZRecursoModelWeb,
     ZCampoModel,    
 } from './model';
 
@@ -8,17 +9,18 @@ import
     RecursosConstants 
 } from './constants';
 
-import ZAreaTrabajo from './components/ZAreaTrabajo';
+import ZAplicacion from './components/ZAplicacion';
 
 
 export 
 {
     //Models
     ZRecursoModel,
+    ZRecursoModelWeb,
     ZCampoModel,
 
     //Components
-    ZAreaTrabajo,
+    ZAplicacion,
 
     //Constants
     RecursosConstants
