@@ -9,7 +9,7 @@ import
     RecursosConstants 
 } from './constants';
 
-import ZAplicacion from './components/ZAplicacion';
+import ZRecurso from './components/ZRecurso';
 
 
 export 
@@ -20,7 +20,7 @@ export
     ZCampoModel,
 
     //Components
-    ZAplicacion,
+    ZRecurso,
 
     //Constants
     RecursosConstants

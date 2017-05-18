@@ -16,15 +16,13 @@ import 'bootstrap';
 import {
 
     //Models
-    ZRecursoModel,
-    ZCampoModel,
 
     //Components
     ZAplicacion,
 
     //Constants
-    RecursosConstants
-} from "./modules/recursos/";
+
+} from "./modules/aplicacion";
 
 ReactDOM.render(
     <ZAplicacion/>,

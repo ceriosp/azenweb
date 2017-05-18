@@ -17,14 +17,13 @@ import {
 
 import {
     ZRecursoModel,
-    ZRecursoModelWeb
-} from "../model";
+    ZRecursoModelWeb,
+    RecursosConstants,
 
-import {
-    RecursosConstants
-} from "../constants";
+    //Components
+    ZRecurso
+} from "../../recursos";
 
-import ZRecurso from './ZRecurso';
 
 interface OwnProps
 {
@@ -110,18 +109,7 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
         }        
     }
 
-
     cerrarVentanaRecurso(recursoId:string, e:any){
-
         this.props.cerrarVentanaRecursoFn(recursoId);
-
-        /*
-        let hashStackRecursosVisibility: Map<string, boolean> = this.state.hashStackRecursosVisibility;
-        hashStackRecursosVisibility.set(recursoId, false);
-
-        this.setState({
-            hashStackRecursosVisibility:hashStackRecursosVisibility
-        });
-        */
     }    
 }

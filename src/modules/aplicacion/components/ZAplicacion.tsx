@@ -1,25 +1,15 @@
 import * as React from 'react';
 
 import {
-    Row,
-    Col,
-    Form,
-    Modal,
-    Glyphicon,
-    Navbar,
-    Nav,
-    MenuItem,
-    NavItem,
-    NavDropdown,
-    Button
-} from 'react-bootstrap';
-
-import {
     ZRecursoModel,
     ZRecursoModelWeb
-} from "../model";
+} from "../../recursos";
 
-import ZMenuAplicacion from './ZMenuAplicacion';
+import
+{
+    ZMenu
+} from "../../zmenu";
+
 import ZAreaTrabajo from './ZAreaTrabajo';
 
 const recursosList: Array<string> =
@@ -56,30 +46,12 @@ export default class ZAplicacion extends React.Component<OwnProps, OwnState>
         this.state = {
             mapRecursosActivos: new Map<string, ZRecursoModelWeb>()
         };
-
-        /*
-        let hashStackRecursos: Map<string, ZRecursoModel> = new Map<string, ZRecursoModel>();
-        hashStackRecursos.set("documentos", JSON.parse(recursosList[0]) as ZRecursoModel);
-        hashStackRecursos.set("terceros", JSON.parse(recursosList[1]) as ZRecursoModel);
-        hashStackRecursos.set("cuentas", JSON.parse(recursosList[2]) as ZRecursoModel);
-
-        let hashStackRecursosVisibility: Map<string, boolean> = new Map<string, boolean>();
-        hashStackRecursosVisibility.set("documentos", false);
-        hashStackRecursosVisibility.set("terceros", false);
-        hashStackRecursosVisibility.set("cuentas", false);
-
-        this.state = {
-            hashStackRecursos: hashStackRecursos,
-            hashStackRecursosVisibility: hashStackRecursosVisibility
-        };
-        
-        */
     }
     render() {
 
         return (
             <div className="container">
-                <ZMenuAplicacion despacharOpcionMenuFn={this.mostrarRecurso.bind(this)} />
+                <ZMenu despacharOpcionMenuFn={this.mostrarRecurso.bind(this)} />
                 <ZAreaTrabajo 
                     mapRecursosActivos={this.state.mapRecursosActivos}
                     cerrarVentanaRecursoFn={this.cerrarVentanaRecurso.bind(this)} />
