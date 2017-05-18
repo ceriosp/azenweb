@@ -11,14 +11,25 @@ import {
     NavDropdown
 } from 'react-bootstrap';
 
+import {
+    ZMenuModel,
+    ZMenuItemModel
+} from '../model';
+
 interface OwnProps
 {
-    despacharOpcionMenuFn:(recurso:string)=>void
+    zmenuModel:ZMenuModel
+    index:number;
+    despacharOpcionMenuFn?:(recurso:string)=>void
 }
+
+import ZMenuItem from './ZMenuItem';
 
 export default class ZMenu extends React.Component<OwnProps, undefined>
 {
     render(){
+
+        let { zmenuModel } = this.props;
 
         return (
                 <Row>
@@ -30,17 +41,21 @@ export default class ZMenu extends React.Component<OwnProps, undefined>
                                 </Navbar.Brand>
                                 <Navbar.Toggle />
                             </Navbar.Header>
-                            <Navbar.Collapse>
+                            <Navbar.Collapse>                                
                                 <Nav>
-                                    <NavItem eventKey={1} href="#">Ayuda</NavItem>
-                                    <NavDropdown eventKey={2} title="Entidades" id="basic-nav-dropdown">
-                                        <MenuItem eventKey={2.1} onClick={this.despacharOpcionMenu.bind(this, "#/azenctb/ctbdoc")}>Documento</MenuItem>
-                                        <MenuItem eventKey={2.2} onClick={this.despacharOpcionMenu.bind(this, "#/azenctb/ctbter")}>Tercero</MenuItem>
-                                        <MenuItem eventKey={2.3} onClick={this.despacharOpcionMenu.bind(this, "#/azenctb/ctbcta")}>Cuenta</MenuItem>
-                                        <MenuItem divider />
-                                        <MenuItem eventKey={2.4}>Ayuda</MenuItem>
-                                        <MenuItem divider/>
-                                    </NavDropdown>
+                                    {zmenuModel.menu.map((zmenuItemModel:ZMenuItemModel, index:number)=>{
+                                        let key:string = zmenuItemModel.ctx + index;
+                                        return (
+                                            <NavDropdown 
+                                                key={key}                                                
+                                                title={zmenuItemModel.nom} 
+                                                id={"zmenu_" + index}>
+                                                <ZMenuItem                                                    
+                                                    zmenuItemModel={zmenuItemModel}
+                                                    parentIndex={index}/>
+                                            </NavDropdown>
+                                        );
+                                    })}
                                 </Nav>
                                 <Nav pullRight>
                                     <NavItem eventKey={1} href="#">
