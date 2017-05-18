@@ -33,16 +33,26 @@ export default class ZCampo extends React.Component<OwnProperties, void>
 {    
     private isRegion:boolean = false;
 
+    constructor(props:any){
+        super(props);
+        console.log("construye zcampo");
+    }    
+
     render(){
-        const { zCampoModel, esCheckboxAislado } = this.props;        
+
+           const { 
+            zCampoModel, 
+            esCheckboxAislado,
+            zcamposEnRegionList } = this.props;
+
         const claseInd:number = zCampoModel.claseInd;
 
         let zCampoComponent = this.getZCampoComponent();
         
         return (
-                <div>
-                    {zCampoComponent}
-                </div>            
+                <Col md={6}>
+                    {this.getZCampoComponent()}
+                </Col>           
         );
     }
 
