@@ -1,6 +1,6 @@
 import {
     ZRecursoModel,
-    ZRecursoViewModel,
+    ZRecursoModelWeb,
     ZCampoModel,    
 } from './model';
 
@@ -16,7 +16,7 @@ export
 {
     //Models
     ZRecursoModel,
-    ZRecursoViewModel,
+    ZRecursoModelWeb,
     ZCampoModel,
 
     //Components

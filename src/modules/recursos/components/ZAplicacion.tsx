@@ -15,14 +15,12 @@ import {
 } from 'react-bootstrap';
 
 import {
-    ZCampoModel,
     ZRecursoModel,
-    ZRecursoViewModel
+    ZRecursoModelWeb
 } from "../model";
 
 import ZMenuAplicacion from './ZMenuAplicacion';
 import ZAreaTrabajo from './ZAreaTrabajo';
-import ZRecurso from './ZRecurso';
 
 const recursosList: Array<string> =
     [
@@ -46,9 +44,7 @@ interface OwnProps {
 }
 
 interface OwnState {
-    mapRecursosActivos: Map<string, ZRecursoViewModel>;
-    recursoActivo:ZRecursoViewModel;
-    zcamposForma:Array<ZCampoModel>;
+    mapRecursosActivos: Map<string, ZRecursoModelWeb>;
 }
 
 export default class ZAplicacion extends React.Component<OwnProps, OwnState>
@@ -58,14 +54,9 @@ export default class ZAplicacion extends React.Component<OwnProps, OwnState>
         super(props);
 
         this.state = {
-            mapRecursosActivos: new Map<string, ZRecursoViewModel>(),
-            recursoActivo:null,
-            zcamposForma:[]
+            mapRecursosActivos: new Map<string, ZRecursoModelWeb>()
         };
 
-
-        this.cerrarVentanaRecurso = this.cerrarVentanaRecurso.bind(this);
-        this.mostrarRecurso = this.mostrarRecurso.bind(this);
         /*
         let hashStackRecursos: Map<string, ZRecursoModel> = new Map<string, ZRecursoModel>();
         hashStackRecursos.set("documentos", JSON.parse(recursosList[0]) as ZRecursoModel);
@@ -88,100 +79,86 @@ export default class ZAplicacion extends React.Component<OwnProps, OwnState>
 
         return (
             <div className="container">
-                <ZMenuAplicacion despacharOpcionMenuFn={this.mostrarRecurso} />
+                <ZMenuAplicacion despacharOpcionMenuFn={this.mostrarRecurso.bind(this)} />
                 <ZAreaTrabajo 
                     mapRecursosActivos={this.state.mapRecursosActivos}
-                    recursoActivo={this.state.recursoActivo}
-                    zcamposForma={this.state.zcamposForma}                    
-                    cerrarVentanaRecursoFn={this.cerrarVentanaRecurso}>  
-                    </ZAreaTrabajo>
+                    cerrarVentanaRecursoFn={this.cerrarVentanaRecurso.bind(this)} />
             </div>
         );
     }
 
-    mostrarRecurso(recursoAAbrirId: string) {        
+    mostrarRecurso(recursoAAbrirId: string, e: any) {
 
         let { mapRecursosActivos } = this.state;
 
-        let mapRecursosActivosUpdated: Map<string, ZRecursoViewModel> = new Map<string, ZRecursoViewModel>();
-        let zrecursoModelWebAlFrente: ZRecursoViewModel = null;
+        let mapRecursosActivosUpdated: Map<string, ZRecursoModelWeb> = new Map<string, ZRecursoModelWeb>();
+        let zrecursoModelWebAlFrente: ZRecursoModelWeb = null;
 
         if (mapRecursosActivos.has(recursoAAbrirId)) {
-            zrecursoModelWebAlFrente = {...mapRecursosActivos.get(recursoAAbrirId)};
+            zrecursoModelWebAlFrente = mapRecursosActivos.get(recursoAAbrirId);
             mapRecursosActivos.delete(recursoAAbrirId);
         } else {
             switch (recursoAAbrirId) {
                 case "#/azenctb/ctbdoc":
-                    zrecursoModelWebAlFrente = JSON.parse(recursosList[0]) as ZRecursoViewModel;
+                    zrecursoModelWebAlFrente = JSON.parse(recursosList[0]) as ZRecursoModelWeb;
                     break;
                 case "#/azenctb/ctbter":
-                    zrecursoModelWebAlFrente = JSON.parse(recursosList[1]) as ZRecursoViewModel;
+                    zrecursoModelWebAlFrente = JSON.parse(recursosList[1]) as ZRecursoModelWeb;
                     break;
                 case "#/azenctb/ctbcta":
-                    zrecursoModelWebAlFrente = JSON.parse(recursosList[2]) as ZRecursoViewModel;
+                    zrecursoModelWebAlFrente = JSON.parse(recursosList[2]) as ZRecursoModelWeb;
                     break;
             }
         }
 
-        mapRecursosActivos.forEach((zrecursoAAgregar: ZRecursoViewModel, recursoIdAAgregar: string) => {
-            zrecursoAAgregar.activo = false;
-            mapRecursosActivosUpdated.set(recursoIdAAgregar, {...zrecursoAAgregar});
-        });
         zrecursoModelWebAlFrente.activo = true;
-        mapRecursosActivosUpdated.set(recursoAAbrirId, {...zrecursoModelWebAlFrente});
+        mapRecursosActivosUpdated.set(recursoAAbrirId, zrecursoModelWebAlFrente);
+        mapRecursosActivos.forEach((zrecursoAAgregar: ZRecursoModelWeb, recursoIdAAgregar: string) => {
+            zrecursoAAgregar.activo = false;
+            mapRecursosActivosUpdated.set(recursoIdAAgregar, zrecursoAAgregar);
+        });
 
         this.setState({
-            mapRecursosActivos: mapRecursosActivosUpdated,
-            recursoActivo:zrecursoModelWebAlFrente,
-            zcamposForma:zrecursoModelWebAlFrente.camps
-        } as OwnState);
+            mapRecursosActivos: mapRecursosActivosUpdated
+        });
     }
 
-    cerrarVentanaRecurso(recursoACerrarId: string) {
+    cerrarVentanaRecurso(recursoACerrarId: string, e: any) {
 
         let { mapRecursosActivos } = this.state;
-        let nuevoMapRecursosActivos: Map<string, ZRecursoViewModel> = new Map<string, ZRecursoViewModel>();
+        let mapRecursosActivosUpdated: Map<string, ZRecursoModelWeb> = new Map<string, ZRecursoModelWeb>();
 
         if (!mapRecursosActivos.has(recursoACerrarId)) {
             return;
         }
 
-        let zrecursoModelWebAAbrir: ZRecursoViewModel = null;
+        let zrecursoModelWebAAbrir: ZRecursoModelWeb = null;
         let recursoAAbrirId: string = null;
-        let zrecursoModelWebACerrar: ZRecursoViewModel = mapRecursosActivos.get(recursoACerrarId);
+        let zrecursoModelWebACerrar: ZRecursoModelWeb = mapRecursosActivos.get(recursoACerrarId);
         zrecursoModelWebACerrar.activo = false;
 
         let keysIterable: IterableIterator<string> = mapRecursosActivos.keys();
         for (let i = 0; i < mapRecursosActivos.size; i++) {
             let zrecursoModelWebForKey: string = keysIterable.next().value;
-            recursoAAbrirId = zrecursoModelWebForKey;
-            if (i < mapRecursosActivos.size - 1) {
-                zrecursoModelWebForKey = keysIterable.next().value; 
-                if (zrecursoModelWebForKey == recursoACerrarId) {
-                    break;
+            if (zrecursoModelWebForKey == recursoACerrarId) {
+                if (i < mapRecursosActivos.size - 1) {
+                    recursoAAbrirId = keysIterable.next().value;
                 }
             }
         }
 
-        mapRecursosActivos.forEach((zrecursoAAgregar: ZRecursoViewModel, recursoIdAAgregar: string) => {
-            if (recursoIdAAgregar == recursoAAbrirId) {                
+        mapRecursosActivos.forEach((zrecursoAAgregar: ZRecursoModelWeb, recursoIdAAgregar: string) => {
+            if (recursoIdAAgregar == recursoAAbrirId) {
                 zrecursoAAgregar.activo = true;
-                zrecursoModelWebAAbrir = {...zrecursoAAgregar};
             }
             else {
                 zrecursoAAgregar.activo = false;
             }
-
-            let zRecursoNuevaInstancia = {...zrecursoAAgregar};
-
-            nuevoMapRecursosActivos.set(recursoIdAAgregar, {...zRecursoNuevaInstancia});
+            mapRecursosActivosUpdated.set(recursoIdAAgregar, zrecursoAAgregar);
         });
 
         this.setState({
-            mapRecursosActivos: nuevoMapRecursosActivos,
-            recursoActivo:zrecursoModelWebAAbrir,
-            zcamposForma:zrecursoModelWebAAbrir.camps
-        } as OwnState);
+            mapRecursosActivos: mapRecursosActivosUpdated
+        });
     }
-
 }

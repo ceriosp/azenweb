@@ -49,5 +49,3 @@ export default class ZRegion extends React.Component<OwnProperties, void>
         );
     }
 }
-
-

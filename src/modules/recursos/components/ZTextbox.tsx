@@ -11,27 +11,13 @@ import {
     ZCampoModel
 } from "../model";
 
-interface OwnProps
+interface OwnProperties
 {
     zCampoModel:ZCampoModel;
 }
 
-interface OwnState
+export default class ZTextbox extends React.Component<OwnProperties, void>
 {
-    value:string
-}
-
-export default class ZTextbox extends React.Component<OwnProps, OwnState>
-{
-    
-    constructor(props:any){
-        super(props);
-        this.state = {
-            value:""
-        }
-        //console.log("construye textbox");
-    }
-
     render(){
         const { zCampoModel } = this.props;
         return (
@@ -41,14 +27,10 @@ export default class ZTextbox extends React.Component<OwnProps, OwnState>
                         {zCampoModel.etq}
                     </Col>
                     <Col>
-                        <FormControl value={this.state.value} onChange={this.onChange.bind(this)} type="text"/>
+                        <FormControl type="text"/>
                     </Col>                
                 </Col>
             </FormGroup>
         );
-    }
-
-    onChange(evento:any) {
-        this.setState({ value: evento.target.value });
     }
 }

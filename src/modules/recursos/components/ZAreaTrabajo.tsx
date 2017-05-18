@@ -16,9 +16,8 @@ import {
 } from 'react-bootstrap';
 
 import {
-    ZCampoModel,
     ZRecursoModel,
-    ZRecursoViewModel
+    ZRecursoModelWeb
 } from "../model";
 
 import {
@@ -29,35 +28,21 @@ import ZRecurso from './ZRecurso';
 
 interface OwnProps
 {
-    recursoActivo?:ZRecursoViewModel;    
-    mapRecursosActivos: Map<string, ZRecursoViewModel>;
+    mapRecursosActivos: Map<string, ZRecursoModelWeb>;
     cerrarVentanaRecursoFn:(recursoId:string)=>void
-    zcamposForma?:Array<ZCampoModel>;
 }
-
 
 export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
 {
     private divAreaTrabajo:HTMLDivElement;
-
-    private zcamposForma:Array<ZCampoModel> = [];
-    private zcamposBotonesComandos: Array<ZCampoModel> = [];
-    private zcamposBotonesLineaList: Array<ZCampoModel> = [];            
     
     private recursosIterable: IterableIterator<ZRecursoModel>;
 
     constructor(props:OwnProps){
-
-        super(props);        
-
-        this.cerrarVentanaRecurso = this.cerrarVentanaRecurso.bind(this);
-
-        console.log("Construye area trabajo");
+        super(props);
     }
 
     render(){
-        
-        
         return (            
             <div>
 
@@ -80,22 +65,17 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
                         <div ref={(divTrabajo:HTMLDivElement)=>{
                                 this.divAreaTrabajo = divTrabajo;
                             }}>
-                        {
-                                
-                                //Todo, revisar referencia a zcamposForma, puede estar causando 
-                                //que se repinte todo el formulario
-                                this.getRecursosActivos().map((recursoAPintar:ZRecursoViewModel, index:number)=>{
-                                    let key:string = recursoAPintar.ven.nomTbl; //(index+1).toString(); //recursoAPintar.ven.nomTbl.replace("#", "").replace("/", "").replace("/", "");
-                                    return <ZRecurso    
-                                        key={key}                                        
-                                        activo={recursoAPintar.activo}
-                                        parentKey={key}
-                                        zRecursoModelWeb={recursoAPintar}
-                                        zcamposForma={recursoAPintar.camps}
-                                        onHide={this.cerrarVentanaRecurso}
-                                        container={this.divAreaTrabajo}/>}
-                                )
-                            }                            
+                            {
+                               this.getRecursosEnFormaIds2().map((recursoId:string, index:number)=>{
+                                        return (
+                                            <ZRecurso    
+                                                key={recursoId}                     
+                                                zRecursoModelWeb={this.props.mapRecursosActivos.get(recursoId)}                                                 
+                                                onHide={this.cerrarVentanaRecurso.bind(this, recursoId)}
+                                                container={this.divAreaTrabajo}/>
+                                        );
+                                })
+                            }                   
                         </div>
                     </Col>
                 </Row>
@@ -103,55 +83,35 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
         );
     }
 
-    componentWillMount(){
-        console.log("will mount");
-        //this.clasificarCamposAPintar();                
-    }
 
-    getRecursosEnFormaIds():Array<string>{  
+    getRecursosEnFormaIds2():Array<string>{  
 
         let { mapRecursosActivos } = this.props;
 
         let recursosActivosIds:Array<string> = new Array<string>();          
 
-        mapRecursosActivos.forEach((zrecursoEnFor:ZRecursoViewModel, recursoIdEnFor:string)=>{
-            if(zrecursoEnFor.activo == true){
-                recursosActivosIds.push(recursoIdEnFor);
-                return true;
-            }
+        mapRecursosActivos.forEach((zrecursoEnFor:ZRecursoModelWeb, recursoIdEnFor:string)=>{
+            recursosActivosIds.push(recursoIdEnFor);
         });   
 
         return recursosActivosIds;
     }
 
-    getRecursosActivos():Array<ZRecursoViewModel>{  
-
-        let { mapRecursosActivos } = this.props;
-
-        let recursosActivos:Array<ZRecursoViewModel> = new Array<ZRecursoViewModel>();          
-
-        mapRecursosActivos.forEach((zrecursoEnFor:ZRecursoViewModel, recursoIdEnFor:string)=>{
-            recursosActivos.push(zrecursoEnFor);
-        });   
-
-        return recursosActivos;
-    }
-
     getRecursoAPintar(){
 
         let { mapRecursosActivos } = this.props;
-        let recursosAPintar:Array<ZRecursoViewModel> = [];        
+        let recursosAPintar:Array<ZRecursoModelWeb> = [];        
         let keysIterable: IterableIterator<string> = mapRecursosActivos.keys();
         for (let i = 0; i < mapRecursosActivos.size; i++) {
             let zrecursoModelWebForKey: string = keysIterable.next().value;
             if(mapRecursosActivos.get(zrecursoModelWebForKey).activo){
-                
+                recursosAPintar.push();
             }
         }        
     }
 
 
-    cerrarVentanaRecurso(recursoId:string){
+    cerrarVentanaRecurso(recursoId:string, e:any){
 
         this.props.cerrarVentanaRecursoFn(recursoId);
 
@@ -164,38 +124,4 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
         });
         */
     }    
-
-
-    clasificarCamposAPintar(){        
-        
-        if(!this.props.recursoActivo){
-            return;
-        }
-        
-        let zcamposForma:Array<ZCampoModel> = new Array<ZCampoModel>();
-
-        let zcampoAPintar:ZCampoModel;
-        for(let i=0; i<this.props.recursoActivo.camps.length; i++){
-
-            zcampoAPintar = this.props.recursoActivo.camps[i];
-            if(zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B")) //Botón
-            {
-                this.zcamposBotonesComandos.push(zcampoAPintar);
-                continue;
-            }
-            if(zcampoAPintar.etq.startsWith("@L"))//Botones línea comandos
-            {            
-                this.zcamposBotonesLineaList.push(zcampoAPintar);
-                continue;
-            }
-            if(zcampoAPintar.etq.startsWith("@@H"))//Línea horizontal
-            {                
-                continue;
-            }            
-
-            zcamposForma.push(zcampoAPintar);
-        }
-
-        return zcamposForma;
-    }
 }

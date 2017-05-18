@@ -27,5 +27,3 @@ export default class ZCheckbox extends React.Component<OwnProperties, void>
         );
     }
 }
-
-

@@ -18,11 +18,6 @@ interface OwnProps
 
 export default class ZMenuAplicacion extends React.Component<OwnProps, undefined>
 {
-     constructor(props: OwnProps) {
-        super(props);
-        console.log("constructor zmenu aplicacion");
-     }
-
     render(){
 
         return (
@@ -31,7 +26,7 @@ export default class ZMenuAplicacion extends React.Component<OwnProps, undefined
                         <Navbar collapseOnSelect style={{zIndex:1000000}}>
                             <Navbar.Header>
                                 <Navbar.Brand>
-                                    <a href="#">ecBoss IT-ROI web</a>
+                                    <a href="#">Azen contabilidad web</a>
                                 </Navbar.Brand>
                                 <Navbar.Toggle />
                             </Navbar.Header>
