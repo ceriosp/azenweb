@@ -1,14 +1,18 @@
 import * as React from 'react';
 
 import {
-    Row,    
+    CSSProperties
+} from 'react';
+
+import {
+    Row,
     Col,
     Glyphicon,
     Navbar,
     Nav,
     MenuItem,
     NavItem,
-    NavDropdown
+    NavDropdown,
 } from 'react-bootstrap';
 
 import {
@@ -16,49 +20,130 @@ import {
     ZMenuItemModel
 } from '../model';
 
-interface OwnProps
-{
-    zmenuItemModel:ZMenuItemModel
-    parentIndex:number;
-    despacharOpcionMenuFn?:(recurso:string)=>void
+interface OwnProps {
+    zmenuItemModel: ZMenuItemModel
+    parentLevel: number;
+    menuItemPadre?: ZMenuItemModel,
+    despacharOpcionMenuFn?: (zmenuItemModel: ZMenuItemModel) => void
 }
 
+interface OwnState {
+    isMenuOpen: boolean;
+}
 
-export default class ZMenuItem extends React.Component<OwnProps, undefined>
+export default class ZMenuItem extends React.Component<OwnProps, OwnState>
 {
-    render(){
+    private opcionesHijasDePrimerNivel: Array<any> = [];
 
-        let { zmenuItemModel, parentIndex } = this.props;
+    constructor(props: OwnProps) {        
 
-        let subMenuItems = <NavItem href="#"></NavItem>;
+        super(props);        
 
-        if(zmenuItemModel.menu && zmenuItemModel.menu.length > 0){
-            subMenuItems = (
-                <NavDropdown eventKey={2} title="Entidades" id={"z_menuitem_" + parentIndex}>
-                    {zmenuItemModel.menu.map((zmenuItemModel:ZMenuItemModel, index:number)=>{
-                        let key:string = zmenuItemModel.ctx + parentIndex + index;
-                        return (
-                            <ZMenuItem 
-                                key={key} 
-                                zmenuItemModel={zmenuItemModel}
-                                parentIndex={index}>{zmenuItemModel.desc}</ZMenuItem>
-                        );
-                    })}
-                </NavDropdown>
-            );
-        }        
-        
-        let menu = subMenuItems
+        this.state = {
+            isMenuOpen: false
+        } as OwnState;
 
-        return (
-                <Nav>
-                     <NavItem href="#">{zmenuItemModel.nom}</NavItem>
-                     {subMenuItems}
-                </Nav>
+        this.despacharOpcionMenu = this.despacharOpcionMenu.bind(this);
+        this.createSubMenu = this.createSubMenu.bind(this);
+
+        console.log("construye zmenu item");
+    }
+
+    render(): any {
+
+        let {
+            zmenuItemModel,
+            menuItemPadre,
+            parentLevel
+        } = this.props;
+
+        let {
+            isMenuOpen
+        } = this.state;
+         
+        let menuStyle = {
+            marginLeft: (parentLevel * 10) + "px"
+        } as CSSProperties;
+
+        let opcionMenu = <MenuItem 
+                            href="#" 
+                            style={menuStyle}
+                            onClick={this.despacharOpcionMenu}>
+                                {zmenuItemModel.nom}
+                        </MenuItem>;
+
+        if (this.esMenuContenedor()) {
+            this.loadOpcionesHijasDePrimerNivel();
+            opcionMenu =
+                (
+                    <NavDropdown 
+                        onClick={this.createSubMenu}
+                        style={menuStyle}
+                        eventKey={2} 
+                        title={zmenuItemModel.nom} 
+                        id={"z_menuitem_" + zmenuItemModel.ctx}>                        
+                        {this.opcionesHijasDePrimerNivel}
+                    </NavDropdown>
+                );
+        }
+
+        return (opcionMenu);
+    }
+
+
+    loadOpcionesHijasDePrimerNivel() {
+
+        if(!this.state.isMenuOpen){
+            return;
+        }
+
+        let {
+            zmenuItemModel,
+            menuItemPadre,
+            parentLevel
+        } = this.props;
+
+        this.opcionesHijasDePrimerNivel = (
+            zmenuItemModel.menu.map((zmenuItemModelChild: ZMenuItemModel, index: number) => {
+                let key: string = zmenuItemModelChild.ctx;
+                return  (
+                   <ZMenuItem 
+                        key={key}
+                        zmenuItemModel={zmenuItemModelChild}
+                        parentLevel={parentLevel+1}
+                        despacharOpcionMenuFn={this.props.despacharOpcionMenuFn}
+                    />
+                );
+            })
         );
     }
 
-    despacharOpcionMenu(recursoId:string){
-        this.props.despacharOpcionMenuFn(recursoId);
+    esMenuContenedor() {
+        let { zmenuItemModel } = this.props;
+        return zmenuItemModel.menu && zmenuItemModel.menu.length > 0;
+    }
+
+    createSubMenu() {        
+        this.setState({
+            isMenuOpen: true
+        } as OwnState);
+    }
+
+    despacharOpcionMenu() {
+
+        document.body.click();// .getElementById("azen-evt-container").click();
+
+        if(this.isMobileDevice()){
+            console.log("is mobile");
+            (document.querySelector("button.navbar-toggle") as HTMLElement).click();
+        }
+        
+        if(this.props.despacharOpcionMenuFn){
+            this.props.despacharOpcionMenuFn(this.props.zmenuItemModel);
+        }
+    }
+
+    isMobileDevice(){
+        return window.innerWidth <= 500;
     }
 }

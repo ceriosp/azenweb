@@ -8,11 +8,6 @@ import {Button} from 'react-bootstrap';
 import "es6-string-polyfills";
 require('es6-object-assign').polyfill();
 
-/*
-import * as $ from "jquery";
-import 'bootstrap';
-*/
-
 import {
 
     //Models
@@ -25,6 +20,6 @@ import {
 } from "./modules/aplicacion";
 
 ReactDOM.render(
-    <ZAplicacion/>,
+    <div><ZAplicacion/></div>,
     document.getElementById("app-container")
 );

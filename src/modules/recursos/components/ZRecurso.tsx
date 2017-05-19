@@ -2,6 +2,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import {
+    CSSProperties
+} from 'react';
+
+import {
     Row,    
     Col,
     Form,
@@ -60,11 +64,14 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
         let modalStyle:any = new Object();
         
         if(this.props.zRecursoModelWeb.activo){
-            modalStyle.display="block";
-            modalStyle.top = 50;
+            modalStyle = {
+                display:"block",
+                top:"50px"               
+            } as CSSProperties;
         }else{
-            modalStyle.display="none";
-            modalStyle.top = 50;
+            modalStyle = {
+                display:"none",
+            } as CSSProperties;
         }
 
         this.zRecursoModel = this.props.zRecursoModelWeb;     

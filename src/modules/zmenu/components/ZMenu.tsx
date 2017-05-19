@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {
-    Row,    
+    Row,
     Col,
     Glyphicon,
     Navbar,
@@ -16,61 +16,70 @@ import {
     ZMenuItemModel
 } from '../model';
 
-interface OwnProps
-{
-    zmenuModel:ZMenuModel
-    index:number;
-    despacharOpcionMenuFn?:(recurso:string)=>void
+interface OwnProps {
+    zmenuModel: ZMenuModel
+    index: number;
+    menuExpanded: boolean;
+    despacharOpcionMenuFn?: (zmenuItemModel: ZMenuItemModel) => void
 }
 
 import ZMenuItem from './ZMenuItem';
 
 export default class ZMenu extends React.Component<OwnProps, undefined>
 {
-    render(){
+    constructor(props: OwnProps) {
+        super(props);
 
-        let { zmenuModel } = this.props;
+        this.despacharOpcionMenu = this.despacharOpcionMenu.bind(this);
+    }
+
+    render() {
+
+        let { zmenuModel, index } = this.props;
 
         return (
-                <Row>
-                    <Col md={12}>
-                        <Navbar collapseOnSelect style={{zIndex:1000000}}>
-                            <Navbar.Header>
-                                <Navbar.Brand>
-                                    <a href="#">Azen contabilidad web</a>
-                                </Navbar.Brand>
-                                <Navbar.Toggle />
-                            </Navbar.Header>
-                            <Navbar.Collapse>                                
-                                <Nav>
-                                    {zmenuModel.menu.map((zmenuItemModel:ZMenuItemModel, index:number)=>{
-                                        let key:string = zmenuItemModel.ctx + index;
-                                        return (
-                                            <NavDropdown 
-                                                key={key}                                                
-                                                title={zmenuItemModel.nom} 
-                                                id={"zmenu_" + index}>
-                                                <ZMenuItem                                                    
-                                                    zmenuItemModel={zmenuItemModel}
-                                                    parentIndex={index}/>
-                                            </NavDropdown>
-                                        );
-                                    })}
-                                </Nav>
-                                <Nav pullRight>
-                                    <NavItem eventKey={1} href="#">
-                                        <Glyphicon glyph="user" /> Usuario: Carlos Ríos
+            <Row>
+                <Col md={12}>
+                    <Navbar
+                        //defaultNavExpanded={this.props.menuExpanded}
+                        //expanded={this.props.menuExpanded}
+                        collapseOnSelect
+                        staticTop                        
+                        style={{ zIndex: 1000000 }}>
+                        <Navbar.Header>
+                            <Navbar.Brand>
+                                <a href="#">Azen contabilidad</a>
+                            </Navbar.Brand>
+                            <Navbar.Toggle>                                
+                            </Navbar.Toggle>
+                        </Navbar.Header>
+                        <Navbar.Collapse>
+                            <Nav>
+                                {zmenuModel.menu.map((zmenuItemModel: ZMenuItemModel, i: number) => {
+                                    let key: string = zmenuItemModel.ctx;
+                                    return (
+                                        <ZMenuItem
+                                            key={key}
+                                            zmenuItemModel={zmenuItemModel}
+                                            despacharOpcionMenuFn={this.despacharOpcionMenu}
+                                            parentLevel={0} />
+                                    );
+                                })}
+
+                                <NavItem eventKey={1} href="#">
+                                    <Glyphicon glyph="user" /> Usuario: Carlos Ríos
                                     </NavItem>
-                                    <NavItem eventKey={2} href="#"> </NavItem>
-                                </Nav>
-                            </Navbar.Collapse>
-                        </Navbar>   
-                    </Col>    
-                </Row>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
+                </Col>
+            </Row>
         );
     }
 
-    despacharOpcionMenu(recursoId:string){
-        this.props.despacharOpcionMenuFn(recursoId);
+    despacharOpcionMenu(zmenuItemModel: ZMenuItemModel) {
+        if (this.props.despacharOpcionMenuFn) {
+            this.props.despacharOpcionMenuFn(zmenuItemModel);
+        }
     }
 }
