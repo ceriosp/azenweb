@@ -68,7 +68,7 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
                                 this.divAreaTrabajo = divTrabajo;
                             }}>
                             {
-                               this.getRecursosEnFormaIds2().map((recursoId:string, index:number)=>{
+                               this.getRecursosEnFormaIds().map((recursoId:string, index:number)=>{
                                         return (
                                             <ZRecurso    
                                                 key={recursoId}                     
@@ -86,7 +86,7 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
     }
 
 
-    getRecursosEnFormaIds2():Array<string>{  
+    getRecursosEnFormaIds():Array<string>{  
 
         let { mapRecursosActivos } = this.props;
 

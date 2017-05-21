@@ -19,13 +19,12 @@ import {
 interface OwnProps {
     zmenuModel: ZMenuModel
     index: number;
-    menuExpanded: boolean;
     despacharOpcionMenuFn?: (zmenuItemModel: ZMenuItemModel) => void
 }
 
 import ZMenuItem from './ZMenuItem';
 
-export default class ZMenu extends React.Component<OwnProps, undefined>
+export default class ZMenuComp extends React.Component<OwnProps, undefined>
 {
     constructor(props: OwnProps) {
         super(props);
@@ -41,8 +40,6 @@ export default class ZMenu extends React.Component<OwnProps, undefined>
             <Row>
                 <Col md={12}>
                     <Navbar
-                        //defaultNavExpanded={this.props.menuExpanded}
-                        //expanded={this.props.menuExpanded}
                         collapseOnSelect
                         staticTop                        
                         style={{ zIndex: 1000000 }}>

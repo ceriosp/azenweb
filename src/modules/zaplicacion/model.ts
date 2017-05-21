@@ -7,7 +7,12 @@ import {
     ZRecursoViewModel
 } from "../zrecursos";
 
-interface ZAplicacionState
+interface State
+{
+    zaplicationState:ZAplicationState
+}
+
+interface ZAplicationState
 {
     zmenuModel:ZMenuModel;
 
@@ -17,5 +22,6 @@ interface ZAplicacionState
 
 export
 {
-    ZAplicacionState
+    State,
+    ZAplicationState
 }

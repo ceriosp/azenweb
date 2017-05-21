@@ -47,10 +47,6 @@ class ZCampoModel
     noEnTabla: number;
     modo: number;
     numDec: number; 
-
-    public sayHello(){
-        console.log("hello zcampo: " + this.nomCmp);
-    }
 }
 
 class ZDominioModel

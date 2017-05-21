@@ -64,6 +64,7 @@
     "es6-string-polyfills": "^1.0.0",
     "isomorphic-fetch": "^2.2.1",
     "react-bootstrap": "^0.31.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1"
   }
 }

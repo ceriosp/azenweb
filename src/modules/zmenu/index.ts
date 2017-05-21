@@ -1,16 +1,9 @@
-import {
-    ZMenuModel,
-    ZMenuItemModel
-} from './model';
+export * from './model';
 
-import ZMenu from './components/ZMenu';
+import ZMenuComp from './components/ZMenuComp';
 
 export 
 {
-    //Models
-    ZMenuModel,
-    ZMenuItemModel,
-    
     //Components
-    ZMenu
+    ZMenuComp
 }
