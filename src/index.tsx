@@ -17,9 +17,9 @@ import {
 
     //Constants
 
-} from "./modules/aplicacion";
+} from "./modules/zaplicacion";
 
 ReactDOM.render(
-    <div><ZAplicacion/></div>,
+    <ZAplicacion/>,
     document.getElementById("app-container")
 );

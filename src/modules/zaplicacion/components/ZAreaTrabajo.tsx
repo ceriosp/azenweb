@@ -25,7 +25,7 @@ import {
 
     //Components
     ZRecurso
-} from "../../recursos";
+} from "../../zrecursos";
 
 
 interface OwnProps

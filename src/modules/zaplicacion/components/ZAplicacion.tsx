@@ -3,7 +3,7 @@ import * as React from 'react';
 import {
     ZRecursoModel,
     ZRecursoViewModel
-} from "../../recursos";
+} from "../../zrecursos";
 
 import
 {

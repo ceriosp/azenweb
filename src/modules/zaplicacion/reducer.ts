@@ -7,7 +7,7 @@ import {
 import {
     ZRecursoModel,
     ZRecursoViewModel
-} from "../recursos";
+} from "../zrecursos";
 
 import { ZAplicacion } from './constants';
 

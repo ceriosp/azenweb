@@ -5,7 +5,7 @@ import {
 import {
     ZRecursoModel,
     ZRecursoViewModel
-} from "../recursos";
+} from "../zrecursos";
 
 interface ZAplicacionState
 {
