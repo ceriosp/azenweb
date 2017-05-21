@@ -10,7 +10,7 @@ import {
 } from "../model";
 
 import {
-    Recurso
+    Recursos
 } from "../constants";
 
 import ZButton from './ZButton';
@@ -31,7 +31,7 @@ export default class ZBarraBotones extends React.Component<OwnProperties, void>
                     {zcamposBotonesComandosList.map((zcampoBoton:ZCampoModel, index:number)=>{
                         return  <ZButton    key={index} 
                                             zCampoModel={zcampoBoton} 
-                                            tipoBoton={Recurso.TipoBoton.Comando}/>
+                                            tipoBoton={Recursos.TipoBoton.Comando}/>
                     })}
                 </ButtonToolbar>
                 <hr style={{margin:"5px"}}/>
@@ -39,7 +39,7 @@ export default class ZBarraBotones extends React.Component<OwnProperties, void>
                     {zcamposBotonesLineaList.map((zcampoBoton:ZCampoModel, index:number)=>{
                         return  <ZButton    key={index} 
                                             zCampoModel={zcampoBoton} 
-                                            tipoBoton={Recurso.TipoBoton.Linea}/>
+                                            tipoBoton={Recursos.TipoBoton.Linea}/>
 
                     })}
                 </ButtonToolbar>            

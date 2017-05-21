@@ -13,7 +13,7 @@ import {
 } from "../model";
 
 import {
-    RecursosConstants
+    Recursos
 } from "../constants";
 
 import ZTextbox from './ZTextbox';
@@ -61,16 +61,16 @@ export default class ZCampo extends React.Component<OwnProperties, void>
                         zCampoRegion={zCampoModel} 
                         zcamposEnRegionList={zcamposEnRegionList} />;
         }
-        else if(claseInd == RecursosConstants.CAMPO_TEXTO){
+        else if(claseInd == Recursos.Constants.CAMPO_TEXTO){
             return <ZTextbox zCampoModel={zCampoModel}/>;
         }    
-        else if(claseInd == RecursosConstants.CAMPO_RADIO && esCheckboxAislado){
+        else if(claseInd == Recursos.Constants.CAMPO_RADIO && esCheckboxAislado){
             return <ZCheckbox zCampoModel={zCampoModel}/>;
         }            
-        else if(claseInd == RecursosConstants.CAMPO_RADIO){
+        else if(claseInd == Recursos.Constants.CAMPO_RADIO){
             return <ZRadio zCampoModel={zCampoModel}/>;
         }
-        else if(claseInd == RecursosConstants.CAMPO_CHECKBOX){
+        else if(claseInd == Recursos.Constants.CAMPO_CHECKBOX){
             return <ZCheckbox zCampoModel={zCampoModel}/>;
         }        
     }    

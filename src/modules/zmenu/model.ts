@@ -15,6 +15,5 @@ class ZMenuItemModel
 export
 {
     ZMenuModel,
-
     ZMenuItemModel
 }

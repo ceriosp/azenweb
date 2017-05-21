@@ -9,13 +9,13 @@ import {
 } from "../model";
 
 import {
-    Recurso
+    Recursos
 } from "../constants";
 
 interface OwnProperties
 {
     zCampoModel:ZCampoModel;
-    tipoBoton:Recurso.TipoBoton
+    tipoBoton:Recursos.TipoBoton
 }
 
 export default class ZButton extends React.Component<OwnProperties, void>
@@ -27,17 +27,17 @@ export default class ZButton extends React.Component<OwnProperties, void>
 
         let etq:string = ""; 
 
-        if(tipoBoton == Recurso.TipoBoton.Comando){
+        if(tipoBoton == Recursos.TipoBoton.Comando){
             etq = zCampoModel.etq.replace("@@B", "");
         }
-        else if(tipoBoton == Recurso.TipoBoton.Linea){
+        else if(tipoBoton == Recursos.TipoBoton.Linea){
             etq = zCampoModel.etq.replace("@L", "");
         }
 
         etq = etq.replace("{", "").replace("}", "");
 
         {            
-            (tipoBoton == Recurso.TipoBoton.Comando)
+            (tipoBoton == Recursos.TipoBoton.Comando)
                 ?            
                     zButtonComponent = 
                             <Button bsStyle="primary">

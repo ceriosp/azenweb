@@ -6,7 +6,7 @@ class ZRecursoModel
     refs: Array<ZReferenciaModel>;
 }
 
-class ZRecursoModelWeb extends ZRecursoModel
+class ZRecursoViewModel extends ZRecursoModel
 {
     px:number;
     activo:boolean;
@@ -95,7 +95,7 @@ class ZJunturaModel
 export 
 { 
     ZRecursoModel,
-    ZRecursoModelWeb,
+    ZRecursoViewModel,
     ZVentanaModel,
     ZCampoModel,
     ZDominioModel,

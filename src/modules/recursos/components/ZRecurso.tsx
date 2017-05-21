@@ -15,13 +15,13 @@ import {
 } from 'react-bootstrap';
 
 import {
-    ZRecursoModelWeb,
+    ZRecursoViewModel,
     ZRecursoModel,
     ZCampoModel
 } from "../model";
 
 import {
-    RecursosConstants
+    Recursos
 } from "../constants";
 
 import ZCampo from './ZCampo';
@@ -31,7 +31,7 @@ interface OwnProperties
 {    
     onHide?:()=>void;
     container?:any;
-    zRecursoModelWeb:ZRecursoModelWeb;    
+    zRecursoModelWeb:ZRecursoViewModel;    
 }
 
 export default class ZRecurso extends React.Component<OwnProperties, void>
@@ -122,7 +122,7 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
         {
             zcamposEnRegionActualList = this.getCamposEnRegion(zcampoAPintar, index);
         } 
-        else if(zcampoAPintar.claseInd == RecursosConstants.CAMPO_RADIO){            
+        else if(zcampoAPintar.claseInd == Recursos.Constants.CAMPO_RADIO){            
             esCheckboxAislado = true;
         }                
 

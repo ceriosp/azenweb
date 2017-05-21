@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap';
 
 import {
-    RecursosConstants
+    Recursos
 } from "../constants";
 
 import {

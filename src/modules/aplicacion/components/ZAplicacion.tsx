@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import {
     ZRecursoModel,
-    ZRecursoModelWeb
+    ZRecursoViewModel
 } from "../../recursos";
 
 import
@@ -76,7 +76,7 @@ interface OwnProps {
 }
 
 interface OwnState {
-    mapRecursosActivos: Map<string, ZRecursoModelWeb>;
+    mapRecursosActivos: Map<string, ZRecursoViewModel>;
     menuExpanded:boolean;
 }
 
@@ -89,7 +89,7 @@ export default class ZAplicacion extends React.Component<OwnProps, OwnState>
         super(props);
 
         this.state = {
-            mapRecursosActivos: new Map<string, ZRecursoModelWeb>(),
+            mapRecursosActivos: new Map<string, ZRecursoViewModel>(),
             menuExpanded:false
         };
 
@@ -98,7 +98,6 @@ export default class ZAplicacion extends React.Component<OwnProps, OwnState>
 
         return (
             <div className="container">
-
                 <ZMenu 
                     zmenuModel={JSON.parse(menuJSON) as ZMenuModel}
                     index={0}
@@ -119,8 +118,8 @@ export default class ZAplicacion extends React.Component<OwnProps, OwnState>
 
         let { mapRecursosActivos } = this.state;
 
-        let mapRecursosActivosUpdated: Map<string, ZRecursoModelWeb> = new Map<string, ZRecursoModelWeb>();
-        let zrecursoModelWebAlFrente: ZRecursoModelWeb = null;
+        let mapRecursosActivosUpdated: Map<string, ZRecursoViewModel> = new Map<string, ZRecursoViewModel>();
+        let zrecursoModelWebAlFrente: ZRecursoViewModel = null;
 
         if (mapRecursosActivos.has(recursoAAbrirId)) {
             zrecursoModelWebAlFrente = mapRecursosActivos.get(recursoAAbrirId);
@@ -128,20 +127,20 @@ export default class ZAplicacion extends React.Component<OwnProps, OwnState>
         } else {
             switch (recursoAAbrirId) {
                 case "A14E":
-                    zrecursoModelWebAlFrente = JSON.parse(recursosList[0]) as ZRecursoModelWeb;
+                    zrecursoModelWebAlFrente = JSON.parse(recursosList[0]) as ZRecursoViewModel;
                     break;
                 case "A142":
-                    zrecursoModelWebAlFrente = JSON.parse(recursosList[1]) as ZRecursoModelWeb;
+                    zrecursoModelWebAlFrente = JSON.parse(recursosList[1]) as ZRecursoViewModel;
                     break;
                 case "A13D":
-                    zrecursoModelWebAlFrente = JSON.parse(recursosList[2]) as ZRecursoModelWeb;
+                    zrecursoModelWebAlFrente = JSON.parse(recursosList[2]) as ZRecursoViewModel;
                     break;
             }
         }
 
         zrecursoModelWebAlFrente.activo = true;
         mapRecursosActivosUpdated.set(recursoAAbrirId, zrecursoModelWebAlFrente);
-        mapRecursosActivos.forEach((zrecursoAAgregar: ZRecursoModelWeb, recursoIdAAgregar: string) => {
+        mapRecursosActivos.forEach((zrecursoAAgregar: ZRecursoViewModel, recursoIdAAgregar: string) => {
             zrecursoAAgregar.activo = false;
             mapRecursosActivosUpdated.set(recursoIdAAgregar, zrecursoAAgregar);
         });
@@ -155,15 +154,15 @@ export default class ZAplicacion extends React.Component<OwnProps, OwnState>
     cerrarVentanaRecurso(recursoACerrarId: string, e: any) {
 
         let { mapRecursosActivos } = this.state;
-        let mapRecursosActivosUpdated: Map<string, ZRecursoModelWeb> = new Map<string, ZRecursoModelWeb>();
+        let mapRecursosActivosUpdated: Map<string, ZRecursoViewModel> = new Map<string, ZRecursoViewModel>();
 
         if (!mapRecursosActivos.has(recursoACerrarId)) {
             return;
         }
 
-        let zrecursoModelWebAAbrir: ZRecursoModelWeb = null;
+        let zrecursoModelWebAAbrir: ZRecursoViewModel = null;
         let recursoAAbrirId: string = null;
-        let zrecursoModelWebACerrar: ZRecursoModelWeb = mapRecursosActivos.get(recursoACerrarId);
+        let zrecursoModelWebACerrar: ZRecursoViewModel = mapRecursosActivos.get(recursoACerrarId);
         zrecursoModelWebACerrar.activo = false;
 
         let keysIterable: IterableIterator<string> = mapRecursosActivos.keys();
@@ -176,7 +175,7 @@ export default class ZAplicacion extends React.Component<OwnProps, OwnState>
             }
         }
 
-        mapRecursosActivos.forEach((zrecursoAAgregar: ZRecursoModelWeb, recursoIdAAgregar: string) => {
+        mapRecursosActivos.forEach((zrecursoAAgregar: ZRecursoViewModel, recursoIdAAgregar: string) => {
             if (recursoIdAAgregar == recursoAAbrirId) {
                 zrecursoAAgregar.activo = true;
             }

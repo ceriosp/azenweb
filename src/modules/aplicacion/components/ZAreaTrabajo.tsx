@@ -16,9 +16,12 @@ import {
 } from 'react-bootstrap';
 
 import {
+    //Models
     ZRecursoModel,
-    ZRecursoModelWeb,
-    RecursosConstants,
+    ZRecursoViewModel,
+
+    //Constants
+    Recursos,
 
     //Components
     ZRecurso
@@ -27,7 +30,7 @@ import {
 
 interface OwnProps
 {
-    mapRecursosActivos: Map<string, ZRecursoModelWeb>;
+    mapRecursosActivos: Map<string, ZRecursoViewModel>;
     cerrarVentanaRecursoFn:(recursoId:string)=>void
 }
 
@@ -89,7 +92,7 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
 
         let recursosActivosIds:Array<string> = new Array<string>();          
 
-        mapRecursosActivos.forEach((zrecursoEnFor:ZRecursoModelWeb, recursoIdEnFor:string)=>{
+        mapRecursosActivos.forEach((zrecursoEnFor:ZRecursoViewModel, recursoIdEnFor:string)=>{
             recursosActivosIds.push(recursoIdEnFor);
         });   
 
@@ -99,7 +102,7 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
     getRecursoAPintar(){
 
         let { mapRecursosActivos } = this.props;
-        let recursosAPintar:Array<ZRecursoModelWeb> = [];        
+        let recursosAPintar:Array<ZRecursoViewModel> = [];        
         let keysIterable: IterableIterator<string> = mapRecursosActivos.keys();
         for (let i = 0; i < mapRecursosActivos.size; i++) {
             let zrecursoModelWebForKey: string = keysIterable.next().value;

@@ -1,27 +1,26 @@
 import {
     ZRecursoModel,
-    ZRecursoModelWeb,
+    ZRecursoViewModel,
     ZCampoModel,    
 } from './model';
 
 import
 {
-    RecursosConstants 
+    Recursos 
 } from './constants';
 
 import ZRecurso from './components/ZRecurso';
-
 
 export 
 {
     //Models
     ZRecursoModel,
-    ZRecursoModelWeb,
+    ZRecursoViewModel,
     ZCampoModel,
 
     //Components
     ZRecurso,
 
     //Constants
-    RecursosConstants
+    Recursos
 }
