@@ -29,14 +29,14 @@ import ZBarraBotones from './ZBarraBotones';
 
 interface OwnProperties
 {    
-    onHide?:()=>void;
+    onHideFn?:(zRecursoViewModel:ZRecursoViewModel)=>void;
     container?:any;
-    zRecursoModelWeb:ZRecursoViewModel;    
+    zRecursoViewModel:ZRecursoViewModel;    
 }
 
 export default class ZRecurso extends React.Component<OwnProperties, void>
 {
-    private zRecursoModel:ZRecursoModel;
+    private zRecursoViewModel:ZRecursoViewModel;
     private zcampoRegionEnProceso:ZCampoModel;
 
     private recursosYaRenderizado:boolean = false;
@@ -46,24 +46,18 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
 
     constructor(props:OwnProperties){        
         super(props);
-        console.log("constructor recurso " + this.props.zRecursoModelWeb.ven.nomTbl);
-    }
+        console.log("constructor recurso " + this.props.zRecursoViewModel.ven.nomTbl);
 
+        this.cerrarVentana = this.cerrarVentana.bind(this);
+    }
     
-
-    renderInitialize(){
-        this.zcamposForma = new Array<ZCampoModel>();
-        this.zcamposBotonesComandos = new Array<ZCampoModel>();
-        this.zcamposBotonesLineaList = new Array<ZCampoModel>();
-    }
-
     render(){
         
         this.renderInitialize();
 
         let modalStyle:any = new Object();
         
-        if(this.props.zRecursoModelWeb.activo){
+        if(this.props.zRecursoViewModel.activo){
             modalStyle = {
                 display:"block",
                 top:"50px"               
@@ -74,14 +68,14 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
             } as CSSProperties;
         }
 
-        this.zRecursoModel = this.props.zRecursoModelWeb;     
+        this.zRecursoViewModel = this.props.zRecursoViewModel;     
         this.clasificarCamposAPintar();
                 
         return (                            
                 <Modal 
-                    id={this.zRecursoModel.ven.nomTbl}
+                    id={this.zRecursoViewModel.ven.nomTbl}
                     style={modalStyle}
-                    onHide={this.props.onHide} 
+                    onHide={this.cerrarVentana} 
                     show={true}
                     container={this.props.container}
                     backdrop={false}
@@ -91,7 +85,7 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
                     aria-labelledby="contained-modal-title">    
 
                     <Modal.Header className="bg-primary" closeButton>
-                        <Modal.Title>{this.zRecursoModel.ven.descr}</Modal.Title>
+                        <Modal.Title>{this.zRecursoViewModel.ven.descr}</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
@@ -108,6 +102,16 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
                 </Modal>                
 
         );
+    }
+
+    cerrarVentana(){
+        this.props.onHideFn(this.props.zRecursoViewModel);
+    }
+
+    renderInitialize(){
+        this.zcamposForma = new Array<ZCampoModel>();
+        this.zcamposBotonesComandos = new Array<ZCampoModel>();
+        this.zcamposBotonesLineaList = new Array<ZCampoModel>();
     }
 
     pintarZCampoEnRecurso(zcampoAPintar:ZCampoModel, index:number){        
@@ -138,7 +142,7 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
 
     getCamposEnRegion(zcampoRegion:ZCampoModel, zcampoRegionIndex:number):Array<ZCampoModel>{
 
-        let { camps } = this.zRecursoModel;
+        let { camps } = this.zRecursoViewModel;
     
         this.zcampoRegionEnProceso = zcampoRegion;
 
@@ -173,9 +177,9 @@ export default class ZRecurso extends React.Component<OwnProperties, void>
     clasificarCamposAPintar(){
         
         let zcampoAPintar:ZCampoModel;
-        for(let i=0; i<this.props.zRecursoModelWeb.camps.length; i++){
+        for(let i=0; i<this.props.zRecursoViewModel.camps.length; i++){
 
-            zcampoAPintar = this.props.zRecursoModelWeb.camps[i];
+            zcampoAPintar = this.props.zRecursoViewModel.camps[i];
             if(zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B")) //Botón
             {
                 this.zcamposBotonesComandos.push(zcampoAPintar);

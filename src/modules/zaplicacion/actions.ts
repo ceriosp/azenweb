@@ -2,15 +2,16 @@ import {
     ZMenuItemModel
 } from "../zmenu";
 
-import {
+
+import {    
+    ZRecursoViewModel,
+} from '../zrecursos';
+
+import {    
     ActionTypes,
-    DESPACHAR_RECURSO,
+    Action,
 } from './actionTypes';
 
-//Action parameters
-export type Action =
-    //UI  actions
-    { type: DESPACHAR_RECURSO, zmenuItemModel: ZMenuItemModel }
 
 export namespace Actions
 {
@@ -18,4 +19,9 @@ export namespace Actions
         type:ActionTypes.DESPACHAR_RECURSO,
         zmenuItemModel:zmenuItemModel
     });
+
+    export const cerrarRecurso = (zRecursoViewModel: ZRecursoViewModel):Action => ({
+        type:ActionTypes.CERRAR_RECURSO,
+        zrecursoViewModel:zRecursoViewModel
+    });    
 }

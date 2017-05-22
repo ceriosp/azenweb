@@ -31,17 +31,18 @@ import {
 interface OwnProps
 {
     mapRecursosActivos: Map<string, ZRecursoViewModel>;
-    cerrarVentanaRecursoFn:(recursoId:string)=>void
+    recursosActivosCtxList:Array<string>,
+    cerrarVentanaRecursoFn:(zRecursoViewModel:ZRecursoViewModel)=>void
 }
 
 export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
 {
-    private divAreaTrabajo:HTMLDivElement;
-    
-    private recursosIterable: IterableIterator<ZRecursoModel>;
+    private divAreaTrabajo:HTMLDivElement;    
 
     constructor(props:OwnProps){
         super(props);
+
+        this.cerrarVentanaRecurso = this.cerrarVentanaRecurso.bind(this);
     }
 
     render(){
@@ -68,12 +69,12 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
                                 this.divAreaTrabajo = divTrabajo;
                             }}>
                             {
-                               this.getRecursosEnFormaIds().map((recursoId:string, index:number)=>{
+                               this.props.recursosActivosCtxList.map((recursoId:string, index:number)=>{
                                         return (
                                             <ZRecurso    
                                                 key={recursoId}                     
-                                                zRecursoModelWeb={this.props.mapRecursosActivos.get(recursoId)}                                                 
-                                                onHide={this.cerrarVentanaRecurso.bind(this, recursoId)}
+                                                zRecursoViewModel={this.props.mapRecursosActivos.get(recursoId)}                                                 
+                                                onHideFn={this.cerrarVentanaRecurso}
                                                 container={this.divAreaTrabajo}/>
                                         );
                                 })
@@ -85,34 +86,7 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
         );
     }
 
-
-    getRecursosEnFormaIds():Array<string>{  
-
-        let { mapRecursosActivos } = this.props;
-
-        let recursosActivosIds:Array<string> = new Array<string>();          
-
-        mapRecursosActivos.forEach((zrecursoEnFor:ZRecursoViewModel, recursoIdEnFor:string)=>{
-            recursosActivosIds.push(recursoIdEnFor);
-        });   
-
-        return recursosActivosIds;
-    }
-
-    getRecursoAPintar(){
-
-        let { mapRecursosActivos } = this.props;
-        let recursosAPintar:Array<ZRecursoViewModel> = [];        
-        let keysIterable: IterableIterator<string> = mapRecursosActivos.keys();
-        for (let i = 0; i < mapRecursosActivos.size; i++) {
-            let zrecursoModelWebForKey: string = keysIterable.next().value;
-            if(mapRecursosActivos.get(zrecursoModelWebForKey).activo){
-                recursosAPintar.push();
-            }
-        }        
-    }
-
-    cerrarVentanaRecurso(recursoId:string, e:any){
-        this.props.cerrarVentanaRecursoFn(recursoId);
+    cerrarVentanaRecurso(zRecursoViewModel:ZRecursoViewModel){
+        this.props.cerrarVentanaRecursoFn(zRecursoViewModel);
     }    
 }

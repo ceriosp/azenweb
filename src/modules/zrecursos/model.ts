@@ -8,6 +8,7 @@ class ZRecursoModel
 
 class ZRecursoViewModel extends ZRecursoModel
 {
+    ctx:string;
     px:number;
     activo:boolean;
 }

@@ -1,9 +1,9 @@
 export * from './model';
 
-import ZMenuComp from './components/ZMenuComp';
+import ZMenuRoot from './components/ZMenuRoot';
 
 export 
 {
     //Components
-    ZMenuComp
+    ZMenuRoot
 }

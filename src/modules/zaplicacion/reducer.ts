@@ -29,8 +29,7 @@ import {
     ZRecursoViewModel
 } from "../zrecursos";
 
-import { ActionTypes } from './actionTypes';
-import { Action } from './actions';
+import { ActionTypes, Action } from './actionTypes';
 import * as ZAplication from './index';
 
 const initialState: ZAplication.ZAplicationState = {
@@ -43,8 +42,12 @@ const ZAplicacionReducer: Reducer<ZAplication.ZAplicationState> =
     (zaplicationState: ZAplication.ZAplicationState = initialState, action: Action): ZAplication.ZAplicationState => {
 
         switch (action.type) {
+
             case ActionTypes.DESPACHAR_RECURSO:
                 return despacharRecurso(zaplicationState, action);
+            
+            case ActionTypes.CERRAR_RECURSO:
+                return cerrarRecurso(zaplicationState, action);
 
             default:
                 return zaplicationState;
@@ -96,10 +99,7 @@ const despacharRecurso =
         
                 let newMapRecursosIndxByCtx: Map<string, ZRecursoViewModel> = new Map<string, ZRecursoViewModel>();
                 let zrecursoModelWebAlFrente: ZRecursoViewModel = null;
-        
-                let mapServices = new ZCommon.MapServices<string, ZRecursoViewModel>();        
-                let recursoAAbrirMapIndex = mapServices.getMapIndexByKey(mapRecursosIndxByCtx, zmenuItemModelActivated.ctx);        
-        
+                
                 if (mapRecursosIndxByCtx.has(ctx)) {
                     zrecursoModelWebAlFrente = mapRecursosIndxByCtx.get(ctx);
                 } else {
@@ -116,6 +116,7 @@ const despacharRecurso =
                     }
                 }
         
+                zrecursoModelWebAlFrente.ctx = zmenuItemModelActivated.ctx;
                 zrecursoModelWebAlFrente.activo = true;
                 newMapRecursosIndxByCtx.set(ctx, zrecursoModelWebAlFrente);
         
@@ -129,6 +130,23 @@ const despacharRecurso =
         
                 return {...state, mapRecursosIndxByCtx:newMapRecursosIndxByCtx} as ZAplication.ZAplicationState;
     }
+
+
+const cerrarRecurso =
+    (zaplicationState: ZAplication.ZAplicationState, action: Action): ZAplication.ZAplicationState => {
+
+        if (action.type != ActionTypes.CERRAR_RECURSO) {
+            return zaplicationState;
+        }
+
+        const { mapRecursosIndxByCtx } = zaplicationState;
+        mapRecursosIndxByCtx.delete(action.zrecursoViewModel.ctx);
+
+        let newMapRecursosIndxByCtx = new Map<string, ZRecursoViewModel>(mapRecursosIndxByCtx);
+
+        return {...zaplicationState, mapRecursosIndxByCtx:newMapRecursosIndxByCtx};
+    }
+
 
 export {
     ZAplicacionReducer

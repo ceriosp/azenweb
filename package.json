@@ -31,7 +31,8 @@
     "bootstrap",
     "webpack",
     "hotreload",
-    "watch"
+    "watch",
+    "reselect"
   ],
   "author": "Jose Ubaldo Carvajal, Carlos Eduardo Ríos Pineda",
   "license": "ISC",
@@ -63,6 +64,7 @@
     "es6-promise": "^4.1.0",
     "es6-string-polyfills": "^1.0.0",
     "isomorphic-fetch": "^2.2.1",
+    "map.prototype.tojson": "^0.1.3",
     "react-bootstrap": "^0.31.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"

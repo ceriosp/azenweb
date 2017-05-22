@@ -24,7 +24,7 @@ interface OwnProps {
 
 import ZMenuItem from './ZMenuItem';
 
-export default class ZMenuComp extends React.Component<OwnProps, undefined>
+export default class ZMenuRoot extends React.Component<OwnProps, undefined>
 {
     constructor(props: OwnProps) {
         super(props);

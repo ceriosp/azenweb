@@ -3,11 +3,12 @@ export * from './model';
 export * from './actionTypes';
 export * from './actions';
 export * from './reducer';
+export * from './selectors';
 
-import {ZAplicacionComponent} from './components/ZAplicacionComp';
+import {ZAplicacionRootComponent} from './components/ZAplicacionRoot';
 
 export 
 {
     //Components
-    ZAplicacionComponent
+    ZAplicacionRootComponent
 }

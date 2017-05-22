@@ -8,14 +8,13 @@ import {
 } from "../zrecursos";
 
 interface State
-{
+{    
     zaplicationState:ZAplicationState
 }
 
 interface ZAplicationState
 {
-    zmenuModel:ZMenuModel;
-
+    zmenuModel:ZMenuModel;    
     mapRecursosIndxByCtx: Map<string, ZRecursoViewModel>;
     recursosActivosIds:Array<string>;
 }
