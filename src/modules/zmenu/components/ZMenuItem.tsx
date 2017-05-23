@@ -35,9 +35,9 @@ export default class ZMenuItem extends React.Component<OwnProps, OwnState>
 {
     private opcionesHijasDePrimerNivel: Array<any> = [];
 
-    constructor(props: OwnProps) {        
+    constructor(props: OwnProps) {
 
-        super(props);        
+        super(props);
 
         this.state = {
             isMenuOpen: false
@@ -57,31 +57,29 @@ export default class ZMenuItem extends React.Component<OwnProps, OwnState>
             parentLevel
         } = this.props;
 
-        let {
-            isMenuOpen
-        } = this.state;
-         
+        let { isMenuOpen } = this.state;
+
         let menuStyle = {
             marginLeft: (parentLevel * 10) + "px"
         } as CSSProperties;
 
-        let opcionMenu = <MenuItem 
-                            href="#" 
-                            style={menuStyle}
-                            onClick={this.despacharOpcionMenu}>
-                                {zmenuItemModel.nom}
-                        </MenuItem>;
+        let opcionMenu = <MenuItem
+            href="#"
+            style={menuStyle}            
+            onClick={this.despacharOpcionMenu}>
+            {zmenuItemModel.nom}
+        </MenuItem>;
 
         if (this.esMenuContenedor()) {
             this.loadOpcionesHijasDePrimerNivel();
             opcionMenu =
                 (
-                    <NavDropdown 
+                    <NavDropdown
                         onClick={this.createSubMenu}
                         style={menuStyle}
-                        eventKey={2} 
-                        title={zmenuItemModel.nom} 
-                        id={"z_menuitem_" + zmenuItemModel.ctx}>                        
+                        eventKey={2}
+                        title={zmenuItemModel.nom}
+                        id={"z_menuitem_" + zmenuItemModel.ctx}>
                         {this.opcionesHijasDePrimerNivel}
                     </NavDropdown>
                 );
@@ -93,7 +91,7 @@ export default class ZMenuItem extends React.Component<OwnProps, OwnState>
 
     loadOpcionesHijasDePrimerNivel() {
 
-        if(!this.state.isMenuOpen){
+        if (!this.state.isMenuOpen) {
             return;
         }
 
@@ -106,11 +104,11 @@ export default class ZMenuItem extends React.Component<OwnProps, OwnState>
         this.opcionesHijasDePrimerNivel = (
             zmenuItemModel.menu.map((zmenuItemModelChild: ZMenuItemModel, index: number) => {
                 let key: string = zmenuItemModelChild.ctx;
-                return  (
-                   <ZMenuItem 
+                return (
+                    <ZMenuItem
                         key={key}
                         zmenuItemModel={zmenuItemModelChild}
-                        parentLevel={parentLevel+1}
+                        parentLevel={parentLevel + 1}
                         despacharOpcionMenuFn={this.props.despacharOpcionMenuFn}
                     />
                 );
@@ -123,7 +121,7 @@ export default class ZMenuItem extends React.Component<OwnProps, OwnState>
         return zmenuItemModel.menu && zmenuItemModel.menu.length > 0;
     }
 
-    createSubMenu() {        
+    createSubMenu() {
         this.setState({
             isMenuOpen: true
         } as OwnState);
@@ -133,17 +131,17 @@ export default class ZMenuItem extends React.Component<OwnProps, OwnState>
 
         document.body.click();// .getElementById("azen-evt-container").click();
 
-        if(this.isMobileDevice()){
+        if (this.isMobileDevice()) {
             console.log("is mobile");
             (document.querySelector("button.navbar-toggle") as HTMLElement).click();
         }
-        
-        if(this.props.despacharOpcionMenuFn){
+
+        if (this.props.despacharOpcionMenuFn) {
             this.props.despacharOpcionMenuFn(this.props.zmenuItemModel);
         }
     }
 
-    isMobileDevice(){
+    isMobileDevice() {
         return window.innerWidth <= 500;
     }
 }

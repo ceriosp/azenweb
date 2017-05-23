@@ -65,7 +65,7 @@ export default class ZCampo extends React.Component<OwnProperties, void>
             return <ZTextbox zCampoModel={zCampoModel}/>;
         }    
         else if(claseInd == Recursos.Constants.CAMPO_RADIO && esCheckboxAislado){
-            return <ZCheckbox zCampoModel={zCampoModel}/>;
+            return <div style={{marginBottom:"10px"}}><ZCheckbox zCampoModel={zCampoModel}/> </div>;
         }            
         else if(claseInd == Recursos.Constants.CAMPO_RADIO){
             return <ZRadio zCampoModel={zCampoModel}/>;

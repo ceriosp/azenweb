@@ -13,6 +13,7 @@ import {Button} from 'react-bootstrap';
 import "es6-string-polyfills";
 require('es6-object-assign').polyfill();
 require('map.prototype.tojson');
+const { default: immutableStateInvariant } = require('redux-immutable-state-invariant');
 
 import * as ZAplicacion from "./modules/zaplicacion";
 
@@ -48,17 +49,25 @@ const initialState: ZAplicacion.State = {
 }
 
 //let store = createStore(combinedReducers, initialState);
-
-
-declare let window:any;
-let devtools: any = window['devToolsExtension'] ? window['devToolsExtension']() : (f:any)=>f;
-let middleware = redux.applyMiddleware(thunk);
-const store: any = middleware(devtools(redux.createStore))(combinedReducers, initialState);
-
 declare const __DEV__: boolean; // from webpack
 if (__DEV__) {
     console.log("dev stage");
 }
+
+
+const middlewares  = __DEV__ ?
+  [immutableStateInvariant(), thunk] :
+  [thunk];
+
+declare let window:any;
+let devtools: any = window['devToolsExtension'] ? window['devToolsExtension']() : (f:any)=>f;
+let middleware = redux.applyMiddleware(...middlewares);
+const store: any = middleware(devtools(redux.createStore))(combinedReducers, initialState);
+
+const store2 = createStore(
+  combinedReducers,
+  redux.applyMiddleware(...middlewares)
+);
 
 ReactDOM.render(
     <Provider store={store}>

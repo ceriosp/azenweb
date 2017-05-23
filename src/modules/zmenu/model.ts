@@ -1,5 +1,9 @@
 class ZMenuModel
 {
+    constructor(){
+        this.menu = new Array<ZMenuItemModel>();
+    }
+
     menu: Array<ZMenuItemModel>;
 }
 

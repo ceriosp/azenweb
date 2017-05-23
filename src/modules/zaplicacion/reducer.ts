@@ -45,7 +45,7 @@ const ZAplicacionReducer: Reducer<ZAplication.ZAplicationState> =
 
             case ActionTypes.DESPACHAR_RECURSO:
                 return despacharRecurso(zaplicationState, action);
-            
+
             case ActionTypes.CERRAR_RECURSO:
                 return cerrarRecurso(zaplicationState, action);
 
@@ -55,25 +55,23 @@ const ZAplicacionReducer: Reducer<ZAplication.ZAplicationState> =
     }
 
 const despacharRecurso =
-    (state: ZAplication.ZAplicationState = initialState, action: Action): ZAplication.ZAplicationState => {
+    (zaplicationState: ZAplication.ZAplicationState, action: Action): ZAplication.ZAplicationState => {
 
         if (action.type != ActionTypes.DESPACHAR_RECURSO) {
-            return state;
+            return zaplicationState;
         }
-/*
-        let { mapRecursosIndxByCtx } = state;
         let zmenuItemModelActivated: ZMenuItemModel = action.zmenuItemModel
+
+        let { mapRecursosIndxByCtx } = zaplicationState;
         let { ctx } = zmenuItemModelActivated;
 
-        mapRecursosIndxByCtx.forEach((zrecursoAAgregar: ZRecursoViewModel, recursoIdAAgregar: string) => {
-            zrecursoAAgregar.activo = false;
-        });
+        let newMapRecursosIndxByCtx: Map<string, ZRecursoViewModel> = new Map<string, ZRecursoViewModel>();
+        let zrecursoModelWebAlFrente: ZRecursoViewModel = null;
 
         if (mapRecursosIndxByCtx.has(ctx)) {
-            mapRecursosIndxByCtx.get(ctx).activo = true;
+            zrecursoModelWebAlFrente = mapRecursosIndxByCtx.get(ctx);
         } else {
-            let zrecursoModelWebAlFrente: ZRecursoViewModel = null;
-            switch (ctx) {                
+            switch (ctx) {
                 case "A14E":
                     zrecursoModelWebAlFrente = JSON.parse(recursosList[0]) as ZRecursoViewModel;
                     break;
@@ -84,51 +82,21 @@ const despacharRecurso =
                     zrecursoModelWebAlFrente = JSON.parse(recursosList[2]) as ZRecursoViewModel;
                     break;
             }
-            zrecursoModelWebAlFrente.activo = true;
-            mapRecursosIndxByCtx.set(ctx, zrecursoModelWebAlFrente);
         }
-        
 
-        return {...state, mapRecursosIndxByCtx:mapRecursosIndxByCtx};
-*/
-        
-                let zmenuItemModelActivated: ZMenuItemModel = action.zmenuItemModel        
-        
-                let { mapRecursosIndxByCtx } = state;
-                let {ctx} = zmenuItemModelActivated;
-        
-                let newMapRecursosIndxByCtx: Map<string, ZRecursoViewModel> = new Map<string, ZRecursoViewModel>();
-                let zrecursoModelWebAlFrente: ZRecursoViewModel = null;
-                
-                if (mapRecursosIndxByCtx.has(ctx)) {
-                    zrecursoModelWebAlFrente = mapRecursosIndxByCtx.get(ctx);
-                } else {
-                    switch (ctx) {
-                        case "A14E":
-                            zrecursoModelWebAlFrente = JSON.parse(recursosList[0]) as ZRecursoViewModel;
-                            break;
-                        case "A142":
-                            zrecursoModelWebAlFrente = JSON.parse(recursosList[1]) as ZRecursoViewModel;
-                            break;
-                        case "A13D":
-                            zrecursoModelWebAlFrente = JSON.parse(recursosList[2]) as ZRecursoViewModel;
-                            break;
-                    }
-                }
-        
-                zrecursoModelWebAlFrente.ctx = zmenuItemModelActivated.ctx;
-                zrecursoModelWebAlFrente.activo = true;
-                newMapRecursosIndxByCtx.set(ctx, zrecursoModelWebAlFrente);
-        
-                mapRecursosIndxByCtx.forEach((zrecursoAAgregar: ZRecursoViewModel, recursoIdAAgregar: string) => {            
-                    if(recursoIdAAgregar == ctx){
-                        return true;
-                    }
-                    zrecursoAAgregar.activo = false;
-                    newMapRecursosIndxByCtx.set(recursoIdAAgregar, zrecursoAAgregar);
-                });
-        
-                return {...state, mapRecursosIndxByCtx:newMapRecursosIndxByCtx} as ZAplication.ZAplicationState;
+        zrecursoModelWebAlFrente.ctx = zmenuItemModelActivated.ctx;
+        zrecursoModelWebAlFrente.activo = true;
+        newMapRecursosIndxByCtx.set(ctx, zrecursoModelWebAlFrente);
+
+        mapRecursosIndxByCtx.forEach((zrecursoAAgregar: ZRecursoViewModel, recursoIdAAgregar: string) => {
+            if (recursoIdAAgregar == ctx) {
+                return true;
+            }
+            zrecursoAAgregar.activo = false;
+            newMapRecursosIndxByCtx.set(recursoIdAAgregar, zrecursoAAgregar);
+        });        
+
+        return { ...zaplicationState, mapRecursosIndxByCtx: newMapRecursosIndxByCtx } as ZAplication.ZAplicationState;
     }
 
 
@@ -139,12 +107,29 @@ const cerrarRecurso =
             return zaplicationState;
         }
 
-        const { mapRecursosIndxByCtx } = zaplicationState;
-        mapRecursosIndxByCtx.delete(action.zrecursoViewModel.ctx);
+        const mapServices = new ZCommon.MapServices<string, ZRecursoViewModel>();
+
+        const {ctx} = action.zrecursoViewModel;
+        let ctxToActivate:string = null;
+        const { mapRecursosIndxByCtx } = zaplicationState;        
+        
+        const recursoToDeleteIndex = mapServices.getMapIndexByKey(mapRecursosIndxByCtx, ctx);
+        if(recursoToDeleteIndex >= 0)
+        {
+            let zrecursoAActivar:ZRecursoViewModel = mapServices.getElementByIndex(mapRecursosIndxByCtx, recursoToDeleteIndex+1);
+            if(zrecursoAActivar != null){
+                ctxToActivate = zrecursoAActivar.ctx;
+            }
+        }
+        
+        mapRecursosIndxByCtx.delete(ctx);
 
         let newMapRecursosIndxByCtx = new Map<string, ZRecursoViewModel>(mapRecursosIndxByCtx);
+        if(ctxToActivate != null){
+            newMapRecursosIndxByCtx.get(ctxToActivate).activo = true;
+        }
 
-        return {...zaplicationState, mapRecursosIndxByCtx:newMapRecursosIndxByCtx};
+        return { ...zaplicationState, mapRecursosIndxByCtx: newMapRecursosIndxByCtx };
     }
 
 
