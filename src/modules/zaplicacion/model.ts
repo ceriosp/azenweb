@@ -15,7 +15,8 @@ interface State
 interface ZAplicationState
 {
     zmenuModel:ZMenuModel;    
-    mapRecursosIndxByCtx: Map<string, ZRecursoViewModel>;
+    mapRecursosIndxById: Map<string, ZRecursoViewModel>;
+    mapRecursosZoomIndxById: Map<string, ZRecursoViewModel>;
     recursosActivosIds:Array<string>;
 }
 

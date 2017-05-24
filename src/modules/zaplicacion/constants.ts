@@ -1,11 +1,6 @@
-
-import {
-    DESPACHAR_RECURSO
-} from './actionTypes';
-
-class Constants
+namespace Constants
 {
-    public static readonly NAME:"zaplicacion";
+    const NAME:string = "zaplicacion";
 }
 
 export 

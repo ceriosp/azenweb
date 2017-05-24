@@ -9,69 +9,79 @@ import {
 } from 'react-bootstrap';
 
 import {
-    ZCampoModel
+    ZRecursoViewModel,
+    ZCampoModel,
+    ZReferenciaViewModel
 } from "../model";
 
-import {
-    Recursos
-} from "../constants";
+import * as ZRecursos from "../../zrecursos";
 
 import ZTextbox from './ZTextbox';
 import ZRadio from './ZRadio';
 import ZCheckbox from './ZCheckbox';
 import ZRegion from './ZRegion';
+import ZCampoZoom from './ZCampoZoom';
 
-interface OwnProperties
-{
-    zCampoModel:ZCampoModel;    
+interface OwnProperties {
+    zrecursoViewModel: ZRecursoViewModel;
+    zcampoModel: ZCampoModel;
+    esCheckboxAislado?: boolean; //Si es checkbox group = true, sirve un sólo checkbox = false. Ej. ter.noActivo        
+    zcamposEnRegionList?: Array<ZCampoModel>;
 
-    esCheckboxAislado?:boolean; //Si es checkbox group = true, sirve un sólo checkbox = false. Ej. ter.noActivo    
-    zcamposEnRegionList?:Array<ZCampoModel>;    
+    onCampoZoomClick?: (zreferenciaViewModel: ZReferenciaViewModel) => void
 }
 
 export default class ZCampo extends React.Component<OwnProperties, void>
-{    
-    private isRegion:boolean = false;
+{
+    private isRegion: boolean = false;
 
-    render(){
-        const { zCampoModel, esCheckboxAislado } = this.props;        
-        const claseInd:number = zCampoModel.claseInd;
+    render() {
+        const { zcampoModel, esCheckboxAislado } = this.props;
+        const claseInd: number = zcampoModel.claseInd;
 
         let zCampoComponent = this.getZCampoComponent();
-        
+
         return (
-                <div>
-                    {zCampoComponent}
-                </div>            
+            <div>
+                {zCampoComponent}
+            </div>
         );
     }
 
-    getZCampoComponent():any
-    {
-        const { 
-            zCampoModel, 
+    getZCampoComponent(): any {
+        const {
+            zrecursoViewModel,
+            zcampoModel,
             esCheckboxAislado,
             zcamposEnRegionList } = this.props;
 
-        const claseInd:number = zCampoModel.claseInd;
-        const esRegion:boolean = zcamposEnRegionList && zcamposEnRegionList.length > 0;        
+        const { claseInd, nomCmp } = zcampoModel;
 
-        if(esRegion){
+        const esRegion: boolean = zcamposEnRegionList && zcamposEnRegionList.length > 0;
+
+        if (esRegion) {
             return <ZRegion
-                        zCampoRegion={zCampoModel} 
-                        zcamposEnRegionList={zcamposEnRegionList} />;
+                zrecursoViewModel={zrecursoViewModel}
+                zCampoRegion={zcampoModel}
+                zcamposEnRegionList={zcamposEnRegionList} />;
         }
-        else if(claseInd == Recursos.Constants.CAMPO_TEXTO){
-            return <ZTextbox zCampoModel={zCampoModel}/>;
-        }    
-        else if(claseInd == Recursos.Constants.CAMPO_RADIO && esCheckboxAislado){
-            return <div style={{marginBottom:"10px"}}><ZCheckbox zCampoModel={zCampoModel}/> </div>;
-        }            
-        else if(claseInd == Recursos.Constants.CAMPO_RADIO){
-            return <ZRadio zCampoModel={zCampoModel}/>;
+        else if (zrecursoViewModel.mapZoomsIdsIndxByCampo.has(zcampoModel.nomCmp)) {
+            return <ZCampoZoom
+                zcampoModel={zcampoModel}
+                zreferenciaViewModel={zrecursoViewModel.mapZoomsIdsIndxByCampo.get(zcampoModel.nomCmp)}
+                onCampoZoomClick={this.props.onCampoZoomClick} />
         }
-        else if(claseInd == Recursos.Constants.CAMPO_CHECKBOX){
-            return <ZCheckbox zCampoModel={zCampoModel}/>;
-        }        
-    }    
+        else if (claseInd == ZRecursos.Constants.CAMPO_TEXTO) {
+            return <ZTextbox zCampoModel={zcampoModel} />;
+        }
+        else if (claseInd == ZRecursos.Constants.CAMPO_RADIO && esCheckboxAislado) {
+            return <div style={{ marginBottom: "10px" }}><ZCheckbox zCampoModel={zcampoModel} /> </div>;
+        }
+        else if (claseInd == ZRecursos.Constants.CAMPO_RADIO) {
+            return <ZRadio zCampoModel={zcampoModel} />;
+        }
+        else if (claseInd == ZRecursos.Constants.CAMPO_CHECKBOX) {
+            return <ZCheckbox zCampoModel={zcampoModel} />;
+        }
+    }
 }

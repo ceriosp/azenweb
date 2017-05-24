@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 import {
+    ZMenuModel,
     ZMenuItemModel
 } from "../zmenu";
 
@@ -12,13 +13,15 @@ import {
     ZAplicationState,    
 } from './model';
 
-namespace selectors
+namespace Selectors
 {
-    export const mapRecursosIndxByCtxSelector = (zaplicationState:ZAplicationState):Map<string, ZRecursoViewModel> => zaplicationState.mapRecursosIndxByCtx;
 
+    export const zmenuModelSelector = (zaplicationState:ZAplicationState):ZMenuModel => zaplicationState.zmenuModel;
 
-    export const recursosCtxListSelector = createSelector(
-        [mapRecursosIndxByCtxSelector],
+    export const mapRecursosIndxByIdSelector = (zaplicationState:ZAplicationState):Map<string, ZRecursoViewModel> => zaplicationState.mapRecursosIndxById;
+
+    export const recursosIdListSelector = createSelector(
+        [mapRecursosIndxByIdSelector],
         (mapRecursosIndxByCtx:Map<string, ZRecursoViewModel>) => {
 
             let recursosCtxList = new Array<string>();
@@ -35,7 +38,7 @@ namespace selectors
 
 
 export {
-    selectors
+    Selectors
 }
 
 

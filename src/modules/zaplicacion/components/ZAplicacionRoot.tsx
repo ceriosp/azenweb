@@ -23,8 +23,7 @@ import {
     ZRecursoViewModel
 } from "../../zrecursos";
 
-import * as ZAplication from '../index';
-
+import * as ZAplicacion from '../index';
 
 interface OwnProps {
 
@@ -32,23 +31,23 @@ interface OwnProps {
 
 interface ConnectedState {
     zmenuModel:ZMenuModel;
-    mapRecursosActivos: Map<string, ZRecursoViewModel>;
-    recursosActivosCtxList:Array<string>
+    mapRecursosActivosIndxById: Map<string, ZRecursoViewModel>;
+    recursosActivosIdList:Array<string>
 }
-const mapStateToProps = (state:ZAplication.State, ownProps:OwnProps) : ConnectedState => ({
-    zmenuModel:state.zaplicationState.zmenuModel,
-    mapRecursosActivos:state.zaplicationState.mapRecursosIndxByCtx,
-    recursosActivosCtxList:ZAplication.selectors.recursosCtxListSelector(state.zaplicationState)
+const mapStateToProps = (state:ZAplicacion.State, ownProps:OwnProps) : ConnectedState => ({
+    zmenuModel:ZAplicacion.Selectors.zmenuModelSelector(state.zaplicationState),
+    mapRecursosActivosIndxById:ZAplicacion.Selectors.mapRecursosIndxByIdSelector(state.zaplicationState),
+    recursosActivosIdList:ZAplicacion.Selectors.recursosIdListSelector(state.zaplicationState)
 });
 
 interface ConnectedDispatch
 {
-    desparcharRecurso: (zmenuItemModel: ZMenuItemModel) => void;
-    cerrarRecurso:(zrecursoViewModel: ZRecursoViewModel) => void    
+    despacharOpcionMenu: (zmenuItemModel: ZMenuItemModel) => void;
+    cerrarVentanaRecurso:(zrecursoViewModel: ZRecursoViewModel) => void    
 }
-const mapDispatchToProps = (dispatch: redux.Dispatch<ZAplication.ZAplicationState>): ConnectedDispatch => ({
-  desparcharRecurso:(zmenuItemModel: ZMenuItemModel) => dispatch(ZAplication.Actions.desparcharRecurso(zmenuItemModel)),
-  cerrarRecurso:(zrecursoViewModel: ZRecursoViewModel) => dispatch(ZAplication.Actions.cerrarRecurso(zrecursoViewModel)),
+const mapDispatchToProps = (dispatch: redux.Dispatch<ZAplicacion.ZAplicationState>): ConnectedDispatch => ({
+  despacharOpcionMenu:(zmenuItemModel: ZMenuItemModel) => dispatch(ZAplicacion.Actions.despacharOpcionMenu(zmenuItemModel)),
+  cerrarVentanaRecurso:(zrecursoViewModel: ZRecursoViewModel) => dispatch(ZAplicacion.Actions.cerrarVentanaRecurso(zrecursoViewModel)),
 });
 
 
@@ -57,8 +56,9 @@ class ZAplicacionRoot extends React.Component<ConnectedDispatch & ConnectedState
     constructor(props: ConnectedDispatch & ConnectedState & OwnProps) {
         super(props);
 
-        this.mostrarRecurso = this.mostrarRecurso.bind(this);
+        this.despacharOpcionMenu = this.despacharOpcionMenu.bind(this);
         this.cerrarVentanaRecurso = this.cerrarVentanaRecurso.bind(this);
+        this.onCampoZoomClick = this.onCampoZoomClick.bind(this);
     }
 
     render() {
@@ -69,24 +69,30 @@ class ZAplicacionRoot extends React.Component<ConnectedDispatch & ConnectedState
                 <ZMenuRoot 
                     zmenuModel={this.props.zmenuModel}
                     index={0}
-                    despacharOpcionMenuFn={this.mostrarRecurso} />
+                    despacharOpcionMenuFn={this.despacharOpcionMenu} />
 
                 <ZAreaTrabajo 
-                    mapRecursosActivos={this.props.mapRecursosActivos}
-                    recursosActivosCtxList={this.props.recursosActivosCtxList}
-                    cerrarVentanaRecursoFn={this.cerrarVentanaRecurso} />
+                    mapRecursosActivosIndxById={this.props.mapRecursosActivosIndxById}
+                    recursosActivosIdList={this.props.recursosActivosIdList}
+                    cerrarVentanaRecursoFn={this.cerrarVentanaRecurso}
+                    onCampoZoomClick={this.onCampoZoomClick} />
 
             </div>
         );
     }
 
 
-    mostrarRecurso(zmenuItemModel: ZMenuItemModel) {
-        this.props.desparcharRecurso(zmenuItemModel);
+    despacharOpcionMenu(zmenuItemModel: ZMenuItemModel) {
+        this.props.despacharOpcionMenu(zmenuItemModel);
     }
 
     cerrarVentanaRecurso(zRecursoViewModel:ZRecursoViewModel) {
-        this.props.cerrarRecurso(zRecursoViewModel);
+        this.props.cerrarVentanaRecurso(zRecursoViewModel);
+    }
+
+    onCampoZoomClick(zreferenciaViewModel: ZRecursos.ZReferenciaViewModel){
+        console.log("en aplicacion root");
+        console.log(zreferenciaViewModel);
     }
 }
 

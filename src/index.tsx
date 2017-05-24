@@ -43,7 +43,8 @@ import {
 const initialState: ZAplicacion.State = {    
     zaplicationState:{        
         zmenuModel: JSON.parse(menuJSON) as ZMenuModel,
-        mapRecursosIndxByCtx: new Map<string, ZRecursoViewModel>(),
+        mapRecursosIndxById: new Map<string, ZRecursoViewModel>(),
+        mapRecursosZoomIndxById:new Map<string, ZRecursoViewModel>(),
         recursosActivosIds: Array<string>()        
     }
 }

@@ -1,3 +1,5 @@
+import {Constants} from './constants';
+
 class ZRecursoModel
 {
     ven: ZVentanaModel;
@@ -11,6 +13,8 @@ class ZRecursoViewModel extends ZRecursoModel
     ctx:string;
     px:number;
     activo:boolean;
+    tipoRecurso:Constants.TipoRecurso;
+    mapZoomsIdsIndxByCampo:Map<string, ZReferenciaViewModel>;
 }
 
 class ZVentanaModel
@@ -72,6 +76,11 @@ class ZReferenciaModel
     public descs: Array<ZDescripcionReferenciaModel>;    
 }
 
+class ZReferenciaViewModel extends ZReferenciaModel
+{
+    public nomCmp:string;
+}
+
 class ZDescripcionReferenciaModel
 {
     etq: string;
@@ -97,6 +106,7 @@ export
     ZCampoModel,
     ZDominioModel,
     ZReferenciaModel,
+    ZReferenciaViewModel,
     ZJunturaModel,
     ZDescripcionReferenciaModel
 }

@@ -3,36 +3,27 @@ import * as ReactDOM from 'react-dom';
 
 import {
     Row,    
-    Col,
-    Form,
-    Modal,
-    Glyphicon,
-    Navbar,
-    Nav,
-    MenuItem,
-    NavItem,
-    NavDropdown,
-    Button
+    Col
 } from 'react-bootstrap';
 
+import * as ZRecursos from "../../zrecursos";
 import {
     //Models
     ZRecursoModel,
     ZRecursoViewModel,
 
-    //Constants
-    Recursos,
-
     //Components
-    ZRecurso
+    ZVentanaRecurso
+
 } from "../../zrecursos";
 
 
 interface OwnProps
 {
-    mapRecursosActivos: Map<string, ZRecursoViewModel>;
-    recursosActivosCtxList:Array<string>,
-    cerrarVentanaRecursoFn:(zRecursoViewModel:ZRecursoViewModel)=>void
+    mapRecursosActivosIndxById: Map<string, ZRecursoViewModel>;
+    recursosActivosIdList:Array<string>,
+    cerrarVentanaRecursoFn:(zRecursoViewModel:ZRecursoViewModel)=>void;
+    onCampoZoomClick?: (zreferenciaViewModel:  ZRecursos.ZReferenciaViewModel) => void 
 }
 
 export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
@@ -69,13 +60,14 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
                                 this.divAreaTrabajo = divTrabajo;
                             }}>
                             {
-                               this.props.recursosActivosCtxList.map((recursoId:string, index:number)=>{
+                               this.props.recursosActivosIdList.map((recursoId:string, index:number)=>{
                                         return (
-                                            <ZRecurso    
+                                            <ZVentanaRecurso    
                                                 key={recursoId}                     
-                                                zRecursoViewModel={this.props.mapRecursosActivos.get(recursoId)}                                                 
+                                                zRecursoViewModel={this.props.mapRecursosActivosIndxById.get(recursoId)}                                                 
                                                 onHideFn={this.cerrarVentanaRecurso}
-                                                container={this.divAreaTrabajo}/>
+                                                container={this.divAreaTrabajo}
+                                                onCampoZoomClick={this.props.onCampoZoomClick}/>
                                         );
                                 })
                             }                   

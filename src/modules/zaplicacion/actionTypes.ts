@@ -6,16 +6,25 @@ import {
     ZMenuItemModel
 } from "../zmenu";
 
-export type DESPACHAR_RECURSO = "zaplicacion/DESPACHAR_RECURSO";
-export type CERRAR_RECURSO = "zaplicacion/CERRAR_RECURSO";
+namespace ActionTypes
+{
+    export namespace Types
+    {
+        export type DESPACHAR_OPCION_MENU = "zaplicacion/DESPACHAR_OPCION_MENU";
+        export type CERRAR_VENTANA_RECURSO = "zaplicacion/CERRAR_VENTANA_RECURSO";
+    }
 
-export class ActionTypes {
-    public static readonly DESPACHAR_RECURSO: DESPACHAR_RECURSO = "zaplicacion/DESPACHAR_RECURSO";
-    public static readonly CERRAR_RECURSO: CERRAR_RECURSO = "zaplicacion/CERRAR_RECURSO";
+    export const DESPACHAR_OPCION_MENU: Types.DESPACHAR_OPCION_MENU = "zaplicacion/DESPACHAR_OPCION_MENU";
+    export const CERRAR_VENTANA_RECURSO: Types.CERRAR_VENTANA_RECURSO = "zaplicacion/CERRAR_VENTANA_RECURSO";
+
+    //Action parameters
+    export type Action =
+        //UI  actions
+            { type: Types.DESPACHAR_OPCION_MENU, zmenuItemModel: ZMenuItemModel }
+        |   { type: Types.CERRAR_VENTANA_RECURSO, zrecursoViewModel: ZRecursoViewModel }    
 }
 
-//Action parameters
-export type Action =
-    //UI  actions
-    { type: DESPACHAR_RECURSO, zmenuItemModel: ZMenuItemModel }
-    | { type: CERRAR_RECURSO, zrecursoViewModel: ZRecursoViewModel }
+export
+{
+    ActionTypes
+}

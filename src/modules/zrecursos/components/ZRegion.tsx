@@ -6,12 +6,11 @@ import {
     Checkbox
 } from 'react-bootstrap';
 
-import {
-    Recursos
-} from "../constants";
+import * as ZRecursos from "../../zrecursos";
 
 import {
-    ZCampoModel
+    ZCampoModel,
+    ZRecursoViewModel
 } from "../model";
 
 import ZTextbox from './ZTextbox';
@@ -20,6 +19,7 @@ import ZCheckbox from './ZCheckbox';
 
 interface OwnProperties
 {
+    zrecursoViewModel:ZRecursoViewModel;
     zCampoRegion:ZCampoModel;
     zcamposEnRegionList:Array<ZCampoModel>
 }
@@ -34,14 +34,16 @@ export default class ZRegion extends React.Component<OwnProperties, void>
 
     render(){
 
-        const { zCampoRegion, zcamposEnRegionList } = this.props;
+        const { zrecursoViewModel, zCampoRegion, zcamposEnRegionList } = this.props;
         
         return (            
             <Panel header={zCampoRegion.etq.replace("@R", "")} bsStyle="info">                
                 {zcamposEnRegionList.map((zcampoEnRegion:ZCampoModel, index:number) => {
                     return (
                         <Col xs={12} sm={4} md={4} key={index}>
-                            <ZCampo zCampoModel={zcampoEnRegion}/>
+                            <ZCampo 
+                                zrecursoViewModel={zrecursoViewModel}
+                                zcampoModel={zcampoEnRegion}/>
                         </Col>
                     );
                 })}

@@ -9,19 +9,23 @@ import {
 
 import {    
     ActionTypes,
-    Action,
 } from './actionTypes';
 
 
-export namespace Actions
+namespace Actions
 {
-    export const desparcharRecurso = (zmenuItemModel: ZMenuItemModel):Action => ({
-        type:ActionTypes.DESPACHAR_RECURSO,
+    export const despacharOpcionMenu = (zmenuItemModel: ZMenuItemModel):ActionTypes.Action => ({
+        type:ActionTypes.DESPACHAR_OPCION_MENU,
         zmenuItemModel:zmenuItemModel
     });
 
-    export const cerrarRecurso = (zRecursoViewModel: ZRecursoViewModel):Action => ({
-        type:ActionTypes.CERRAR_RECURSO,
+    export const cerrarVentanaRecurso = (zRecursoViewModel: ZRecursoViewModel):ActionTypes.Action => ({
+        type:ActionTypes.CERRAR_VENTANA_RECURSO,
         zrecursoViewModel:zRecursoViewModel
     });    
+}
+
+export
+{
+    Actions
 }

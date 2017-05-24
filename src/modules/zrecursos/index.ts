@@ -1,10 +1,11 @@
 export * from './constants';
 export * from './model';
+export * from './services';
 
-import ZRecurso from './components/ZRecurso';
+import ZVentanaRecurso from './components/ZVentanaRecurso';
 
 export 
 {
     //Components
-    ZRecurso,
+    ZVentanaRecurso,
 }
