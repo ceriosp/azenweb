@@ -1,23 +1,13 @@
 import { createSelector } from 'reselect';
 
 import {
-    ZMenuModel,
-    ZMenuItemModel
-} from "../zmenu";
+    ZRecursoViewModel,
 
-import {
-    ZRecursoViewModel
-} from "../zrecursos";
+    ZAplicationState,
+} from "../zcommon";
 
-import {     
-    ZAplicationState,    
-} from './model';
-
-namespace Selectors
-{
-
-    export const zmenuModelSelector = (zaplicationState:ZAplicationState):ZMenuModel => zaplicationState.zmenuModel;
-
+export namespace Selectors
+{    
     export const mapRecursosIndxByIdSelector = (zaplicationState:ZAplicationState):Map<string, ZRecursoViewModel> => zaplicationState.mapRecursosIndxById;
 
     export const recursosIdListSelector = createSelector(
@@ -35,11 +25,5 @@ namespace Selectors
         }
     );
 }
-
-
-export {
-    Selectors
-}
-
 
 

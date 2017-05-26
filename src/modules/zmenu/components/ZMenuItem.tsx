@@ -18,7 +18,8 @@ import {
 import {
     ZMenuModel,
     ZMenuItemModel
-} from '../model';
+} from '../../zcommon';
+
 
 interface OwnProps {
     zmenuItemModel: ZMenuItemModel

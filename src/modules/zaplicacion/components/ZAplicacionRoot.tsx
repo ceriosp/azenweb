@@ -3,25 +3,23 @@ import * as redux from 'redux';
 import {Action} from 'redux';
 import { connect } from 'react-redux';
 
+import * as ZCommon from '../../zcommon';
+import {
+    ZRecursoModel,
+    ZRecursoViewModel,
+    ZReferenciaViewModel,
+
+    ZAplicationState
+} from "../../zcommon";
 
 import
 {
-    //Models
-    ZMenuModel,
-    ZMenuItemModel,    
-
     //Components
-    ZMenuRoot    
+    ZMenuRootComponent    
 
 } from "../../zmenu";
 
 import ZAreaTrabajo from './ZAreaTrabajo';
-
-import * as ZRecursos from '../../zrecursos/';
-import {
-    ZRecursoModel,
-    ZRecursoViewModel
-} from "../../zrecursos";
 
 import * as ZAplicacion from '../index';
 
@@ -30,23 +28,19 @@ interface OwnProps {
 }
 
 interface ConnectedState {
-    zmenuModel:ZMenuModel;
     mapRecursosActivosIndxById: Map<string, ZRecursoViewModel>;
     recursosActivosIdList:Array<string>
 }
-const mapStateToProps = (state:ZAplicacion.State, ownProps:OwnProps) : ConnectedState => ({
-    zmenuModel:ZAplicacion.Selectors.zmenuModelSelector(state.zaplicationState),
+const mapStateToProps = (state:ZCommon.State, ownProps:OwnProps) : ConnectedState => ({
     mapRecursosActivosIndxById:ZAplicacion.Selectors.mapRecursosIndxByIdSelector(state.zaplicationState),
     recursosActivosIdList:ZAplicacion.Selectors.recursosIdListSelector(state.zaplicationState)
 });
 
 interface ConnectedDispatch
 {
-    despacharOpcionMenu: (zmenuItemModel: ZMenuItemModel) => void;
     cerrarVentanaRecurso:(zrecursoViewModel: ZRecursoViewModel) => void    
 }
-const mapDispatchToProps = (dispatch: redux.Dispatch<ZAplicacion.ZAplicationState>): ConnectedDispatch => ({
-  despacharOpcionMenu:(zmenuItemModel: ZMenuItemModel) => dispatch(ZAplicacion.Actions.despacharOpcionMenu(zmenuItemModel)),
+const mapDispatchToProps = (dispatch: redux.Dispatch<ZAplicationState>): ConnectedDispatch => ({ 
   cerrarVentanaRecurso:(zrecursoViewModel: ZRecursoViewModel) => dispatch(ZAplicacion.Actions.cerrarVentanaRecurso(zrecursoViewModel)),
 });
 
@@ -56,7 +50,6 @@ class ZAplicacionRoot extends React.Component<ConnectedDispatch & ConnectedState
     constructor(props: ConnectedDispatch & ConnectedState & OwnProps) {
         super(props);
 
-        this.despacharOpcionMenu = this.despacharOpcionMenu.bind(this);
         this.cerrarVentanaRecurso = this.cerrarVentanaRecurso.bind(this);
         this.onCampoZoomClick = this.onCampoZoomClick.bind(this);
     }
@@ -66,10 +59,7 @@ class ZAplicacionRoot extends React.Component<ConnectedDispatch & ConnectedState
         return (
             <div className="container">
 
-                <ZMenuRoot 
-                    zmenuModel={this.props.zmenuModel}
-                    index={0}
-                    despacharOpcionMenuFn={this.despacharOpcionMenu} />
+                <ZMenuRootComponent index={0}/>
 
                 <ZAreaTrabajo 
                     mapRecursosActivosIndxById={this.props.mapRecursosActivosIndxById}
@@ -81,16 +71,11 @@ class ZAplicacionRoot extends React.Component<ConnectedDispatch & ConnectedState
         );
     }
 
-
-    despacharOpcionMenu(zmenuItemModel: ZMenuItemModel) {
-        this.props.despacharOpcionMenu(zmenuItemModel);
-    }
-
     cerrarVentanaRecurso(zRecursoViewModel:ZRecursoViewModel) {
         this.props.cerrarVentanaRecurso(zRecursoViewModel);
     }
 
-    onCampoZoomClick(zreferenciaViewModel: ZRecursos.ZReferenciaViewModel){
+    onCampoZoomClick(zreferenciaViewModel: ZReferenciaViewModel){
         console.log("en aplicacion root");
         console.log(zreferenciaViewModel);
     }
@@ -99,7 +84,7 @@ class ZAplicacionRoot extends React.Component<ConnectedDispatch & ConnectedState
 const ZAplicacionRootComponent: React.ComponentClass<OwnProps> = 
 connect<ConnectedState, ConnectedDispatch, OwnProps>(mapStateToProps, mapDispatchToProps)(ZAplicacionRoot);
 
-export 
+export
 {
     ZAplicacionRootComponent
 }

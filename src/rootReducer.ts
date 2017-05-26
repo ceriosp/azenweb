@@ -1,10 +1,16 @@
-import { combineReducers } from 'redux';
+import { combineReducers, Reducer } from 'redux';
 
+import * as ZMenu from './modules/zmenu/';
 import * as ZAplicacion from './modules/zaplicacion/';
 
-export const combinedReducers = combineReducers({
+import {
+    State
+} from './modules/zcommon';
+
+export const combinedReducers: Reducer<State> = combineReducers<State>({
 
     //la llave de la propiedad debe estar en el State general de la aplicación. Ej:
     //State = { zaplicationState : {} }
-    zaplicationState: ZAplicacion.ZAplicacionReducer
+    zmenuState:ZMenu.Reducers.zmenuReducer,
+    zaplicationState: ZAplicacion.Reducers.ZAplicacionReducer
 });

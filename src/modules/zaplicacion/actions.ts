@@ -1,21 +1,19 @@
 import {
-    ZMenuItemModel
-} from "../zmenu";
+    ZMenuItemModel,
+    ZRecursoViewModel
+} from "../zcommon";
 
-
-import {    
-    ZRecursoViewModel,
-} from '../zrecursos';
+import * as ZMenu from '../zmenu';
 
 import {    
     ActionTypes,
 } from './actionTypes';
 
 
-namespace Actions
+export namespace Actions
 {
     export const despacharOpcionMenu = (zmenuItemModel: ZMenuItemModel):ActionTypes.Action => ({
-        type:ActionTypes.DESPACHAR_OPCION_MENU,
+        type: ZMenu.ActionTypes.DESPACHAR_OPCION_MENU,
         zmenuItemModel:zmenuItemModel
     });
 
@@ -23,9 +21,4 @@ namespace Actions
         type:ActionTypes.CERRAR_VENTANA_RECURSO,
         zrecursoViewModel:zRecursoViewModel
     });    
-}
-
-export
-{
-    Actions
 }

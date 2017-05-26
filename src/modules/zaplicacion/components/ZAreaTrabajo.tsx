@@ -6,24 +6,23 @@ import {
     Col
 } from 'react-bootstrap';
 
-import * as ZRecursos from "../../zrecursos";
 import {
-    //Models
     ZRecursoModel,
     ZRecursoViewModel,
+    ZReferenciaViewModel
+} from "../../zcommon";
 
+import {    
     //Components
     ZVentanaRecurso
-
 } from "../../zrecursos";
-
 
 interface OwnProps
 {
     mapRecursosActivosIndxById: Map<string, ZRecursoViewModel>;
     recursosActivosIdList:Array<string>,
     cerrarVentanaRecursoFn:(zRecursoViewModel:ZRecursoViewModel)=>void;
-    onCampoZoomClick?: (zreferenciaViewModel:  ZRecursos.ZReferenciaViewModel) => void 
+    onCampoZoomClick?: (zreferenciaViewModel:  ZReferenciaViewModel) => void 
 }
 
 export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>

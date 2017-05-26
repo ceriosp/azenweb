@@ -1,8 +1,7 @@
 export * from './constants';
-export * from './model';
 export * from './actionTypes';
 export * from './actions';
-export * from './reducer';
+export * from './reducers';
 export * from './selectors';
 
 import {ZAplicacionRootComponent} from './components/ZAplicacionRoot';

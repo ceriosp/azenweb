@@ -16,9 +16,7 @@ import {
     ZRecursoViewModel,
     ZRecursoModel,
     ZCampoModel
-} from "../model";
-
-import * as ZRecursos from "../../zrecursos";
+} from "../../zcommon";
 
 import ZCampo from './ZCampo';
 

@@ -8,11 +8,13 @@ import {
     ControlLabel
 } from 'react-bootstrap';
 
+
+import * as ZCommon from "../../zcommon";
 import {
     ZRecursoViewModel,
     ZCampoModel,
     ZReferenciaViewModel
-} from "../model";
+} from "../../zcommon";
 
 import * as ZRecursos from "../../zrecursos";
 
@@ -71,16 +73,16 @@ export default class ZCampo extends React.Component<OwnProperties, void>
                 zreferenciaViewModel={zrecursoViewModel.mapZoomsIdsIndxByCampo.get(zcampoModel.nomCmp)}
                 onCampoZoomClick={this.props.onCampoZoomClick} />
         }
-        else if (claseInd == ZRecursos.Constants.CAMPO_TEXTO) {
+        else if (claseInd == ZCommon.Constants.CAMPO_TEXTO) {
             return <ZTextbox zCampoModel={zcampoModel} />;
         }
-        else if (claseInd == ZRecursos.Constants.CAMPO_RADIO && esCheckboxAislado) {
+        else if (claseInd == ZCommon.Constants.CAMPO_RADIO && esCheckboxAislado) {
             return <div style={{ marginBottom: "10px" }}><ZCheckbox zCampoModel={zcampoModel} /> </div>;
         }
-        else if (claseInd == ZRecursos.Constants.CAMPO_RADIO) {
+        else if (claseInd == ZCommon.Constants.CAMPO_RADIO) {
             return <ZRadio zCampoModel={zcampoModel} />;
         }
-        else if (claseInd == ZRecursos.Constants.CAMPO_CHECKBOX) {
+        else if (claseInd == ZCommon.Constants.CAMPO_CHECKBOX) {
             return <ZCheckbox zCampoModel={zcampoModel} />;
         }
     }

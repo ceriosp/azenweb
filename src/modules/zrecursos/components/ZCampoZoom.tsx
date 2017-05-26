@@ -14,7 +14,7 @@ import {
     ZCampoModel,
     ZReferenciaModel,
     ZReferenciaViewModel
-} from "../model";
+} from "../../zcommon";
 
 interface OwnProps {
     zcampoModel: ZCampoModel;

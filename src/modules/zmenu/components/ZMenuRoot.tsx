@@ -1,4 +1,7 @@
+import * as redux from 'redux';
 import * as React from 'react';
+
+import { connect } from 'react-redux';
 
 import {
     Row,
@@ -11,22 +14,41 @@ import {
     NavDropdown
 } from 'react-bootstrap';
 
+import * as ZMenu from '../index';
+
 import {
     ZMenuModel,
-    ZMenuItemModel
-} from '../model';
+    ZMenuItemModel,
+
+    State,
+    ZMenuState,
+
+} from '../../zcommon';
 
 interface OwnProps {
-    zmenuModel: ZMenuModel
     index: number;
-    despacharOpcionMenuFn?: (zmenuItemModel: ZMenuItemModel) => void
 }
+
+interface ConnectedState {
+    zmenuModel:ZMenuModel
+}
+const mapStateToProps = (state:State, ownProps:OwnProps) : ConnectedState => ({
+    zmenuModel:ZMenu.selectors.zmenuModelSelector(state.zmenuState),
+});
+
+interface ConnectedDispatch
+{
+    despacharOpcionMenu: (zmenuItemModel: ZMenuItemModel) => void;
+}
+const mapDispatchToProps = (dispatch: redux.Dispatch<ZMenuState>): ConnectedDispatch => ({
+  despacharOpcionMenu:(zmenuItemModel: ZMenuItemModel) => dispatch(ZMenu .Actions.despacharOpcionMenu(zmenuItemModel))
+});
 
 import ZMenuItem from './ZMenuItem';
 
-export default class ZMenuRoot extends React.Component<OwnProps, undefined>
+class ZMenuRoot extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    constructor(props: OwnProps) {
+    constructor(props:OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
         this.despacharOpcionMenu = this.despacharOpcionMenu.bind(this);
@@ -75,8 +97,9 @@ export default class ZMenuRoot extends React.Component<OwnProps, undefined>
     }
 
     despacharOpcionMenu(zmenuItemModel: ZMenuItemModel) {
-        if (this.props.despacharOpcionMenuFn) {
-            this.props.despacharOpcionMenuFn(zmenuItemModel);
-        }
+        this.props.despacharOpcionMenu(zmenuItemModel);
     }
 }
+
+export const ZMenuRootComponent: React.ComponentClass<OwnProps> = 
+connect<ConnectedState, ConnectedDispatch, OwnProps>(mapStateToProps, mapDispatchToProps)(ZMenuRoot);

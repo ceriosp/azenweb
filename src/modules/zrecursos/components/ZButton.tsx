@@ -4,16 +4,15 @@ import {
     Button
 } from 'react-bootstrap';
 
+import * as ZCommon from "../../zcommon";
 import {
     ZCampoModel
-} from "../model";
-
-import * as ZRecursos from "../../zrecursos";
+} from "../../zcommon";
 
 interface OwnProperties
 {
     zCampoModel:ZCampoModel;
-    tipoBoton: ZRecursos.Constants.TipoBoton
+    tipoBoton: ZCommon.Constants.TipoBoton
 }
 
 export default class ZButton extends React.Component<OwnProperties, void>
@@ -25,17 +24,17 @@ export default class ZButton extends React.Component<OwnProperties, void>
 
         let etq:string = ""; 
 
-        if(tipoBoton == ZRecursos.Constants.TipoBoton.Comando){
+        if(tipoBoton == ZCommon.Constants.TipoBoton.Comando){
             etq = zCampoModel.etq.replace("@@B", "");
         }
-        else if(tipoBoton == ZRecursos.Constants.TipoBoton.Linea){
+        else if(tipoBoton == ZCommon.Constants.TipoBoton.Linea){
             etq = zCampoModel.etq.replace("@L", "");
         }
 
         etq = etq.replace("{", "").replace("}", "");
 
         {            
-            (tipoBoton == ZRecursos.Constants.TipoBoton.Comando)
+            (tipoBoton == ZCommon.Constants.TipoBoton.Comando)
                 ?            
                     zButtonComponent = 
                             <Button bsStyle="primary">

@@ -5,11 +5,10 @@ import {
     Button
 } from 'react-bootstrap';
 
+import * as ZCommon from "../../zcommon";
 import {
     ZCampoModel
-} from "../model";
-
-import * as ZRecursos from "../../zrecursos";
+} from "../../zcommon";
 
 import ZButton from './ZButton';
 
@@ -29,14 +28,14 @@ export default class ZBarraBotones extends React.Component<OwnProperties, void>
                     {zcamposBotonesComandosList.map((zcampoBoton:ZCampoModel, index:number)=>{
                         return  <ZButton    key={index} 
                                             zCampoModel={zcampoBoton} 
-                                            tipoBoton={ZRecursos.Constants.TipoBoton.Comando}/>
+                                            tipoBoton={ZCommon.Constants.TipoBoton.Comando}/>
                     })}
                 </ButtonToolbar>                
                 <ButtonToolbar>
                     {zcamposBotonesLineaList.map((zcampoBoton:ZCampoModel, index:number)=>{
                         return  <ZButton    key={index} 
                                             zCampoModel={zcampoBoton} 
-                                            tipoBoton={ZRecursos.Constants.TipoBoton.Linea}/>
+                                            tipoBoton={ZCommon.Constants.TipoBoton.Linea}/>
 
                     })}
                 </ButtonToolbar>            

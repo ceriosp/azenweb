@@ -2,7 +2,8 @@ import {
     ZRecursoViewModel,
     ZReferenciaModel,
     ZReferenciaViewModel
-} from './model';
+} from './../zcommon';
+
 namespace Services
 {
     export class ZRecursoServices

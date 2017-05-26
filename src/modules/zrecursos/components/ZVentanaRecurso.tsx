@@ -14,13 +14,14 @@ import {
     Panel 
 } from 'react-bootstrap';
 
+import * as ZCommon from "../../zcommon";
 import {
     ZRecursoViewModel,
     ZRecursoModel,
     ZCampoModel,    
-} from "../model";
+    ZReferenciaViewModel,
 
-import * as ZRecursos from "../../zrecursos";
+} from "../../zcommon";
 
 import ZBarraBotones from './ZBarraBotones';
 import ZRecursoBasico from './ZRecursoBasico';
@@ -31,7 +32,7 @@ interface OwnProperties
     onHideFn?:(zRecursoViewModel:ZRecursoViewModel)=>void;
     container?:any;
     zRecursoViewModel:ZRecursoViewModel;
-    onCampoZoomClick?: (zreferenciaViewModel:  ZRecursos.ZReferenciaViewModel) => void 
+    onCampoZoomClick?: (zreferenciaViewModel:  ZReferenciaViewModel) => void 
 }
 
 export default class ZVentanaRecurso extends React.Component<OwnProperties, void>
@@ -54,7 +55,7 @@ export default class ZVentanaRecurso extends React.Component<OwnProperties, void
 
         let modalStyle:any = new Object();
         
-        if(this.props.zRecursoViewModel.activo){
+        if(this.props.zRecursoViewModel.visible){
             modalStyle = {
                 display:"block",
                 top:"50px"               
@@ -131,10 +132,10 @@ export default class ZVentanaRecurso extends React.Component<OwnProperties, void
 
         switch(this.zRecursoViewModel.tipoRecurso){
 
-            case ZRecursos.Constants.TipoRecurso.Basico:
+            case ZCommon.Constants.TipoRecurso.Basico:
                 return <ZRecursoBasico zRecursoViewModel={this.zRecursoViewModel} onCampoZoomClick={this.props.onCampoZoomClick}/>;
 
-            case ZRecursos.Constants.TipoRecurso.Zoom:
+            case ZCommon.Constants.TipoRecurso.Zoom:
                 return <ZRecursoZoom zRecursoViewModel={this.zRecursoViewModel}/>;
         }
     }

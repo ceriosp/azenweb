@@ -11,11 +11,12 @@ import * as ZRecursos from "../../zrecursos";
 import {
     ZCampoModel,
     ZRecursoViewModel
-} from "../model";
+} from "../../zcommon";
 
 import ZTextbox from './ZTextbox';
 import ZRadio from './ZRadio';
 import ZCheckbox from './ZCheckbox';
+import ZCampo from './ZCampo';
 
 interface OwnProperties
 {
@@ -23,8 +24,6 @@ interface OwnProperties
     zCampoRegion:ZCampoModel;
     zcamposEnRegionList:Array<ZCampoModel>
 }
-
-import ZCampo from './ZCampo';
 
 export default class ZRegion extends React.Component<OwnProperties, void>
 {

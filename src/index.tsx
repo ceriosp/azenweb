@@ -13,12 +13,17 @@ import {Button} from 'react-bootstrap';
 import "es6-string-polyfills";
 require('es6-object-assign').polyfill();
 require('map.prototype.tojson');
+require('es6-map/implement');
 const { default: immutableStateInvariant } = require('redux-immutable-state-invariant');
-
-import * as ZAplicacion from "./modules/zaplicacion";
 
 import {combinedReducers} from './rootReducer';
 
+import {
+    ZMenuModel,
+    ZMenuItemModel
+} from './modules/zcommon';
+
+import * as ZAplicacion from "./modules/zaplicacion";
 import {
 
     //Components
@@ -26,23 +31,21 @@ import {
 
 } from "./modules/zaplicacion";
 
-import {
-
-    //Models
-    ZMenuModel,
-
-} from "./modules/zmenu";
 
 import {
 
     //Models
     ZRecursoViewModel,
 
-} from "./modules/zrecursos";
+    State
 
-const initialState: ZAplicacion.State = {    
-    zaplicationState:{        
+} from "./modules/zcommon";
+
+const initialState: State = {    
+    zmenuState:{
         zmenuModel: JSON.parse(menuJSON) as ZMenuModel,
+    },
+    zaplicationState:{                
         mapRecursosIndxById: new Map<string, ZRecursoViewModel>(),
         mapRecursosZoomIndxById:new Map<string, ZRecursoViewModel>(),
         recursosActivosIds: Array<string>()        

@@ -11,20 +11,20 @@ import {
     Panel 
 } from 'react-bootstrap';
 
+import * as ZCommon from "../../zcommon";
 import {
     ZRecursoViewModel,
     ZRecursoModel,
-    ZCampoModel
-} from "../model";
-
-import * as ZRecursos from "../../zrecursos";
+    ZCampoModel,
+    ZReferenciaViewModel,
+} from "../../zcommon";
 
 import ZCampo from './ZCampo';
 
 interface OwnProperties
 {    
     zRecursoViewModel:ZRecursoViewModel;
-    onCampoZoomClick?: (zreferenciaViewModel:  ZRecursos.ZReferenciaViewModel) => void 
+    onCampoZoomClick?: (zreferenciaViewModel:  ZReferenciaViewModel) => void 
 }
 
 export default class ZRecursoBasico extends React.Component<OwnProperties, void>
@@ -72,7 +72,7 @@ export default class ZRecursoBasico extends React.Component<OwnProperties, void>
         {
             zcamposEnRegionActualList = this.getCamposEnRegion(zcampoAPintar, index);
         } 
-        else if(zcampoAPintar.claseInd == ZRecursos.Constants.CAMPO_RADIO){            
+        else if(zcampoAPintar.claseInd == ZCommon.Constants.CAMPO_RADIO){            
             esCheckboxAislado = true;
         }                
 

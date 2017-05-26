@@ -7,7 +7,7 @@ import {
 
 import {
     ZCampoModel
-} from "../model";
+} from "../../zcommon";
 
 interface OwnProperties
 {

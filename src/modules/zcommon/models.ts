@@ -1,4 +1,24 @@
-import {Constants} from './constants';
+import {
+    Constants
+} from './constants';
+
+class ZMenuState
+{
+    zmenuModel: ZMenuModel;
+}
+
+interface State
+{    
+    zmenuState:ZMenuState;
+    zaplicationState:ZAplicationState;
+}
+
+interface ZAplicationState
+{        
+    mapRecursosIndxById: Map<string, ZRecursoViewModel>;
+    mapRecursosZoomIndxById: Map<string, ZRecursoViewModel>;
+    recursosActivosIds:Array<string>;
+}
 
 class ZRecursoModel
 {
@@ -12,7 +32,7 @@ class ZRecursoViewModel extends ZRecursoModel
 {
     ctx:string;
     px:number;
-    activo:boolean;
+    visible:boolean;
     tipoRecurso:Constants.TipoRecurso;
     mapZoomsIdsIndxByCampo:Map<string, ZReferenciaViewModel>;
 }
@@ -98,8 +118,33 @@ class ZJunturaModel
     public nomCmp: string;
 }
 
+
+class ZMenuModel
+{
+    constructor(){
+        this.menu = new Array<ZMenuItemModel>();
+    }
+
+    menu: Array<ZMenuItemModel>;
+}
+
+class ZMenuItemModel
+{
+    nom: string;
+    desc: string;
+    ctx: string;
+    desh: number;
+    menu: Array<ZMenuItemModel>;
+}
+
 export 
 { 
+    //State
+    State,
+    ZAplicationState,
+    ZMenuState,
+
+    //Recursos
     ZRecursoModel,
     ZRecursoViewModel,
     ZVentanaModel,
@@ -108,5 +153,9 @@ export
     ZReferenciaModel,
     ZReferenciaViewModel,
     ZJunturaModel,
-    ZDescripcionReferenciaModel
+    ZDescripcionReferenciaModel,
+
+    //Menu
+    ZMenuModel,
+    ZMenuItemModel,
 }
