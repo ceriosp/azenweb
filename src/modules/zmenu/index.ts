@@ -4,10 +4,10 @@ export * from './actions';
 export * from './reducers';
 export * from './selectors';
 
-import {ZMenuRootComponent} from './components/ZMenuRoot';
+import {ZMenuRoot} from './components/ZMenuRoot';
 
 export 
 {
     //Components
-    ZMenuRootComponent
+    ZMenuRoot
 }

@@ -10,36 +10,40 @@ import {
     ZCampoModel
 } from "../../zcommon";
 
-import ZButton from './ZButton';
+import ZCampoButton from './ZCampoButton';
 
-interface OwnProperties
-{
-    zcamposBotonesComandosList:Array<ZCampoModel>,
-    zcamposBotonesLineaList:Array<ZCampoModel>
+interface OwnProperties {
+    zcamposBotonesComandosList: Array<ZCampoModel>,
+    zcamposBotonesLineaList: Array<ZCampoModel>
 }
 
 export default class ZBarraBotones extends React.Component<OwnProperties, void>
 {
-    render(){
-        const { zcamposBotonesComandosList, zcamposBotonesLineaList} = this.props;
+    render() {
+        const { zcamposBotonesComandosList, zcamposBotonesLineaList } = this.props;
         return (
             <div className="well">
                 <ButtonToolbar>
-                    {zcamposBotonesComandosList.map((zcampoBoton:ZCampoModel, index:number)=>{
-                        return  <ZButton    key={index} 
-                                            zCampoModel={zcampoBoton} 
-                                            tipoBoton={ZCommon.Constants.TipoBoton.Comando}/>
+                    {zcamposBotonesComandosList.map((zcampoBoton: ZCampoModel, index: number) => {
+                        return (
+                            <ZCampoButton
+                                key={index}
+                                zCampoModel={zcampoBoton}
+                                tipoBoton={ZCommon.Constants.TipoBoton.Comando} />
+                        );
                     })}
-                </ButtonToolbar>                
+                </ButtonToolbar>
                 <ButtonToolbar>
-                    {zcamposBotonesLineaList.map((zcampoBoton:ZCampoModel, index:number)=>{
-                        return  <ZButton    key={index} 
-                                            zCampoModel={zcampoBoton} 
-                                            tipoBoton={ZCommon.Constants.TipoBoton.Linea}/>
-
+                    {zcamposBotonesLineaList.map((zcampoBoton: ZCampoModel, index: number) => {
+                        return (
+                            <ZCampoButton
+                                key={index}
+                                zCampoModel={zcampoBoton}
+                                tipoBoton={ZCommon.Constants.TipoBoton.Linea} />
+                        );
                     })}
-                </ButtonToolbar>            
-            </div>            
+                </ButtonToolbar>
+            </div>
         );
     }
 }

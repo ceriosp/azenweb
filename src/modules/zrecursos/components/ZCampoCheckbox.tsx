@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import {
-    Radio
+    Col,
+    Checkbox
 } from 'react-bootstrap';
 
 import {
@@ -13,16 +14,16 @@ interface OwnProperties
     zCampoModel:ZCampoModel;
 }
 
-export default class ZRadio extends React.Component<OwnProperties, void>
+export default class ZCampoCheckbox extends React.Component<OwnProperties, void>
 {
     render(){
 
         const { zCampoModel } = this.props;
 
         return (            
-                <Radio name={zCampoModel.nomCmp} inline>
-                    {zCampoModel.etq.replace("( )", "")}
-                </Radio>
+                <Checkbox>
+                    {zCampoModel.etq.replace("[ ]", "")}
+                </Checkbox>
         );
     }
 }

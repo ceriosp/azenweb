@@ -27,6 +27,7 @@ import {
 
 interface OwnProps {
     index: number;
+    solaparse:boolean;
 }
 
 interface ConnectedState {
@@ -46,7 +47,7 @@ const mapDispatchToProps = (dispatch: redux.Dispatch<ZMenuState>): ConnectedDisp
 
 import ZMenuItem from './ZMenuItem';
 
-class ZMenuRoot extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
+class ZMenuRootComponent extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
     constructor(props:OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
@@ -58,13 +59,15 @@ class ZMenuRoot extends React.Component<OwnProps & ConnectedState & ConnectedDis
 
         let { zmenuModel, index } = this.props;
 
+        console.log("sobreponerse-menu: " + this.props.solaparse);
+
         return (
             <Row>
                 <Col md={12}>
                     <Navbar
                         collapseOnSelect
                         staticTop                        
-                        style={{ zIndex: 1000000 }}>
+                        style={ this.props.solaparse ? { zIndex: 1000000 } : null}>
                         <Navbar.Header>
                             <Navbar.Brand>
                                 <a href="#">Azen contabilidad</a>
@@ -101,5 +104,5 @@ class ZMenuRoot extends React.Component<OwnProps & ConnectedState & ConnectedDis
     }
 }
 
-export const ZMenuRootComponent: React.ComponentClass<OwnProps> = 
-connect<ConnectedState, ConnectedDispatch, OwnProps>(mapStateToProps, mapDispatchToProps)(ZMenuRoot);
+export const ZMenuRoot: React.ComponentClass<OwnProps> = 
+connect<ConnectedState, ConnectedDispatch, OwnProps>(mapStateToProps, mapDispatchToProps)(ZMenuRootComponent);

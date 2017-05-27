@@ -20,6 +20,7 @@ import {
 interface OwnProps
 {
     mapRecursosActivosIndxById: Map<string, ZRecursoViewModel>;
+    mapRecursosZoomActivosIndxById: Map<string, ZRecursoViewModel>;
     recursosActivosIdList:Array<string>,
     cerrarVentanaRecursoFn:(zRecursoViewModel:ZRecursoViewModel)=>void;
     onCampoZoomClick?: (zreferenciaViewModel:  ZReferenciaViewModel) => void 
@@ -63,8 +64,8 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
                                         return (
                                             <ZVentanaRecurso    
                                                 key={recursoId}                     
-                                                zRecursoViewModel={this.props.mapRecursosActivosIndxById.get(recursoId)}                                                 
-                                                onHideFn={this.cerrarVentanaRecurso}
+                                                zRecursoViewModel={this.props.mapRecursosActivosIndxById.get(recursoId) ? this.props.mapRecursosActivosIndxById.get(recursoId) : this.props.mapRecursosZoomActivosIndxById.get(recursoId)}
+                                                onCerrarVentanaFn={this.cerrarVentanaRecurso}
                                                 container={this.divAreaTrabajo}
                                                 onCampoZoomClick={this.props.onCampoZoomClick}/>
                                         );

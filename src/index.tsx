@@ -27,7 +27,7 @@ import * as ZAplicacion from "./modules/zaplicacion";
 import {
 
     //Components
-    ZAplicacionRootComponent,
+    ZAplicacionRoot,
 
 } from "./modules/zaplicacion";
 
@@ -36,7 +36,6 @@ import {
 
     //Models
     ZRecursoViewModel,
-
     State
 
 } from "./modules/zcommon";
@@ -45,7 +44,8 @@ const initialState: State = {
     zmenuState:{
         zmenuModel: JSON.parse(menuJSON) as ZMenuModel,
     },
-    zaplicationState:{                
+    zaplicationState:{         
+        mostrandoVentanaModal:false,       
         mapRecursosIndxById: new Map<string, ZRecursoViewModel>(),
         mapRecursosZoomIndxById:new Map<string, ZRecursoViewModel>(),
         recursosActivosIds: Array<string>()        
@@ -75,7 +75,7 @@ const store2 = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        <ZAplicacionRootComponent/>
+        <ZAplicacionRoot/>
     </Provider>,
     document.getElementById("app-container")
 );

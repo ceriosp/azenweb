@@ -18,10 +18,10 @@ import {
 
 import * as ZRecursos from "../../zrecursos";
 
-import ZTextbox from './ZTextbox';
-import ZRadio from './ZRadio';
-import ZCheckbox from './ZCheckbox';
-import ZRegion from './ZRegion';
+import ZCampoTextbox from './ZCampoTextbox';
+import ZCampoRadio from './ZCampoRadio';
+import ZCampoCheckbox from './ZCampoCheckbox';
+import ZCampoRegion from './ZCampoRegion';
 import ZCampoZoom from './ZCampoZoom';
 
 interface OwnProperties {
@@ -62,28 +62,35 @@ export default class ZCampo extends React.Component<OwnProperties, void>
         const esRegion: boolean = zcamposEnRegionList && zcamposEnRegionList.length > 0;
 
         if (esRegion) {
-            return <ZRegion
-                zrecursoViewModel={zrecursoViewModel}
-                zCampoRegion={zcampoModel}
-                zcamposEnRegionList={zcamposEnRegionList} />;
+            return (
+                <ZCampoRegion
+                    zrecursoViewModel={zrecursoViewModel}
+                    zCampoRegion={zcampoModel}
+                    zcamposEnRegionList={zcamposEnRegionList} />
+            );
         }
         else if (zrecursoViewModel.mapZoomsIdsIndxByCampo.has(zcampoModel.nomCmp)) {
-            return <ZCampoZoom
-                zcampoModel={zcampoModel}
-                zreferenciaViewModel={zrecursoViewModel.mapZoomsIdsIndxByCampo.get(zcampoModel.nomCmp)}
-                onCampoZoomClick={this.props.onCampoZoomClick} />
+            return (
+                <ZCampoZoom
+                    zcampoModel={zcampoModel}
+                    zreferenciaViewModel={zrecursoViewModel.mapZoomsIdsIndxByCampo.get(zcampoModel.nomCmp)}
+                    onCampoZoomClick={this.props.onCampoZoomClick} />
+            );
         }
         else if (claseInd == ZCommon.Constants.CAMPO_TEXTO) {
-            return <ZTextbox zCampoModel={zcampoModel} />;
+            return <ZCampoTextbox zCampoModel={zcampoModel} />;
         }
         else if (claseInd == ZCommon.Constants.CAMPO_RADIO && esCheckboxAislado) {
-            return <div style={{ marginBottom: "10px" }}><ZCheckbox zCampoModel={zcampoModel} /> </div>;
+            return (
+                <div style={{ marginBottom: "10px" }}>
+                    <ZCampoCheckbox zCampoModel={zcampoModel} /> 
+                </div>);
         }
         else if (claseInd == ZCommon.Constants.CAMPO_RADIO) {
-            return <ZRadio zCampoModel={zcampoModel} />;
+            return <ZCampoRadio zCampoModel={zcampoModel} />;
         }
         else if (claseInd == ZCommon.Constants.CAMPO_CHECKBOX) {
-            return <ZCheckbox zCampoModel={zcampoModel} />;
+            return <ZCampoCheckbox zCampoModel={zcampoModel} />;
         }
     }
 }

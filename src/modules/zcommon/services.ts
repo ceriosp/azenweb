@@ -1,10 +1,11 @@
+
 class MapServices<TKey, TValue>
 {
     public getMapIndexByKey(map: Map<TKey, TValue>, key: TKey) {
 
         if (!map) {
             return -1;
-        }
+        }        
 
         if (!map.has(key)) {
             return -1;

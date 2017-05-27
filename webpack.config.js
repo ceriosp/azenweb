@@ -17,7 +17,7 @@ module.exports = {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: [".ts", ".tsx", ".js", ".json"]
     },
-    
+
     module: {
         rules: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
@@ -39,22 +39,22 @@ module.exports = {
         ]
     },
 
-    plugins: [      
+    plugins: [
 
         new webpack.DefinePlugin({
             __DEV__: true
         }),
 
-        new LiveReloadPlugin({appendScriptTag: true})
-/*
-        new CompressionPlugin({
-            asset: "[path].gz[query]",
-            algorithm: "gzip",
-            test: /\.js$|\.css$|\.html$/,
-            threshold: 10240,
-            minRatio: 0.8
-        })        
-*/        
+        new LiveReloadPlugin({ appendScriptTag: true })
+        /*
+                new CompressionPlugin({
+                    asset: "[path].gz[query]",
+                    algorithm: "gzip",
+                    test: /\.js$|\.css$|\.html$/,
+                    threshold: 10240,
+                    minRatio: 0.8
+                })        
+        */
     ],
 
     // When importing a module whose path matches one of the following, just
@@ -64,5 +64,5 @@ module.exports = {
     externals: {
         "react": "React",
         "react-dom": "ReactDOM"
-    }
+    },
 };

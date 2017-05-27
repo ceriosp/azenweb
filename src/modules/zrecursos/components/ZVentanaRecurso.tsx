@@ -6,137 +6,130 @@ import {
 } from 'react';
 
 import {
-    Row,    
+    Row,
     Col,
     Form,
-    Button, 
+    Button,
     Modal,
-    Panel 
+    Panel
 } from 'react-bootstrap';
 
 import * as ZCommon from "../../zcommon";
 import {
     ZRecursoViewModel,
-    ZRecursoModel,
-    ZCampoModel,    
+    ZCampoModel,
     ZReferenciaViewModel,
 
 } from "../../zcommon";
 
 import ZBarraBotones from './ZBarraBotones';
-import ZRecursoBasico from './ZRecursoBasico';
-import ZRecursoZoom from './ZRecursoZoom';
+import ZVentanaRecursoBasico from './ZVentanaRecursoBasico';
+import ZVentanaRecursoZoom from './ZVentanaRecursoZoom';
 
-interface OwnProperties
-{    
-    onHideFn?:(zRecursoViewModel:ZRecursoViewModel)=>void;
-    container?:any;
-    zRecursoViewModel:ZRecursoViewModel;
-    onCampoZoomClick?: (zreferenciaViewModel:  ZReferenciaViewModel) => void 
+interface OwnProperties {
+    onCerrarVentanaFn?: (zRecursoViewModel: ZRecursoViewModel) => void;
+    container?: any;
+    zRecursoViewModel: ZRecursoViewModel;
+    onCampoZoomClick?: (zreferenciaViewModel: ZReferenciaViewModel) => void
 }
 
 export default class ZVentanaRecurso extends React.Component<OwnProperties, void>
 {
-    private zRecursoViewModel:ZRecursoViewModel;
-
+    private zRecursoViewModel: ZRecursoViewModel;
     private zcamposBotonesComandos: Array<ZCampoModel> = [];
-    private zcamposBotonesLineaList: Array<ZCampoModel> = [];        
+    private zcamposBotonesLineaList: Array<ZCampoModel> = [];
+    private modalCSSProperties: CSSProperties = new Object();
 
-    constructor(props:OwnProperties){        
+    constructor(props: OwnProperties) {
         super(props);
         console.log("constructor ventana recurso " + this.props.zRecursoViewModel.ven.nomTbl);
 
         this.cerrarVentana = this.cerrarVentana.bind(this);
     }
-    
-    render(){        
 
-        this.renderInitialize();
+    render() {
 
-        let modalStyle:any = new Object();
-        
-        if(this.props.zRecursoViewModel.visible){
-            modalStyle = {
-                display:"block",
-                top:"50px"               
-            } as CSSProperties;
-        }else{
-            modalStyle = {
-                display:"none",
-            } as CSSProperties;
-        }
+        this.initializeRender();
+        this.initializeCSSModalStyle();        
 
-        this.zRecursoViewModel = this.props.zRecursoViewModel;     
-                
-        return (                            
-                <Modal 
-                    id={this.zRecursoViewModel.ven.nomTbl}
-                    style={modalStyle}
-                    onHide={this.cerrarVentana} 
-                    show={true}
-                    container={this.props.container}
-                    backdrop={false}
-                    enforceFocus={false}
-                    autoFocus={false}                    
-                    bsSize="large"
-                    aria-labelledby="contained-modal-title">    
-
-                    <Modal.Header className="bg-primary" closeButton>
-                        <Modal.Title>{this.zRecursoViewModel.ven.descr}</Modal.Title>
-                    </Modal.Header>
-
-                    <Modal.Body>
-                        {this.getTipoRecursoAPintar()}
-                    </Modal.Body>
-
-                    <Modal.Footer>
-                        <ZBarraBotones
-                            zcamposBotonesComandosList={this.zcamposBotonesComandos}
-                            zcamposBotonesLineaList={this.zcamposBotonesLineaList}/>
-                    </Modal.Footer>
-                </Modal>                
-
+        return (
+            <div>
+                {this.getVentanaRecursoAPintar()}
+            </div>
         );
     }
 
-    cerrarVentana(){
-        this.props.onHideFn(this.props.zRecursoViewModel);
+    cerrarVentana() {
+        this.props.onCerrarVentanaFn(this.props.zRecursoViewModel);
     }
 
-    renderInitialize(){        
+    initializeRender() {
+
+        this.zRecursoViewModel = this.props.zRecursoViewModel;
         this.zcamposBotonesComandos = new Array<ZCampoModel>();
         this.zcamposBotonesLineaList = new Array<ZCampoModel>();
         this.clasificarBotonesAPintar();
-    }    
+    }
 
-    clasificarBotonesAPintar(){
-        
-        let zcampoAPintar:ZCampoModel;
-        for(let i=0; i<this.props.zRecursoViewModel.camps.length; i++){
+    initializeCSSModalStyle() {
+
+        let top = this.zRecursoViewModel.tipoRecurso == ZCommon.Constants.TipoRecurso.Basico
+                    ? 50
+                    : 70;
+        if (this.props.zRecursoViewModel.visible) {
+            this.modalCSSProperties = {
+                display: "block",
+                top: top + "px"
+            } as CSSProperties;
+        } else {
+            this.modalCSSProperties = {
+                display: "none",
+            } as CSSProperties;
+        }
+    }
+
+    clasificarBotonesAPintar() {
+
+        let zcampoAPintar: ZCampoModel;
+        for (let i = 0; i < this.props.zRecursoViewModel.camps.length; i++) {
 
             zcampoAPintar = this.props.zRecursoViewModel.camps[i];
-            if(zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B")) //Botón
+            if (zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B")) //Botón
             {
                 this.zcamposBotonesComandos.push(zcampoAPintar);
                 continue;
             }
-            if(zcampoAPintar.etq.startsWith("@L"))//Botones línea comandos
-            {            
+            if (zcampoAPintar.etq.startsWith("@L"))//Botones línea comandos
+            {
                 this.zcamposBotonesLineaList.push(zcampoAPintar);
                 continue;
             }
         }
     }
 
-    getTipoRecursoAPintar(){
+    getVentanaRecursoAPintar() {
 
-        switch(this.zRecursoViewModel.tipoRecurso){
+        switch (this.zRecursoViewModel.tipoRecurso) {
 
             case ZCommon.Constants.TipoRecurso.Basico:
-                return <ZRecursoBasico zRecursoViewModel={this.zRecursoViewModel} onCampoZoomClick={this.props.onCampoZoomClick}/>;
+                return (
+                    <ZVentanaRecursoBasico                        
+                        onCerrarVentanaFn={this.cerrarVentana}
+                        container={this.props.container}
+                        zRecursoViewModel={this.zRecursoViewModel}
+                        onCampoZoomClick={this.props.onCampoZoomClick}
+                        cssPropertiesFromParent={this.modalCSSProperties}
+                        zcamposBotonesComandos={this.zcamposBotonesComandos}
+                        zcamposBotonesLineaList={this.zcamposBotonesLineaList} />);
 
             case ZCommon.Constants.TipoRecurso.Zoom:
-                return <ZRecursoZoom zRecursoViewModel={this.zRecursoViewModel}/>;
+               return (
+                    <ZVentanaRecursoZoom
+                        onCerrarVentanaFn={this.cerrarVentana}
+                        zRecursoViewModel={this.zRecursoViewModel}
+                        cssPropertiesFromParent={this.modalCSSProperties}
+                        zcamposBotonesComandos={this.zcamposBotonesComandos}
+                        zcamposBotonesLineaList={this.zcamposBotonesLineaList} />);                
         }
     }
 }

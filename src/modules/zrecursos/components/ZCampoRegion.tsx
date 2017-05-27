@@ -13,9 +13,6 @@ import {
     ZRecursoViewModel
 } from "../../zcommon";
 
-import ZTextbox from './ZTextbox';
-import ZRadio from './ZRadio';
-import ZCheckbox from './ZCheckbox';
 import ZCampo from './ZCampo';
 
 interface OwnProperties

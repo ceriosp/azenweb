@@ -9,19 +9,26 @@ import {
 export namespace Selectors
 {    
     export const mapRecursosIndxByIdSelector = (zaplicationState:ZAplicationState):Map<string, ZRecursoViewModel> => zaplicationState.mapRecursosIndxById;
+    export const mapRecursosZoomIndxByIdSelector = (zaplicationState:ZAplicationState):Map<string, ZRecursoViewModel> => zaplicationState.mapRecursosZoomIndxById;
 
     export const recursosIdListSelector = createSelector(
-        [mapRecursosIndxByIdSelector],
-        (mapRecursosIndxByCtx:Map<string, ZRecursoViewModel>) => {
+        [mapRecursosIndxByIdSelector, mapRecursosZoomIndxByIdSelector],
+        (mapRecursosIndxByCtx:Map<string, ZRecursoViewModel>,
+        mapRecursosZoomIndxByCtx:Map<string, ZRecursoViewModel>) => {
 
-            let recursosCtxList = new Array<string>();
+            let recursosIdsList = new Array<string>();
 
             let keysIterable: IterableIterator<string> = mapRecursosIndxByCtx.keys();      
             for (let i = 0; i < mapRecursosIndxByCtx.size; i++) {
-                recursosCtxList.push(keysIterable.next().value);
+                recursosIdsList.push(keysIterable.next().value);
             }    
 
-            return recursosCtxList;
+            keysIterable = mapRecursosZoomIndxByCtx.keys();      
+            for (let i = 0; i < mapRecursosZoomIndxByCtx.size; i++) {
+                recursosIdsList.push(keysIterable.next().value);
+            }
+
+            return recursosIdsList;
         }
     );
 }

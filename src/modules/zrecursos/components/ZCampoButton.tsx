@@ -15,7 +15,7 @@ interface OwnProperties
     tipoBoton: ZCommon.Constants.TipoBoton
 }
 
-export default class ZButton extends React.Component<OwnProperties, void>
+export default class ZCampoButton extends React.Component<OwnProperties, void>
 {
     render(){
 

@@ -14,7 +14,8 @@ interface State
 }
 
 interface ZAplicationState
-{        
+{
+    mostrandoVentanaModal:boolean;
     mapRecursosIndxById: Map<string, ZRecursoViewModel>;
     mapRecursosZoomIndxById: Map<string, ZRecursoViewModel>;
     recursosActivosIds:Array<string>;

@@ -20,83 +20,60 @@ import {
 
 import ZCampo from './ZCampo';
 
-interface OwnProperties
-{    
-    zRecursoViewModel:ZRecursoViewModel;    
+interface OwnProperties {
+    zRecursoViewModel: ZRecursoViewModel;
 }
 
 export default class ZRecursoBasico extends React.Component<OwnProperties, void>
 {
-    private zRecursoViewModel:ZRecursoViewModel;
-    private zcampoRegionEnProceso:ZCampoModel;
+    private zRecursoViewModel: ZRecursoViewModel;
+    private zcampoRegionEnProceso: ZCampoModel;
 
-    private zcamposForma:Array<ZCampoModel> = [];
+    private zcamposTitulos: Array<ZCampoModel> = [];
 
-    constructor(props:OwnProperties){        
+    constructor(props: OwnProperties) {
         super(props);
     }
-    
-    render(){
-        
-        this.renderInitialize();
 
-        let modalStyle:any = new Object();
-        
-        this.zRecursoViewModel = this.props.zRecursoViewModel;     
-        this.clasificarCamposAPintar();
-                
+    render() {
+
+        this.renderInitialize();
+        this.clasificarColumnasAPintar();
+
         return (
             <Panel>
-                <Table striped bordered condensed hover>
-                    <Form  horizontal>
-                        {this.zcamposForma.map(this.pintarZCampoEnRecurso.bind(this))}
-                    </Form>                    
-                </Table>
-            </Panel>      
+                <Form horizontal>
+                    <Table striped bordered condensed hover>
+                        <thead>
+                            <tr>
+                                {this.zcamposTitulos.map(this.pintarTitulosColumnas.bind(this))}
+                            </tr>
+                        </thead>
+                    </Table>
+                </Form>
+            </Panel>
         );
     }
 
-    renderInitialize(){
-        this.zcamposForma = new Array<ZCampoModel>();
+    renderInitialize() {
+        this.zRecursoViewModel = this.props.zRecursoViewModel;
+        this.zcamposTitulos = new Array<ZCampoModel>();
     }
 
-    pintarZCampoEnRecurso(zcampoAPintar:ZCampoModel, index:number){
+    pintarTitulosColumnas(zcampoAPintar: ZCampoModel, index: number) {
         return (
-                <Col key={index} md={6}>
-                    <th>
-                        {zcampoAPintar.etq}
-                    </th>
-                </Col>
+            <th key={index}>
+                {zcampoAPintar.etq}
+            </th>
         );
     }
 
-    clasificarCamposAPintar(){
-        
-        let zcampoAPintar:ZCampoModel;
-        for(let i=0; i<this.props.zRecursoViewModel.camps.length; i++){
+    clasificarColumnasAPintar() {
 
+        let zcampoAPintar: ZCampoModel;
+        for (let i = 0; i < this.props.zRecursoViewModel.camps.length; i++) {
             zcampoAPintar = this.props.zRecursoViewModel.camps[i];
-            if(zcampoAPintar.etq.startsWith("@@B") || zcampoAPintar.etq.startsWith("@B")) //Botón
-            {
-                continue;
-            }
-            if(zcampoAPintar.etq.startsWith("@L"))//Botones línea comandos
-            {            
-                continue;
-            }
-            if(zcampoAPintar.etq.startsWith("@@H"))//Línea horizontal
-            {                
-                continue;
-            }            
-
-            this.zcamposForma.push(zcampoAPintar);
+            this.zcamposTitulos.push(zcampoAPintar);
         }
     }
-
-    formSubmitted(e: React.SyntheticEvent<HTMLButtonElement>){
-        e.preventDefault();
-        let sourceEventButton:HTMLButtonElement = e.target as HTMLButtonElement;
-        console.log(sourceEventButton);
-        alert("Form submitted: " + sourceEventButton.name + " ");
-    }    
 }

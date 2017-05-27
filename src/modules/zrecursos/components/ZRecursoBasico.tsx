@@ -103,7 +103,7 @@ export default class ZRecursoBasico extends React.Component<OwnProperties, void>
             }
             else{
                 break;
-            }                
+            }
         }
 
         return zcamposEnGrupoList;
