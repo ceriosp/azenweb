@@ -32,6 +32,8 @@ interface OwnProperties
     zcamposBotonesLineaList: Array<ZCampoModel>;   
 
     cssPropertiesFromParent:CSSProperties;
+
+    container?: any;
 }
 
 export default class ZVentanaRecursoZoom extends React.Component<OwnProperties, void>
@@ -51,23 +53,22 @@ export default class ZVentanaRecursoZoom extends React.Component<OwnProperties, 
 
         return (                            
                 <Modal 
-                    id={this.zRecursoViewModel.ven.nomTbl}
                     style={this.props.cssPropertiesFromParent}
-
+                    container={this.props.container}
                     onHide={this.onCerrarVentana} 
                     show={true}
                     backdrop={"static"}
                     enforceFocus={true}
-                    autoFocus={true}                    
+                    autoFocus={true}                  
                     bsSize={"small"}
-                    aria-labelledby="contained-modal-title">    
+                    >    
 
                     <Modal.Header className="bg-primary" closeButton>
                         <Modal.Title>{this.zRecursoViewModel.ven.descr}</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
-                        <ZRecursoZoom zRecursoViewModel={this.zRecursoViewModel}/>
+                        <ZRecursoZoom zRecursoViewModel={this.zRecursoViewModel}/>                       
                     </Modal.Body>
 
                     <Modal.Footer>

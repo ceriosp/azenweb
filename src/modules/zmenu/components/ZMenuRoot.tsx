@@ -27,7 +27,7 @@ import {
 
 interface OwnProps {
     index: number;
-    solaparse:boolean;
+    sobrePonerse:boolean;
 }
 
 interface ConnectedState {
@@ -59,15 +59,13 @@ class ZMenuRootComponent extends React.Component<OwnProps & ConnectedState & Con
 
         let { zmenuModel, index } = this.props;
 
-        console.log("sobreponerse-menu: " + this.props.solaparse);
-
         return (
             <Row>
                 <Col md={12}>
                     <Navbar
                         collapseOnSelect
                         staticTop                        
-                        style={ this.props.solaparse ? { zIndex: 1000000 } : null}>
+                        style={ this.props.sobrePonerse ? { zIndex: 1000000 } : null}>
                         <Navbar.Header>
                             <Navbar.Brand>
                                 <a href="#">Azen contabilidad</a>

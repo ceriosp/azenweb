@@ -27,10 +27,15 @@ import ZVentanaRecursoBasico from './ZVentanaRecursoBasico';
 import ZVentanaRecursoZoom from './ZVentanaRecursoZoom';
 
 interface OwnProperties {
-    onCerrarVentanaFn?: (zRecursoViewModel: ZRecursoViewModel) => void;
-    container?: any;
-    zRecursoViewModel: ZRecursoViewModel;
+
+    onCerrarVentanaFn: (zRecursoViewModel: ZRecursoViewModel) => void;
     onCampoZoomClick?: (zreferenciaViewModel: ZReferenciaViewModel) => void
+
+    mapRecursosZoomActivosIndxById: Map<string, ZRecursoViewModel>;    
+    container?: any;
+    zRecursoViewModel: ZRecursoViewModel;    
+
+    esModal:boolean;
 }
 
 export default class ZVentanaRecurso extends React.Component<OwnProperties, void>
@@ -44,7 +49,7 @@ export default class ZVentanaRecurso extends React.Component<OwnProperties, void
         super(props);
         console.log("constructor ventana recurso " + this.props.zRecursoViewModel.ven.nomTbl);
 
-        this.cerrarVentana = this.cerrarVentana.bind(this);
+        this.onCerrarVentana = this.onCerrarVentana.bind(this);
     }
 
     render() {
@@ -59,7 +64,13 @@ export default class ZVentanaRecurso extends React.Component<OwnProperties, void
         );
     }
 
-    cerrarVentana() {
+    onCerrarVentana(zrecursoViewModelZoom?: ZRecursoViewModel) {
+        
+        if (zrecursoViewModelZoom.tipoRecurso && zrecursoViewModelZoom.tipoRecurso == ZCommon.Constants.TipoRecurso.Zoom) {
+            this.props.onCerrarVentanaFn(zrecursoViewModelZoom);
+            return;
+        }
+
         this.props.onCerrarVentanaFn(this.props.zRecursoViewModel);
     }
 
@@ -75,7 +86,7 @@ export default class ZVentanaRecurso extends React.Component<OwnProperties, void
 
         let top = this.zRecursoViewModel.tipoRecurso == ZCommon.Constants.TipoRecurso.Basico
                     ? 50
-                    : 70;
+                    : 0;
         if (this.props.zRecursoViewModel.visible) {
             this.modalCSSProperties = {
                 display: "block",
@@ -114,22 +125,25 @@ export default class ZVentanaRecurso extends React.Component<OwnProperties, void
             case ZCommon.Constants.TipoRecurso.Basico:
                 return (
                     <ZVentanaRecursoBasico                        
-                        onCerrarVentanaFn={this.cerrarVentana}
-                        container={this.props.container}
-                        zRecursoViewModel={this.zRecursoViewModel}
+                        onCerrarVentanaFn={this.onCerrarVentana}
                         onCampoZoomClick={this.props.onCampoZoomClick}
+                        mapRecursosZoomActivosIndxById={this.props.mapRecursosZoomActivosIndxById}
+                        container={this.props.container}
+                        zRecursoViewModel={this.zRecursoViewModel}                        
                         cssPropertiesFromParent={this.modalCSSProperties}
                         zcamposBotonesComandos={this.zcamposBotonesComandos}
-                        zcamposBotonesLineaList={this.zcamposBotonesLineaList} />);
+                        zcamposBotonesLineaList={this.zcamposBotonesLineaList} 
+                        esModal={this.props.esModal}/>);
 
             case ZCommon.Constants.TipoRecurso.Zoom:
                return (
                     <ZVentanaRecursoZoom
-                        onCerrarVentanaFn={this.cerrarVentana}
+                        onCerrarVentanaFn={this.onCerrarVentana}
                         zRecursoViewModel={this.zRecursoViewModel}
                         cssPropertiesFromParent={this.modalCSSProperties}
                         zcamposBotonesComandos={this.zcamposBotonesComandos}
-                        zcamposBotonesLineaList={this.zcamposBotonesLineaList} />);                
+                        zcamposBotonesLineaList={this.zcamposBotonesLineaList}
+                        container={this.props.container} />);                
         }
     }
 }

@@ -49,6 +49,9 @@ export default class ZRecursoBasico extends React.Component<OwnProperties, void>
                                 {this.zcamposTitulos.map(this.pintarTitulosColumnas.bind(this))}
                             </tr>
                         </thead>
+                        <tbody>
+                            {this.pintarFilasFicticias()}
+                        </tbody>
                     </Table>
                 </Form>
             </Panel>
@@ -66,6 +69,26 @@ export default class ZRecursoBasico extends React.Component<OwnProperties, void>
                 {zcampoAPintar.etq}
             </th>
         );
+    }
+
+    pintarFilasFicticias(){
+
+        let arrFilas = new Array<any>();        
+        for(let i=0; i<10; i++){
+            arrFilas.push((
+                <tr key={i}>
+                    {this.zcamposTitulos.map((zcampoAPintar: ZCampoModel, index:number)=>{
+                        return(
+                            <td key={index}>
+                                {zcampoAPintar.nomCmp + "_" + i}
+                            </td>
+                        );
+                    })}
+                </tr>
+            ));
+        }
+
+        return arrFilas;
     }
 
     clasificarColumnasAPintar() {

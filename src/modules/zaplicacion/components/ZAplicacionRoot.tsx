@@ -67,14 +67,15 @@ class ZAplicacionRootComponent extends React.Component<ConnectedDispatch & Conne
 
                 <ZMenuRoot 
                     index={0}
-                    solaparse={!this.props.mostrandoVentanaModal}/>
+                    sobrePonerse={!this.props.mostrandoVentanaModal}/>
 
                 <ZAreaTrabajo 
                     mapRecursosActivosIndxById={this.props.mapRecursosActivosIndxById}
                     mapRecursosZoomActivosIndxById={this.props.mapRecursosZoomActivosIndxById}
                     recursosActivosIdList={this.props.recursosActivosIdList}
-                    cerrarVentanaRecursoFn={this.cerrarVentanaRecurso}
-                    onCampoZoomClick={this.onCampoZoomClick} />
+                    onCerrarVentanaRecursoFn={this.cerrarVentanaRecurso}
+                    onCampoZoomClick={this.onCampoZoomClick} 
+                    mostrandoVentanaModal={this.props.mostrandoVentanaModal}/>
 
             </div>
         );

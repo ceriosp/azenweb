@@ -16,9 +16,21 @@ const recursosBasicosList: Array<string> =
 
 const recursosZoomList: Array<string> =
     [
-        `{ "ven":{ "descr":"Cuentas" ,"nomTbl":"#/azenctb/ctbcta" ,"nomRcrZoom":"NULL" ,"nfils":12 ,"ncols":57 ,"fil":0 ,"col":1 ,"modo":0 ,"cmdsBtn":0 ,"cmdsLE":0 ,"numLinsEnc":1 ,"numLinsDatos":11 ,"ctx":41278 ,"nfilsrx":0 ,"ncolsrx":0  }, "camps":[ {"etq":"Código","filEtq":0,"colEtq":999999,"nomCmp":"codigo","filCmp":999999,"colCmp":999999,"lonv":15,"posBit":0,"claseInd":0,"tipo":0,"lon":0,"noEnTabla":0,"modo":0,"numDec":0}, {"etq":"Nombre","filEtq":0,"colEtq":999999,"nomCmp":"nombre","filCmp":999999,"colCmp":999999,"lonv":40,"posBit":0,"claseInd":0,"tipo":0,"lon":0,"noEnTabla":0,"modo":0,"numDec":0} ], "doms":[ ], "refs":[ ]
+        //ctbcte.zf2
+        `{ "ven":{ "descr":"Comprobante" ,"nomTbl":"#/azenctb/ctbcte" ,"nomRcrZoom":"NULL" ,"nfils":12 ,"ncols":45 ,"fil":0 ,"col":1 ,"modo":0 ,"cmdsBtn":0 ,"cmdsLE":0 ,"numLinsEnc":1 ,"numLinsDatos":11 ,"ctx":41290 ,"nfilsrx":0 ,"ncolsrx":0  }, "camps":[ {"etq":"Cod","filEtq":0,"colEtq":999999,"nomCmp":"codigo","filCmp":999999,"colCmp":999999,"lonv":3,"posBit":0,"claseInd":0,"tipo":0,"lon":0,"noEnTabla":0,"modo":0,"numDec":0}, {"etq":"Nombre","filEtq":0,"colEtq":999999,"nomCmp":"nombre","filCmp":999999,"colCmp":999999,"lonv":40,"posBit":0,"claseInd":0,"tipo":0,"lon":0,"noEnTabla":0,"modo":0,"numDec":0} ], "doms":[ ], "refs":[ ]
 }
 `,
+
+        //à/zdim/zdim.zf2
+        `{"ven":{"descr":"Impresora","nomTbl":"�/zdim/zdim","nomRcrZoom":"NULL","nfils":9,"ncols":54,"fil":0,"col":1,"modo":0,"cmdsBtn":0,"cmdsLE":0,"numLinsEnc":1,"numLinsDatos":8,"ctx":8705,"nfilsrx":0,"ncolsrx":0},"camps":[{"etq":"Nombre","filEtq":0,"colEtq":999999,"nomCmp":"nombre","filCmp":999999,"colCmp":999999,"lonv":14,"posBit":0,"claseInd":0,"tipo":0,"lon":0,"noEnTabla":0,"modo":0,"numDec":0},{"etq":"Comentario","filEtq":0,"colEtq":999999,"nomCmp":"comentario","filCmp":999999,"colCmp":999999,"lonv":35,"posBit":0,"claseInd":0,"tipo":0,"lon":0,"noEnTabla":0,"modo":0,"numDec":0}],"doms":[],"refs":[]
+}
+`,
+
+        //ctbanx.zf2 - NULL
+        `{ "ven":{ "descr":"Anexos" ,"nomTbl":"#/azenctb/ctbanx" ,"nomRcrZoom":"NULL" ,"nfils":12 ,"ncols":60 ,"fil":0 ,"col":1 ,"modo":0 ,"cmdsBtn":0 ,"cmdsLE":0 ,"numLinsEnc":1 ,"numLinsDatos":11 ,"ctx":41304 ,"nfilsrx":0 ,"ncolsrx":0  }, "camps":[ {"etq":"Codigo","filEtq":0,"colEtq":999999,"nomCmp":"codigo","filCmp":999999,"colCmp":999999,"lonv":15,"posBit":0,"claseInd":0,"tipo":0,"lon":0,"noEnTabla":0,"modo":0,"numDec":0}, {"etq":"Nombre","filEtq":0,"colEtq":999999,"nomCmp":"nombre","filCmp":999999,"colCmp":999999,"lonv":40,"posBit":0,"claseInd":0,"tipo":0,"lon":0,"noEnTabla":0,"modo":0,"numDec":0} ], "doms":[ ], "refs":[ ]
+}
+`,
+
     ];
 
 import * as ZCommon from '../zcommon';
@@ -32,7 +44,7 @@ export namespace Services {
 
     export class ZAplicacionService {
 
-        public abrirVentanaRecurso(tipoRecurso:ZCommon.Constants.TipoRecurso, idRecurso: string, mapRecursosIndxById: Map<string, ZRecursoViewModel>): Map<string, ZRecursoViewModel> {
+        public abrirVentanaRecurso(tipoRecurso: ZCommon.Constants.TipoRecurso, idRecurso: string, mapRecursosIndxById: Map<string, ZRecursoViewModel>): Map<string, ZRecursoViewModel> {
 
             let zrecursoModelWebAlFrente: ZRecursoViewModel = null;
             const mapServices = new ZCommon.MapServices<string, ZRecursoViewModel>();
@@ -64,13 +76,17 @@ export namespace Services {
                 let zrecursoViewModelService = new ZRecursos.Services.ZRecursoServices();
                 zrecursoViewModelService.normalizeZRecursoViewModelState(zrecursoModelWebAlFrente);
 
+                mapRecursosIndxById.forEach((zrecuersoViewModelI:ZRecursoViewModel)=>{
+                    zrecuersoViewModelI.visible = false;                    
+                });
+
                 resultMap = mapServices.addNewElementAtBeginingImmutableWay(idRecurso, zrecursoModelWebAlFrente, mapRecursosIndxById);
             }
 
             return resultMap;
         }
 
-        public cerrarVentanaRecurso(idRecurso: string, mapRecursosIndxById: Map<string, ZRecursoViewModel>, abrirSiguiente:boolean): Map<string, ZRecursoViewModel> {
+        public cerrarVentanaRecurso(idRecurso: string, mapRecursosIndxById: Map<string, ZRecursoViewModel>, abrirSiguiente: boolean): Map<string, ZRecursoViewModel> {
 
             let idRecursoToActivate: string = null;
             const mapServices = new ZCommon.MapServices<string, ZRecursoViewModel>();
@@ -104,6 +120,12 @@ export namespace Services {
 
                 case "^/ctbcte.zf2":
                     return JSON.parse(recursosZoomList[0]) as ZRecursoViewModel;
+
+                case "à/zdim/zdim.zf2":
+                    return JSON.parse(recursosZoomList[1]) as ZRecursoViewModel;
+
+                case "^/ctbanx.zf2": //^/ctbanx.zf2
+                    return JSON.parse(recursosZoomList[2]) as ZRecursoViewModel;
 
                 default:
                     return null;
