@@ -2,7 +2,8 @@ export namespace Constants {
 
     export enum TipoRecurso {
         Basico,
-        Zoom
+        Zoom,
+        Movimento
     }
 
     export enum TipoBoton {

@@ -20,11 +20,17 @@ import {
 } from "../../zcommon";
 
 import ZCampo from './ZCampo';
+import ZVentanaRecurso from './ZVentanaRecurso';
 
 interface OwnProperties
-{    
+{   
+    onCerrarVentanaFn: (zRecursoViewModel: ZRecursoViewModel) => void;     
+    onCampoZoomClick?: (zreferenciaViewModel:  ZReferenciaViewModel) => void;
+
     zRecursoViewModel:ZRecursoViewModel;
-    onCampoZoomClick?: (zreferenciaViewModel:  ZReferenciaViewModel) => void 
+    mapRecursosZoomActivosIndxById: Map<string, ZRecursoViewModel>;
+    esModal: boolean;
+    container?: any;
 }
 
 export default class ZRecursoBasico extends React.Component<OwnProperties, void>
@@ -40,11 +46,7 @@ export default class ZRecursoBasico extends React.Component<OwnProperties, void>
     
     render(){
         
-        this.renderInitialize();
-
-        let modalStyle:any = new Object();
-        
-        this.zRecursoViewModel = this.props.zRecursoViewModel;     
+        this.initializeRender();                
         this.clasificarCamposAPintar();
                 
         return (
@@ -52,11 +54,13 @@ export default class ZRecursoBasico extends React.Component<OwnProperties, void>
                 <Form onSubmit={this.formSubmitted.bind(this)} horizontal>
                     {this.zcamposForma.map(this.pintarZCampoEnRecurso.bind(this))}
                 </Form>
+                {this.renderRecursosZoom()}
             </Panel>      
         );
     }
 
-    renderInitialize(){
+    initializeRender(){
+        this.zRecursoViewModel = this.props.zRecursoViewModel;
         this.zcamposForma = new Array<ZCampoModel>();
     }
 
@@ -144,6 +148,31 @@ export default class ZRecursoBasico extends React.Component<OwnProperties, void>
 
             this.zcamposForma.push(zcampoAPintar);
         }
+    }
+
+    renderRecursosZoom(): Array<ZVentanaRecurso> {
+
+        let zventanasRecursoZoomCompList = new Array<any>();
+
+        //debugger
+        this.zRecursoViewModel.mapZoomsIdsIndxByCampo.forEach((zreferenciaViewModel: ZReferenciaViewModel, nomCmp: string) => {
+
+            if (!this.props.mapRecursosZoomActivosIndxById.has(zreferenciaViewModel.nomRcrZoom)) {
+                //continue
+                return true;
+            }
+            zventanasRecursoZoomCompList.push(
+                <ZVentanaRecurso
+                    key={nomCmp}
+                    mapRecursosZoomActivosIndxById={this.props.mapRecursosZoomActivosIndxById}
+                    container={this.props.container}
+                    onCerrarVentanaFn={this.props.onCerrarVentanaFn}
+                    zRecursoViewModel={this.props.mapRecursosZoomActivosIndxById.get(zreferenciaViewModel.nomRcrZoom)}
+                    esModal={this.props.esModal}
+                />);
+        });
+
+        return zventanasRecursoZoomCompList;
     }
 
     formSubmitted(e: React.SyntheticEvent<HTMLButtonElement>){

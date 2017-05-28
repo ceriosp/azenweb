@@ -47,7 +47,7 @@ export default class ZVentanaRecurso extends React.Component<OwnProperties, void
 
     constructor(props: OwnProperties) {
         super(props);
-        console.log("constructor ventana recurso " + this.props.zRecursoViewModel.ven.nomTbl);
+        //console.log("constructor ventana recurso " + this.props.zRecursoViewModel.ven.nomTbl);
 
         this.onCerrarVentana = this.onCerrarVentana.bind(this);
     }
@@ -118,11 +118,12 @@ export default class ZVentanaRecurso extends React.Component<OwnProperties, void
         }
     }
 
-    getVentanaRecursoAPintar() {
+    getVentanaRecursoAPintar() {        
 
         switch (this.zRecursoViewModel.tipoRecurso) {
 
             case ZCommon.Constants.TipoRecurso.Basico:
+            case ZCommon.Constants.TipoRecurso.Movimento:
                 return (
                     <ZVentanaRecursoBasico                        
                         onCerrarVentanaFn={this.onCerrarVentana}

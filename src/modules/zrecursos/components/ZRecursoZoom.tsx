@@ -37,13 +37,13 @@ export default class ZRecursoBasico extends React.Component<OwnProperties, void>
 
     render() {
 
-        this.renderInitialize();
+        this.initializeRender();
         this.clasificarColumnasAPintar();
 
         return (
             <Panel>
                 <Form horizontal>
-                    <Table striped bordered condensed hover>
+                    <Table striped bordered condensed hover responsive>
                         <thead>
                             <tr>
                                 {this.zcamposTitulos.map(this.pintarTitulosColumnas.bind(this))}
@@ -58,7 +58,7 @@ export default class ZRecursoBasico extends React.Component<OwnProperties, void>
         );
     }
 
-    renderInitialize() {
+    initializeRender() {
         this.zRecursoViewModel = this.props.zRecursoViewModel;
         this.zcamposTitulos = new Array<ZCampoModel>();
     }

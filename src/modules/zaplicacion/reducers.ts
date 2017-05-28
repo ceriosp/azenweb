@@ -26,7 +26,7 @@ import * as ZAplication from './index';
 export namespace Reducers {
 
     const initialState: ZAplicationState = {
-        mostrandoVentanaModal:false,
+        mostrandoVentanaModal: false,
         mapRecursosIndxById: new Map<string, ZRecursoViewModel>(),
         mapRecursosZoomIndxById: new Map<string, ZRecursoViewModel>(),
         recursosActivosIds: Array<string>()
@@ -41,9 +41,9 @@ export namespace Reducers {
                     return despacharRecurso(zaplicationState, action);
 
                 case ActionTypes.CERRAR_VENTANA_RECURSO:
-                    return cerrarRecurso(zaplicationState, action);
+                    return cerrarVentanaRecurso(zaplicationState, action);
 
-             case ActionTypes.ABRIR_VENTANA_ZOOM:
+                case ActionTypes.ABRIR_VENTANA_ZOOM:
                     return abrirVentanaZoom(zaplicationState, action);
 
                 default:
@@ -56,44 +56,64 @@ export namespace Reducers {
 
             if (action.type != ZMenu.ActionTypes.DESPACHAR_OPCION_MENU) {
                 return zaplicationState;
-            }            
+            }
 
             let idRecurso: string = action.zmenuItemModel.ctx;
             let zaplicacionService = new ZAplication.Services.ZAplicacionService();
             let resultMap = zaplicacionService.abrirVentanaRecurso(ZCommon.Constants.TipoRecurso.Basico, idRecurso, zaplicationState.mapRecursosIndxById);
-            
+
             return { ...zaplicationState, mapRecursosIndxById: resultMap } as ZAplicationState;
         }
 
 
-    const cerrarRecurso = (zaplicationState: ZAplicationState, action: ActionTypes.Action): ZAplicationState => {        
+    const cerrarVentanaRecurso = (zaplicationState: ZAplicationState, action: ActionTypes.Action): ZAplicationState => {
 
         if (action.type != ActionTypes.CERRAR_VENTANA_RECURSO) {
             return zaplicationState;
-        }        
-
-        const idRecurso:string = action.zrecursoViewModel.ctx;
-
-
-
-        let mapRecursosIndxById = action.zrecursoViewModel.tipoRecurso == ZCommon.Constants.TipoRecurso.Basico 
-                                    ? zaplicationState.mapRecursosIndxById
-                                    : zaplicationState.mapRecursosZoomIndxById;
-                                    
-        let zaplicacionService = new ZAplication.Services.ZAplicacionService();
-
-        let abrirSiguiente = action.zrecursoViewModel.tipoRecurso == ZCommon.Constants.TipoRecurso.Basico;        
-        let newMapRecursosIndxByCtx = zaplicacionService.cerrarVentanaRecurso(idRecurso, mapRecursosIndxById, abrirSiguiente);        
-
-        if(action.zrecursoViewModel.tipoRecurso == ZCommon.Constants.TipoRecurso.Basico){
-            return { ...zaplicationState, mapRecursosIndxById: newMapRecursosIndxByCtx };
         }
 
-        return { 
-            ...zaplicationState, 
+        switch(action.zrecursoViewModel.tipoRecurso)
+        {
+            case ZCommon.Constants.TipoRecurso.Basico:
+                return cerrarVentanaRecursoBasico(zaplicationState, action);
+
+            case ZCommon.Constants.TipoRecurso.Zoom:
+                return cerrarVentanaRecursZoom(zaplicationState, action);
+        }
+    }
+
+    const cerrarVentanaRecursoBasico = (zaplicationState: ZAplicationState, action: ActionTypes.Action): ZAplicationState => {
+
+        if (action.type != ActionTypes.CERRAR_VENTANA_RECURSO) {
+            return zaplicationState;
+        }
+
+        const idRecurso: string = action.zrecursoViewModel.ctx;
+        let mapRecursosIndxById = zaplicationState.mapRecursosIndxById;
+        let zaplicacionService = new ZAplication.Services.ZAplicacionService();
+        let abrirSiguienteVentana = true;
+        let newMapRecursosIndxByCtx = zaplicacionService.cerrarVentanaRecurso(idRecurso, mapRecursosIndxById, abrirSiguienteVentana);
+
+        return { ...zaplicationState, mapRecursosIndxById: newMapRecursosIndxByCtx };
+    }
+
+    const cerrarVentanaRecursZoom = (zaplicationState: ZAplicationState, action: ActionTypes.Action): ZAplicationState => {
+
+        if (action.type != ActionTypes.CERRAR_VENTANA_RECURSO) {
+            return zaplicationState;
+        }
+
+        const idRecurso: string = action.zrecursoViewModel.ctx;
+        let mapRecursosIndxById = zaplicationState.mapRecursosZoomIndxById;
+        let zaplicacionService = new ZAplication.Services.ZAplicacionService();
+        let abrirSiguienteVentana = false;
+        let newMapRecursosIndxByCtx = zaplicacionService.cerrarVentanaRecurso(idRecurso, mapRecursosIndxById, abrirSiguienteVentana);
+
+        return {
+            ...zaplicationState,
             mapRecursosZoomIndxById: newMapRecursosIndxByCtx,
-            mostrandoVentanaModal:false
-        };        
+            mostrandoVentanaModal: false
+        };
     }
 
     const abrirVentanaZoom =
@@ -101,17 +121,17 @@ export namespace Reducers {
 
             if (action.type != ZAplication.ActionTypes.ABRIR_VENTANA_ZOOM) {
                 return zaplicationState;
-            }            
+            }
 
             let idRecurso: string = action.zreferenciaViewModel.nomRcrZoom;
             let zaplicacionService = new ZAplication.Services.ZAplicacionService();
             let resultMap = zaplicacionService.abrirVentanaRecurso(ZCommon.Constants.TipoRecurso.Zoom, idRecurso, zaplicationState.mapRecursosZoomIndxById);
-            
-            return { 
-                    ...zaplicationState, 
-                    mapRecursosZoomIndxById: resultMap,
-                    mostrandoVentanaModal:true,
-                } as ZAplicationState;
+
+            return {
+                ...zaplicationState,
+                mapRecursosZoomIndxById: resultMap,
+                mostrandoVentanaModal: true,
+            } as ZAplicationState;
         }
 }
 

@@ -61,18 +61,14 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
                         <div ref={(divTrabajo:HTMLDivElement)=>{
                                 this.divAreaTrabajo = divTrabajo;
                             }}>
-                            {
+                            {                                
                                this.props.recursosActivosIdList
-                               .filter((recursoId:string, index:number)=>{
-                                    return (this.props.mapRecursosActivosIndxById.get(recursoId) &&
-                                        this.props.mapRecursosActivosIndxById.get(recursoId).tipoRecurso == ZCommon.Constants.TipoRecurso.Basico);
-                               })
                                .map((recursoId:string, index:number)=>{
                                         return (
                                             <ZVentanaRecurso    
                                                 key={recursoId}    
                                                 mapRecursosZoomActivosIndxById={this.props.mapRecursosZoomActivosIndxById}                 
-                                                zRecursoViewModel={this.props.mapRecursosActivosIndxById.get(recursoId) ? this.props.mapRecursosActivosIndxById.get(recursoId) : this.props.mapRecursosZoomActivosIndxById.get(recursoId)}
+                                                zRecursoViewModel={this.props.mapRecursosActivosIndxById.get(recursoId)}
                                                 onCerrarVentanaFn={this.cerrarVentanaRecurso}
                                                 container={this.divAreaTrabajo}
                                                 onCampoZoomClick={this.props.onCampoZoomClick}

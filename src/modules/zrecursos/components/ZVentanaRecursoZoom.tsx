@@ -49,7 +49,7 @@ export default class ZVentanaRecursoZoom extends React.Component<OwnProperties, 
     
     render(){        
 
-        this.renderInitialize();
+        this.initializeRender();
 
         return (                            
                 <Modal 
@@ -85,7 +85,7 @@ export default class ZVentanaRecursoZoom extends React.Component<OwnProperties, 
         this.props.onCerrarVentanaFn(this.props.zRecursoViewModel);
     }
 
-    renderInitialize(){        
+    initializeRender(){        
         this.zRecursoViewModel = this.props.zRecursoViewModel;
         this.zcamposBotonesComandos = this.props.zcamposBotonesComandos;
         this.zcamposBotonesLineaList = this.props.zcamposBotonesLineaList;

@@ -69,7 +69,7 @@ class MapServices<TKey, TValue>
 
         let resultMap = new Map<TKey, TValue>();
 
-        if (typeof updateAllMapValuesFn == "function") {
+        if (updateAllMapValuesFn && typeof updateAllMapValuesFn == "function") {
                         
             let updatedMap = updateAllMapValuesFn();
             resultMap.set(key, Object.assign({}, updateValueFn()));
