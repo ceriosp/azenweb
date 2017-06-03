@@ -34,7 +34,7 @@ interface ConnectedState {
     zmenuModel:ZMenuModel
 }
 const mapStateToProps = (state:State, ownProps:OwnProps) : ConnectedState => ({
-    zmenuModel:ZMenu.selectors.zmenuModelSelector(state.zmenuState),
+    zmenuModel:ZMenu.Selectors.zmenuModelSelector(state.zmenuState),
 });
 
 interface ConnectedDispatch

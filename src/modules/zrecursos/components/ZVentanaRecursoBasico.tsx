@@ -6,12 +6,7 @@ import {
 } from 'react';
 
 import {
-    Row,
-    Col,
-    Form,
-    Button,
-    Modal,
-    Panel
+    Modal
 } from 'react-bootstrap';
 
 import * as ZCommon from "../../zcommon";
@@ -24,9 +19,7 @@ import {
 } from "../../zcommon";
 
 import ZBarraBotones from './ZBarraBotones';
-import ZRecursoBasico from './ZRecursoBasico';
-import ZRecursoZoom from './ZRecursoZoom';
-import ZRecursoMovimiento from './ZRecursoMovimiento';
+import ZRecurso from './ZRecurso';
 
 interface OwnProperties {
 
@@ -45,15 +38,12 @@ interface OwnProperties {
     esModal: boolean;
 }
 
-export default class ZVentanaRecursoBasico extends React.Component<OwnProperties, void>
+export default class ZVentanaRecursoBasico extends React.PureComponent<OwnProperties, void>
 {
     private zRecursoViewModel: ZRecursoViewModel;
-    private zcamposBotonesComandos: Array<ZCampoModel> = [];
-    private zcamposBotonesLineaList: Array<ZCampoModel> = [];
 
     constructor(props: OwnProperties) {
         super(props);
-
         this.onCerrarVentana = this.onCerrarVentana.bind(this);
         this.cerrarVentanaZoom = this.cerrarVentanaZoom.bind(this);
     }
@@ -80,13 +70,19 @@ export default class ZVentanaRecursoBasico extends React.Component<OwnProperties
                     </Modal.Header>
 
                     <Modal.Body>
-                        {this.getRecursoAPintar()}
+                        <ZRecurso
+                            zRecursoViewModel={this.zRecursoViewModel}
+                            onCampoZoomClick={this.props.onCampoZoomClick}
+                            onCerrarVentanaFn={this.props.onCerrarVentanaFn}
+                            container={this.props.container}
+                            mapRecursosZoomActivosIndxById={this.props.mapRecursosZoomActivosIndxById}
+                            esModal={this.props.esModal} />
                     </Modal.Body>
 
                     <Modal.Footer>
                         <ZBarraBotones
-                            zcamposBotonesComandosList={this.zcamposBotonesComandos}
-                            zcamposBotonesLineaList={this.zcamposBotonesLineaList} />
+                            zcamposBotonesComandosList={this.props.zcamposBotonesComandos}
+                            zcamposBotonesLineaList={this.props.zcamposBotonesLineaList} />
                     </Modal.Footer>
                 </Modal>
             </div>
@@ -103,34 +99,11 @@ export default class ZVentanaRecursoBasico extends React.Component<OwnProperties
         this.props.onCerrarVentanaFn(this.props.zRecursoViewModel);
     }
 
-    getRecursoAPintar() {                
-        switch(this.zRecursoViewModel.tipoRecurso){
-            case ZCommon.Constants.TipoRecurso.Basico:
-                return (
-                    <ZRecursoBasico
-                        zRecursoViewModel={this.zRecursoViewModel} 
-                        onCampoZoomClick={this.props.onCampoZoomClick} 
-                        onCerrarVentanaFn={this.props.onCerrarVentanaFn}
-                        container={this.props.container}
-                        mapRecursosZoomActivosIndxById={this.props.mapRecursosZoomActivosIndxById}
-                        esModal={this.props.esModal}/>
-                );
-            case ZCommon.Constants.TipoRecurso.Movimento:
-                return (
-                    <ZRecursoMovimiento
-                        zRecursoViewModel={this.zRecursoViewModel} 
-                        onCampoZoomClick={this.props.onCampoZoomClick}/>
-                );
-        }
-    }
-
     cerrarVentanaZoom(zrecursoViewModelZoom: ZRecursoViewModel) {
         this.props.onCerrarVentanaFn(zrecursoViewModelZoom);
     }
 
     initializeRender() {
         this.zRecursoViewModel = this.props.zRecursoViewModel;
-        this.zcamposBotonesComandos = this.props.zcamposBotonesComandos;
-        this.zcamposBotonesLineaList = this.props.zcamposBotonesLineaList;
     }
 }

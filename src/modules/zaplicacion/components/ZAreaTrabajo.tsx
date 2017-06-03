@@ -6,11 +6,20 @@ import {
     Col
 } from 'react-bootstrap';
 
-import * as ZCommon from "../../zcommon";
+import * as ZCommon from '../../zcommon';
 import {
+
+    //Models
     ZRecursoModel,
     ZRecursoViewModel,
-    ZReferenciaViewModel
+    ZReferenciaViewModel,
+
+    //State
+    ZAplicationState,
+
+    //Utils
+    EntityNormalizedObj,
+
 } from "../../zcommon";
 
 import {    
@@ -20,12 +29,7 @@ import {
 
 interface OwnProps
 {
-    onCerrarVentanaRecursoFn:(zRecursoViewModel:ZRecursoViewModel)=>void;
-    mapRecursosActivosIndxById: Map<string, ZRecursoViewModel>;
-    mapRecursosZoomActivosIndxById: Map<string, ZRecursoViewModel>;
-    recursosActivosIdList:Array<string>,    
-    onCampoZoomClick?: (zreferenciaViewModel:  ZReferenciaViewModel) => void 
-    mostrandoVentanaModal:boolean;
+    recursosActivosViewModelList: Array<ZRecursoViewModel>;
 }
 
 export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
@@ -34,8 +38,6 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
 
     constructor(props:OwnProps){
         super(props);
-
-        this.cerrarVentanaRecurso = this.cerrarVentanaRecurso.bind(this);
     }
 
     render(){
@@ -61,12 +63,16 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
                         <div ref={(divTrabajo:HTMLDivElement)=>{
                                 this.divAreaTrabajo = divTrabajo;
                             }}>
-                            {                                
+
+                            Area divAreaTrabajo 3
+
+                            
+                                {/*
                                this.props.recursosActivosIdList
                                .map((recursoId:string, index:number)=>{
                                         return (
                                             <ZVentanaRecurso    
-                                                key={recursoId}    
+                                                key={index}    
                                                 mapRecursosZoomActivosIndxById={this.props.mapRecursosZoomActivosIndxById}                 
                                                 zRecursoViewModel={this.props.mapRecursosActivosIndxById.get(recursoId)}
                                                 onCerrarVentanaFn={this.cerrarVentanaRecurso}
@@ -75,15 +81,11 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
                                                 esModal={this.props.mostrandoVentanaModal}/>
                                         );
                                 })
-                            }                   
+                                */}         
                         </div>
                     </Col>
                 </Row>
             </div>
         );
     }
-
-    cerrarVentanaRecurso(zRecursoViewModel:ZRecursoViewModel){
-        this.props.onCerrarVentanaRecursoFn(zRecursoViewModel);
-    }    
 }

@@ -26,14 +26,14 @@ import {
 import ZBarraBotones from './ZBarraBotones';
 import ZRecursoBasico from './ZRecursoBasico';
 import ZRecursoZoom from './ZRecursoZoom';
-import ZVentanaRecurso from './ZVentanaRecurso';
+import ZRecursoMovimiento from './ZRecursoMovimiento';
 
 interface OwnProperties {
 
     onCerrarVentanaFn: (zRecursoViewModel: ZRecursoViewModel) => void;
     onCampoZoomClick: (zreferenciaViewModel: ZReferenciaViewModel) => void;
 
-    //Pilas de todas las ventanas, incluyendo recursos zooms
+    //Pila de recursos zoom indx by id
     mapRecursosZoomActivosIndxById: Map<string, ZRecursoViewModel>;
 
     zRecursoViewModel: ZRecursoViewModel;
@@ -45,13 +45,9 @@ interface OwnProperties {
     esModal: boolean;
 }
 
-export default class ZVentanaRecursoMulti extends React.Component<OwnProperties, void>
+export default class ZVentanaRecursoMovimiento extends React.PureComponent<OwnProperties, void>
 {
     private zRecursoViewModel: ZRecursoViewModel;
-    private zcamposBotonesComandos: Array<ZCampoModel> = [];
-    private zcamposBotonesLineaList: Array<ZCampoModel> = [];
-
-    private divZoomContainer: HTMLDivElement;
 
     constructor(props: OwnProperties) {
         super(props);
@@ -63,6 +59,8 @@ export default class ZVentanaRecursoMulti extends React.Component<OwnProperties,
     render() {
 
         this.initializeRender();
+
+        console.log("call ventanarecursobasico render");
 
         return (
             <div>
@@ -82,22 +80,15 @@ export default class ZVentanaRecursoMulti extends React.Component<OwnProperties,
                     </Modal.Header>
 
                     <Modal.Body>
-                        <ZRecursoBasico zRecursoViewModel={this.zRecursoViewModel} onCampoZoomClick={this.props.onCampoZoomClick} />
-                        <div ref={(divZoomContainer: HTMLDivElement) => { 
-                                this.divZoomContainer = divZoomContainer; 
-                            }}>
-                        </div>
+                        {this.getRecursoAPintar()}
                     </Modal.Body>
 
                     <Modal.Footer>
                         <ZBarraBotones
-                            zcamposBotonesComandosList={this.zcamposBotonesComandos}
-                            zcamposBotonesLineaList={this.zcamposBotonesLineaList} />
+                            zcamposBotonesComandosList={this.props.zcamposBotonesComandos}
+                            zcamposBotonesLineaList={this.props.zcamposBotonesLineaList} />
                     </Modal.Footer>
                 </Modal>
-
-                {this.renderRecursosZoom()}
-
             </div>
         );
     }
@@ -112,36 +103,32 @@ export default class ZVentanaRecursoMulti extends React.Component<OwnProperties,
         this.props.onCerrarVentanaFn(this.props.zRecursoViewModel);
     }
 
+    getRecursoAPintar() {
+        switch (this.zRecursoViewModel.tipoRecurso) {
+            case ZCommon.Constants.TipoRecurso.Basico:
+                return (
+                    <ZRecursoBasico
+                        zRecursoViewModel={this.zRecursoViewModel}
+                        onCampoZoomClick={this.props.onCampoZoomClick}
+                        onCerrarVentanaFn={this.props.onCerrarVentanaFn}
+                        container={this.props.container}
+                        mapRecursosZoomActivosIndxById={this.props.mapRecursosZoomActivosIndxById}
+                        esModal={this.props.esModal} />
+                );
+            case ZCommon.Constants.TipoRecurso.Movimento:
+                return (
+                    <ZRecursoMovimiento
+                        zRecursoViewModel={this.zRecursoViewModel}
+                        onCampoZoomClick={this.props.onCampoZoomClick} />
+                );
+        }
+    }
+
     cerrarVentanaZoom(zrecursoViewModelZoom: ZRecursoViewModel) {
         this.props.onCerrarVentanaFn(zrecursoViewModelZoom);
     }
 
     initializeRender() {
         this.zRecursoViewModel = this.props.zRecursoViewModel;
-        this.zcamposBotonesComandos = this.props.zcamposBotonesComandos;
-        this.zcamposBotonesLineaList = this.props.zcamposBotonesLineaList;
-    }
-
-    renderRecursosZoom(): Array<ZVentanaRecurso> {
-
-        let zventanasRecursoZoomCompList = new Array<any>();
-
-        this.zRecursoViewModel.mapZoomsIdsIndxByCampo.forEach((zreferenciaViewModel: ZReferenciaViewModel, nomCmp: string) => {
-
-            if (!this.props.mapRecursosZoomActivosIndxById.has(zreferenciaViewModel.nomRcrZoom)) {
-                return true; //continue
-            }
-            zventanasRecursoZoomCompList.push(
-                <ZVentanaRecurso
-                    key={nomCmp}
-                    mapRecursosZoomActivosIndxById={this.props.mapRecursosZoomActivosIndxById}
-                    container={this.props.container}
-                    onCerrarVentanaFn={this.onCerrarVentana}
-                    zRecursoViewModel={this.props.mapRecursosZoomActivosIndxById.get(zreferenciaViewModel.nomRcrZoom)}
-                    esModal={this.props.esModal}
-                />);
-        });
-
-        return zventanasRecursoZoomCompList;
     }
 }

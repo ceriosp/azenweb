@@ -16,7 +16,7 @@ interface OwnProperties
     zCampoModel:ZCampoModel;
 }
 
-export default class ZCampoTextbox extends React.Component<OwnProperties, void>
+export default class ZCampoTextbox extends React.PureComponent<OwnProperties, void>
 {
     render(){
         const { zCampoModel } = this.props;

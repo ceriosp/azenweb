@@ -28,9 +28,8 @@ interface OwnProperties {
     onCampoZoomClick?: (zreferenciaViewModel: ZReferenciaViewModel) => void
 }
 
-export default class ZRecursoMovimiento extends React.Component<OwnProperties, void>
+export default class ZRecursoMovimiento extends React.PureComponent<OwnProperties, void>
 {
-
     private zRecursoViewModel: ZRecursoViewModel;
     private encabezadoZRecursoViewModel: ZRecursoViewModel;
     private detalleZRecursoViewModel: ZRecursoViewModel;

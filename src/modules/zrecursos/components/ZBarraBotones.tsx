@@ -17,7 +17,7 @@ interface OwnProperties {
     zcamposBotonesLineaList: Array<ZCampoModel>
 }
 
-export default class ZBarraBotones extends React.Component<OwnProperties, void>
+export default class ZBarraBotones extends React.PureComponent<OwnProperties, void>
 {
     render() {
         const { zcamposBotonesComandosList, zcamposBotonesLineaList } = this.props;

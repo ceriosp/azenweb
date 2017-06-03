@@ -24,7 +24,7 @@ interface OwnProperties {
     zRecursoViewModel: ZRecursoViewModel;
 }
 
-export default class ZRecursoBasico extends React.Component<OwnProperties, void>
+export default class ZRecursoBasico extends React.PureComponent<OwnProperties, void>
 {
     private zRecursoViewModel: ZRecursoViewModel;
     private zcampoRegionEnProceso: ZCampoModel;

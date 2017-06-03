@@ -5,26 +5,42 @@ import {
     ZMenuState,
 } from '../zcommon';
 
-import{
+import {
     ActionTypes
 } from './actionTypes';
 
+import {
+    Services
+} from './services';
 
-export namespace Reducers
-{
-    const initialState:ZMenuState =
-    {
-        zmenuModel:new ZMenuModel()
+
+export namespace Reducers {
+    const initialState: ZMenuState = {
+        zmenuModel: new ZMenuModel()
     }
 
-    export const zmenuReducer = (zmenuSate:ZMenuState = initialState, action:ActionTypes.Action)=>{
+    export const zmenuReducer = (zmenuState: ZMenuState = initialState, action: ActionTypes.Action): ZMenuState => {
 
-        switch(action.type){
+        switch (action.type) {
+
+            case ActionTypes.CARGAR_MENU:
+                return cargarMenu(zmenuState, action);
+
             case ActionTypes.DESPACHAR_OPCION_MENU:
-                console.log("responder en zmenu reducer");
-            break;
+                break;
         }
 
-        return zmenuSate;
+        return zmenuState;
+    }
+
+    const cargarMenu = (zmenuSate: ZMenuState = initialState, action: ActionTypes.Action): ZMenuState => {
+
+        if (action.type != ActionTypes.CARGAR_MENU) {
+            return zmenuSate;
+        }
+
+        let zmenuService = new Services.ZMenuService();
+
+        return zmenuService.getZMenuState();
     }
 }

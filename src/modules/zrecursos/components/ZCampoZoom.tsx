@@ -22,7 +22,7 @@ interface OwnProps {
     onCampoZoomClick?:(zreferenciaViewModel:ZReferenciaViewModel) => void
 }
 
-export default class ZCampoZoom extends React.Component<OwnProps, void>
+export default class ZCampoZoom extends React.PureComponent<OwnProps, void>
 {
     constructor(props:OwnProps){
         super(props);

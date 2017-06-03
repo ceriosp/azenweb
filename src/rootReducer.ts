@@ -12,5 +12,5 @@ export const combinedReducers: Reducer<State> = combineReducers<State>({
     //la llave de la propiedad debe estar en el State general de la aplicación. Ej:
     //State = { zaplicationState : {} }
     zmenuState:ZMenu.Reducers.zmenuReducer,
-    zaplicationState: ZAplicacion.Reducers.ZAplicacionReducer
+    zaplicationState: ZAplicacion.Reducers.ZAplicacionReducer,    
 });

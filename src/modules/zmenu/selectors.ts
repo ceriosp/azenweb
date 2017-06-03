@@ -7,7 +7,7 @@ import {
 } from '../zcommon';
 
 
-export namespace selectors
+export namespace Selectors
 {
     export const zmenuModelSelector = (zmenuState:ZMenuState):ZMenuModel => zmenuState.zmenuModel; 
 }

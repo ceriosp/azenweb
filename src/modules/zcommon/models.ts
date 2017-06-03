@@ -2,23 +2,19 @@ import {
     Constants
 } from './constants';
 
-class ZMenuState
-{
-    zmenuModel: ZMenuModel;
+class EntityNormalizedObj<TEntity>{
+
+    constructor(){
+        this.byId = {};
+        this.allIds = Array<string>();
+    }
+
+    byId: EntityMap<TEntity>;
+    allIds: Array<string>
 }
 
-interface State
-{    
-    zmenuState:ZMenuState;
-    zaplicationState:ZAplicationState;
-}
-
-interface ZAplicationState
-{
-    mostrandoVentanaModal:boolean;
-    mapRecursosIndxById: Map<string, ZRecursoViewModel>;
-    mapRecursosZoomIndxById: Map<string, ZRecursoViewModel>;
-    recursosActivosIds:Array<string>;
+class EntityMap<TEntity>{
+    [id: string]: TEntity;
 }
 
 class ZRecursoModel
@@ -140,11 +136,6 @@ class ZMenuItemModel
 
 export 
 { 
-    //State
-    State,
-    ZAplicationState,
-    ZMenuState,
-
     //Recursos
     ZRecursoModel,
     ZRecursoViewModel,
@@ -159,4 +150,8 @@ export
     //Menu
     ZMenuModel,
     ZMenuItemModel,
+
+    //Utils
+    EntityNormalizedObj,
+    EntityMap,
 }

@@ -22,7 +22,7 @@ interface OwnProperties
     zcamposEnRegionList:Array<ZCampoModel>
 }
 
-export default class ZRegion extends React.Component<OwnProperties, void>
+export default class ZRegion extends React.PureComponent<OwnProperties, void>
 {
     public static defaultProps: Partial<OwnProperties> = {
         zcamposEnRegionList : new Array<ZCampoModel>()

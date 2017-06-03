@@ -59,6 +59,7 @@ export namespace Services {
             const mapServices = new ZCommon.MapServices<string, ZRecursoViewModel>();
             let resultMap: Map<string, ZRecursoViewModel>;
 
+
             if (mapRecursosIndxById.has(idRecurso)) {
 
                 zrecursoModelWebAlFrente = { ...mapRecursosIndxById.get(idRecurso) };
@@ -76,7 +77,7 @@ export namespace Services {
                             zrecursoModelWebAlFrente.visible = true;
                             return zrecursoModelWebAlFrente;
                         });
-            } else {                
+            } else {
 
                 zrecursoModelWebAlFrente = this.getRecursoWebFromJSON(idRecurso);
                 zrecursoModelWebAlFrente.tipoRecurso = tipoRecurso;
@@ -88,7 +89,23 @@ export namespace Services {
                 mapRecursosIndxById.forEach((zrecuersoViewModelI: ZRecursoViewModel) => {
                     zrecuersoViewModelI.visible = false;
                 });
+                                
+                let newMapRecursosIndxById = new Map<string, ZRecursoViewModel>();
 
+                console.log("new map: ");
+                console.log(newMapRecursosIndxById);
+
+                if (mapRecursosIndxById.size > 0) {
+                    newMapRecursosIndxById.get("A14E").px = 6;
+
+                    console.log("oldMapRecursosIndxById px ");
+                    console.log(mapRecursosIndxById.get("A14E").px);
+
+                    console.log("newMapRecursosIndxById px ");
+                    console.log(newMapRecursosIndxById.get("A14E").px);
+                }
+                
+                
                 resultMap = mapServices.addNewElementAtBeginingImmutableWay(idRecurso, zrecursoModelWebAlFrente, mapRecursosIndxById);
             }
 
@@ -117,7 +134,7 @@ export namespace Services {
             return newMapRecursosIndxByCtx;
         }
 
-        getRecursoWebFromJSON(ctx: string): ZRecursoViewModel {
+        private getRecursoWebFromJSON(ctx: string): ZRecursoViewModel {
 
             switch (ctx) {
                 case "A14E":

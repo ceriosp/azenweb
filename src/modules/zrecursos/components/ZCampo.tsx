@@ -33,7 +33,7 @@ interface OwnProperties {
     onCampoZoomClick?: (zreferenciaViewModel: ZReferenciaViewModel) => void
 }
 
-export default class ZCampo extends React.Component<OwnProperties, void>
+export default class ZCampo extends React.PureComponent<OwnProperties, void>
 {
     private isRegion: boolean = false;
 

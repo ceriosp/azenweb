@@ -1,21 +1,29 @@
 import { createSelector } from 'reselect';
 
 import {
+
+    //Models
     ZRecursoViewModel,
 
+    //State
     ZAplicationState,
+
+    //Utils
+    EntityNormalizedObj
+
 } from "../zcommon";
 
 export namespace Selectors
 {    
-    export const mapRecursosIndxByIdSelector = (zaplicationState:ZAplicationState):Map<string, ZRecursoViewModel> => zaplicationState.mapRecursosIndxById;
-    export const mapRecursosZoomIndxByIdSelector = (zaplicationState:ZAplicationState):Map<string, ZRecursoViewModel> => zaplicationState.mapRecursosZoomIndxById;
+    export const getRecursosViewModelById = (zaplicationState:ZAplicationState):EntityNormalizedObj<ZRecursoViewModel> => zaplicationState.recursosViewModel;
+    export const getRecursosZoomViewModelById = (zaplicationState:ZAplicationState):EntityNormalizedObj<ZRecursoViewModel> => zaplicationState.recursosZoomViewModel;
 
     export const recursosIdListSelector = createSelector(
-        [mapRecursosIndxByIdSelector, mapRecursosZoomIndxByIdSelector],
-        (mapRecursosIndxByCtx:Map<string, ZRecursoViewModel>,
-        mapRecursosZoomIndxByCtx:Map<string, ZRecursoViewModel>) => {
+        [getRecursosViewModelById, getRecursosZoomViewModelById],
+        (mapRecursosIndxByCtx:EntityNormalizedObj<ZRecursoViewModel>,
+        mapRecursosZoomIndxByCtx:EntityNormalizedObj<ZRecursoViewModel>) => {
 
+            /*
             let recursosIdsList = new Array<string>();
 
             let keysIterable: IterableIterator<string> = mapRecursosIndxByCtx.keys();      
@@ -29,6 +37,7 @@ export namespace Selectors
             }
 
             return recursosIdsList;
+            */
         }
     );
 }

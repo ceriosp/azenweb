@@ -6,12 +6,7 @@ import {
 } from 'react';
 
 import {
-    Row,    
-    Col,
-    Form,
-    Button, 
     Modal,
-    Panel 
 } from 'react-bootstrap';
 
 import * as ZCommon from "../../zcommon";
@@ -21,7 +16,7 @@ import {
 } from "../../zcommon";
 
 import ZBarraBotones from './ZBarraBotones';
-import ZRecursoZoom from './ZRecursoZoom';
+import ZRecurso from './ZRecurso';
 
 interface OwnProperties
 {    
@@ -36,11 +31,9 @@ interface OwnProperties
     container?: any;
 }
 
-export default class ZVentanaRecursoZoom extends React.Component<OwnProperties, void>
+export default class ZVentanaRecursoZoom extends React.PureComponent<OwnProperties, void>
 {
     private zRecursoViewModel:ZRecursoViewModel;
-    private zcamposBotonesComandos: Array<ZCampoModel> = [];
-    private zcamposBotonesLineaList: Array<ZCampoModel> = [];            
 
     constructor(props:OwnProperties){        
         super(props);
@@ -68,16 +61,15 @@ export default class ZVentanaRecursoZoom extends React.Component<OwnProperties, 
                     </Modal.Header>
 
                     <Modal.Body>
-                        <ZRecursoZoom zRecursoViewModel={this.zRecursoViewModel}/>                       
+                        <ZRecurso zRecursoViewModel={this.zRecursoViewModel}/>
                     </Modal.Body>
 
                     <Modal.Footer>
                         <ZBarraBotones
-                            zcamposBotonesComandosList={this.zcamposBotonesComandos}
-                            zcamposBotonesLineaList={this.zcamposBotonesLineaList}/>
+                            zcamposBotonesComandosList={this.props.zcamposBotonesComandos}
+                            zcamposBotonesLineaList={this.props.zcamposBotonesLineaList}/>
                     </Modal.Footer>
-                </Modal>                
-
+                </Modal>
         );
     }
 
@@ -87,7 +79,5 @@ export default class ZVentanaRecursoZoom extends React.Component<OwnProperties, 
 
     initializeRender(){        
         this.zRecursoViewModel = this.props.zRecursoViewModel;
-        this.zcamposBotonesComandos = this.props.zcamposBotonesComandos;
-        this.zcamposBotonesLineaList = this.props.zcamposBotonesLineaList;
     }
 }
