@@ -59,7 +59,6 @@ export namespace Services {
             const mapServices = new ZCommon.MapServices<string, ZRecursoViewModel>();
             let resultMap: Map<string, ZRecursoViewModel>;
 
-
             if (mapRecursosIndxById.has(idRecurso)) {
 
                 zrecursoModelWebAlFrente = { ...mapRecursosIndxById.get(idRecurso) };

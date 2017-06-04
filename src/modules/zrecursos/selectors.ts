@@ -21,7 +21,13 @@ export namespace Selectors
         [getRecursosViewModel],
         (recursosViewModelById:EntityNormalizedObj<ZRecursoViewModel>):Array<ZRecursoViewModel> => {            
 
+            console.log("recalculates selector");
+
             let recursosActivos = new Array<ZRecursoViewModel>();
+
+            if(!recursosViewModelById){
+                return recursosActivos;
+            }
 
             if(!recursosViewModelById.allIds){
                 return recursosActivos;

@@ -73,12 +73,12 @@ export namespace Services {
 
             let newZrecursoEntityMap = new EntityMap<ZRecursoViewModel>();
             let zrecursoModelWebAbrir: ZRecursoViewModel = null;
-            const { idRecurso, zrecursoViewModelEntityMap } = despacharOpcionMenuParamsDTO;
+            const { idRecurso, zrecursoViewModelEntityMapOld } = despacharOpcionMenuParamsDTO;
 
             zrecursoModelWebAbrir = this.getRecursoWebFromJSON(idRecurso);
             newZrecursoEntityMap = u({
                 [idRecurso]:zrecursoModelWebAbrir
-            }, zrecursoViewModelEntityMap);
+            }, zrecursoViewModelEntityMapOld);
 
             return newZrecursoEntityMap;
         }

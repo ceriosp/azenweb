@@ -13,6 +13,7 @@ import {
 
     //Utils
     EntityMap,
+    EntityNormalizedObj,
 
 } from '../zcommon';
 
@@ -27,49 +28,55 @@ import { ActionTypes } from './actionTypes';
 
 export namespace Reducers {
 
-    const initialState = new EntityMap<ZRecursoViewModel>();
+    export namespace recursosViewModel {
 
-    const recursosViewModelByIdReducer = (state: EntityMap<ZRecursoViewModel> = initialState, action: ActionTypes.Action): EntityMap<ZRecursoViewModel> => {
-                
-        switch (action.type) {
+        const initialState = new EntityMap<ZRecursoViewModel>();
 
-            case ZMenu.ActionTypes.DESPACHAR_OPCION_MENU:                
-                return despacharOpcionMenu(state, action);
+        const byId = (state: EntityMap<ZRecursoViewModel> = initialState, action: ActionTypes.Action): EntityMap<ZRecursoViewModel> => {
 
-            default:
-                return state;                
-        }
-    }
+            switch (action.type) {
 
-    const despacharOpcionMenu = (state: EntityMap<ZRecursoViewModel> = initialState, action: ActionTypes.Action): EntityMap<ZRecursoViewModel> => {
+                case ZMenu.ActionTypes.DESPACHAR_OPCION_MENU:
+                    return byIdDespacharOpcionMenu(state, action);
 
-        if (action.type != ZMenu.ActionTypes.DESPACHAR_OPCION_MENU) {
-            return state;
+                default:
+                    return state;
+            }
         }
 
-        let zrecursosService = new Services.ZRecursoServices();
+        const allIds = (state: Array<string> = [], action: ActionTypes.Action): Array<string> => {
 
-        return zrecursosService.despacharOpcionMenu({
-            idRecurso: action.zmenuItemModel.ctx,
-            tipoRecurso: ZCommon.Constants.TipoRecurso.Basico,
-            zrecursoViewModelEntityMap: state
+            switch (action.type) {
+                case ZMenu.ActionTypes.DESPACHAR_OPCION_MENU:
+                    if(state.indexOf(action.zmenuItemModel.ctx) != -1){
+                        return state;
+                    }
+                    return [action.zmenuItemModel.ctx, ...state];
+
+                default:
+                    return state;
+            }
+        }
+
+        const byIdDespacharOpcionMenu = (state: EntityMap<ZRecursoViewModel> = initialState, action: ActionTypes.Action): EntityMap<ZRecursoViewModel> => {
+
+            if (action.type != ZMenu.ActionTypes.DESPACHAR_OPCION_MENU) {
+                return state;
+            }
+
+            let zrecursosService = new Services.ZRecursoServices();
+
+            return zrecursosService.despacharOpcionMenu({
+                idRecurso: action.zmenuItemModel.ctx,
+                tipoRecurso: ZCommon.Constants.TipoRecurso.Basico,
+                zrecursoViewModelEntityMapOld: state
+            });
+        }
+
+        export const recursosViewModel: Reducer<EntityNormalizedObj<ZRecursoViewModel>> = combineReducers<EntityNormalizedObj<ZRecursoViewModel>>({
+            byId: byId,
+            allIds: allIds
         });
     }
-
-    const allRecursosViewModelReducer = (state: Array<string> = [], action: ActionTypes.Action): Array<string> => {      
-        
-        switch (action.type) {
-            case ZMenu.ActionTypes.DESPACHAR_OPCION_MENU:                
-                return [action.zmenuItemModel.ctx, ...state];
-
-            default:
-                return state;
-        }
-}
-
-export const recursosViewModelReducer: Reducer<any> = combineReducers({
-    byId: recursosViewModelByIdReducer,
-    allIds: allRecursosViewModelReducer
-});
 }
 

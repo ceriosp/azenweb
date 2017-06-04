@@ -1,4 +1,3 @@
-
 import { Reducer, combineReducers } from 'redux';
 
 import * as ZCommon from '../zcommon';
@@ -31,12 +30,19 @@ import {
 import * as ZAplication from './index';
 
 export namespace Reducers {
-    
-    export const ZAplicacionReducer: Reducer<any> = combineReducers({
-        mostrandoVentanaModal:()=>{ return {}; },
-        recursosZoomViewModel:()=>{ return {}; },
-        recursosViewModel: ZRecursos.Reducers.recursosViewModelReducer,        
-    });
 
+    export const zaplicacionReducer = (state: ZAplicationState = {} as ZAplicationState, action: any): ZAplicationState => {
+
+        switch (action.type) {
+            case ZMenu.ActionTypes.DESPACHAR_OPCION_MENU:
+                return {
+                    ...state,
+                    mostrandoVentanaModal: false,
+                    recursosViewModel: ZRecursos.Reducers.recursosViewModel.recursosViewModel(state.recursosViewModel, action)
+                };
+        }
+
+        return state;
+    }
 }
 

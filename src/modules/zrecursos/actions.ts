@@ -22,7 +22,7 @@ export namespace DTO {
     export class DespacharOpcionMenuParamsDTO {
         tipoRecurso: ZCommon.Constants.TipoRecurso;
         idRecurso: string;
-        zrecursoViewModelEntityMap: EntityMap<ZRecursoViewModel>;
+        zrecursoViewModelEntityMapOld: EntityMap<ZRecursoViewModel>;
     }
 }
 
