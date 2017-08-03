@@ -18,12 +18,7 @@ import {
 } from './modules/zcommon';
 
 import * as ZAplicacion from "./modules/zaplicacion";
-import {
-
-    //Components
-    ZAplicacionRoot,
-
-} from "./modules/zaplicacion";
+import { ZListadoAplicacionesContainer } from "./modules/app/containers/ZListadoAplicacionesContainer";
 
 
 import {
@@ -55,7 +50,7 @@ const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        <ZAplicacionRoot />
+        <ZListadoAplicacionesContainer />
     </Provider>,
     document.getElementById("app-container")
 );

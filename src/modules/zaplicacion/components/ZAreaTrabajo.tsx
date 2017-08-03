@@ -64,7 +64,7 @@ export default class ZAreaTrabajo extends React.Component<OwnProps, undefined>
                                 this.divAreaTrabajo = divTrabajo;
                             }}>
 
-                            Area divAreaTrabajo 3
+                            
 
                             
                                 {/*

@@ -33,10 +33,11 @@ export namespace Reducers {
         const initialState = new EntityMap<ZRecursoViewModel>();
 
         const byId = (state: EntityMap<ZRecursoViewModel> = initialState, action: ActionTypes.Action): EntityMap<ZRecursoViewModel> => {
+            
 
             switch (action.type) {
 
-                case ZMenu.ActionTypes.DESPACHAR_OPCION_MENU:
+                case ZMenu.ActionTypes.DESPACHAR_OPCION_MENU:                
                     return byIdDespacharOpcionMenu(state, action);
 
                 default:
@@ -73,9 +74,9 @@ export namespace Reducers {
             });
         }
 
-        export const recursosViewModel: Reducer<EntityNormalizedObj<ZRecursoViewModel>> = combineReducers<EntityNormalizedObj<ZRecursoViewModel>>({
-            byId: byId,
-            allIds: allIds
+        export const recursosViewModel = combineReducers<EntityNormalizedObj<ZRecursoViewModel>>({
+            byId,
+            allIds
         });
     }
 }
