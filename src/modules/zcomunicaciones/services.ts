@@ -4,41 +4,76 @@ import {
     Constants as ZUtilsConstants
 } from "../zutils";
 
-import { IColaEventos } from "./models";
+import { IColaEventos, EnviarComandoParams } from "./models";
+import { Constants } from "./constants";
 
 export namespace Services {
 
-    ResultadoActionConDato
     export const lanzarAplicacion =
-        (identificadorAplicacion: string): Promise<ResultadoActionConDato<IColaEventos>> =>
-            new Promise<ResultadoActionConDato<IColaEventos>>((resolve, reject) => {
-                //fetch(`http://52.11.111.216:8080/azen/Sesion?cmd=-1&buffer=azen&idApl=${identificadorAplicacion}`, {
-                    fetch(`http://localhost:8585/azenweb/server/despacharRecurso.php`, {
-                    /*
-                    headers: {
-                        'Content-Type': 'application/json'
+        (idApl: string): Promise<ResultadoActionConDato<IColaEventos>> => {
+            return new Promise<ResultadoActionConDato<IColaEventos>>((resolve, reject) => {
+                enviarRequestComando<IColaEventos>({
+                    cmd: Constants.CodigoComandoEnum.CM_APLICACION,
+                    buffer: 'azen',
+                    idApl: idApl
+                }).then(
+                    (resultadoCmAplicacion:ResultadoActionConDato<IColaEventos>)=>{
+                        console.log("resultado CM_APLICACION");
+                        console.log(resultadoCmAplicacion);                        
+                        enviarRequestComando<Object>({
+                            cmd:Constants.CodigoComandoEnum.CM_DEFMENU,
+                            buffer:'azen',
+                            idApl:idApl
+                        }).then(
+                            (result)=>{
+                                console.log('resultado menu');
+                                console.log(result);
+                            }
+                        );
                     },
-                    */
-                    method: 'GET',
-                })
-                    .then(response => response.text())
-                    .then((colaEventoStr: string) => {
-                        //colaEventoStr = colaEventoStr.substring(0, colaEventoStr.length - 1);
-                        //debugger
-                        let colaEventos: IColaEventos = JSON.parse(colaEventoStr);
-                        let resultadoActionExito = new ResultadoActionConDato<IColaEventos>();
-                        resultadoActionExito.retorno = colaEventos;
-                        resultadoActionExito.resultado = ZUtilsConstants.ResultadoAccionEnum.EXITO;
-                        resolve(resultadoActionExito);
-                    })
-                    .catch((error) => {
-                        let resultadoActionError = new ResultadoAction();
-                        resultadoActionError.resultado = ZUtilsConstants.ResultadoAccionEnum.ERROR;
-                        resultadoActionError.mensaje = "Error lanzando aplicación";
-                        resultadoActionError.traza = error;
-                        console.error("Comunicaciones/services/lanzarAplicacion");
-                        console.error(resultadoActionError);
-                        reject(resultadoActionError);
-                    });
+                    ()=>{}
+                );
+            });
+        }
+
+    const enviarRequestComando = <TRetorno>(parametros: EnviarComandoParams): Promise<ResultadoActionConDato<TRetorno>> => {
+        return new Promise<ResultadoActionConDato<TRetorno>>((resolve, reject) => {
+            let { cmd, buffer, idApl } = parametros;
+            fetch(`http://52.11.111.216:8080/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}`, {
+                //fetch(`http://localhost:8585/azenweb/server/despacharRecurso.php`, {
+                /*
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                */                
+                credentials: 'include',
+                method: 'GET',
             })
+                .then(                    
+                    (response) => {                        
+                        return response.text();
+                    }
+                )
+                .then((retornoStr: string) => {                
+                    if (retornoStr[retornoStr.length - 1] != '}') {
+                        retornoStr = retornoStr.substring(0, retornoStr.length - 1);
+                    }
+                    let retorno: TRetorno = JSON.parse(retornoStr);
+                    let resultadoActionExito = new ResultadoActionConDato<TRetorno>();
+                    resultadoActionExito.retorno = retorno;
+                    resultadoActionExito.resultado = ZUtilsConstants.ResultadoAccionEnum.EXITO;
+                    resolve(resultadoActionExito);
+                })
+                .catch((error) => {
+                    let resultadoActionError = new ResultadoAction();
+                    resultadoActionError.resultado = ZUtilsConstants.ResultadoAccionEnum.ERROR;
+                    resultadoActionError.mensaje = `Error ejecutando comando ${cmd}`;
+                    resultadoActionError.traza = error;
+                    console.error("Comunicaciones/services/enviarRequestComando");
+                    console.error(resultadoActionError);
+                    reject(resultadoActionError);
+                });
+        })
+    }
+
 }

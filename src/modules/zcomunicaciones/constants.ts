@@ -8,12 +8,7 @@ export namespace Constants {
         EVT_RATON
     }
 
-    export enum CodigoComandoEnum {
-
-        CM_APLICACION = -1,
-        CM_LOGIN = -2,
-        CM_ACEPTARLOGIN = -3,
-        
+    export enum CodigoComandoEnum {        
         CM_NADA,	//0
         CM_SI,	//1	
         CM_NO,	//2
@@ -214,5 +209,10 @@ export namespace Constants {
         CM_URL,	//176   cerIOS ABR 2009
 
         CM_NUMCODIGOS, // 177
+
+        CM_APLICACION = -1,
+        CM_LOGIN = -2,
+        CM_ACEPTARLOGIN = -3,
+        
     }
 }

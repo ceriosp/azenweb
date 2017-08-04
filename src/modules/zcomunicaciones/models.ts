@@ -24,3 +24,9 @@ export interface IColaEventos {
     numEventos:number;
     eventos:Array<IEvento>;
 }
+
+export interface EnviarComandoParams {
+    cmd:Constants.CodigoComandoEnum;
+    buffer:string;
+    idApl:string;
+}
