@@ -22,32 +22,28 @@ import {
 
     State,
     ZMenuState,
+    IZMenu,
+    IZMenuItem,
 
 } from '../../zcommon';
 
-interface OwnProps {
+export interface OwnProps {
     index: number;
     sobrePonerse:boolean;
 }
 
-interface ConnectedState {
-    zmenuModel:ZMenuModel
+export interface ConnectedState {
+    zMenu:IZMenu
 }
-const mapStateToProps = (state:State, ownProps:OwnProps) : ConnectedState => ({
-    zmenuModel:ZMenu.Selectors.zmenuModelSelector(state.zmenuState),
-});
 
-interface ConnectedDispatch
+export interface ConnectedDispatch
 {
     despacharOpcionMenu: (zmenuItemModel: ZMenuItemModel) => void;
 }
-const mapDispatchToProps = (dispatch: redux.Dispatch<ZMenuState>): ConnectedDispatch => ({
-  despacharOpcionMenu:(zmenuItemModel: ZMenuItemModel) => dispatch(ZMenu .Actions.despacharOpcionMenu(zmenuItemModel))
-});
 
 import ZMenuItem from './ZMenuItem';
 
-class ZMenuRootComponent extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
+export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
     constructor(props:OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
@@ -57,7 +53,7 @@ class ZMenuRootComponent extends React.Component<OwnProps & ConnectedState & Con
 
     render() {
 
-        let { zmenuModel, index } = this.props;
+        let { zMenu, index } = this.props;
 
         return (
             <Row>
@@ -75,12 +71,12 @@ class ZMenuRootComponent extends React.Component<OwnProps & ConnectedState & Con
                         </Navbar.Header>
                         <Navbar.Collapse>
                             <Nav>
-                                {zmenuModel.menu.map((zmenuItemModel: ZMenuItemModel, i: number) => {
-                                    let key: string = zmenuItemModel.ctx;
+                                {zMenu.menu.map((zMenuItem: IZMenuItem, i: number) => {
+                                    let key: string = zMenuItem.ctx;
                                     return (
                                         <ZMenuItem
                                             key={key}
-                                            zmenuItemModel={zmenuItemModel}
+                                            zmenuItemModel={zMenuItem}
                                             despacharOpcionMenuFn={this.despacharOpcionMenu}
                                             parentLevel={0} />
                                     );
@@ -101,6 +97,3 @@ class ZMenuRootComponent extends React.Component<OwnProps & ConnectedState & Con
         this.props.despacharOpcionMenu(zmenuItemModel);
     }
 }
-
-export const ZMenuRoot: React.ComponentClass<OwnProps> = 
-connect<ConnectedState, ConnectedDispatch, OwnProps>(mapStateToProps, mapDispatchToProps)(ZMenuRootComponent);

@@ -12,6 +12,8 @@ const { default: immutableStateInvariant } = require('redux-immutable-state-inva
 
 import { combinedReducers } from './rootReducer';
 
+import * as App from './modules/app';
+
 import {
     ZMenuModel,
     ZMenuItemModel
@@ -44,7 +46,7 @@ const middlewares = __DEV__ ?
 
 declare let window: any;
 const store = createStore(
-    combinedReducers,
+    App.Reducers.zaplState,
     redux.compose(redux.applyMiddleware(...middlewares), window.devToolsExtension ? window.devToolsExtension() : (f: any) => f)
 );
 

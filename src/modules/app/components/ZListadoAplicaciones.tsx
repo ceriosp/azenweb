@@ -26,6 +26,9 @@ import {
     //Components
     ZVentanaRecurso
 } from "../../zrecursos";
+import { ZMenuRootContainer } from "../../zmenu/containers/ZMenuRootContainer";
+
+
 
 export interface OwnProps
 {
@@ -54,12 +57,19 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
     render(){        
         return (            
             <div>
-                <div>Listado aplicaciones</div>
+
+                <ZMenuRootContainer
+                    index={0}
+                    sobrePonerse={true}
+                />
+
                 <input 
                     type='button' 
                     value='azenctb'
                     onClick={this.lanzarAplicacion}
                 />
+
+
             </div>
         );
     }

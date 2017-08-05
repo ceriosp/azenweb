@@ -115,7 +115,7 @@ class ZJunturaModel
     public nomCmp: string;
 }
 
-
+//ZMenuItemModel
 class ZMenuModel
 {
     constructor(){
@@ -148,8 +148,8 @@ export
     ZDescripcionReferenciaModel,
 
     //Menu
-    ZMenuModel,
     ZMenuItemModel,
+    ZMenuModel,
 
     //Utils
     EntityNormalizedObj,

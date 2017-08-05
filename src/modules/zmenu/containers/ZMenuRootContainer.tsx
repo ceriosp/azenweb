@@ -12,19 +12,18 @@ import {
     OwnProps,
     ConnectedState,
     ConnectedDispatch,
-    ZListadoAplicaciones,
-} from '../components/ZListadoAplicaciones';
+    ZMenuRoot,
+} from '../components/ZMenuRoot';
 
 import * as ZAplicacion from '../../zaplicacion';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
-    
+    zMenu:appState.zMenuModule.zmenu    
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-    lanzarAplicacion: (identificadorAplicacion: string) => 
-        dispatch(ZAplicacion.Actions.lanzarAplicacion(identificadorAplicacion))
+    despacharOpcionMenu: (zmenuItemModel: any) => null
 });
 
-export const ZListadoAplicacionesContainer: React.ComponentClass<OwnProps> =
-    connect<ConnectedState, ConnectedDispatch, OwnProps>(mapStateToProps, mapDispatchToProps)(ZListadoAplicaciones);
+export const ZMenuRootContainer: React.ComponentClass<OwnProps> =
+    connect<ConnectedState, ConnectedDispatch, OwnProps>(mapStateToProps, mapDispatchToProps)(ZMenuRoot);

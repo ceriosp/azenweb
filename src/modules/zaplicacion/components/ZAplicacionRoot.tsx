@@ -79,11 +79,6 @@ class ZAplicacionRootComponent extends React.Component<ConnectedDispatch & Conne
 
         return (
             <div className="container">
-
-                <ZMenuRoot
-                    index={0}
-                    sobrePonerse={!this.props.mostrandoVentanaModal} />
-
                 <ZAreaTrabajoContainer />
             </div>
         );
