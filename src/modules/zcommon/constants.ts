@@ -24,7 +24,7 @@ export namespace Constants {
         EVT_RATON
     }
 
-    export enum CodigoComandoEnum {        
+    export enum ComandoEnum {        
         CM_NADA,	//0
         CM_SI,	//1	
         CM_NO,	//2

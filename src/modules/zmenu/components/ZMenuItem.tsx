@@ -16,27 +16,36 @@ import {
 } from 'react-bootstrap';
 
 import {
-    ZMenuModel,
-    ZMenuItemModel
-} from '../../zcommon';
+    IZMenuItem,
+    IZMenu
+} from '../../zcommon/contracts';
+import { ZMenuItemContainer } from "../containers/ZMenuItemContainer";
 
-
-interface OwnProps {
-    zmenuItemModel: ZMenuItemModel
+export interface OwnProps {
+    zmenuItem: IZMenuItem
     parentLevel: number;
-    menuItemPadre?: ZMenuItemModel,
-    despacharOpcionMenuFn?: (zmenuItemModel: ZMenuItemModel) => void
+    menuItemPadre?: IZMenu,
+    despacharOpcionMenuFn?: (zmenuItemModel: IZMenuItem) => void
+}
+
+export interface ConnectedState {
+    
+}
+
+export interface ConnectedDispatch
+{
+    lanzarOpcion: (ctx: string) => void;
 }
 
 interface OwnState {
     isMenuOpen: boolean;
 }
 
-export default class ZMenuItem extends React.Component<OwnProps, OwnState>
+export class ZMenuItem extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, OwnState>
 {
     private opcionesHijasDePrimerNivel: Array<any> = [];
 
-    constructor(props: OwnProps) {
+    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
 
         super(props);
 
@@ -46,14 +55,12 @@ export default class ZMenuItem extends React.Component<OwnProps, OwnState>
 
         this.despacharOpcionMenu = this.despacharOpcionMenu.bind(this);
         this.createSubMenu = this.createSubMenu.bind(this);
-
-        console.log("construye zmenu item");
     }
 
     render(): any {
 
         let {
-            zmenuItemModel,
+            zmenuItem,
             menuItemPadre,
             parentLevel
         } = this.props;
@@ -68,7 +75,7 @@ export default class ZMenuItem extends React.Component<OwnProps, OwnState>
             href="#"
             style={menuStyle}            
             onClick={this.despacharOpcionMenu}>
-            {zmenuItemModel.nom}
+            {zmenuItem.nom}
         </MenuItem>;
 
         if (this.esMenuContenedor()) {
@@ -79,8 +86,8 @@ export default class ZMenuItem extends React.Component<OwnProps, OwnState>
                         onClick={this.createSubMenu}
                         style={menuStyle}
                         eventKey={2}
-                        title={zmenuItemModel.nom}
-                        id={"z_menuitem_" + zmenuItemModel.ctx}>
+                        title={zmenuItem.nom}
+                        id={"z_menuitem_" + zmenuItem.ctx}>
                         {this.opcionesHijasDePrimerNivel}
                     </NavDropdown>
                 );
@@ -97,20 +104,20 @@ export default class ZMenuItem extends React.Component<OwnProps, OwnState>
         }
 
         let {
-            zmenuItemModel,
+            zmenuItem,
             menuItemPadre,
             parentLevel
         } = this.props;
 
         this.opcionesHijasDePrimerNivel = (
-            zmenuItemModel.menu.map((zmenuItemModelChild: ZMenuItemModel, index: number) => {
+            zmenuItem.menu.map((zmenuItemModelChild: IZMenuItem, index: number) => {
                 let key: string = zmenuItemModelChild.ctx;
                 return (
-                    <ZMenuItem
+                    <ZMenuItemContainer
                         key={key}
-                        zmenuItemModel={zmenuItemModelChild}
+                        zmenuItem={zmenuItemModelChild}
                         parentLevel={parentLevel + 1}
-                        despacharOpcionMenuFn={this.props.despacharOpcionMenuFn}
+                        despacharOpcionMenuFn={this.props.despacharOpcionMenuFn}                    
                     />
                 );
             })
@@ -118,8 +125,8 @@ export default class ZMenuItem extends React.Component<OwnProps, OwnState>
     }
 
     esMenuContenedor() {
-        let { zmenuItemModel } = this.props;
-        return zmenuItemModel.menu && zmenuItemModel.menu.length > 0;
+        let { zmenuItem } = this.props;
+        return zmenuItem.menu && zmenuItem.menu.length > 0;
     }
 
     createSubMenu() {
@@ -137,9 +144,7 @@ export default class ZMenuItem extends React.Component<OwnProps, OwnState>
             (document.querySelector("button.navbar-toggle") as HTMLElement).click();
         }
 
-        if (this.props.despacharOpcionMenuFn) {
-            this.props.despacharOpcionMenuFn(this.props.zmenuItemModel);
-        }
+        this.props.lanzarOpcion(this.props.zmenuItem.ctx);
     }
 
     isMobileDevice() {

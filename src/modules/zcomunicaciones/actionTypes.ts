@@ -1,12 +1,12 @@
 export namespace ActionTypes {
 
     export namespace Types {
-        export type CM_APLICACION = "zcomunicaciones/CM_APLICACION";
+        export type SET_ESTAPROCESANDOREQUESTSERVIDOR = "zcomunicaciones/SET_ESTAPROCESANDOREQUESTSERVIDOR";
     }
 
-    export const CM_APLICACION: Types.CM_APLICACION = "zcomunicaciones/CM_APLICACION";
+    export const SET_ESTAPROCESANDOREQUESTSERVIDOR: Types.SET_ESTAPROCESANDOREQUESTSERVIDOR = "zcomunicaciones/SET_ESTAPROCESANDOREQUESTSERVIDOR";
 
-     export type Action =
-            { type: Types.CM_APLICACION, identificadorAplicacion:string }
+    export type Action =
+        { type: Types.SET_ESTAPROCESANDOREQUESTSERVIDOR, valor: boolean }
 
 }

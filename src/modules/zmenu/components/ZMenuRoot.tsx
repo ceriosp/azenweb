@@ -29,23 +29,22 @@ import {
 
 export interface OwnProps {
     index: number;
-    sobrePonerse:boolean;
+    sobrePonerse: boolean;
 }
 
 export interface ConnectedState {
-    zMenu:IZMenu
+    zMenu: IZMenu
 }
 
-export interface ConnectedDispatch
-{
+export interface ConnectedDispatch {
     despacharOpcionMenu: (zmenuItemModel: ZMenuItemModel) => void;
 }
 
-import ZMenuItem from './ZMenuItem';
+import { ZMenuItemContainer } from '../containers/ZMenuItemContainer';
 
 export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    constructor(props:OwnProps & ConnectedState & ConnectedDispatch) {
+    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
         this.despacharOpcionMenu = this.despacharOpcionMenu.bind(this);
@@ -60,13 +59,13 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
                 <Col md={12}>
                     <Navbar
                         collapseOnSelect
-                        staticTop                        
-                        style={ this.props.sobrePonerse ? { zIndex: 1000000 } : null}>
+                        staticTop
+                        style={this.props.sobrePonerse ? { zIndex: 1000000 } : null}>
                         <Navbar.Header>
                             <Navbar.Brand>
                                 <a href="#">Azen contabilidad</a>
                             </Navbar.Brand>
-                            <Navbar.Toggle>                                
+                            <Navbar.Toggle>
                             </Navbar.Toggle>
                         </Navbar.Header>
                         <Navbar.Collapse>
@@ -74,9 +73,9 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
                                 {zMenu.menu.map((zMenuItem: IZMenuItem, i: number) => {
                                     let key: string = zMenuItem.ctx;
                                     return (
-                                        <ZMenuItem
+                                        <ZMenuItemContainer
                                             key={key}
-                                            zmenuItemModel={zMenuItem}
+                                            zmenuItem={zMenuItem}
                                             despacharOpcionMenuFn={this.despacharOpcionMenu}
                                             parentLevel={0} />
                                     );

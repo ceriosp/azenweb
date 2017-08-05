@@ -1,7 +1,8 @@
 import { Constants } from "./constants";
 
 export interface IZAplState
-{
+{   
+    estaProcesandoRequestServidor:boolean;     
     zMenuModule:IZMenuModule;
 }
 
@@ -19,7 +20,7 @@ export interface IZDatoEvento {
 
     tipo:Constants.TipoEventoEnum;
     tec:number; //tecla
-    cmd:Constants.CodigoComandoEnum;
+    cmd:Constants.ComandoEnum;
     inf:string;
     buffer:IZBuffer;    
 }
@@ -35,7 +36,7 @@ export interface IZColaEventos {
 }
 
 export interface IZEnviarComandoParams {
-    cmd:Constants.CodigoComandoEnum;
+    cmd:Constants.ComandoEnum;
     buffer:string;
     idApl:string;
 }
@@ -53,3 +54,22 @@ export interface IZMenuItem
     desh: number;
     menu: Array<IZMenuItem>;
 }
+
+export interface IZCampo
+{
+    etq: string;
+    nomCmp: string;
+    filEtq: number;
+    colEtq: number;    
+    filCmp: number;
+    colCmp: number;
+    lonv: number;
+    posbit: number;
+    claseInd: number;
+    tipo: number;
+    lon: number;
+    noEnTabla: number;
+    modo: number;
+    numDec: number; 
+}
+

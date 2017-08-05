@@ -27,6 +27,7 @@ import {
     ZVentanaRecurso
 } from "../../zrecursos";
 import { ZMenuRootContainer } from "../../zmenu/containers/ZMenuRootContainer";
+import { ZProcesandoContainer } from "../../zaplicacion/containers/ZProcesandoContainer";
 
 
 
@@ -60,7 +61,7 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
 
                 <ZMenuRootContainer
                     index={0}
-                    sobrePonerse={true}
+                    sobrePonerse={false}
                 />
 
                 <input 
@@ -68,6 +69,8 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
                     value='azenctb'
                     onClick={this.lanzarAplicacion}
                 />
+
+                <ZProcesandoContainer/>
 
 
             </div>

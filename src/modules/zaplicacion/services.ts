@@ -44,8 +44,10 @@ const recursosZoomList: Array<string> =
 
 import * as ZCommon from '../zcommon';
 import {
-    ZRecursoViewModel
+    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu
 } from '../zcommon';
+
+import * as ZMenu from '../zmenu';
 
 import * as ZRecursos from '../zrecursos';
 
@@ -88,7 +90,7 @@ export namespace Services {
                 mapRecursosIndxById.forEach((zrecuersoViewModelI: ZRecursoViewModel) => {
                     zrecuersoViewModelI.visible = false;
                 });
-                                
+
                 let newMapRecursosIndxById = new Map<string, ZRecursoViewModel>();
 
                 console.log("new map: ");
@@ -103,8 +105,8 @@ export namespace Services {
                     console.log("newMapRecursosIndxById px ");
                     console.log(newMapRecursosIndxById.get("A14E").px);
                 }
-                
-                
+
+
                 resultMap = mapServices.addNewElementAtBeginingImmutableWay(idRecurso, zrecursoModelWebAlFrente, mapRecursosIndxById);
             }
 
@@ -156,6 +158,36 @@ export namespace Services {
 
                 default:
                     return null;
+            }
+        }
+    }
+
+    export namespace Responder {
+        export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
+
+            for (let i = 0; i < zColaEventos.eventos.length; i++) {
+                procesarEvento(zColaEventos.eventos[i], dispatch, getState);
+            }
+
+        }
+
+        const procesarEvento = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
+            if (zEvento.dato.tipo == ZCommon.Constants.TipoEventoEnum.EVT_COMANDO) {
+                procesarEventoComando(zEvento, dispatch, getState);
+            }
+        }
+
+        const procesarEventoComando = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
+            switch (zEvento.dato.cmd) {
+
+                case ZCommon.Constants.ComandoEnum.CM_DEFMENU:
+                    const zmenu = zEvento.dato.buffer.dato as IZMenu;
+                    dispatch(ZMenu.Actions.ZMenuModule.setZMenu(zmenu));
+                    break;
+
+                case ZCommon.Constants.ComandoEnum.CM_PXCREAR:
+                    console.log(JSON.stringify(zEvento));
+                break;
             }
         }
     }
