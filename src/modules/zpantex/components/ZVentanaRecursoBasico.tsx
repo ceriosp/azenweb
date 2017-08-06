@@ -38,7 +38,7 @@ interface OwnProperties {
     esModal: boolean;
 }
 
-export default class ZVentanaRecursoBasico extends React.PureComponent<OwnProperties, void>
+export default class ZVentanaRecursoBasico extends React.PureComponent<OwnProperties, undefined>
 {
     private zRecursoViewModel: ZRecursoViewModel;
 

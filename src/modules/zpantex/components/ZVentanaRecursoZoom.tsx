@@ -31,7 +31,7 @@ interface OwnProperties
     container?: any;
 }
 
-export default class ZVentanaRecursoZoom extends React.PureComponent<OwnProperties, void>
+export default class ZVentanaRecursoZoom extends React.PureComponent<OwnProperties, undefined>
 {
     private zRecursoViewModel:ZRecursoViewModel;
 

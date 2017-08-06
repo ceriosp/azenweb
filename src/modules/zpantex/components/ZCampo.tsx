@@ -38,7 +38,7 @@ interface OwnProperties {
     */
 }
 
-export default class ZCampo extends React.PureComponent<OwnProperties, void>
+export default class ZCampo extends React.PureComponent<OwnProperties, undefined>
 {
     private isRegion: boolean = false;
 

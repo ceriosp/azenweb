@@ -32,7 +32,7 @@ interface OwnProperties {
     container?: any;
 }
 
-export default class ZRecursoBasico extends React.PureComponent<OwnProperties, void>
+export default class ZRecursoBasico extends React.PureComponent<OwnProperties, undefined>
 {
     private zRecursoViewModel: ZRecursoViewModel;
     private zcampoRegionEnProceso: ZCampoModel;    

@@ -14,7 +14,7 @@ interface OwnProperties
     zCampoModel:ZCampoModel;
 }
 
-export default class ZCampoCheckbox extends React.PureComponent<OwnProperties, void>
+export default class ZCampoCheckbox extends React.PureComponent<OwnProperties, undefined>
 {
     render(){
 

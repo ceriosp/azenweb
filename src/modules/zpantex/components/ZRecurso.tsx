@@ -24,7 +24,7 @@ interface OwnProperties {
     container?: any;
 }
 
-export default class ZRecurso extends React.PureComponent<OwnProperties, void>
+export default class ZRecurso extends React.PureComponent<OwnProperties, undefined>
 {
     private zRecursoViewModel: ZRecursoViewModel;
     private recursoYaArmado: boolean;

@@ -40,10 +40,10 @@ export class ZAplicacion extends React.Component<OwnProps & ConnectedState & Con
     render(): any {
         return (
             <div>
-                {this.props.zPantexModule.pilaPantex.map((zPantexI:IZPantex)=>{
+                {this.props.zPantexModule.pilaPantex.map((zPantexI:IZPantex, index:number)=>{
                     return (
                         <ZPantexContainer
-                            key={zPantexI.numPx}
+                            key={index}
                             zPantex={zPantexI}
                         />
                     );

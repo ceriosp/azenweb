@@ -45,7 +45,7 @@ interface OwnProperties {
     esModal: boolean;
 }
 
-export default class ZVentanaRecursoMovimiento extends React.PureComponent<OwnProperties, void>
+export default class ZVentanaRecursoMovimiento extends React.PureComponent<OwnProperties, undefined>
 {
     private zRecursoViewModel: ZRecursoViewModel;
 

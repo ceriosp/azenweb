@@ -29,7 +29,7 @@ interface OwnProperties {
     esModal: boolean;
 }
 
-export default class ZVentanaRecurso extends React.Component<OwnProperties, void>
+export default class ZVentanaRecurso extends React.Component<OwnProperties, undefined>
 {
     private zRecursoViewModel: ZRecursoViewModel;
     private zcamposBotonesComandos: Array<ZCampoModel> = [];

@@ -13,7 +13,7 @@ interface OwnProperties
     zCampoModel:ZCampoModel;
 }
 
-export default class ZCampoRadio extends React.PureComponent<OwnProperties, void>
+export default class ZCampoRadio extends React.PureComponent<OwnProperties, undefined>
 {
     render(){
 
