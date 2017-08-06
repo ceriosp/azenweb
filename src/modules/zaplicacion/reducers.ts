@@ -18,14 +18,14 @@ import {
 
 } from '../zcommon';
 
-import * as ZRecursos from '../zrecursos';
+import * as ZRecursos from '../zpantex';
 
 import * as ZMenu from '../zmenu';
 
 import {
     Services,
     Constants
-} from "../zrecursos";
+} from "../zpantex";
 
 import * as ZAplication from './index';
 

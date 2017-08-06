@@ -44,12 +44,11 @@ const recursosZoomList: Array<string> =
 
 import * as ZCommon from '../zcommon';
 import {
-    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu
+    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex
 } from '../zcommon';
 
 import * as ZMenu from '../zmenu';
-
-import * as ZRecursos from '../zrecursos';
+import * as ZPantex from '../zpantex';
 
 export namespace Services {
 
@@ -84,7 +83,7 @@ export namespace Services {
                 zrecursoModelWebAlFrente.tipoRecurso = tipoRecurso;
                 zrecursoModelWebAlFrente.visible = true;
                 zrecursoModelWebAlFrente.ctx = idRecurso;
-                let zrecursoViewModelService = new ZRecursos.Services.ZRecursoServices();
+                let zrecursoViewModelService = new ZPantex.Services.ZRecursoServices();
                 zrecursoViewModelService.normalizeZRecursoViewModelState(zrecursoModelWebAlFrente);
 
                 mapRecursosIndxById.forEach((zrecuersoViewModelI: ZRecursoViewModel) => {
@@ -185,9 +184,10 @@ export namespace Services {
                     dispatch(ZMenu.Actions.ZMenuModule.setZMenu(zmenu));
                     break;
 
-                case ZCommon.Constants.ComandoEnum.CM_PXCREAR:
-                    console.log(JSON.stringify(zEvento));
-                break;
+                case ZCommon.Constants.ComandoEnum.CM_PXCREAR:         
+                    const zPantex = zEvento.dato.buffer.dato as IZPantex;
+                    dispatch(ZPantex.Actions.ZPantexModule.ponerAlTope(zPantex));
+                break;                
             }
         }
     }

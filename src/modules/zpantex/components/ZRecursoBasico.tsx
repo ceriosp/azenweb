@@ -85,6 +85,7 @@ export default class ZRecursoBasico extends React.PureComponent<OwnProperties, v
 
         return (
             <Col key={index} md={6}>
+            {/*
                 <ZCampo
                     key={zcampoAPintar.nomCmp}
                     zrecursoViewModel={this.zRecursoViewModel}
@@ -92,6 +93,7 @@ export default class ZRecursoBasico extends React.PureComponent<OwnProperties, v
                     esCheckboxAislado={esCheckboxAislado}
                     zcamposEnRegionList={zcamposEnRegionActualList}
                     onCampoZoomClick={this.props.onCampoZoomClick} />
+                    */}
             </Col>
         );
     }

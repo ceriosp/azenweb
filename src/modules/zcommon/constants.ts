@@ -11,7 +11,7 @@ export namespace Constants {
         Comando,
         Linea
     }
-    
+
     export const CAMPO_RADIO: number = 2;
     export const CAMPO_CHECKBOX: number = 1;
     export const CAMPO_TEXTO: number = 0;
@@ -24,7 +24,7 @@ export namespace Constants {
         EVT_RATON
     }
 
-    export enum ComandoEnum {        
+    export enum ComandoEnum {
         CM_NADA,	//0
         CM_SI,	//1	
         CM_NO,	//2
@@ -228,6 +228,32 @@ export namespace Constants {
 
         CM_APLICACION = -1,
         CM_LOGIN = -2,
-        CM_ACEPTARLOGIN = -3,        
-    }    
+        CM_ACEPTARLOGIN = -3,
+    }
+
+    export enum ClaseIndicadorEnum {
+        ZCMP_NOINDICADOR,
+        ZCMP_CHEQUEO,
+        ZCMP_RADIO
+    }
+
+    export namespace ModoCampo {
+        /* modos b sicos para el campo - zcmp.modo */
+        export const ZCMP_MSOLOVISUAL = 0x01; /* sólo es visualizable */
+        export const ZCMP_MFIJO = 0x02;	/* nunca se puede mover */
+        export const ZCMP_MCOLUMNARIO = 0x04; /* ubicación etiqueta columnaria */
+        export const ZCMP_MNOARRIVABLE = 0x08	/* no se arriva en navegación */
+        export const ZCMP_MDETALLABLE = 0x10 /* pone ícono "detallable" */
+        export const ZCMP_MNOLIMPIABLE = 0x20 /* inhibe al zcmp_Limpiar() */
+        export const ZCMP_CLAVE = 0x40;	/* para clave de acceso */
+        export const ZCMP_DESCRJUNTURA = 0x80;	/* es un campo descripción de una juntura */
+        // CERios Nov 11 de 2005. Para tener en cuenta en modo C/S
+        export const ZCMP_ESLLAVEPRIMARIA = 0x100;	/* es un campo que pertenece a la llave primaria  */
+
+        // CERios Ago 2006. Identificacion de lista estatica
+        export const ZCMP_LISTAESTATICA = 0x200;	/* es lista estatica. No se indica en tipos de indicador porque  
+        con ellos se hace uso del campo lonv, y se  requiere 
+        en el caso de listas estaticas */
+    }
+
 }

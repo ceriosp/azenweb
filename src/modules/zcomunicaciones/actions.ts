@@ -32,6 +32,7 @@ export namespace Actions {
                     if (retornoStr[retornoStr.length - 1] != '}') {
                         retornoStr = retornoStr.substring(0, retornoStr.length - 1);
                     }
+                    //console.log(retornoStr);
                     let retorno: TRetorno = JSON.parse(retornoStr);
                     let resultadoActionExito = new ResultadoActionConDato<TRetorno>();
                     resultadoActionExito.retorno = retorno;

@@ -28,7 +28,7 @@ import {
 import { ZAreaTrabajoContainer } from '../containers/ZAreaTrabajoContainer';
 
 import * as ZMenu from "../../zmenu";
-import * as ZRecursos from "../../zrecursos";
+import * as ZRecursos from "../../zpantex";
 import * as ZAplicacion from '../index';
 
 interface OwnProps {

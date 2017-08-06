@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import {
-    Row,    
+    Row,
     Col
 } from 'react-bootstrap';
 
@@ -22,41 +22,39 @@ import {
 
 } from "../../zcommon";
 
-import {    
+import {
     //Components
     ZVentanaRecurso
-} from "../../zrecursos";
+} from "../../zpantex";
 import { ZMenuRootContainer } from "../../zmenu/containers/ZMenuRootContainer";
 import { ZProcesandoContainer } from "../../zaplicacion/containers/ZProcesandoContainer";
+import { ZAplicacionContainer } from "../../zaplicacion/containers/ZAplicacionContainer";
 
 
 
-export interface OwnProps
-{
-    
-}
-
-export interface ConnectedState
-{
+export interface OwnProps {
 
 }
 
-export interface ConnectedDispatch
-{
+export interface ConnectedState {
+
+}
+
+export interface ConnectedDispatch {
     lanzarAplicacion: (identificadorAplicacion: string) => void;
 }
 
 export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
-{    
-    constructor(props:OwnProps & ConnectedState & ConnectedDispatch){
+{
+    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
 
         super(props);
 
         this.lanzarAplicacion = this.lanzarAplicacion.bind(this);
     }
 
-    render(){        
-        return (            
+    render() {
+        return (
             <div>
 
                 <ZMenuRootContainer
@@ -64,20 +62,21 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
                     sobrePonerse={false}
                 />
 
-                <input 
-                    type='button' 
+                <ZAplicacionContainer />
+                
+                <input
+                    type='button'
                     value='azenctb'
                     onClick={this.lanzarAplicacion}
                 />
 
-                <ZProcesandoContainer/>
-
+                <ZProcesandoContainer />
 
             </div>
         );
     }
 
-    lanzarAplicacion(e:any){
+    lanzarAplicacion(e: any) {
         this.props.lanzarAplicacion(e.target.value);
     }
 }

@@ -9,6 +9,8 @@ import {
     //Utils
     EntityMap,
     EntityNormalizedObj,
+    IZAplState,
+    IZPantex,
 
 } from "../zcommon";
 
@@ -17,6 +19,7 @@ import * as ZMenu from '../zmenu';
 import {
     ActionTypes,
 } from './actionTypes';
+import { ResultadoAction } from "../zutils";
 
 export namespace DTO {
     export class DespacharOpcionMenuParamsDTO {
@@ -27,6 +30,23 @@ export namespace DTO {
 }
 
 export namespace Actions {
+
+    export namespace ZPantexModule {
+
+        export const ponerAlTope = (zPantex: IZPantex): ActionTypes.ZPantexModule.Action => ({
+            type: ActionTypes.ZPantexModule.PONER_AL_TOPE,
+            zPantex
+        });
+    }
+
+
+
+
+    
+
+
+
+
     export const despacharOpcionMenu = (zmenuItemModel: ZMenuItemModel): ActionTypes.Action => ({
         type: ZMenu.ActionTypes.DESPACHAR_OPCION_MENU,
         zmenuItemModel: zmenuItemModel

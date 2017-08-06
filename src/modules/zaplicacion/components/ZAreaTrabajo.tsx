@@ -25,7 +25,7 @@ import {
 import {    
     //Components
     ZVentanaRecurso
-} from "../../zrecursos";
+} from "../../zpantex";
 
 interface OwnProps
 {
