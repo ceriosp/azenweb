@@ -38,6 +38,7 @@ export interface ConnectedDispatch
 export class ZPantex extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
     render(): any {
+        
         return (
             <div
                 style={{
