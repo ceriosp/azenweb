@@ -36,7 +36,7 @@ interface OwnProperties {
 
     onCampoZoomClick?: (zreferenciaViewModel: ZReferenciaViewModel) => void
     */
-} 
+}   
 
 export default class ZCampo extends React.PureComponent<OwnProperties, undefined>
 {
