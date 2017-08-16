@@ -123,5 +123,6 @@ export interface IZCampo {
     noEnTabla: number;
     modo: number; //Constants.ModoCampo namespace
     numDec: number;
+    cmps?:Array<IZCampo>;
 }
 
