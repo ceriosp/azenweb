@@ -5,12 +5,12 @@ import {
 } from 'react-bootstrap';
 
 import {
-    ZCampoModel
+    ZCampoModel, IZCampo
 } from "../../zcommon";
 
 interface OwnProperties
 {
-    zCampoModel:ZCampoModel;
+    zCampoModel:IZCampo;
 }
 
 export default class ZCampoRadio extends React.PureComponent<OwnProperties, undefined>

@@ -66,7 +66,6 @@ export interface IZPantex {
 export interface IZFormaTabla { //zft
     ven: IZVentana;
     linEst: Array<IZComandoForma>;
-    cmpsGra: Array<IZCampoGrafico>;
     cmps:Array<IZCampo>;
     btns: Array<IZComandoForma>;
 }
@@ -100,21 +99,9 @@ export interface IZVentana {
     ncolsrx: number;
 }
 
-export interface IZCampoGrafico {
-    etq: string;
-    filIni: number;
-    colIni: number;
-    filFin: number;
-    colFin: number;
-}
-
-export interface IZCampo {    
+export interface IZCampo {
     nomCmp: string;
     etq: string;
-    filEtq: number;
-    colEtq: number;
-    filCmp: number;
-    colCmp: number;    
     lonv: number;
     posbit: number;
     claseInd: Constants.ClaseIndicadorEnum;

@@ -24,7 +24,7 @@ import * as ZRecursos from "../../zpantex";
 import ZCampoTextbox from './ZCampoTextbox';
 import ZCampoRadio from './ZCampoRadio';
 import ZCampoCheckbox from './ZCampoCheckbox';
-import ZCampoRegion from './ZCampoRegion';
+import ZCampoGrafico from './ZCampoGrafico';
 import ZCampoZoom from './ZCampoZoom';
 
 interface OwnProperties {
@@ -36,7 +36,7 @@ interface OwnProperties {
 
     onCampoZoomClick?: (zreferenciaViewModel: ZReferenciaViewModel) => void
     */
-}   
+}
 
 export default class ZCampo extends React.PureComponent<OwnProperties, undefined>
 {
@@ -61,9 +61,12 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
             zCampo,
         } = this.props;
 
-        const { claseInd, nomCmp } = zCampo;
+        const { claseInd, nomCmp, cmps } = zCampo;
 
-        if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_NOINDICADOR) {
+        if (cmps) {
+            return <ZCampoGrafico zCampoGrafico={zCampo} zFormaTabla={zFormaTabla}  />
+        }
+        else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_NOINDICADOR) {
             return <ZCampoTextbox zCampoModel={zCampo} />;
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_RADIO) {

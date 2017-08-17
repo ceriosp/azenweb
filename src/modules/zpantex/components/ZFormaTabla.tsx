@@ -14,16 +14,19 @@ import {
     NavItem,
     NavDropdown,
     Form,
-    Panel
+    Panel,
+    ButtonToolbar,
+    Button
 } from 'react-bootstrap';
 
 import {
     IZMenuItem,
     IZMenu
 } from '../../zcommon/contracts';
-import { IZPantex, IZFormaTabla, IZCampo } from "../../zcommon";
+import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma } from "../../zcommon";
 import { ZVentana } from "./ZVentana";
 import ZCampo from "./ZCampo";
+import ZBarraComandos from "./ZBarraComandos";
 
 export interface OwnProps {
     zFormaTabla: IZFormaTabla;
@@ -48,12 +51,25 @@ export class ZFormaTabla extends React.Component<OwnProps & ConnectedState & Con
         return (
             <div
                 style={{
-                    padding:'10px'
+                    padding: '10px'
                 }}
             >
-                <Panel header={titulo} bsStyle="primary">                    
+                <Panel header={titulo} bsStyle="primary">
                     <Form horizontal>
-                        {this.props.zFormaTabla.cmps.map(this.pintarZCampoEnRecurso.bind(this))}
+                        <ZBarraComandos
+                            zComandosList={this.props.zFormaTabla.btns}
+                        />
+                        <div>
+                            {this.props.zFormaTabla.cmps.map(this.pintarZCampoEnRecurso.bind(this))}
+                        </div>
+                        <div style={{
+                            clear: 'both'
+                        }}
+                        >
+                        </div>
+                        <ZBarraComandos
+                            zComandosList={this.props.zFormaTabla.btns}
+                        />                        
                     </Form>
                 </Panel>
             </div>
