@@ -18,7 +18,7 @@ zcomunicaciones.actions --> zlogin.Actions: Promise<ResultadoActionConDato<commo
 deactivate zcomunicaciones.actions
 
 control zaplication.services.Responder
-zlogin.Actions -> zaplication.services.Responder:procesarZColaEventos(iZColaEventos)
+zlogin.Actions -> zaplication.services.Responder: <b>[resultado == EXITO]</b> procesarZColaEventos(iZColaEventos)
 activate zaplication.services.Responder
 
 
