@@ -2,7 +2,6 @@
 
 actor Usuario
 participant ZLogin <<Component>>
-
 Usuario -> ZLogin: Click en botón "Ingresar"
 ZLogin -> zlogin.Actions: login(dispatch:(), getState())
 zlogin.Actions -> zcomunicaciones.actions: enviarRequestComando()
@@ -11,7 +10,10 @@ zlogin.Actions -> zaplication.services.Responder:procesarZColaEventos(iZColaEven
 zaplication.services.Responder -> zaplication.services.Responder: procesarEvento(zEvento: IZEvento, dispatch(), getState())
 zaplication.services.Responder -> zaplication.services.Responder: procesarEventoComando(zEvento: IZEvento, dispatch(), getState())
 note left: switch con evento zcommon.constants.ComandoEnum.CM_ACEPTARLOGIN
+
+participant modules.zlogin.reducers <<Reducer>>
+zaplication.services.Responder -> modules.zlogin.reducers: setZAplList(zAplList:IZAplList)
 participant ZListadoAplicaciones <<Component>>
-zaplication.services.Responder -> ZListadoAplicaciones: refresh
+modules.zlogin.reducers -> ZListadoAplicaciones: refresh
 
 @enduml
