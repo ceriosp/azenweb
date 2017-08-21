@@ -29,8 +29,7 @@ import {
 import { ZMenuRootContainer } from "../../zmenu/containers/ZMenuRootContainer";
 import { ZProcesandoContainer } from "../../zaplicacion/containers/ZProcesandoContainer";
 import { ZAplicacionContainer } from "../../zaplicacion/containers/ZAplicacionContainer";
-
-
+import { ZLoginContainer } from '../../zlogin/containers/ZloginContainer';
 
 export interface OwnProps {
 
@@ -56,7 +55,7 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
     render() {
         return (
             <div>
-                Listado aplicaciones
+                <ZLoginContainer />
             </div>
         );
     }

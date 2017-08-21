@@ -1,10 +1,10 @@
 import { Reducer, combineReducers } from 'redux';
 import { IZAplState } from "../zcommon/contracts";
 
-
-import * as ZComunicaciones from '../zcomunicaciones'; 
-import * as ZMenu from '../zmenu'; 
-import * as ZPantex from '../zpantex'; 
+import * as ZComunicaciones from '../zcomunicaciones';
+import * as ZLogin from '../zlogin';
+import * as ZMenu from '../zmenu';
+import * as ZPantex from '../zpantex';
 
 export namespace Reducers {
 
@@ -17,10 +17,11 @@ export namespace Reducers {
 
         return state;
     }
-    
-    export const zaplState : Reducer<IZAplState> = combineReducers<IZAplState>({
-        estaProcesandoRequestServidor:estaProcesandoRequestServidor as any,
-        zMenuModule: ZMenu.Reducers.ZMenuModule.impl as any,
-        zPantexModule: ZPantex.Reducers.ZPantexModule.impl as any,
+
+    export const zaplState: Reducer<IZAplState> = combineReducers<IZAplState>({
+        estaProcesandoRequestServidor: estaProcesandoRequestServidor,
+        zMenuModule: ZMenu.Reducers.ZMenuModule.impl,
+        zPantexModule: ZPantex.Reducers.ZPantexModule.impl,
+        zLoginModule: ZLogin.Reducers.ZLoginModule.impl,
     });
 }

@@ -3,12 +3,11 @@ import {
 } from './constants';
 
 export class ResultadoAction {
-    resultado:Constants.ResultadoAccionEnum;
+    resultado: Constants.ResultadoAccionEnum;
     mensaje: string;
-    traza:string;
+    traza: string;
 }
 
-export class ResultadoActionConDato<TipoRetorno> extends ResultadoAction{
-    retorno:TipoRetorno;
+export class ResultadoActionConDato<TipoRetorno> extends ResultadoAction {
+    retorno: TipoRetorno;
 }
-

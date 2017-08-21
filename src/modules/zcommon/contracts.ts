@@ -1,4 +1,5 @@
 import { Constants } from "./constants";
+import { ResultadoAction } from "../zutils/models";
 
 export interface IZAplState {
     estaProcesandoRequestServidor: boolean;
@@ -17,7 +18,10 @@ export interface IZPantexModule {
 }
 
 export interface IZLoginModule {
-    
+    username:string,
+    password:string,
+    zAplList: IZAplList,
+    resultadoAction: ResultadoAction
 }
 
 export interface IZBuffer {
