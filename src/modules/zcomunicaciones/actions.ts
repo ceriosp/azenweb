@@ -29,6 +29,7 @@ export namespace Actions {
                 }
                 )
                 .then((retornoStr: string) => {
+                    console.log(retornoStr);
                     if (retornoStr[retornoStr.length - 1] != '}') {
                         retornoStr = retornoStr.substring(0, retornoStr.length - 1);
                     }

@@ -13,6 +13,7 @@ const { default: immutableStateInvariant } = require('redux-immutable-state-inva
 import { combinedReducers } from './rootReducer';
 
 import * as App from './modules/app';
+import * as ZUtils from './modules/zutils';
 
 import {
     ZMenuModel,
@@ -20,6 +21,7 @@ import {
 } from './modules/zcommon';
 
 import * as ZAplicacion from "./modules/zaplicacion";
+import { ZAplicacionContainer } from "./modules/app/containers/ZAplicacionContainer";
 import { ZListadoAplicacionesContainer } from "./modules/app/containers/ZListadoAplicacionesContainer";
 
 
@@ -50,9 +52,21 @@ const store = createStore(
     redux.compose(redux.applyMiddleware(...middlewares), window.devToolsExtension ? window.devToolsExtension() : (f: any) => f)
 );
 
-ReactDOM.render(
-    <Provider store={store}>
-        <ZListadoAplicacionesContainer />
-    </Provider>,
-    document.getElementById("app-container")
-);
+let idApl = ZUtils.Services.getQueryStringParameter('idApl');
+
+if (!idApl) {
+    ReactDOM.render(
+        <Provider store={store}>
+            <ZListadoAplicacionesContainer />
+        </Provider>,
+        document.getElementById("app-container")
+    );
+}
+else {
+    ReactDOM.render(
+        <Provider store={store}>
+            <ZAplicacionContainer />
+        </Provider>,
+        document.getElementById("app-container")
+    );
+}

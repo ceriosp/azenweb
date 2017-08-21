@@ -1,0 +1,4 @@
+@startuml
+    Index o-- ZListadoAplicaciones
+    ZListadoAplicaciones o-- ZLogin
+@enduml

@@ -44,7 +44,7 @@ export interface ConnectedDispatch {
     lanzarAplicacion: (identificadorAplicacion: string) => void;
 }
 
-export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
+export class ZAplicacion extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
 
@@ -56,7 +56,22 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
     render() {
         return (
             <div>
-                Listado aplicaciones
+
+                <ZMenuRootContainer
+                    index={0}
+                    sobrePonerse={false}
+                />
+
+                <ZAplicacionContainer />
+                
+                <input
+                    type='button'
+                    value='azenctb'
+                    onClick={this.lanzarAplicacion}
+                />
+
+                <ZProcesandoContainer />
+
             </div>
         );
     }

@@ -184,7 +184,7 @@ export namespace Services {
                     dispatch(ZMenu.Actions.ZMenuModule.setZMenu(zmenu));
                     break;
 
-                case ZCommon.Constants.ComandoEnum.CM_PXCREAR:         
+                case ZCommon.Constants.ComandoEnum.CM_PXCREAR:
                     const zPantex = zEvento.dato.buffer.dato as IZPantex;
                     dispatch(ZPantex.Actions.ZPantexModule.ponerAlTope(zPantex));
                 break;                
