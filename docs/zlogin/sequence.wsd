@@ -1,0 +1,17 @@
+@startuml
+
+actor Usuario
+participant ZLogin <<Component>>
+
+Usuario -> ZLogin: Click en botón "Ingresar"
+ZLogin -> zlogin.Actions: login(dispatch:(), getState())
+zlogin.Actions -> zcomunicaciones.actions: enviarRequestComando()
+zcomunicaciones.actions -> zlogin.Actions: Promise<ResultadoActionConDato<common.contrats.IZColaEventos>>
+zlogin.Actions -> zaplication.services.Responder:procesarZColaEventos(iZColaEventos)
+zaplication.services.Responder -> zaplication.services.Responder: procesarEvento(zEvento: IZEvento, dispatch(), getState())
+zaplication.services.Responder -> zaplication.services.Responder: procesarEventoComando(zEvento: IZEvento, dispatch(), getState())
+note left: switch con evento zcommon.constants.ComandoEnum.CM_ACEPTARLOGIN
+participant ZListadoAplicaciones <<Component>>
+zaplication.services.Responder -> ZListadoAplicaciones: refresh
+
+@enduml

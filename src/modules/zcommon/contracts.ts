@@ -16,6 +16,10 @@ export interface IZPantexModule {
     pilaPantex:Array<IZPantex>;
 }
 
+export interface IZLoginModule {
+    
+}
+
 export interface IZBuffer {
     fto: string;
     dato: string | IZMenu | IZPantex;
@@ -111,5 +115,14 @@ export interface IZCampo {
     modo: number; //Constants.ModoCampo namespace
     numDec: number;
     cmps?:Array<IZCampo>;
+}
+
+export interface IZAplList {
+    apl:Array<IZApl>;
+}
+
+export interface IZApl {
+    apl:string;
+    descr:string;
 }
 
