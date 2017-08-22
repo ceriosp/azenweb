@@ -44,7 +44,7 @@ const recursosZoomList: Array<string> =
 
 import * as ZCommon from '../zcommon';
 import {
-    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule
+    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList
 } from '../zcommon';
 
 import * as ZMenu from '../zmenu';
@@ -192,6 +192,8 @@ export namespace Services {
                     break;
 
                 case ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN:
+                    const zAplList = zEvento.dato.buffer.dato as IZAplList;
+                    dispatch(ZLogin.Actions.ZLoginModule.setZAplList(zAplList));
                     break;
             }
         }

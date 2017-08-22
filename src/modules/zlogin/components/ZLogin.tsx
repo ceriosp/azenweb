@@ -59,7 +59,7 @@ export class ZLogin extends React.Component<OwnProps & ConnectedState & Connecte
                                     <FormControl
                                         type="username"
                                         placeholder="Nombre de usuario"
-                                        onBlur={this.onUsernameChanged} />
+                                        onChange={this.onUsernameChanged} />
                                 </Col>
                             </FormGroup>
 
@@ -71,7 +71,7 @@ export class ZLogin extends React.Component<OwnProps & ConnectedState & Connecte
                                     <FormControl
                                         type="password"
                                         placeholder="Contraseña"
-                                        onBlur={this.onPasswordChanged} />
+                                        onChange={this.onPasswordChanged} />
                                 </Col>
                             </FormGroup>
 

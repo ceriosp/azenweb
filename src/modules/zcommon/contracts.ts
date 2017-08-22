@@ -27,7 +27,7 @@ export interface IZLoginModule {
 
 export interface IZBuffer {
     fto: string;
-    dato: string | IZMenu | IZPantex;
+    dato: string | IZMenu | IZPantex | IZAplList;
 }
 
 export interface IZDatoEvento {
