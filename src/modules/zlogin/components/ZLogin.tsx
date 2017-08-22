@@ -5,24 +5,16 @@ import {
 } from 'react';
 
 import {
-    Row,
-    Col,
-    Glyphicon,
-    Navbar,
-    Nav,
-    MenuItem,
-    NavItem,
-    NavDropdown,
     Form,
     FormGroup,
     FormControl,
     Button,
-    Modal
+    Modal,
+    Col
 } from 'react-bootstrap';
 
 import {
-    IZMenuItem,
-    IZMenu
+    IZLoginModule
 } from '../../zcommon/contracts';
 
 export interface OwnProps {
@@ -30,16 +22,23 @@ export interface OwnProps {
 }
 
 export interface ConnectedState {
-
+    zLogin: IZLoginModule;
 }
 
 export interface ConnectedDispatch {
+    login: () => void;
+    usernameChanged: (username:string) => void;
+    passwordChanged: (password:string) => void;
 }
 
 export class ZLogin extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
     constructor(props: ConnectedState & ConnectedDispatch & OwnProps) {
         super(props);
+
+        this.onIngresarClick = this.onIngresarClick.bind(this);
+        this.onUsernameChanged = this.onUsernameChanged.bind(this);
+        this.onPasswordChanged = this.onPasswordChanged.bind(this);
     }
 
     public render(): any {
@@ -57,7 +56,10 @@ export class ZLogin extends React.Component<OwnProps & ConnectedState & Connecte
                                     Usuario:
                                 </Col>
                                 <Col sm={10}>
-                                    <FormControl type="username" placeholder="Nombre de usuario" />
+                                    <FormControl
+                                        type="username"
+                                        placeholder="Nombre de usuario"
+                                        onBlur={this.onUsernameChanged} />
                                 </Col>
                             </FormGroup>
 
@@ -66,7 +68,10 @@ export class ZLogin extends React.Component<OwnProps & ConnectedState & Connecte
                                     Contraseña
                                 </Col>
                                 <Col sm={10}>
-                                    <FormControl type="password" placeholder="Contraseña" />
+                                    <FormControl
+                                        type="password"
+                                        placeholder="Contraseña"
+                                        onBlur={this.onPasswordChanged} />
                                 </Col>
                             </FormGroup>
 
@@ -82,5 +87,17 @@ export class ZLogin extends React.Component<OwnProps & ConnectedState & Connecte
                 </Modal.Dialog>
             </div>
         );
+    }
+
+    private onIngresarClick() {
+        this.props.login();
+    }
+
+    private onUsernameChanged(e:any) {
+        this.props.usernameChanged(e.target.value);
+    }
+
+    private onPasswordChanged(e:any) {
+        this.props.passwordChanged(e.target.value);       
     }
 }

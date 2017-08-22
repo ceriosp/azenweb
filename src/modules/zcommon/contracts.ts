@@ -5,6 +5,7 @@ export interface IZAplState {
     estaProcesandoRequestServidor: boolean;
     zMenuModule: IZMenuModule;
     zPantexModule: IZPantexModule;
+    zLoginModule: IZLoginModule;
 }
 
 export interface IZMenuModule {
@@ -13,15 +14,15 @@ export interface IZMenuModule {
 }
 
 export interface IZPantexModule {
-    pxAlTope:number;    
-    pilaPantex:Array<IZPantex>;
+    pxAlTope: number;
+    pilaPantex: Array<IZPantex>;
 }
 
 export interface IZLoginModule {
-    username:string,
-    password:string,
-    zAplList: IZAplList,
-    resultadoAction: ResultadoAction
+    username: string;
+    password: string;
+    zAplList: IZAplList;
+    resultadoAction: ResultadoAction;
 }
 
 export interface IZBuffer {
@@ -74,7 +75,7 @@ export interface IZPantex {
 export interface IZFormaTabla { //zft
     ven: IZVentana;
     linEst: Array<IZComandoForma>;
-    cmps:Array<IZCampo>;
+    cmps: Array<IZCampo>;
     btns: Array<IZComandoForma>;
 }
 
@@ -118,15 +119,15 @@ export interface IZCampo {
     noEnTabla: number;
     modo: number; //Constants.ModoCampo namespace
     numDec: number;
-    cmps?:Array<IZCampo>;
+    cmps?: Array<IZCampo>;
 }
 
 export interface IZAplList {
-    apl:Array<IZApl>;
+    apl: Array<IZApl>;
 }
 
 export interface IZApl {
-    apl:string;
-    descr:string;
+    apl: string;
+    descr: string;
 }
 

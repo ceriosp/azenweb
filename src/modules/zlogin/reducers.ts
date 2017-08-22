@@ -18,7 +18,9 @@ export namespace Reducers {
     export namespace ZLoginModule {
 
         const zLoginModule = {
-            zAplList: {} as IZAplList,
+            username: '',
+            password: '',
+            zAplList: { apl: [] } as IZAplList,
             resultadoAction: new ResultadoAction()
         } as IZLoginModule;
 
@@ -36,9 +38,9 @@ export namespace Reducers {
                         password: action.password
                     } as IZLoginModule, state);
 
-                case ActionTypes.ZLoginModule.SET_APLLIST:
+                case ActionTypes.ZLoginModule.SET_ZAPLLIST:
                     return u({
-                        zAplList: action.aplList
+                        zAplList: action.zAplList
                     } as IZLoginModule, state);
 
                 case ActionTypes.ZLoginModule.SET_RESULTADOACTION:

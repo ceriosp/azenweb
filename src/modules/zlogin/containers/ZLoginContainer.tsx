@@ -8,15 +8,24 @@ import {
     OwnProps,
     ConnectedState,
     ConnectedDispatch,
-    ZLogin,
+    ZLogin
 } from '../components/ZLogin';
 
-import * as ZAplicacion from '../../zaplicacion';
+import { Actions } from '../actions'
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
+    zLogin: appState.zLoginModule
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
+    login: () =>
+        dispatch(Actions.ZLoginModule.login()),
+
+    usernameChanged: (username: string) =>
+        dispatch(Actions.ZLoginModule.setUsername(username)),
+
+    passwordChanged: (password: string) =>
+        dispatch(Actions.ZLoginModule.setPassword(password))
 });
 
 export const ZLoginContainer: React.ComponentClass<OwnProps> =

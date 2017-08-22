@@ -44,11 +44,13 @@ const recursosZoomList: Array<string> =
 
 import * as ZCommon from '../zcommon';
 import {
-    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex
+    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule
 } from '../zcommon';
 
 import * as ZMenu from '../zmenu';
 import * as ZPantex from '../zpantex';
+import * as ZLogin from '../zlogin';
+
 
 export namespace Services {
 
@@ -187,7 +189,10 @@ export namespace Services {
                 case ZCommon.Constants.ComandoEnum.CM_PXCREAR:
                     const zPantex = zEvento.dato.buffer.dato as IZPantex;
                     dispatch(ZPantex.Actions.ZPantexModule.ponerAlTope(zPantex));
-                break;                
+                    break;
+
+                case ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN:
+                    break;
             }
         }
     }
