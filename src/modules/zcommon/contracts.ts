@@ -123,7 +123,7 @@ export interface IZCampo {
 }
 
 export interface IZAplList {
-    apl: Array<IZApl>;
+    apls: Array<IZApl>;
 }
 
 export interface IZApl {

@@ -5,12 +5,14 @@ import {
 } from 'react';
 
 import {
+    Row,
+    Col,
     Form,
     FormGroup,
     FormControl,
     Button,
     Modal,
-    Col
+    Image
 } from 'react-bootstrap';
 
 import {
@@ -22,18 +24,19 @@ export interface OwnProps {
 }
 
 export interface ConnectedState {
-    zLogin: IZLoginModule;
+    zLoginModule: IZLoginModule;
 }
 
 export interface ConnectedDispatch {
-    login: () => void;
-    usernameChanged: (username:string) => void;
-    passwordChanged: (password:string) => void;
+    despacharLogin: () => void;
+    usernameChanged: (username: string) => void;
+    passwordChanged: (password: string) => void;
 }
 
 export class ZLogin extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    constructor(props: ConnectedState & ConnectedDispatch & OwnProps) {
+    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
+
         super(props);
 
         this.onIngresarClick = this.onIngresarClick.bind(this);
@@ -44,60 +47,75 @@ export class ZLogin extends React.Component<OwnProps & ConnectedState & Connecte
     public render(): any {
         return (
             <div className="static-modal">
-                <Modal.Dialog>
+                <Modal show={true} onHide={function () { }}>
                     <Modal.Header>
                         <Modal.Title>Ingreso</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
-                        <Form horizontal>
-                            <FormGroup controlId="formHorizontalUsername">
-                                <Col sm={2}>
-                                    Usuario:
-                                </Col>
-                                <Col sm={10}>
-                                    <FormControl
-                                        type="username"
-                                        placeholder="Nombre de usuario"
-                                        onChange={this.onUsernameChanged} />
-                                </Col>
-                            </FormGroup>
+                        <Row>
+                            <Col xs={9} lg={9}>
+                                <Form horizontal>
+                                    <FormGroup controlId="formHorizontalUsername">
+                                        <Col xs={3} lg={3}>
+                                            Usuario:
+                                    </Col>
+                                        <Col xs={9} lg={9}>
+                                            <FormControl
+                                                type="username"
+                                                placeholder="Nombre de usuario"
+                                                value={this.props.zLoginModule.username}
+                                                onChange={this.onUsernameChanged} />
+                                        </Col>
+                                    </FormGroup>
 
-                            <FormGroup controlId="formHorizontalPassword">
-                                <Col sm={2}>
-                                    Contraseña
-                                </Col>
-                                <Col sm={10}>
-                                    <FormControl
-                                        type="password"
-                                        placeholder="Contraseña"
-                                        onChange={this.onPasswordChanged} />
-                                </Col>
-                            </FormGroup>
+                                    <FormGroup controlId="formHorizontalPassword">
+                                        <Col xs={3} lg={3}>
+                                            Contraseña:
+                                    </Col>
+                                        <Col xs={9} lg={9}>
+                                            <FormControl
+                                                type="password"
+                                                placeholder="Contraseña"
+                                                value={this.props.zLoginModule.password}
+                                                onChange={this.onPasswordChanged} />
+                                        </Col>
+                                    </FormGroup>
 
-                            <FormGroup>
-                                <Col smOffset={10} sm={2}>
-                                    <Button type="button">
-                                        Ingresar
-                                    </Button>
-                                </Col>
-                            </FormGroup>
-                        </Form>
+                                    <FormGroup>
+                                        <Col xs={3} lg={3} xsOffset={9} lgOffset={9}>
+                                            <Button
+                                                type="button"
+                                                onClick={this.onIngresarClick}>
+                                                Ingresar
+                                        </Button>
+                                        </Col>
+                                    </FormGroup>
+                                </Form>
+                            </Col>
+                            <Col xs={3} lg={3}>
+                                <img src="dist/img/azenLogo.jpg" />
+                            </Col>
+                        </Row>
                     </Modal.Body>
-                </Modal.Dialog>
-            </div>
+
+                    <Modal.Footer>
+                        Azen
+                    </Modal.Footer>
+                </Modal>
+            </div >
         );
     }
 
     private onIngresarClick() {
-        this.props.login();
+        this.props.despacharLogin();
     }
 
-    private onUsernameChanged(e:any) {
+    private onUsernameChanged(e: any) {
         this.props.usernameChanged(e.target.value);
     }
 
-    private onPasswordChanged(e:any) {
-        this.props.passwordChanged(e.target.value);       
+    private onPasswordChanged(e: any) {
+        this.props.passwordChanged(e.target.value);
     }
 }
