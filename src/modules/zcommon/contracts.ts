@@ -138,7 +138,7 @@ export interface IZApl {
 export namespace CM {
 
     /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_PRENDERMODO
+     * Responde a zcommon.Constants.ComandoEnum.CM_PRENDERMODO - 51
      */
     export interface IPrenderModo {
         /**
@@ -162,7 +162,104 @@ export namespace CM {
         mc: number;
     }
 
+    /**
+     * Responde a zcommon.Constants.ComandoEnum.CM_CONSULTAR - 61
+     */
+    export interface IConsultar {
+        /**
+         * 
+         */
+        px:number,
+
+        /**
+         * 
+         */
+        vc:string
+    }
+
+    /**
+     * Responde a zcommon.Constants.ComandoEnum.CM_PRENDERCONTROL - 96
+     */
+    export interface IPrenderControl {
+        /**
+         * 
+         */
+        px: number,
+
+        /**
+         * 
+         */
+        nc: string,
+
+        /**
+         * 
+         */
+        rg: number,
+
+        /**
+         * 
+         */
+        mc: number
+    }
+
+    /**
+     * Responde a zcommon.Constants.ComandoEnum.CM_SINCCAMPO - 119 
+     */
+    export interface ISinCampo {
+        /**
+         * 
+         */
+        px: number,
+
+        /**
+         * 
+         */
+        nc:string,
+
+        /**
+         * 
+         */
+        vc:string,
+
+        /**
+         * 
+         */
+        pb:number,
+
+        /**
+         * 
+         */
+        rg:number
+    }
+
+    /**
+     *  Responde a zcommon.Constants.ComandoEnum.CM_PXARRIVAR - 122
+     */
+    export interface IPxArrivar {
+        /**
+         * 
+         */
+        px:number
+    }
+
+    /**
+     * Responde a zcommon.Constants.ComandoEnum.CM_SINCBOTON - 140
+     */
+    export interface ISinCBoton {
+        /**
+         * 
+         */
+        px: number,
+
+        /**
+         * 
+         */
+        nc: number,
+
+        /**
+         * 
+         */
+        vc: number
+    }
+
 }
-
-
-
