@@ -18,7 +18,7 @@ import {
 import * as ZAplicacion from '../../zaplicacion';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
-    
+    zLoginModule: appState.zLoginModule    
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({

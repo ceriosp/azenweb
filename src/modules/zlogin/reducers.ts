@@ -20,7 +20,7 @@ export namespace Reducers {
         const zLoginModule = {
             username: '',
             password: '',
-            zAplList: { apl: [] } as IZAplList,
+            zAplList: { apls: [] } as IZAplList,
             resultadoAction: new ResultadoAction()
         } as IZLoginModule;
 

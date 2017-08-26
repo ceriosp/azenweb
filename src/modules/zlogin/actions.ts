@@ -13,6 +13,8 @@ import * as ZCommon from '../zcommon';
 import * as ZAplication from '../zaplicacion';
 import * as ZComunicaciones from '../zcomunicaciones';
 
+import { Selectors } from './selectors';
+
 export namespace Actions {
 
     export namespace ZLoginModule {
@@ -20,17 +22,19 @@ export namespace Actions {
         export const login = () => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
             return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
 
+                let zLoginModule = Selectors.getZLoginModule(getState());
+
                 dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
                     cmd: ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN,
-                    buffer: "",
-                    idApl: ""
+                    buffer: `<cm>LOGIN</cm><usr>${zLoginModule.username}</usr><vc>${zLoginModule.password}</vc>`,
+                    idApl: `azenctb`
                 }))
-                    .then((resultadoCmEjecOption: ResultadoActionConDato<IZColaEventos>) => {
-                        if (resultadoCmEjecOption.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {
-                            reject(resultadoCmEjecOption);
+                    .then((resultadoCmAcceptLogin: ResultadoActionConDato<IZColaEventos>) => {
+                        if (resultadoCmAcceptLogin.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {
+                            reject(resultadoCmAcceptLogin);
                             return;
                         }
-                        ZAplication.Services.Responder.procesarZColaEventos(resultadoCmEjecOption.retorno, dispatch, getState);
+                        ZAplication.Services.Responder.procesarZColaEventos(resultadoCmAcceptLogin.retorno, dispatch, getState);
                     });
             });
         }

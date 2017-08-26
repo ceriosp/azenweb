@@ -173,12 +173,29 @@ export namespace Services {
         }
 
         const procesarEvento = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
+
+            if (zEvento.dato.tipo == ZCommon.Constants.TipoEventoEnum.EVT_NADA) {
+                procesarEventoNada(zEvento, dispatch, getState);
+            }
+
             if (zEvento.dato.tipo == ZCommon.Constants.TipoEventoEnum.EVT_COMANDO) {
                 procesarEventoComando(zEvento, dispatch, getState);
             }
         }
 
+        const procesarEventoNada = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
+
+            switch (zEvento.dato.cmd) {
+
+                case ZCommon.Constants.ComandoEnum.CM_APLICACION:
+                    const zAplList = zEvento.dato.buffer.dato as IZAplList;
+                    dispatch(ZLogin.Actions.ZLoginModule.setZAplList(zAplList));
+                    break;
+            }
+        }
+
         const procesarEventoComando = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
+
             switch (zEvento.dato.cmd) {
 
                 case ZCommon.Constants.ComandoEnum.CM_DEFMENU:
@@ -189,11 +206,6 @@ export namespace Services {
                 case ZCommon.Constants.ComandoEnum.CM_PXCREAR:
                     const zPantex = zEvento.dato.buffer.dato as IZPantex;
                     dispatch(ZPantex.Actions.ZPantexModule.ponerAlTope(zPantex));
-                    break;
-
-                case ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN:
-                    const zAplList = zEvento.dato.buffer.dato as IZAplList;
-                    dispatch(ZLogin.Actions.ZLoginModule.setZAplList(zAplList));
                     break;
             }
         }
