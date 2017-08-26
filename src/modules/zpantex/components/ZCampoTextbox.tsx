@@ -11,14 +11,13 @@ import {
     ZCampoModel, IZCampo
 } from "../../zcommon";
 
-interface OwnProperties
-{
-    zCampoModel:IZCampo;
+interface OwnProperties {
+    zCampoModel: IZCampo;
 }
 
 export default class ZCampoTextbox extends React.PureComponent<OwnProperties, undefined>
 {
-    render(){
+    render() {
         const { zCampoModel } = this.props;
         return (
             <FormGroup controlId={zCampoModel.nomCmp} bsSize="small">
@@ -27,8 +26,11 @@ export default class ZCampoTextbox extends React.PureComponent<OwnProperties, un
                         {zCampoModel.etq}
                     </Col>
                     <Col>
-                        <FormControl type="text"/>
-                    </Col>                
+                        <FormControl
+                            type="text"
+                            name={zCampoModel.nomCmp}
+                        />
+                    </Col>
                 </Col>
             </FormGroup>
         );

@@ -131,3 +131,38 @@ export interface IZApl {
     descr: string;
 }
 
+/**
+ * Namespace de comandos, 
+ * see: zcommon.Constants.ComandoEnum
+ */
+export namespace CM {
+
+    /**
+     * Responde a zcommon.Constants.ComandoEnum.CM_PRENDERMODO
+     */
+    export interface IPrenderModo {
+        /**
+         * 
+         */
+        px: number;
+
+        /**
+         * 
+         */
+        nc: string;
+
+        /**
+         * 
+         */
+        rg: number;
+
+        /**
+         * 
+         */
+        mc: number;
+    }
+
+}
+
+
+
