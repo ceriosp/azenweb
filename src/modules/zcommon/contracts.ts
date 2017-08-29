@@ -245,7 +245,7 @@ export namespace CM {
     /**
      * Responde a zcommon.Constants.ComandoEnum.CM_SINCBOTON - 140
      */
-    export interface ISinCBoton {
+    export interface ISincBoton {
         /**
          * 
          */
