@@ -78,11 +78,6 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
         this.props.lanzarAplicacion(e.target.value);
     }
 
-    /**
-     * 50 applications - 8 applications by row
-     * las two applications in the third row?
-     * Every row has to have a maxwith {1} eg. -> <Thumbail xs={1} sm={1} md={1} lg={1}>
-     */
     private renderAplList(zLoginModule: IZLoginModule) {
 
         let zAplRows: Array<JSX.Element> = [];
@@ -96,8 +91,10 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
 
             for (let j = 0; j < zLoginModule.zAplList.apls.length; j++) {
 
+                let zAplColOffset = (currentApl % 8) == 0 ? 4 : 0;
+
                 zAplColumns.push(
-                    <Col key={'zAplCol' + currentApl} xs={1} sm={1} md={1} lg={1}>
+                    <Col key={'zAplCol' + currentApl} xs={1} sm={1} md={1} lg={1} xsOffset={zAplColOffset} lgOffset={zAplColOffset}>
                         <Thumbnail src="dist/img/azenLogo.jpg">
                             <p>{zLoginModule.zAplList.apls[currentApl].descr}</p>
                             <p>
@@ -108,11 +105,12 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
                                     href={'?idApl=' + zLoginModule.zAplList.apls[currentApl].apl}
                                     target="_blank">
                                     Inciar
-                                </Button>
+                        </Button>
                             </p>
                         </Thumbnail>
                     </Col>
                 );
+
                 currentApl++;
 
                 if (j == 7) break;
@@ -122,17 +120,13 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
         }
 
         const zAplsContainer: JSX.Element = (
-            <Grid fluid>
-                <Row>
-                    <Col xs={12} sm={12} md={12} lg={12}>
-                        {zAplRows}
-                    </Col>
-                </Row>
-            </Grid>
+            <div style={{ paddingTop: "20vh" }}>
+                <Grid fluid>
+                    {zAplRows}
+                </Grid>
+            </div>
         );
 
-        return (
-            zAplsContainer
-        );
+        return zAplsContainer;
     }
-} 7
+}
