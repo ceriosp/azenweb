@@ -7,7 +7,7 @@ boundary Index
 boundary ZAplicacionContainer <<Component>>
 
 Usuario -> ZListadoAplicaciones: lanzarAplicacion(idApl:string)
-ZListadoAplicaciones -> Index : onLoad()
+ZListadoAplicaciones -> Index : cuando se carga la página
 activate Index
 
 Index -> ZUtils.Services : getQueryStringParameter('idApl')
@@ -22,6 +22,7 @@ Index -> Index:obtenerEstadoInicial(idApl):
 activate Index
 Index -> IZAplState : zAplState = new (idApl:string)
 Index -> Redux: createStore(App.Reducers.zaplState, zAplState, middlewares...)
+Index <-- Redux: store
 
 deactivate Index
 deactivate Index
