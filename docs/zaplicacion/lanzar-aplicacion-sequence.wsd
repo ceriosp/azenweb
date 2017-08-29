@@ -20,7 +20,7 @@ alt idApl != undefined
 note left: Obtener idApl del QueryString
 Index -> Index:obtenerEstadoInicial(idApl):
 activate Index
-Index -> IZAplState : zAplState = new (idApl:string)
+Index -> IZAplState : zAplState = new { idApl:string }
 Index -> Redux: createStore(App.Reducers.zaplState, zAplState, middlewares...)
 Index <-- Redux: store
 
