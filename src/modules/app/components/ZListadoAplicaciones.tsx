@@ -91,12 +91,12 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
 
             for (let j = 0; j < zLoginModule.zAplList.apls.length; j++) {
 
-                let zAplColOffset = (currentApl % 8) == 0 ? 4 : 0;
+                let zAplColOffset = (currentApl % 8) == 0 ? 2 : 0;
 
                 zAplColumns.push(
-                    <Col key={'zAplCol' + currentApl} xs={1} sm={1} md={1} lg={1} xsOffset={zAplColOffset} lgOffset={zAplColOffset}>
+                    <Col key={'zAplCol' + currentApl} xs={2} sm={2} md={2} lg={2} xsOffset={zAplColOffset} lgOffset={zAplColOffset}>
                         <Thumbnail src="dist/img/azenLogo.jpg">
-                            <p>{zLoginModule.zAplList.apls[currentApl].descr}</p>
+                            <h3>{zLoginModule.zAplList.apls[currentApl].descr}</h3>
                             <p>
                                 <Button
                                     bsStyle="primary"

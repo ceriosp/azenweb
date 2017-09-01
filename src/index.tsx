@@ -24,7 +24,6 @@ import * as ZAplicacion from "./modules/zaplicacion";
 import { ZAplicacionContainer } from "./modules/app/containers/ZAplicacionContainer";
 import { ZListadoAplicacionesContainer } from "./modules/app/containers/ZListadoAplicacionesContainer";
 
-
 import {
 
     //Models
@@ -33,10 +32,10 @@ import {
 
     //Utils
     EntityNormalizedObj,
+    IZAplState,
 
 } from "./modules/zcommon";
 
-//let store = createStore(combinedReducers, initialState);
 declare const __DEV__: boolean; // from webpack
 if (__DEV__) {
     console.log("dev stage");
@@ -47,14 +46,32 @@ const middlewares = __DEV__ ?
     [thunk];
 
 declare let window: any;
-const store = createStore(
-    App.Reducers.zaplState,
-    redux.compose(redux.applyMiddleware(...middlewares), window.devToolsExtension ? window.devToolsExtension() : (f: any) => f)
-);
+
+let store = null
 
 let idApl = ZUtils.Services.getQueryStringParameter('idApl');
 
+const obtenerEstadoInicial = (idApl: string) => {
+
+    let zAplState = {
+        idApl: idApl
+    } as IZAplState
+
+    return createStore(
+        App.Reducers.zaplState,
+        zAplState,
+        redux.compose(redux.applyMiddleware(...middlewares), window.devToolsExtension ? window.devToolsExtension() : (f: any) => f)
+    );
+
+}
+
 if (!idApl) {
+
+    store = createStore(
+        App.Reducers.zaplState,
+        redux.compose(redux.applyMiddleware(...middlewares), window.devToolsExtension ? window.devToolsExtension() : (f: any) => f)
+    );
+
     ReactDOM.render(
         <Provider store={store}>
             <ZListadoAplicacionesContainer />
@@ -63,6 +80,9 @@ if (!idApl) {
     );
 }
 else {
+
+    store = obtenerEstadoInicial(idApl);
+
     ReactDOM.render(
         <Provider store={store}>
             <ZAplicacionContainer />

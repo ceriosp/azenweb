@@ -2,6 +2,7 @@ import { Constants } from "./constants";
 import { ResultadoAction } from "../zutils/models";
 
 export interface IZAplState {
+    idApl: string;
     estaProcesandoRequestServidor: boolean;
     zMenuModule: IZMenuModule;
     zPantexModule: IZPantexModule;
@@ -169,12 +170,12 @@ export namespace CM {
         /**
          * 
          */
-        px:number,
+        px: number,
 
         /**
          * 
          */
-        vc:string
+        vc: string
     }
 
     /**
@@ -214,22 +215,22 @@ export namespace CM {
         /**
          * 
          */
-        nc:string,
+        nc: string,
 
         /**
          * 
          */
-        vc:string,
+        vc: string,
 
         /**
          * 
          */
-        pb:number,
+        pb: number,
 
         /**
          * 
          */
-        rg:number
+        rg: number
     }
 
     /**
@@ -239,7 +240,7 @@ export namespace CM {
         /**
          * 
          */
-        px:number
+        px: number
     }
 
     /**
