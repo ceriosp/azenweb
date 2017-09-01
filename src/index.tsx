@@ -24,6 +24,8 @@ import * as ZAplicacion from "./modules/zaplicacion";
 import { ZAplicacionContainer } from "./modules/app/containers/ZAplicacionContainer";
 import { ZListadoAplicacionesContainer } from "./modules/app/containers/ZListadoAplicacionesContainer";
 
+import { Actions as zAplicationActions } from './modules/zaplicacion/actions'
+
 import {
 
     //Models
@@ -65,7 +67,19 @@ const obtenerEstadoInicial = (idApl: string) => {
 
 }
 
-if (!idApl) {
+if (idApl) {
+    store = obtenerEstadoInicial(idApl);
+
+    ReactDOM.render(
+        <Provider store={store}>
+            <ZAplicacionContainer />
+        </Provider>,
+        document.getElementById("app-container")
+    );
+
+    store.dispatch(zAplicationActions.lanzarAplicacion(idApl));
+}
+else {
 
     store = createStore(
         App.Reducers.zaplState,
@@ -75,17 +89,6 @@ if (!idApl) {
     ReactDOM.render(
         <Provider store={store}>
             <ZListadoAplicacionesContainer />
-        </Provider>,
-        document.getElementById("app-container")
-    );
-}
-else {
-
-    store = obtenerEstadoInicial(idApl);
-
-    ReactDOM.render(
-        <Provider store={store}>
-            <ZAplicacionContainer />
         </Provider>,
         document.getElementById("app-container")
     );

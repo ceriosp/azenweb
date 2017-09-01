@@ -53,7 +53,6 @@ export interface IZColaEventos {
 export interface IZEnviarComandoParams {
     cmd: Constants.ComandoEnum;
     buffer: string;
-    idApl: string;
 }
 
 export interface IZMenu {

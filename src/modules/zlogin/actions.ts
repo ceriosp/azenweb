@@ -26,8 +26,7 @@ export namespace Actions {
 
                 dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
                     cmd: ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN,
-                    buffer: `<cm>LOGIN</cm><usr>${zLoginModule.username}</usr><vc>${zLoginModule.password}</vc>`,
-                    idApl: `azenctb`
+                    buffer: `<cm>LOGIN</cm><usr>${zLoginModule.username}</usr><vc>${zLoginModule.password}</vc>`
                 }))
                     .then((resultadoCmAcceptLogin: ResultadoActionConDato<IZColaEventos>) => {
                         if (resultadoCmAcceptLogin.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {

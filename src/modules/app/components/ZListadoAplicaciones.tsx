@@ -91,12 +91,12 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
 
             for (let j = 0; j < zLoginModule.zAplList.apls.length; j++) {
 
-                let zAplColOffset = (currentApl % 8) == 0 ? 2 : 0;
+                let zAplColOffset = (currentApl % 4) == 0 ? 2 : 0;
 
                 zAplColumns.push(
                     <Col key={'zAplCol' + currentApl} xs={2} sm={2} md={2} lg={2} xsOffset={zAplColOffset} lgOffset={zAplColOffset}>
                         <Thumbnail src="dist/img/azenLogo.jpg">
-                            <h3>{zLoginModule.zAplList.apls[currentApl].descr}</h3>
+                            <h4>{zLoginModule.zAplList.apls[currentApl].descr}</h4>
                             <p>
                                 <Button
                                     bsStyle="primary"
@@ -104,7 +104,7 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
                                     value={zLoginModule.zAplList.apls[currentApl].apl}
                                     href={'?idApl=' + zLoginModule.zAplList.apls[currentApl].apl}
                                     target="_blank">
-                                    Inciar
+                                    Ejecutar
                         </Button>
                             </p>
                         </Thumbnail>
@@ -113,7 +113,7 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
 
                 currentApl++;
 
-                if (j == 7) break;
+                if (j == 3) break;
             }
 
             zAplRows.push(<Row key={'zAplRow' + i}>{zAplColumns}</Row>);

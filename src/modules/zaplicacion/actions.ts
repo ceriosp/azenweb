@@ -21,8 +21,7 @@ export namespace Actions {
         return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
             dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
                 cmd: ZCommon.Constants.ComandoEnum.CM_APLICACION,
-                buffer: 'azen',
-                idApl: idApl
+                buffer: 'azen'
             }))
                 .then(
                 (resultadoCmAplicacion: ResultadoActionConDato<IZColaEventos>) => {
@@ -32,8 +31,7 @@ export namespace Actions {
                     }
                     dispatch(ZComunicaciones.Actions.enviarRequestComando<Object>({
                         cmd: ZCommon.Constants.ComandoEnum.CM_DEFMENU,
-                        buffer: 'azen',
-                        idApl: idApl
+                        buffer: 'azen'
                     }))
                         .then(
                         (resultadoCmDefMenu: ResultadoActionConDato<IZColaEventos>) => {
@@ -55,8 +53,7 @@ export namespace Actions {
         return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
             dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
                 cmd: ZCommon.Constants.ComandoEnum.CM_EJECOPCION,
-                buffer: ctx,
-                idApl: 'azenctb'
+                buffer: ctx
             })).then(
                 (resultadoCmEjecOption: ResultadoActionConDato<IZColaEventos>) => {
                     if (resultadoCmEjecOption.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {

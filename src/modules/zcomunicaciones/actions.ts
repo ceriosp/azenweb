@@ -6,11 +6,16 @@ import {
 import { IZAplState, IZColaEventos, IZEnviarComandoParams } from "../zcommon/contracts";
 import { ActionTypes } from "./actionTypes";
 
+import { Selectors as AppSelectors } from "../app/selectors";
+
 export namespace Actions {
 
     export const enviarRequestComando = <TRetorno>(parametros: IZEnviarComandoParams) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<TRetorno>> => {
         return new Promise<ResultadoActionConDato<TRetorno>>((resolve, reject) => {
-            let { cmd, buffer, idApl } = parametros;
+
+            let idApl = AppSelectors.getIdApl(getState());
+
+            let { cmd, buffer } = parametros;
             dispatch(setEstaProcesandoRequestServidor(true));
             fetch(`http://52.11.111.216:8080/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}`, {
                 //fetch(`http://localhost:8585/azenweb/server/despacharRecurso.php`, {
