@@ -120,7 +120,7 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
         }
 
         const zAplsContainer: JSX.Element = (
-            <div style={{ paddingTop: "20vh" }}>
+            <div style={{ paddingTop: "5%" }}>
                 <Grid fluid>
                     {zAplRows}
                 </Grid>
