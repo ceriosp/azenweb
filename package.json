@@ -72,6 +72,7 @@
     "react-bootstrap": "^0.31.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
-    "updeep": "^1.0.0"
+    "updeep": "^1.0.0",
+    "xml2js": "^0.4.19"
   }
 }
