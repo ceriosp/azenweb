@@ -15,7 +15,7 @@ activate ZUtils.Services
 Index <-- ZUtils.Services: idApl = idApl:string
 deactivate ZUtils.Services
 
-alt idApl != undefined
+alt idApl
 
 note left: Obtener idApl del QueryString
 Index -> Index:cargarStoreInicial(idApl):
@@ -23,11 +23,12 @@ activate Index
 Index -> IZAplState : zAplState = new { idApl:string }
 Index -> Redux: createStore(App.Reducers.zaplState, zAplState, middlewares...)
 Index <-- Redux: store
-Index -> ReacDOM: render()
+Index -> ReactDOM: render(ZAplicacionContainer)
 Index -> Store: dispatch(zaplicacion.actions.lanzarAplicacion(idApl))
 Store -> zaplicacion.actions: lanzarAplicacion(idApl:string)
-
 deactivate Index
+else !idApl
+Index -> ReactDOM: render(ZLogin)
 deactivate Index
 end
 

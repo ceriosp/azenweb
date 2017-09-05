@@ -29,7 +29,7 @@ export default class ZBarraComandos extends React.PureComponent<OwnProperties, u
                             <Button
                                 key={index}
                             >
-                                {zComandoI.tex}
+                                {zComandoI.etq}
                             </Button>
                         );
                     })}

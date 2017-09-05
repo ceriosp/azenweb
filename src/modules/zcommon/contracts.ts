@@ -83,7 +83,7 @@ export interface IZFormaTabla { //zft
  * ZEitem
  */
 export interface IZComandoForma {
-    tex: string;
+    etq: string;
     tec: number;
     cmd: Constants.ComandoEnum;
     desh: number; //1:deshabilitado, 0:habilitado
