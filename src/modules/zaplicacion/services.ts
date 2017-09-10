@@ -203,7 +203,6 @@ export namespace Services {
                 }
 
                 xml2js.parseString(zEvento.dato.buffer.dato, parsingOptions, (err: any, result: any) => {
-                    console.log(JSON.stringify(result));
                     zEvento.dato.buffer.dato = result;
                 });
             }
