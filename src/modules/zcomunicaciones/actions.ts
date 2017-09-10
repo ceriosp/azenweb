@@ -27,12 +27,10 @@ export namespace Actions {
                 credentials: 'include',
                 method: 'GET',
             })
-                .then(
-                (response) => {
+                .then((response) => {
                     dispatch(setEstaProcesandoRequestServidor(false));
                     return response.text();
-                }
-                )
+                })
                 .then((retornoStr: string) => {
                     console.log(retornoStr);
                     if (retornoStr[retornoStr.length - 1] != '}') {

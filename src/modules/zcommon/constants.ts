@@ -1,5 +1,10 @@
 export namespace Constants {
 
+    export enum FormatoDatoEventoEnum {
+        XML = "xml",
+        JSON = "json"
+    }
+
     export enum TipoRecurso {
         Basico,
         Zoom,

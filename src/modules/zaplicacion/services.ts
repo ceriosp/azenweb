@@ -51,6 +51,7 @@ import * as ZMenu from '../zmenu';
 import * as ZPantex from '../zpantex';
 import * as ZLogin from '../zlogin';
 
+var xml2js = require('xml2js');
 
 export namespace Services {
 
@@ -169,10 +170,11 @@ export namespace Services {
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
                 procesarEvento(zColaEventos.eventos[i], dispatch, getState);
             }
-
         }
 
         const procesarEvento = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
+
+            normalizarEvento(zEvento);
 
             if (zEvento.dato.tipo == ZCommon.Constants.TipoEventoEnum.EVT_NADA) {
                 procesarEventoNada(zEvento, dispatch, getState);
@@ -180,6 +182,30 @@ export namespace Services {
 
             if (zEvento.dato.tipo == ZCommon.Constants.TipoEventoEnum.EVT_COMANDO) {
                 procesarEventoComando(zEvento, dispatch, getState);
+            }
+        }
+        
+        /**
+         * 
+         * @param zEvento evento azen
+         * https://www.npmjs.com/package/xml2js#processing-attribute-tag-names-and-values
+         */
+        const normalizarEvento = (zEvento: IZEvento) => {
+            if (zEvento.dato.buffer.fto == ZCommon.Constants.FormatoDatoEventoEnum.XML) {
+
+                zEvento.dato.buffer.dato = (`<r>${zEvento.dato.buffer.dato}</r>`);
+
+                let parsingOptions = {
+                    trim: true, //Trim the whitespace at the beginning and end of text nodes.
+                    normalizeTags: true, //Normalize all tag names to lowercase.
+                    normalize: false, //Trim whitespaces inside text nodes.
+                    explicitArray: false //Always put child nodes in an array if true; otherwise an array is created only if there is more than one
+                }
+
+                xml2js.parseString(zEvento.dato.buffer.dato, parsingOptions, (err: any, result: any) => {
+                    console.log(JSON.stringify(result));
+                    zEvento.dato.buffer.dato = result;
+                });
             }
         }
 
