@@ -70,6 +70,8 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
                 {this.props.zLoginModule.zAplList.apls.length > 0 && (
                     this.renderAplList(this.props.zLoginModule)
                 )}
+
+                <ZProcesandoContainer />
             </div>
         );
     }
