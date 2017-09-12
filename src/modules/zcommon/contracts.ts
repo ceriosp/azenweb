@@ -139,6 +139,7 @@ export namespace CM {
 
     /**
      * Responde a zcommon.Constants.ComandoEnum.CM_PRENDERMODO - 51
+     * Estado: Por implementar 
      */
     export interface IPrenderModo {
         /**
