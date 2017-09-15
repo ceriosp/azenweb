@@ -261,4 +261,15 @@ export namespace Constants {
         en el caso de listas estaticas */
     }
 
+    export namespace ControlCampo {
+        /* Control para la edición de campo */
+        export const ZCMP_EDINIT = 1;   /* Borra contenido al editar*/
+        export const ZCMP_UPCASE = 2;  /* Edición en mayúscula */
+        export const ZCMP_INS = 4;     /* Edición modo inserción */
+        export const ZCMP_EDIT = 8;    /* Edición mormal */
+        export const ZCMP_EDIZQ	= 16;  /* Edición poniendo cursor al inicio */ 
+        export const ZCMP_VISUAL = 32; /* Solo visual */
+        export const ZCMP_INTRACMP = 64; /* */
+    }
+
 }
