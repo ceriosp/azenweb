@@ -50,147 +50,51 @@ import {
 import * as ZMenu from '../zmenu';
 import * as ZPantex from '../zpantex';
 import * as ZLogin from '../zlogin';
+import { ZftResponder } from './zmnjs/zftResponder';
+import { ZmenuResponder } from './zmnjs/zmenuResponder';
 
 var xml2js = require('xml2js');
 
+
+const procesarEventoNada = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
+
+    switch (zEvento.dato.cmd) {
+
+        case ZCommon.Constants.ComandoEnum.CM_APLICACION:
+            const zAplList = zEvento.dato.buffer.dato as IZAplList;
+            dispatch(ZLogin.Actions.ZLoginModule.setZAplList(zAplList));
+            break;
+    }
+}
+
+const responderArray: Array<(zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => void> = [
+    ZmenuResponder.responder,
+    ZftResponder.responder,
+    procesarEventoNada
+];
+
 export namespace Services {
 
-    export class ZAplicacionService {
-
-        public abrirVentanaRecurso(tipoRecurso: ZCommon.Constants.TipoRecurso, idRecurso: string, mapRecursosIndxById: Map<string, ZRecursoViewModel>): Map<string, ZRecursoViewModel> {
-
-            let zrecursoModelWebAlFrente: ZRecursoViewModel = null;
-            const mapServices = new ZCommon.MapServices<string, ZRecursoViewModel>();
-            let resultMap: Map<string, ZRecursoViewModel>;
-
-            if (mapRecursosIndxById.has(idRecurso)) {
-
-                zrecursoModelWebAlFrente = { ...mapRecursosIndxById.get(idRecurso) };
-
-                resultMap =
-                    mapServices.updateAndPutFirstElementImmutableWay(idRecurso,
-                        () => {
-                            let mapRecursosIndxByIdUpdated = new Map<string, ZRecursoViewModel>(mapRecursosIndxById);
-                            mapRecursosIndxByIdUpdated.forEach((zrecursoAOcultar: ZRecursoViewModel) => {
-                                zrecursoAOcultar.visible = false;
-                            });
-                            return mapRecursosIndxByIdUpdated;
-                        },
-                        () => { //función para actualizar el objeto antes que se agregue actualizado al map
-                            zrecursoModelWebAlFrente.visible = true;
-                            return zrecursoModelWebAlFrente;
-                        });
-            } else {
-
-                zrecursoModelWebAlFrente = this.getRecursoWebFromJSON(idRecurso);
-                zrecursoModelWebAlFrente.tipoRecurso = tipoRecurso;
-                zrecursoModelWebAlFrente.visible = true;
-                zrecursoModelWebAlFrente.ctx = idRecurso;
-                let zrecursoViewModelService = new ZPantex.Services.ZRecursoServices();
-                zrecursoViewModelService.normalizeZRecursoViewModelState(zrecursoModelWebAlFrente);
-
-                mapRecursosIndxById.forEach((zrecuersoViewModelI: ZRecursoViewModel) => {
-                    zrecuersoViewModelI.visible = false;
-                });
-
-                let newMapRecursosIndxById = new Map<string, ZRecursoViewModel>();
-
-                console.log("new map: ");
-                console.log(newMapRecursosIndxById);
-
-                if (mapRecursosIndxById.size > 0) {
-                    newMapRecursosIndxById.get("A14E").px = 6;
-
-                    console.log("oldMapRecursosIndxById px ");
-                    console.log(mapRecursosIndxById.get("A14E").px);
-
-                    console.log("newMapRecursosIndxById px ");
-                    console.log(newMapRecursosIndxById.get("A14E").px);
-                }
-
-
-                resultMap = mapServices.addNewElementAtBeginingImmutableWay(idRecurso, zrecursoModelWebAlFrente, mapRecursosIndxById);
-            }
-
-            return resultMap;
-        }
-
-        public cerrarVentanaRecurso(idRecurso: string, mapRecursosIndxById: Map<string, ZRecursoViewModel>, abrirSiguiente: boolean): Map<string, ZRecursoViewModel> {
-
-            let idRecursoToActivate: string = null;
-            const mapServices = new ZCommon.MapServices<string, ZRecursoViewModel>();
-            const recursoToDeleteIndex = mapServices.getMapIndexByKey(mapRecursosIndxById, idRecurso);
-            if (recursoToDeleteIndex >= 0) {
-                let zrecursoAActivar: ZRecursoViewModel = mapServices.getElementByIndex(mapRecursosIndxById, recursoToDeleteIndex + 1);
-                if (zrecursoAActivar != null) {
-                    idRecursoToActivate = zrecursoAActivar.ctx;
-                }
-            }
-
-            mapRecursosIndxById.delete(idRecurso);
-
-            let newMapRecursosIndxByCtx = new Map<string, ZRecursoViewModel>(mapRecursosIndxById);
-            if (idRecursoToActivate != null && abrirSiguiente) {
-                newMapRecursosIndxByCtx.get(idRecursoToActivate).visible = true;
-            }
-
-            return newMapRecursosIndxByCtx;
-        }
-
-        private getRecursoWebFromJSON(ctx: string): ZRecursoViewModel {
-
-            switch (ctx) {
-                case "A14E":
-                    return JSON.parse(recursosList[0]) as ZRecursoViewModel;
-                case "A142":
-                    return JSON.parse(recursosList[1]) as ZRecursoViewModel;
-                case "A13D":
-                    return JSON.parse(recursosList[2]) as ZRecursoViewModel;
-                case "A1F1A2":
-                    return JSON.parse(recursosList[3]) as ZRecursoViewModel;
-
-                case "^/ctbcte.zf2":
-                    return JSON.parse(recursosZoomList[0]) as ZRecursoViewModel;
-
-                case "à/zdim/zdim.zf2":
-                    return JSON.parse(recursosZoomList[1]) as ZRecursoViewModel;
-
-                case "^/ctbanx.zf2": //^/ctbanx.zf2
-                    return JSON.parse(recursosZoomList[2]) as ZRecursoViewModel;
-
-                default:
-                    return null;
-            }
-        }
-    }
-
     export namespace Responder {
-        export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
-
-            for (let i = 0; i < zColaEventos.eventos.length; i++) {
-                procesarEvento(zColaEventos.eventos[i], dispatch, getState);
-            }
-        }
-
-        const procesarEvento = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
-
-            normalizarEvento(zEvento);
-
-            if (zEvento.dato.tipo == ZCommon.Constants.TipoEventoEnum.EVT_NADA) {
-                procesarEventoNada(zEvento, dispatch, getState);
-            }
-
-            if (zEvento.dato.tipo == ZCommon.Constants.TipoEventoEnum.EVT_COMANDO) {
-                procesarEventoComando(zEvento, dispatch, getState);
-            }
-        }
         
+        export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {            
+            for (let i = 0; i < zColaEventos.eventos.length; i++) {
+                try{
+                    parseDataEventoToJSON(zColaEventos.eventos[i]);
+                    responderArray[i](zColaEventos.eventos[i], dispatch, getState);    
+                }
+                catch(e){
+                    console.error(`zaplicacion/services/Services/Responder: procesando evento ${JSON.stringify(zColaEventos.eventos[i])}`);
+                }                
+            }
+        }
+
         /**
          * 
          * @param zEvento evento azen
          * https://www.npmjs.com/package/xml2js#processing-attribute-tag-names-and-values
          */
-        const normalizarEvento = (zEvento: IZEvento) => {
+        const parseDataEventoToJSON = (zEvento: IZEvento) => {
             if (zEvento.dato.buffer.fto == ZCommon.Constants.FormatoDatoEventoEnum.XML) {
 
                 zEvento.dato.buffer.dato = (`<r>${zEvento.dato.buffer.dato}</r>`);
@@ -205,33 +109,6 @@ export namespace Services {
                 xml2js.parseString(zEvento.dato.buffer.dato, parsingOptions, (err: any, result: any) => {
                     zEvento.dato.buffer.dato = result;
                 });
-            }
-        }
-
-        const procesarEventoNada = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
-
-            switch (zEvento.dato.cmd) {
-
-                case ZCommon.Constants.ComandoEnum.CM_APLICACION:
-                    const zAplList = zEvento.dato.buffer.dato as IZAplList;
-                    dispatch(ZLogin.Actions.ZLoginModule.setZAplList(zAplList));
-                    break;
-            }
-        }
-
-        const procesarEventoComando = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
-
-            switch (zEvento.dato.cmd) {
-
-                case ZCommon.Constants.ComandoEnum.CM_DEFMENU:
-                    const zmenu = zEvento.dato.buffer.dato as IZMenu;
-                    dispatch(ZMenu.Actions.ZMenuModule.setZMenu(zmenu));
-                    break;
-
-                case ZCommon.Constants.ComandoEnum.CM_PXCREAR:
-                    const zPantex = zEvento.dato.buffer.dato as IZPantex;
-                    dispatch(ZPantex.Actions.ZPantexModule.ponerAlTope(zPantex));
-                    break;
             }
         }
     }
