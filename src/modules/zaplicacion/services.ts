@@ -76,12 +76,14 @@ const responderArray: Array<(zEvento: IZEvento, dispatch: (p: any) => any, getSt
 export namespace Services {
 
     export namespace Responder {
-        
-        export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {            
+
+        export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
                 try{
                     parseDataEventoToJSON(zColaEventos.eventos[i]);
-                    responderArray[i](zColaEventos.eventos[i], dispatch, getState);    
+                    for(let j=0; j<responderArray.length; j++){
+                        responderArray[j](zColaEventos.eventos[i], dispatch, getState);
+                    }                    
                 }
                 catch(e){
                     console.error(`zaplicacion/services/Services/Responder: procesando evento ${JSON.stringify(zColaEventos.eventos[i])}`);
