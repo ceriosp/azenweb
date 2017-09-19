@@ -16,8 +16,12 @@ export namespace Actions {
             let idApl = AppSelectors.getIdApl(getState());
 
             let { cmd, buffer } = parametros;
+            let requestUrl = `http://52.11.111.216:8080/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}`;
+
+            requestUrl = encodeURI(requestUrl);
+
             dispatch(setEstaProcesandoRequestServidor(true));
-            fetch(`http://52.11.111.216:8080/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}`, {
+            fetch(requestUrl, {
                 //fetch(`http://localhost:8585/azenweb/server/despacharRecurso.php`, {
                 /*
                 headers: {
@@ -37,6 +41,7 @@ export namespace Actions {
                         retornoStr = retornoStr.substring(0, retornoStr.length - 1);
                     }
                     //console.log(retornoStr);
+                    retornoStr = retornoStr.replace('<usr>null</usr>', '');
                     let retorno: TRetorno = JSON.parse(retornoStr);
                     let resultadoActionExito = new ResultadoActionConDato<TRetorno>();
                     resultadoActionExito.retorno = retorno;
