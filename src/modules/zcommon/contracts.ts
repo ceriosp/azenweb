@@ -263,8 +263,6 @@ export namespace CM {
         mc: number;
     }
 
-
-
     /**
      * Responde a zcommon.Constants.ComandoEnum.CM_PRENDERCONTROL - 96
      *  Prende bit control del campo, según zcommon.Constants.ControlCampo
@@ -291,36 +289,6 @@ export namespace CM {
          * mc es el valor decimal del bit a prender (ej: 32 corresponde a bit 6)
          */
         mc: number
-    }
-
-    /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_SINCCAMPO - 119 
-     */
-    export interface ISinCampo {
-        /**
-         * 
-         */
-        px: number,
-
-        /**
-         * 
-         */
-        nc: string,
-
-        /**
-         * 
-         */
-        vc: string,
-
-        /**
-         * 
-         */
-        pb: number,
-
-        /**
-         * 
-         */
-        rg: number
     }
 
     /**

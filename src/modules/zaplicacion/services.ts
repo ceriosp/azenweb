@@ -52,6 +52,7 @@ import * as ZPantex from '../zpantex';
 import * as ZLogin from '../zlogin';
 import { ZftResponder } from './zmnjs/zftResponder';
 import { ZmenuResponder } from './zmnjs/zmenuResponder';
+import { ZcmpResponder } from "./zmnjs/zcmpResponder";
 
 var xml2js = require('xml2js');
 
@@ -70,6 +71,7 @@ const procesarEventoNada = (zEvento: IZEvento, dispatch: (p: any) => any, getSta
 const responderArray: Array<(zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => void> = [
     ZmenuResponder.responder,
     ZftResponder.responder,
+    ZcmpResponder.responder,
     procesarEventoNada
 ];
 
