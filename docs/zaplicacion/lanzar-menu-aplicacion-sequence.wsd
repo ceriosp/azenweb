@@ -1,0 +1,31 @@
+@startuml LanzarMenuAplicacion
+
+boundary ZListadoAplicaciones <<Component>>
+boundary Index
+boundary ZAplicacionContainer <<Component>>
+
+ZListadoAplicaciones -> Index : cuando se carga la página
+activate Index
+
+Index -> ZUtils.Services : getQueryStringParameter('idApl')
+activate ZUtils.Services
+Index <-- ZUtils.Services: idApl = idApl:string
+deactivate ZUtils.Services
+
+alt idApl
+
+note left: Obtener idApl del QueryString
+Index -> Index:cargarStoreInicial(idApl):
+activate Index
+Index -> IZAplState : zAplState = new { idApl:string }
+Index -> Redux: createStore(App.Reducers.zaplState, zAplState, middlewares...)
+Index <-- Redux: store
+Index -> ReactDOM: render(ZAplicacionContainer)
+Index -> ZComunicaciones.Actions: enviarRequestComando(ComandoEnum.CM_DEFMENU, 'azen')
+deactivate Index
+else !idApl
+Index -> ReactDOM: render(ZLogin)
+deactivate Index
+end
+
+@enduml
