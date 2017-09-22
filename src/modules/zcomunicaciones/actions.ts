@@ -7,6 +7,7 @@ import { IZAplState, IZColaEventos, IZEnviarComandoParams } from "../zcommon/con
 import { ActionTypes } from "./actionTypes";
 
 import { Selectors as AppSelectors } from "../app/selectors";
+import { Constants } from '../zcommon/constants';
 
 export namespace Actions {
 
@@ -17,8 +18,6 @@ export namespace Actions {
 
             let { cmd, buffer } = parametros;
             let requestUrl = `http://52.11.111.216:8080/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}`;
-
-            requestUrl = encodeURI(requestUrl);
 
             dispatch(setEstaProcesandoRequestServidor(true));
             fetch(requestUrl, {
