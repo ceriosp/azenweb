@@ -77,7 +77,7 @@ if (idApl) {
         document.getElementById("app-container")
     );
 
-    store.dispatch(zAplicationActions.lanzarAplicacion(idApl));
+    store.dispatch(zAplicationActions.lanzarMenu());
 }
 else {
 

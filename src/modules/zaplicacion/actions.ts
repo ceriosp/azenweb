@@ -29,25 +29,27 @@ export namespace Actions {
                         reject(resultadoCmAplicacion);
                         return;
                     }
-                    dispatch(ZComunicaciones.Actions.enviarRequestComando<Object>({
-                        cmd: ZCommon.Constants.ComandoEnum.CM_DEFMENU,
-                        buffer: 'azen'
-                    }))
-                        .then(
-                        (resultadoCmDefMenu: ResultadoActionConDato<IZColaEventos>) => {
-                            if (resultadoCmDefMenu.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {
-                                reject(resultadoCmDefMenu);
-                                return;
-                            }
-                            Services.Responder.procesarZColaEventos(resultadoCmDefMenu.retorno, dispatch, getState);
-                        }
-                        );
                 },
                 () => { }
                 );
         });
     }
 
+    export const lanzarMenu = () => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
+        return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
+            dispatch(ZComunicaciones.Actions.enviarRequestComando<Object>({
+                cmd: ZCommon.Constants.ComandoEnum.CM_DEFMENU,
+                buffer: 'azen'
+            }))
+                .then((resultadoCmDefMenu: ResultadoActionConDato<IZColaEventos>) => {
+                    if (resultadoCmDefMenu.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {
+                        reject(resultadoCmDefMenu);
+                        return;
+                    }
+                    Services.Responder.procesarZColaEventos(resultadoCmDefMenu.retorno, dispatch, getState);
+                });
+        });
+    }
 
     export const lanzarOpcion = (ctx: string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
         return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
@@ -62,7 +64,7 @@ export namespace Actions {
                     }
                     Services.Responder.procesarZColaEventos(resultadoCmEjecOption.retorno, dispatch, getState);
                 }
-            )
+                )
         });
     }
 
