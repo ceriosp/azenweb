@@ -83,7 +83,7 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
     private renderAplList(zLoginModule: IZLoginModule) {
 
         let zAplRows: Array<JSX.Element> = [];
-        let rowsNumber = Math.ceil(zLoginModule.zAplList.apls.length / 8);
+        let rowsNumber = Math.ceil(zLoginModule.zAplList.apls.length / 4);
 
         let currentApl: number = 0;
 
