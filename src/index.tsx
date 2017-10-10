@@ -52,19 +52,21 @@ declare let window: any;
 let store = null
 
 let idApl = ZUtils.Services.getQueryStringParameter('idApl');
+let lanzarMenu = ZUtils.Services.getQueryStringParameter('lanzarMenu');
 
 const obtenerEstadoInicial = (idApl: string) => {
 
-    let zAplState = {
-        idApl: idApl
-    } as IZAplState
+    if (__DEV__) {
+        return createStore(
+            App.Reducers.zaplState,
+            redux.compose(redux.applyMiddleware(...middlewares), window.devToolsExtension ? window.devToolsExtension() : (f: any) => f)
+        );
+    }
 
     return createStore(
         App.Reducers.zaplState,
-        zAplState,
-        redux.compose(redux.applyMiddleware(...middlewares), window.devToolsExtension ? window.devToolsExtension() : (f: any) => f)
+        redux.compose(redux.applyMiddleware(...middlewares))
     );
-
 }
 
 if (idApl) {
@@ -77,7 +79,7 @@ if (idApl) {
         document.getElementById("app-container")
     );
 
-    store.dispatch(zAplicationActions.lanzarMenu());
+    store.dispatch(zAplicationActions.lanzarAplicacion(idApl, lanzarMenu));
 }
 else {
 

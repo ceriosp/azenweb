@@ -54,13 +54,24 @@ export class ZLogin extends React.Component<OwnProps & ConnectedState & Connecte
 
                     <Modal.Body>
                         <Row>
-                            <Col xs={9} lg={9}>
+                            <Col className="text-center" smHidden mdHidden lgHidden>
+                                <img src="dist/img/azenLogo.jpg" />
+                            </Col>
+                            <Col
+                                xs={12}
+                                sm={9}>
                                 <Form horizontal>
                                     <FormGroup controlId="formHorizontalUsername">
-                                        <Col xs={3} lg={3}>
+                                        <Col
+                                            xs={12}
+                                            sm={3}
+                                            lg={3}>
                                             Usuario:
-                                    </Col>
-                                        <Col xs={9} lg={9}>
+                                        </Col>
+                                        <Col
+                                            xs={12}
+                                            sm={9}
+                                            lg={9}>
                                             <FormControl
                                                 type="username"
                                                 placeholder="Nombre de usuario"
@@ -70,10 +81,16 @@ export class ZLogin extends React.Component<OwnProps & ConnectedState & Connecte
                                     </FormGroup>
 
                                     <FormGroup controlId="formHorizontalPassword">
-                                        <Col xs={3} lg={3}>
+                                        <Col
+                                            xs={12}
+                                            sm={3}
+                                            lg={3}>
                                             Contraseña:
-                                    </Col>
-                                        <Col xs={9} lg={9}>
+                                        </Col>
+                                        <Col
+                                            xs={12}
+                                            sm={9}
+                                            lg={9}>
                                             <FormControl
                                                 type="password"
                                                 placeholder="Contraseña"
@@ -83,7 +100,13 @@ export class ZLogin extends React.Component<OwnProps & ConnectedState & Connecte
                                     </FormGroup>
 
                                     <FormGroup>
-                                        <Col xs={3} lg={3} xsOffset={9} lgOffset={9}>
+                                        <Col
+                                            xs={12}
+                                            sm={3}
+                                            smOffset={9}
+                                            lg={3}
+                                            lgOffset={9}
+                                        >
                                             <Button
                                                 type="button"
                                                 onClick={this.onIngresarClick}>
@@ -93,7 +116,7 @@ export class ZLogin extends React.Component<OwnProps & ConnectedState & Connecte
                                     </FormGroup>
                                 </Form>
                             </Col>
-                            <Col xs={3} lg={3}>
+                            <Col xsHidden sm={3}>
                                 <img src="dist/img/azenLogo.jpg" />
                             </Col>
                         </Row>

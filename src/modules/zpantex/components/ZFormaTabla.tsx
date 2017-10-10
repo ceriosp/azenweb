@@ -44,34 +44,17 @@ export class ZFormaTabla extends React.Component<OwnProps & ConnectedState & Con
 {
     render(): any {
 
-        const titulo = (
-            <h3>{this.props.zFormaTabla.ven.descr}</h3>
-        );
-
         return (
-            <div
-                style={{
-                    padding: '10px'
-                }}
-            >
-                <Panel header={titulo} bsStyle="primary">
-                    <Form horizontal>
-                        <ZBarraComandos
-                            zComandosList={this.props.zFormaTabla.btns}
-                        />
-                        <div>
-                            {this.props.zFormaTabla.cmps.map(this.pintarZCampoEnRecurso.bind(this))}
-                        </div>
-                        <div style={{
-                            clear: 'both'
-                        }}
-                        >
-                        </div>
-                        <ZBarraComandos
-                            zComandosList={this.props.zFormaTabla.btns}
-                        />                        
-                    </Form>
-                </Panel>
+            <div>
+                <div>
+                    {this.props.zFormaTabla.cmps.map(this.pintarZCampoEnRecurso.bind(this))}
+                </div>
+                <div 
+                    style={{
+                        clear: 'both'
+                    }}
+                >
+                </div>
             </div>
         );
     }

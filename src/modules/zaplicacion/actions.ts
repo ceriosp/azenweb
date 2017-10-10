@@ -8,16 +8,20 @@ import {
     IZAplState, IZColaEventos
 } from "../zcommon/contracts";
 
+import * as App from '../app';
 import * as ZMenu from '../zmenu';
-
 import * as ZComunicaciones from '../zcomunicaciones';
+
 import { IZMenu } from "../zcommon/contracts";
 import { Services } from "./services";
 import { ActionTypes } from './actionTypes';
 
 export namespace Actions {
 
-    export const lanzarAplicacion = (idApl: string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
+    export const lanzarAplicacion = (idApl: string, lanzarMenu: string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
+
+        dispatch(App.Actions.setIdApl(idApl));
+
         return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
             dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
                 cmd: ZCommon.Constants.ComandoEnum.CM_APLICACION,
@@ -28,6 +32,10 @@ export namespace Actions {
                     if (resultadoCmAplicacion.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {
                         reject(resultadoCmAplicacion);
                         return;
+                    }
+
+                    if (lanzarMenu == '1') {
+                        dispatch(Actions.lanzarMenu());
                     }
                 },
                 () => { }

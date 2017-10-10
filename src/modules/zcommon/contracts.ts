@@ -72,11 +72,19 @@ export interface IZPantex {
     zFormaTablaList: Array<IZFormaTabla>;
 }
 
+export interface IZRegion {
+    zFormaTabla: IZFormaTabla;
+}
+
 export interface IZFormaTabla { //zft
     ven: IZVentana;
     linEst: Array<IZComandoForma>;
     cmps: Array<IZCampo>;
     btns: Array<IZComandoForma>;
+}
+
+export interface IZLineaEstado {
+    linEst: Array<IZComandoForma>;
 }
 
 /**

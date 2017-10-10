@@ -82,51 +82,47 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
 
     private renderAplList(zLoginModule: IZLoginModule) {
 
-        let zAplRows: Array<JSX.Element> = [];
-        let rowsNumber = Math.ceil(zLoginModule.zAplList.apls.length / 4);
+        let zAplCols: Array<JSX.Element> = [];
 
-        let currentApl: number = 0;
-
-        for (let i = 0; i < rowsNumber; i++) {
-
-            let zAplColumns: Array<JSX.Element> = [];
-
-            for (let j = 0; j < zLoginModule.zAplList.apls.length; j++) {
-
-                let zAplColOffset = (currentApl % 4) == 0 ? 2 : 0;
-
-                zAplColumns.push(
-                    <Col key={'zAplCol' + currentApl} xs={2} sm={2} md={2} lg={2} xsOffset={zAplColOffset} lgOffset={zAplColOffset}>
-                        <Thumbnail src="dist/img/azenLogo.jpg">
-                            <h4>{zLoginModule.zAplList.apls[currentApl].descr}</h4>
-                            <p>
-                                <Button
-                                    bsStyle="primary"
-                                    onClick={this.lanzarAplicacion}
-                                    value={zLoginModule.zAplList.apls[currentApl].apl}
-                                    href={'?idApl=' + zLoginModule.zAplList.apls[currentApl].apl}
-                                    target="_blank">
-                                    Ejecutar
+        zLoginModule.zAplList.apls.forEach((zApl: IZApl, index: number) => {
+            zAplCols.push(
+                <Col
+                    key={'zAplCol' + index}
+                    xs={12}
+                    xsOffset={0}
+                    sm={4}
+                    smOffset={0}
+                    md={4}
+                    mdOffset={0}
+                    lg={2}
+                    lgOffset={((index) % 4 == 0) ? 2 : 0}
+                >
+                    <Thumbnail src="dist/img/azenLogo.jpg">
+                        <h4>{zApl.descr}</h4>
+                        <p>
+                            <Button
+                                bsStyle="primary"
+                                onClick={this.lanzarAplicacion}
+                                value={zApl.apl}
+                                href={'?idApl=' + zApl.apl + '&' + 'lanzarMenu=' + (1).toString()}
+                                target="_blank">
+                                Ejecutar
                         </Button>
-                            </p>
-                        </Thumbnail>
-                    </Col>
-                );
-
-                currentApl++;
-
-                if (j == 3) break;
-            }
-
-            zAplRows.push(<Row key={'zAplRow' + i}>{zAplColumns}</Row>);
-        }
+                        </p>
+                    </Thumbnail>
+                </Col>
+            );
+        });
 
         const zAplsContainer: JSX.Element = (
-            <div style={{ paddingTop: "5%" }}>
-                <Grid fluid>
-                    {zAplRows}
-                </Grid>
-            </div>
+            <Grid
+                fluid
+                style={{
+                    paddingTop: "2%"
+                }}
+            >
+                <Row>{zAplCols}</Row>
+            </Grid>
         );
 
         return zAplsContainer;

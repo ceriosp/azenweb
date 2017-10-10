@@ -10,7 +10,7 @@ import { ActionTypes } from "./actionTypes";
 
 export namespace Reducers {
 
-    export const idApl = (state: string = "", action: ActionTypes.Action): string => {
+    export const idApl = (state: string = null, action: ActionTypes.Action): string => {
 
         switch (action.type) {
             case ActionTypes.SET_IDAPL:
