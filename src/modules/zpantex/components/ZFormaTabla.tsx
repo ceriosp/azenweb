@@ -28,12 +28,15 @@ import { ZVentana } from "./ZVentana";
 import ZCampo from "./ZCampo";
 import ZBarraComandos from "./ZBarraComandos";
 
+import { Constants } from "../constants";
+
 export interface OwnProps {
     zFormaTabla: IZFormaTabla;
+    zFormaIndex: number;
 }
 
 export interface ConnectedState {
-
+    pxAlTope: number;
 }
 
 export interface ConnectedDispatch {
@@ -46,10 +49,13 @@ export class ZFormaTabla extends React.Component<OwnProps & ConnectedState & Con
 
         return (
             <div>
-                <div>
+                <Form
+                    horizontal
+                    id={Constants.PX_PREFIJO_ID + this.props.pxAlTope + Constants.ZFT_PREFIJO_ID + this.props.zFormaIndex}
+                >
                     {this.props.zFormaTabla.cmps.map(this.pintarZCampoEnRecurso.bind(this))}
-                </div>
-                <div 
+                </Form>
+                <div
                     style={{
                         clear: 'both'
                     }}

@@ -43,5 +43,3 @@ export namespace Selectors
         }
     );
 }
-
-

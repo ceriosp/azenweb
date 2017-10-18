@@ -25,7 +25,7 @@ import {
 import { IZPantex, IZFormaTabla } from "../../zcommon";
 import ZLineaEstado from "./ZLineaEstado";
 import ZBarraComandos from "./ZBarraComandos";
-import { ZRegion } from './ZRegion';
+import { ZRegionContainer } from '../containers/ZRegionContainer';
 
 export interface OwnProps {
     zPantex: IZPantex;
@@ -58,20 +58,19 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
                     return (
                         <div key={zFormaTablaI.ven.numPx}>
                             <Panel header={titulo} bsStyle="primary">
-                                <Form horizontal>
-                                    <ZLineaEstado
-                                        linEst={zFormaTablaI.linEst}
-                                    />
-                                    <ZBarraComandos
-                                        zComandosList={zFormaTablaI.btns}
-                                    />
-                                    <ZRegion
-                                        zFormaTabla={zFormaTablaI}
-                                    />
-                                    <ZBarraComandos
-                                        zComandosList={zFormaTablaI.btns}
-                                    />
-                                </Form>
+                                <ZLineaEstado
+                                    linEst={zFormaTablaI.linEst}
+                                />
+                                <ZBarraComandos
+                                    zComandosList={zFormaTablaI.btns}
+                                />
+                                <ZRegionContainer
+                                    zFormaTabla={zFormaTablaI}
+                                    zRegionIndex={index}
+                                />
+                                <ZBarraComandos
+                                    zComandosList={zFormaTablaI.btns}
+                                />
                             </Panel>
                         </div>
                     );

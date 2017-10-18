@@ -17,7 +17,7 @@ export namespace Actions {
             let idApl = AppSelectors.getIdApl(getState());
 
             let { cmd, buffer } = parametros;
-            let requestUrl = `http://52.11.111.216:8080/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}`;
+            let requestUrl = `http://52.42.49.101:8080/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}`;
 
             dispatch(setEstaProcesandoRequestServidor(true));
             fetch(requestUrl, {

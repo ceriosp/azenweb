@@ -101,7 +101,7 @@ export namespace Services {
         const parseDataEventoToJSON = (zEvento: IZEvento) => {
             if (zEvento.dato.buffer.fto == ZCommon.Constants.FormatoDatoEventoEnum.XML) {
 
-                zEvento.dato.buffer.dato = (`<r>${zEvento.dato.buffer.dato}</r>`);
+                let eventDataResult = (`<r>${zEvento.dato.buffer.dato}</r>`);
 
                 let parsingOptions = {
                     trim: true, //Trim the whitespace at the beginning and end of text nodes.
@@ -110,8 +110,8 @@ export namespace Services {
                     explicitArray: false //Always put child nodes in an array if true; otherwise an array is created only if there is more than one
                 }
 
-                xml2js.parseString(zEvento.dato.buffer.dato, parsingOptions, (err: any, result: any) => {
-                    zEvento.dato.buffer.dato = result;
+                xml2js.parseString(eventDataResult, parsingOptions, (err: any, result: any) => {
+                    zEvento.dato.buffer.dato = result.r;
                 });
             }
         }

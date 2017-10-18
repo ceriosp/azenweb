@@ -28,7 +28,7 @@ export interface IZLoginModule {
 
 export interface IZBuffer {
     fto: string;
-    dato: string | IZMenu | IZPantex | IZAplList;
+    dato: string | IZMenu | IZPantex | IZAplList | CM.ISincCampo;
 }
 
 export interface IZDatoEvento {

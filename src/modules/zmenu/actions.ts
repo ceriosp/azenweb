@@ -1,12 +1,15 @@
-import {
-    ZMenuItemModel, IZMenu
-} from '../zcommon';
+import * as ZUtils from '../zutils';
+import { ResultadoActionConDato } from "../zutils/models";
 
+import * as ZCommon from '../zcommon';
+import { ZMenuItemModel, IZMenu } from '../zcommon';
+import { IZAplState, IZColaEventos } from "../zcommon/contracts";
 
-import {
-    ActionTypes,
-} from './actionTypes';
+import * as ZComunicaciones from '../zcomunicaciones';
 
+import * as ZAplicacion from '../zaplicacion';
+
+import { ActionTypes } from './actionTypes';
 
 export namespace Actions {
 
@@ -17,6 +20,22 @@ export namespace Actions {
             zmenu
         });
 
+    }
+
+    export const lanzarMenu = () => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
+        return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
+            dispatch(ZComunicaciones.Actions.enviarRequestComando<Object>({
+                cmd: ZCommon.Constants.ComandoEnum.CM_DEFMENU,
+                buffer: 'azen'
+            }))
+                .then((resultadoCmDefMenu: ResultadoActionConDato<IZColaEventos>) => {
+                    if (resultadoCmDefMenu.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {
+                        reject(resultadoCmDefMenu);
+                        return;
+                    }
+                    ZAplicacion.Services.Responder.procesarZColaEventos(resultadoCmDefMenu.retorno, dispatch, getState);
+                });
+        });
     }
 
     export const cargarMenu = (appName: string): ActionTypes.Action => ({
