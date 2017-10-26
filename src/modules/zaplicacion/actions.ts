@@ -2,17 +2,17 @@ import * as ZUtils from '../zutils';
 import { ResultadoActionConDato } from "../zutils/models";
 
 import * as ZCommon from '../zcommon';
-import { IZAplState, IZColaEventos } from "../zcommon/contracts";
+import { IZAplState, IZColaEventos, IZMenu } from "../zcommon/contracts";
 
 import * as App from '../app';
 import * as ZMenu from '../zmenu';
+import { Actions as ZMenuActions } from "../zmenu";
 import * as ZComunicaciones from '../zcomunicaciones';
 
-import { Actions as ZMenuActions } from "../zmenu";
-
-import { IZMenu } from "../zcommon/contracts";
 import { ActionTypes } from './actionTypes';
 import { Services } from "./services";
+
+import { ZclienteResponder } from "./zmnjs/zclienteResponder";
 
 export namespace Actions {
 
@@ -56,6 +56,10 @@ export namespace Actions {
                 }
                 )
         });
+    }
+
+    export const despacharEventoCliente = (cmd: ZCommon.Constants.ComandoEnum) => (dispatch: (p: any) => any, getState: () => IZAplState) => {
+        dispatch(ZclienteResponder.responderEventoCliente(cmd));
     }
 
     export namespace ZAplState {

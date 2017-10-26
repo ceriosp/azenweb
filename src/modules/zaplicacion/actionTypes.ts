@@ -1,5 +1,5 @@
-import { IZMenu } from "../zcommon/contracts";
+import * as ZCommon from "../zcommon";
 
 export namespace ActionTypes {
-
+    
 }

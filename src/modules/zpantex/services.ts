@@ -46,15 +46,18 @@ const recursosZoomList: Array<string> =
 import * as ZCommon from '../zcommon';
 import {
 
+    IZComandoForma,
+
     //Models
     ZRecursoViewModel,
     ZReferenciaModel,
     ZReferenciaViewModel,
     ZCampoModel,
+    Constants,
 
     //Utils
     EntityMap,
-    EntityNormalizedObj
+    EntityNormalizedObj,
 
 } from '../zcommon';
 
@@ -69,7 +72,7 @@ const findIndex = require('lodash.findindex');
 export namespace Services {
     export class ZRecursoServices {
 
-        public despacharOpcionMenu(despacharOpcionMenuParamsDTO:DTO.DespacharOpcionMenuParamsDTO):EntityMap<ZRecursoViewModel>{
+        public despacharOpcionMenu(despacharOpcionMenuParamsDTO: DTO.DespacharOpcionMenuParamsDTO): EntityMap<ZRecursoViewModel> {
 
             let newZrecursoEntityMap = new EntityMap<ZRecursoViewModel>();
             let zrecursoModelWebAbrir: ZRecursoViewModel = null;
@@ -77,7 +80,7 @@ export namespace Services {
 
             zrecursoModelWebAbrir = this.getRecursoWebFromJSON(idRecurso);
             newZrecursoEntityMap = u({
-                [idRecurso]:zrecursoModelWebAbrir
+                [idRecurso]: zrecursoModelWebAbrir
             }, zrecursoViewModelEntityMapOld);
 
             return newZrecursoEntityMap;
@@ -157,6 +160,43 @@ export namespace Services {
 
                 default:
                     return null;
+            }
+        }
+
+        public getCMIcon(zComando: IZComandoForma) {
+            switch (zComando.cmd) {
+                case Constants.ComandoEnum.CM_AYUDA:
+                    return "glyphicon glyphicon-info-sign";
+                case Constants.ComandoEnum.CM_ADICIONAR:
+                    return "glyphicon glyphicon-plus";
+                case Constants.ComandoEnum.CM_MODIFICAR:
+                    return "glyphicon glyphicon-pencil";
+                case Constants.ComandoEnum.CM_CONSULTAR:
+                    return "glyphicon glyphicon-book";
+                case Constants.ComandoEnum.CM_CERRAR:
+                    return "glyphicon glyphicon-log-out";
+                case Constants.ComandoEnum.CM_PRIMERO:
+                    return "glyphicon glyphicon-fast-backward";
+                case Constants.ComandoEnum.CM_ANTREG:
+                    return "glyphicon glyphicon-step-backward";
+                case Constants.ComandoEnum.CM_SGTEREG:
+                    return "glyphicon glyphicon-step-forward";
+                case Constants.ComandoEnum.CM_ULTIMO:
+                    return "glyphicon glyphicon-fast-forward";
+                case Constants.ComandoEnum.CM_RETOCAR:
+                    return "glyphicon glyphicon-edit";
+                case Constants.ComandoEnum.CM_VISUALIZAR:
+                    return "glyphicon glyphicon-eye-open";
+                case Constants.ComandoEnum.CM_GRABAR:
+                    return "glyphicon glyphicon-floppy-save";
+                case Constants.ComandoEnum.CM_BUSCAR:
+                    return "glyphicon glyphicon-search";
+                case Constants.ComandoEnum.CM_DETALLAR:
+                    return "glyphicon glyphicon-print";
+                case Constants.ComandoEnum.CM_SELECCIONAR:
+                    return "glyphicon glyphicon-certificate";
+                case Constants.ComandoEnum.CM_BORRAR:
+                    return "glyphicon glyphicon-floppy-remove";
             }
         }
     }

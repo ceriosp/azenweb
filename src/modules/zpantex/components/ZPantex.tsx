@@ -22,10 +22,10 @@ import {
     IZMenu
 } from '../../zcommon/contracts';
 
-import { IZPantex, IZFormaTabla } from "../../zcommon";
-import ZLineaEstado from "./ZLineaEstado";
-import ZBarraComandos from "./ZBarraComandos";
+import { IZPantex, IZFormaTabla } from '../../zcommon';
 import { ZRegionContainer } from '../containers/ZRegionContainer';
+import { ZLineaEstadoContainer } from '../containers/ZLineaEstadoContainer';
+import { ZBarraComandosContainer } from '../containers/ZBarraComandosContainer';
 
 export interface OwnProps {
     zPantex: IZPantex;
@@ -58,17 +58,17 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
                     return (
                         <div key={zFormaTablaI.ven.numPx}>
                             <Panel header={titulo} bsStyle="primary">
-                                <ZLineaEstado
+                                <ZLineaEstadoContainer
                                     linEst={zFormaTablaI.linEst}
                                 />
-                                <ZBarraComandos
+                                <ZBarraComandosContainer
                                     zComandosList={zFormaTablaI.btns}
                                 />
                                 <ZRegionContainer
                                     zFormaTabla={zFormaTablaI}
                                     zRegionIndex={index}
                                 />
-                                <ZBarraComandos
+                                <ZBarraComandosContainer
                                     zComandosList={zFormaTablaI.btns}
                                 />
                             </Panel>
