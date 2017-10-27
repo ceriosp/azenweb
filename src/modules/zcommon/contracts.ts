@@ -1,31 +1,26 @@
 import { Constants } from "./constants";
 import { ResultadoAction } from "../zutils/models";
 
-export interface IZAplState {
-    idApl: string;
-    estaProcesandoRequestServidor: boolean;
-    zMenuModule: IZMenuModule;
-    zPantexModule: IZPantexModule;
-    zLoginModule: IZLoginModule;
+ 
+//#region =============================================== UTILS ===============================================
+
+class EntityNormalizedObj<TEntity>{
+
+    constructor() {
+        this.byId = {};
+        this.allIds = Array<string>();
+    }
+
+    byId: EntityMap<TEntity>;
+    allIds: Array<string>
 }
 
-export interface IZMenuModule {
-    visible: boolean;
-    zmenu: IZMenu;
+interface EntityMap<TEntity>{
+    [id: string]: TEntity;
 }
+//#endregion
 
-export interface IZPantexModule {
-    pxAlTope: number;
-    pilaPantex: Array<IZPantex>;
-}
-
-export interface IZLoginModule {
-    username: string;
-    password: string;
-    zAplList: IZAplList;
-    resultadoAction: ResultadoAction;
-}
-
+//#region =============================================== DOMAIN ===============================================
 export interface IZBuffer {
     fto: string;
     dato: string | IZMenu | IZPantex | IZAplList | CM.ISincCampo;
@@ -78,9 +73,10 @@ export interface IZRegion {
 
 export interface IZFormaTabla { //zft
     ven: IZVentana;
-    linEst: Array<IZComandoForma>;
-    cmps: Array<IZCampo>;
+
+    linEst: Array<IZComandoForma>;    
     btns: Array<IZComandoForma>;
+    cmps: Array<IZCampo>;    
 }
 
 export interface IZLineaEstado {
@@ -330,3 +326,48 @@ export namespace CM {
     }
 
 }
+//#endregion
+
+//#region =========================================== CUSTOM DOMAIN ===========================================
+
+interface IZCamposRegion {
+    rg:number;
+    camposMap:EntityNormalizedObj<IZCampo>
+}
+
+interface IZPantexNormalized {
+    px:number;
+    zPantex:IZPantex;
+    zftMap:EntityNormalizedObj<IZCamposRegion>
+}
+
+//#endregion
+
+//#region =============================================== STATE ===============================================
+
+export interface IZAplState {
+    idApl: string;
+    estaProcesandoRequestServidor: boolean;
+    zMenuModule: IZMenuModule;
+    zPantexModule: IZPantexModule;
+    zLoginModule: IZLoginModule;
+}
+
+export interface IZMenuModule {
+    visible: boolean;
+    zmenu: IZMenu;
+}
+
+export interface IZPantexModule {
+    pxAlTope: number;
+    pilaPantex: Array<IZPantex>;
+    pantexMap: EntityNormalizedObj<IZPantexNormalized>;
+}
+
+export interface IZLoginModule {
+    username: string;
+    password: string;
+    zAplList: IZAplList;
+    resultadoAction: ResultadoAction;
+}
+//#endregion

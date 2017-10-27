@@ -25,7 +25,7 @@ export namespace ZcmpResponder {
                 querySelector = `#${ZPantexConstants.PX_PREFIJO_ID}${getState().zPantexModule.pxAlTope.toString()}${ZPantexConstants.ZFT_PREFIJO_ID}0`;
 
                 if (!zFormaTablaForm) {
-                    zCampoList = getState().zPantexModule.pilaPantex[0].zFormaTablaList[0].cmps;
+                    zCampoList = getState().zPantexModule.pilaPantex[dato.px - 1].zFormaTablaList[dato.rg - 1].cmps;
                     zFormaTablaForm = document.querySelector(querySelector) as HTMLFormElement;
                 }
 
