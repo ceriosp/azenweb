@@ -26,7 +26,6 @@ import {
 import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma } from "../../zcommon";
 import { ZVentana } from "./ZVentana";
 import ZCampo from "./ZCampo";
-import ZBarraComandos from "./ZBarraComandos";
 
 import { Constants } from "../constants";
 

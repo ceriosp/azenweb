@@ -40,30 +40,10 @@ export namespace ZcmpResponder {
                     if (zCampo.nomCmp) {
                         setFieldTextValue(zCampo, dato);
                     }
-
-                    if (zCampo.cmps && zCampo.cmps.length > 0) {
-                        zCampo.cmps.find((campo: IZCampo) => {
-                            if (campo.nomCmp == dato.nc) {
-                                if (campo.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
-                                    //console.log("check", campo);
-                                }
-
-                                if (campo.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO) {
-                                    //console.log("radio", campo);
-                                }
-                            }
-                            return null;
-                        })
-                    }
-
+                   
                     return null;
                 });
-                /*
-                if (zFormInput.type == "text") {
-                    zFormInput.value = dato.vc;
-                    break;
-                }
-                */
+
                 break;
         }
     }
