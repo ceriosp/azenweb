@@ -20,7 +20,7 @@ export default class ZCampoRadio extends React.PureComponent<OwnProperties, unde
         const { zCampoModel } = this.props;
 
         return (            
-                <Radio name={zCampoModel.nomCmp} inline>
+                <Radio name={zCampoModel.nomCmp} value={zCampoModel.lon} inline>
                     {zCampoModel.etq.replace("( )", "")}
                 </Radio>
         );
