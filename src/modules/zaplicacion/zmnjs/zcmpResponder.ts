@@ -38,7 +38,6 @@ export namespace ZcmpResponder {
 
             zftFormElement = document.querySelector(querySelector) as HTMLFormElement;
             zftCamposState = getState().zPantexModule.pilaPantex[dato.px - 1].zFormaTablaList[dato.rg - 1].cmps as Array<IZCampo>;
-            console.log(zftCamposState);
         }
 
         zftFormInputElement = zftFormElement.elements.namedItem(dato.nc);
