@@ -22,8 +22,7 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-    lanzarAplicacion: (identificadorAplicacion: string) =>
-        dispatch(ZAplicacion.Actions.lanzarAplicacion(identificadorAplicacion, '1'))
+
 });
 
 export const ZListadoAplicacionesContainer: React.ComponentClass<OwnProps> =

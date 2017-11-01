@@ -12,7 +12,7 @@ import * as ZComunicaciones from '../zcomunicaciones';
 import { ActionTypes } from './actionTypes';
 import { Services } from "./services";
 
-import { ZclienteResponder } from "./zmnjs/zclienteResponder";
+import { ZclienteResponder } from "./clientzmnjs/zclienteResponder";
 
 export namespace Actions {
 

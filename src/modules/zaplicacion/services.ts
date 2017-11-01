@@ -44,7 +44,7 @@ const recursosZoomList: Array<string> =
 
 import * as ZCommon from '../zcommon';
 import {
-    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList
+    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList, IZCampo, CM
 } from '../zcommon';
 
 import * as ZMenu from '../zmenu';
@@ -53,9 +53,10 @@ import * as ZLogin from '../zlogin';
 import { ZftResponder } from './zmnjs/zftResponder';
 import { ZmenuResponder } from './zmnjs/zmenuResponder';
 import { ZcmpResponder } from "./zmnjs/zcmpResponder";
+import { Constants as ZCommonConstants } from "../zcommon";
+import { Constants as ZPantexConstants } from "../zpantex";
 
-var xml2js = require('xml2js');
-
+let xml2js = require('xml2js');
 
 const procesarEventoNada = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
@@ -81,21 +82,20 @@ export namespace Services {
 
         export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
-                try{
+                try {
                     parseDataEventoToJSON(zColaEventos.eventos[i]);
-                    for(let j=0; j<responderArray.length; j++){
+                    for (let j = 0; j < responderArray.length; j++) {
                         responderArray[j](zColaEventos.eventos[i], dispatch, getState);
-                    }                    
+                    }
                 }
-                catch(e){
+                catch (e) {
                     console.error(`zaplicacion/services/Services/Responder: procesando evento ${JSON.stringify(zColaEventos.eventos[i])}`);
                     console.error(e.messsage);
-                }                
+                }
             }
         }
 
         /**
-         * 
          * @param zEvento evento azen
          * https://www.npmjs.com/package/xml2js#processing-attribute-tag-names-and-values
          */
@@ -116,5 +116,26 @@ export namespace Services {
                 });
             }
         }
+
+        export const obtenerDefinicionesCampo = (zftCampos: Array<IZCampo>, dato: CM.ISincCampo): IZCampo | Array<IZCampo> => {
+
+            for (let i = 0; i < zftCampos.length; i++) {
+
+                if (zftCampos[i].nomCmp && zftCampos[i].nomCmp == dato.nc) {
+                    return zftCampos[i] as IZCampo;
+                }
+
+                if (zftCampos[i].cmps && zftCampos[i].cmps.length > 0) {
+
+                    for (var j = 0; j < zftCampos[i].cmps.length; j++) {
+
+                        if (zftCampos[i].cmps[j].nomCmp == dato.nc) {
+                            return zftCampos[i].cmps as Array<IZCampo>;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

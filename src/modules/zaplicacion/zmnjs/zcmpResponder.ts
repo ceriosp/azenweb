@@ -1,5 +1,4 @@
 import {
-    IZMenu,
     IZAplState,
     IZEvento,
     IZCampo,
@@ -8,51 +7,109 @@ import {
 import { Constants as ZCommonConstants } from "../../zcommon";
 import { Constants as ZPantexConstants } from "../../zpantex";
 
-export namespace ZcmpResponder {
+import { Services } from "../services";
 
-    let querySelector: any;
-    let zFormaTablaForm: HTMLFormElement;
-    let zFormInput: any;
-    let zCampoList: Array<IZCampo> = [];
+let querySelector: any;
+
+let zftFormElement: HTMLFormElement;
+let zftFormInputElement: any;
+
+let zftCamposState: Array<IZCampo>;
+let zftCampo: any;
+
+export namespace ZcmpResponder {
 
     export const responder = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
         switch (zEvento.dato.cmd) {
 
             case ZCommonConstants.ComandoEnum.CM_SINCCAMPO:
-                const dato = zEvento.dato.buffer.dato as CM.ISincCampo;
-
-                querySelector = `#${ZPantexConstants.PX_PREFIJO_ID}${getState().zPantexModule.pxAlTope.toString()}${ZPantexConstants.ZFT_PREFIJO_ID}0`;
-
-                if (!zFormaTablaForm) {
-                    zCampoList = getState().zPantexModule.pilaPantex[dato.px - 1].zFormaTablaList[dato.rg - 1].cmps;
-                    zFormaTablaForm = document.querySelector(querySelector) as HTMLFormElement;
-                }
-
-                zFormInput = zFormaTablaForm.elements.namedItem(dato.nc);
-
-                if (zFormInput == null) {
-                    break;
-                }
-
-                zCampoList.find((zCampo: IZCampo) => {
-
-                    if (zCampo.nomCmp) {
-                        setFieldTextValue(zCampo, dato);
-                    }
-                   
-                    return null;
-                });
-
+                sincronizarCampo(zEvento, dispatch, getState);
                 break;
         }
     }
 
-    const setFieldTextValue = (campoState: IZCampo, dato: CM.ISincCampo) => {
-        if (campoState.nomCmp == dato.nc) {
-            if (campoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_NOINDICADOR) {
-                zFormInput.value = dato.vc;
+    const sincronizarCampo = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
+
+        const dato = zEvento.dato.buffer.dato as CM.ISincCampo;
+
+        if (!querySelector) {
+            querySelector = `#${ZPantexConstants.PX_PREFIJO_ID}${getState().zPantexModule.pxAlTope.toString()}${ZPantexConstants.ZFT_PREFIJO_ID}0`;
+
+            zftFormElement = document.querySelector(querySelector) as HTMLFormElement;
+            zftCamposState = getState().zPantexModule.pilaPantex[dato.px - 1].zFormaTablaList[dato.rg - 1].cmps as Array<IZCampo>;
+            console.log(zftCamposState);
+        }
+
+        zftFormInputElement = zftFormElement.elements.namedItem(dato.nc);
+
+        if (zftFormInputElement) {
+            zftCampo = Services.Responder.obtenerDefinicionesCampo(zftCamposState, dato);
+
+            if (!zftCampo) {
+                return;
+            }
+
+            if (zftCampo.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_NOINDICADOR) {
+                sincronizarTextBox(dato);
+                return;
+            }
+
+            if (zftCampo.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO) {
+                sincronizarRadio(dato);
+                return;
+            }
+
+            if (zftCampo.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
+                return;
+            }
+
+            if (zftCampo.length > 0) {
+
+                if (zftCampo[0].claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_NOINDICADOR) {
+                    sincronizarCamposTextBox(dato, zftCampo);
+                    return;
+                }
+
+                if (zftCampo[0].claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO) {
+                    sincronizarRadio(dato);
+                    return;
+                }
+
+                if (zftCampo[0].claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
+                    sincronizarCheckBox(dato);
+                    return;
+                }
             }
         }
     }
+
+    const sincronizarTextBox = (dato: CM.ISincCampo) => {
+        zftFormInputElement.value = dato.vc;
+    }
+
+    const sincronizarCamposTextBox = (dato: CM.ISincCampo, zCampo: Array<IZCampo>) => {
+        zCampo.forEach((campo: IZCampo) => {
+            if (zftFormInputElement.name == dato.nc) {
+                zftFormInputElement.value = dato.vc;
+            }
+        });
+    }
+
+    const sincronizarRadio = (dato: CM.ISincCampo) => {
+        zftFormInputElement.forEach((element: any) => {
+            if (element.value == dato.pb) {
+                element.checked = dato.vc == "*" ? true : false;
+            }
+        });
+    }
+
+    const sincronizarCheckBox = (dato: CM.ISincCampo) => {
+        zftFormInputElement.forEach((element: any) => {
+            if (element.value == dato.pb) {
+                element.checked = dato.vc == "X" ? true : false;
+            }
+        });
+    }
+
 }

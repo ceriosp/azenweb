@@ -48,16 +48,13 @@ export interface ConnectedState {
 }
 
 export interface ConnectedDispatch {
-    lanzarAplicacion: (identificadorAplicacion: string) => void;
+
 }
 
 export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
-
         super(props);
-
-        this.lanzarAplicacion = this.lanzarAplicacion.bind(this);
     }
 
     render() {
@@ -74,10 +71,6 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
                 <ZProcesandoContainer />
             </div>
         );
-    }
-
-    private lanzarAplicacion(e: any) {
-        this.props.lanzarAplicacion(e.target.value);
     }
 
     private renderAplList(zLoginModule: IZLoginModule) {
@@ -102,7 +95,6 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
                         <p>
                             <Button
                                 bsStyle="primary"
-                                onClick={this.lanzarAplicacion}
                                 value={zApl.apl}
                                 href={'?idApl=' + zApl.apl + '&' + 'lanzarMenu=' + (1).toString()}
                                 target="_blank">

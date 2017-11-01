@@ -21,7 +21,7 @@ export default class ZCampoCheckbox extends React.PureComponent<OwnProperties, u
         const { zCampoModel } = this.props;
 
         return (            
-                <Checkbox>
+                <Checkbox name={zCampoModel.nomCmp} value={zCampoModel.lon}>
                     {zCampoModel.etq.replace("[ ]", "")}
                 </Checkbox>
         );

@@ -35,11 +35,10 @@ export namespace Actions {
                     return response.text();
                 })
                 .then((retornoStr: string) => {
-                    console.log(retornoStr);
+                    //console.log(retornoStr);
                     if (retornoStr[retornoStr.length - 1] != '}') {
                         retornoStr = retornoStr.substring(0, retornoStr.length - 1);
                     }
-                    //console.log(retornoStr);
                     retornoStr = retornoStr.replace('<usr>null</usr>', '');
                     let retorno: TRetorno = JSON.parse(retornoStr);
                     let resultadoActionExito = new ResultadoActionConDato<TRetorno>();
