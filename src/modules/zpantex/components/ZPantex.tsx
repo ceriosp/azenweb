@@ -26,6 +26,7 @@ import { IZPantex, IZFormaTabla } from '../../zcommon';
 import { ZRegionContainer } from '../containers/ZRegionContainer';
 import { ZLineaEstadoContainer } from '../containers/ZLineaEstadoContainer';
 import { ZBarraComandosContainer } from '../containers/ZBarraComandosContainer';
+import { Constants } from "../constants";
 
 export interface OwnProps {
     zPantex: IZPantex;
@@ -44,7 +45,9 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
     render(): any {
 
         const titulo = (
-            <h3>{this.props.zPantex.zFormaTablaList[0].ven.descr}</h3>
+            <h3 id={Constants.PX_PREFIJO_TITLE_ID + this.props.zPantex.zFormaTablaList[0].ven.numPx}>
+                {this.props.zPantex.zFormaTablaList[0].ven.descr}
+            </h3>
         );
 
         return (
@@ -56,7 +59,7 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
             >
                 {this.props.zPantex.zFormaTablaList.map((zFormaTablaI: IZFormaTabla, index: number) => {
                     return (
-                        <div key={zFormaTablaI.ven.numPx}>
+                        <div id={Constants.PX_PREFIJO_ID + zFormaTablaI.ven.numPx} key={zFormaTablaI.ven.numPx}>
                             <Panel header={titulo} bsStyle="primary">
                                 <ZLineaEstadoContainer
                                     linEst={zFormaTablaI.linEst}

@@ -58,7 +58,7 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
                                 <Button
                                     key={index}
                                     bsStyle="info"
-                                    disabled={zComandoI.desh == 1 || (zComandoI.etq == "" || zComandoI.etq == null)}
+                                    disabled={zComandoI.desh == 1}
                                     onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
                                 >
                                     {(!iconName) &&
@@ -78,7 +78,8 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
         if (cmd == ZCommon.Constants.ComandoEnum.CM_PRIMERO ||
             cmd == ZCommon.Constants.ComandoEnum.CM_ANTREG ||
             cmd == ZCommon.Constants.ComandoEnum.CM_SGTEREG ||
-            cmd == ZCommon.Constants.ComandoEnum.CM_ULTIMO) {
+            cmd == ZCommon.Constants.ComandoEnum.CM_ULTIMO ||
+            cmd == ZCommon.Constants.ComandoEnum.CM_ADICIONAR) {
             this.props.despacharEventoCliente(cmd);
         }
     }

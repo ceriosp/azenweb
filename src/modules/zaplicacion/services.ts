@@ -80,6 +80,8 @@ export namespace Services {
 
     export namespace Responder {
 
+        //#region Public methods
+
         export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
                 try {
@@ -94,6 +96,30 @@ export namespace Services {
                 }
             }
         }
+
+        export const obtenerDefinicionesCampo = (zftCampos: Array<IZCampo>, dato: CM.ISincCampo): IZCampo | Array<IZCampo> => {
+
+            for (let i = 0; i < zftCampos.length; i++) {
+
+                if (zftCampos[i].nomCmp && zftCampos[i].nomCmp == dato.nc) {
+                    return zftCampos[i] as IZCampo;
+                }
+
+                if (zftCampos[i].cmps && zftCampos[i].cmps.length > 0) {
+
+                    for (var j = 0; j < zftCampos[i].cmps.length; j++) {
+
+                        if (zftCampos[i].cmps[j].nomCmp == dato.nc) {
+                            return zftCampos[i].cmps as Array<IZCampo>;
+                        }
+                    }
+                }
+            }
+        }
+
+        //#endregion
+
+        //#region Private methods
 
         /**
          * @param zEvento evento azen
@@ -117,25 +143,7 @@ export namespace Services {
             }
         }
 
-        export const obtenerDefinicionesCampo = (zftCampos: Array<IZCampo>, dato: CM.ISincCampo): IZCampo | Array<IZCampo> => {
-
-            for (let i = 0; i < zftCampos.length; i++) {
-
-                if (zftCampos[i].nomCmp && zftCampos[i].nomCmp == dato.nc) {
-                    return zftCampos[i] as IZCampo;
-                }
-
-                if (zftCampos[i].cmps && zftCampos[i].cmps.length > 0) {
-
-                    for (var j = 0; j < zftCampos[i].cmps.length; j++) {
-
-                        if (zftCampos[i].cmps[j].nomCmp == dato.nc) {
-                            return zftCampos[i].cmps as Array<IZCampo>;
-                        }
-                    }
-                }
-            }
-        }
+        //#endregion
 
     }
 }

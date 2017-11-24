@@ -1,6 +1,7 @@
 import * as ZCommon from '../../zcommon';
-import {IZPantex, IZMenu,  IZAplState,  IZEvento} from '../../zcommon/contracts';
 import * as ZPantex from '../../zpantex';
+import { IZPantex, IZMenu, IZAplState, IZEvento, CM } from '../../zcommon/contracts';
+import { Constants as ZPantexConstants } from "../../zpantex/constants";
 
 export namespace ZftResponder {
 
@@ -13,6 +14,32 @@ export namespace ZftResponder {
                 dispatch(ZPantex.Actions.ZPantexModule.ponerAlTope(zPantex));
                 break;
 
+            case ZCommon.Constants.ComandoEnum.CM_CONSULTAR:
+                const consultar = zEvento.dato.buffer.dato as CM.IConsultar;
+                changeZPantexTitle(consultar.px, consultar.vc);
+                setZFormaTablaState(true, consultar.px, dispatch, getState);
+                break;
+        }
+    }
+
+    export const changeZPantexTitle = (px: number, vc: string) => {
+        let pxTitleHeader = document.querySelector('#' + ZPantexConstants.PX_PREFIJO_TITLE_ID + px);
+        pxTitleHeader.textContent = vc;
+    }
+
+    export const setZFormaTablaState = (setReadOnly: boolean, px: number, dispatch: (p: any) => any, getState: () => IZAplState) => {
+        let zFormaTablaCount = getState().zPantexModule.pilaPantex[0].zFormaTablaList.length;
+        let form: any;
+        let arrayInput: any;
+
+        for (let i = 0; i < zFormaTablaCount; i++) {
+            form = document.querySelector('#' + ZPantexConstants.PX_PREFIJO_ID + px + ZPantexConstants.ZFT_PREFIJO_ID + i);
+
+            arrayInput = form.querySelectorAll('input');
+
+            arrayInput.forEach((input: any) => {
+                input.disabled = setReadOnly;
+            });
         }
     }
 

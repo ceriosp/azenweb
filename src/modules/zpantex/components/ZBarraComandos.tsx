@@ -50,7 +50,8 @@ export class ZBarraComandos extends React.PureComponent<OwnProperties & Connecte
                             <OverlayTrigger key={index} placement="top" overlay={tooltip}>
                                 <Button
                                     key={index}
-                                    onClick={() => { this.despacharEventoCliente(zComandoI.cmd) }}
+                                    disabled={zComandoI.desh == 1}
+                                    onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
                                 >
                                     {(!iconName) &&
                                         zComandoI.etq
