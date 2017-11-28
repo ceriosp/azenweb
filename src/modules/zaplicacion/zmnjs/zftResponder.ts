@@ -19,6 +19,23 @@ export namespace ZftResponder {
                 changeZPantexTitle(consultar.px, consultar.vc);
                 setZFormaTablaState(true, consultar.px, dispatch, getState);
                 break;
+
+            case ZCommon.Constants.ComandoEnum.CM_ADICIONAR:
+                const adicionar = zEvento.dato.buffer.dato as CM.IAdicionar;
+                changeZPantexTitle(adicionar.px, adicionar.vc);
+                setZFormaTablaState(false, adicionar.px, dispatch, getState);
+                break;
+            
+            case ZCommon.Constants.ComandoEnum.CM_MODIFICAR:
+                const modificar = zEvento.dato.buffer.dato as CM.IModificar;
+                changeZPantexTitle(modificar.px, modificar.vc);
+                setZFormaTablaState(false, modificar.px, dispatch, getState);
+                break;
+
+            case ZCommon.Constants.ComandoEnum.CM_CERRAR:
+                console.log("CM_CERRAR");
+                console.log(zEvento.dato.buffer.dato);
+                break;
         }
     }
 

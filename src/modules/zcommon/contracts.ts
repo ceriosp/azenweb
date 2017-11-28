@@ -1,7 +1,7 @@
 import { Constants } from "./constants";
 import { ResultadoAction } from "../zutils/models";
 
- 
+
 //#region =============================================== UTILS ===============================================
 
 class EntityNormalizedObj<TEntity>{
@@ -15,7 +15,7 @@ class EntityNormalizedObj<TEntity>{
     allIds: Array<string>
 }
 
-interface EntityMap<TEntity>{
+interface EntityMap<TEntity> {
     [id: string]: TEntity;
 }
 //#endregion
@@ -74,9 +74,9 @@ export interface IZRegion {
 export interface IZFormaTabla { //zft
     ven: IZVentana;
 
-    linEst: Array<IZComandoForma>;    
+    linEst: Array<IZComandoForma>;
     btns: Array<IZComandoForma>;
-    cmps: Array<IZCampo>;    
+    cmps: Array<IZCampo>;
 }
 
 export interface IZLineaEstado {
@@ -203,9 +203,43 @@ export namespace CM {
     }
 
     /**
+     * Responde a zcommon.Constants.ComandoEnum.CM_ADICIONAR - 44
+     * Pone título a la ventana
+     * Estado: implementado
+     */
+    export interface IAdicionar {
+        /**
+         * Número de la ventana a cambiar título
+         */ 
+        px: number;
+
+        /**
+         * Título a poner a la ventana
+         */
+        vc: string;
+    }
+
+    /**
+     * Responde a zcommon.Constants.ComandoEnum.CM_MODIFICAR - 45
+     * Pone título a la ventana
+     * Estado: implementado
+     */
+    export interface IModificar {
+        /**
+         * Número de la ventana a cambiar título
+         */
+        px: number;
+
+        /**
+         * Título a poner a la ventana
+         */
+        vc: string;
+    }
+
+    /**
      * Responde a zcommon.Constants.ComandoEnum.CM_CONSULTAR - 61
      * Pone título a la ventana
-     *  Estado: por implementar
+     * Estado: implementado
      */
     export interface IConsultar {
         /**
@@ -331,14 +365,14 @@ export namespace CM {
 //#region =========================================== CUSTOM DOMAIN ===========================================
 
 interface IZCamposRegion {
-    rg:number;
-    camposMap:EntityNormalizedObj<IZCampo>
+    rg: number;
+    camposMap: EntityNormalizedObj<IZCampo>
 }
 
 interface IZPantexNormalized {
-    px:number;
-    zPantex:IZPantex;
-    zftMap:EntityNormalizedObj<IZCamposRegion>
+    px: number;
+    zPantex: IZPantex;
+    zftMap: EntityNormalizedObj<IZCamposRegion>
 }
 
 //#endregion
