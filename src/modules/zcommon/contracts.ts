@@ -330,6 +330,17 @@ export namespace CM {
     }
 
     /**
+     * Responde a zcommon.Constants.ComandoEnum.CM_PXDESTRUIR - 121
+     */
+    export interface IPxDestruir {
+        /**
+         * 
+         */
+        px: number
+    }
+    
+    
+    /**
      *  Responde a zcommon.Constants.ComandoEnum.CM_PXARRIVAR - 122
      */
     export interface IPxArrivar {

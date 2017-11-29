@@ -25,32 +25,32 @@ export namespace ZftResponder {
                 changeZPantexTitle(adicionar.px, adicionar.vc);
                 setZFormaTablaState(false, adicionar.px, dispatch, getState);
                 break;
-            
+
             case ZCommon.Constants.ComandoEnum.CM_MODIFICAR:
                 const modificar = zEvento.dato.buffer.dato as CM.IModificar;
                 changeZPantexTitle(modificar.px, modificar.vc);
                 setZFormaTablaState(false, modificar.px, dispatch, getState);
                 break;
 
-            case ZCommon.Constants.ComandoEnum.CM_CERRAR:
-                console.log("CM_CERRAR");
-                console.log(zEvento.dato.buffer.dato);
+            case ZCommon.Constants.ComandoEnum.CM_PXDESTRUIR:
+                const pxDestruir = zEvento.dato.buffer.dato as CM.IPxDestruir;
+                destruirPx(pxDestruir.px);
                 break;
         }
     }
 
-    export const changeZPantexTitle = (px: number, vc: string) => {
-        let pxTitleHeader = document.querySelector('#' + ZPantexConstants.PX_PREFIJO_TITLE_ID + px);
+    const changeZPantexTitle = (px: number, vc: string) => {
+        let pxTitleHeader = document.querySelector("#" + ZPantexConstants.PX_PREFIJO_TITLE_ID + px);
         pxTitleHeader.textContent = vc;
     }
 
-    export const setZFormaTablaState = (setReadOnly: boolean, px: number, dispatch: (p: any) => any, getState: () => IZAplState) => {
+    const setZFormaTablaState = (setReadOnly: boolean, px: number, dispatch: (p: any) => any, getState: () => IZAplState) => {
         let zFormaTablaCount = getState().zPantexModule.pilaPantex[0].zFormaTablaList.length;
         let form: any;
         let arrayInput: any;
 
         for (let i = 0; i < zFormaTablaCount; i++) {
-            form = document.querySelector('#' + ZPantexConstants.PX_PREFIJO_ID + px + ZPantexConstants.ZFT_PREFIJO_ID + i);
+            form = document.querySelector("#" + ZPantexConstants.PX_PREFIJO_ID + px + ZPantexConstants.ZFT_PREFIJO_ID + i);
 
             arrayInput = form.querySelectorAll('input');
 
@@ -58,6 +58,11 @@ export namespace ZftResponder {
                 input.disabled = setReadOnly;
             });
         }
+    }
+
+    const destruirPx = (px: number) => {
+        let pantex = document.querySelector("#" + ZPantexConstants.PX_PREFIJO_ID + px);
+        pantex.parentNode.removeChild(pantex);
     }
 
 }
