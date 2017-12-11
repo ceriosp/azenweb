@@ -81,7 +81,8 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
             cmd == ZCommon.Constants.ComandoEnum.CM_ULTIMO ||
             cmd == ZCommon.Constants.ComandoEnum.CM_ADICIONAR ||
             cmd == ZCommon.Constants.ComandoEnum.CM_MODIFICAR ||
-            cmd == ZCommon.Constants.ComandoEnum.CM_CERRAR) {
+            cmd == ZCommon.Constants.ComandoEnum.CM_CERRAR || 
+            cmd == ZCommon.Constants.ComandoEnum.CM_RETOCAR) {
             this.props.despacharEventoCliente(cmd);
         }
     }
