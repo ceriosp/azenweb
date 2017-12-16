@@ -271,5 +271,4 @@ export namespace Constants {
         export const ZCMP_VISUAL = 32; /* Solo visual */
         export const ZCMP_INTRACMP = 64; /* */
     }
-
 }

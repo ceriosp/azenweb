@@ -58,11 +58,7 @@ export namespace Reducers {
                         } as IZPantexModule, state);
                     }
 
-                    let newPilaPantex = [...pilaPantex];
-                    newPilaPantex = newPilaPantex.slice(0, indxZPantex).concat(newPilaPantex.slice(indxZPantex + 1));                    
-
-                    return u({
-                        pilaPantex: [...newPilaPantex, action.zPantex],
+                    return u({                        
                         pxAlTope: action.zPantex.numPx
                     } as IZPantexModule, state);
             }

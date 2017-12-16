@@ -134,6 +134,10 @@ class ZMenuItemModel
     menu: Array<ZMenuItemModel>;
 }
 
+class ZIconoBoton {
+    [cmd: string]: string;
+}
+
 export 
 { 
     //Recursos
@@ -154,4 +158,5 @@ export
     //Utils
     EntityNormalizedObj,
     EntityMap,
+    ZIconoBoton,
 }

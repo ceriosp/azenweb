@@ -1,3 +1,4 @@
+import * as ZCommon from '../zcommon';
 import * as ZUtils from '../zutils';
 import {
     ResultadoActionConDato, ResultadoAction
@@ -21,6 +22,10 @@ export namespace Actions {
             let dominio = dominioComponentes[0] + "//" + dominioComponentes[2];
             let requestUrl = `http://52.42.49.101:8080/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}&dominio=${dominio}`;
 
+            console.log("----------------------------------------------------------------");
+            console.time(`${ZCommon.Constants.ComandoEnum[cmd]}`);
+            console.log("request: " + requestUrl);
+
             dispatch(setEstaProcesandoRequestServidor(true));
             fetch(requestUrl, {
                 //fetch(`http://localhost:8585/azenweb/server/despacharRecurso.php`, {
@@ -36,8 +41,9 @@ export namespace Actions {
                     dispatch(setEstaProcesandoRequestServidor(false));
                     return response.text();
                 })
-                .then((retornoStr: string) => {
-                    //console.log(retornoStr);
+                .then((retornoStr: string) => {     
+                    console.timeEnd(`${ZCommon.Constants.ComandoEnum[cmd]}`);
+                    console.log(retornoStr);
                     if (retornoStr[retornoStr.length - 1] != '}') {
                         retornoStr = retornoStr.substring(0, retornoStr.length - 1);
                     }

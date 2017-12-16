@@ -54,6 +54,7 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
             <div
                 style={{
                     display: this.props.zPantex.numPx == this.props.pxAlTope ? 'block' : 'none',
+                    //display:'block',
                     padding: '10px'
                 }}
             >

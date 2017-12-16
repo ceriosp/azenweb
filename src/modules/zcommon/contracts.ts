@@ -1,5 +1,6 @@
 import { Constants } from "./constants";
 import { ResultadoAction } from "../zutils/models";
+import { ZIconoBoton } from "./index";
 
 
 //#region =============================================== UTILS ===============================================
@@ -406,6 +407,7 @@ export interface IZMenuModule {
 export interface IZPantexModule {
     pxAlTope: number;
     pilaPantex: Array<IZPantex>;
+    iconosBotonesList: Array<ZIconoBoton>;
     pantexMap: EntityNormalizedObj<IZPantexNormalized>;
 }
 

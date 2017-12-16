@@ -2,10 +2,11 @@ import * as ZCommon from '../../zcommon';
 import * as ZPantex from '../../zpantex';
 import { IZPantex, IZMenu, IZAplState, IZEvento, CM } from '../../zcommon/contracts';
 import { Constants as ZPantexConstants } from "../../zpantex/constants";
+import { debug } from 'util';
 
 export namespace ZftResponder {
 
-    export const responder = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
+    export const responder = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {        
 
         switch (zEvento.dato.cmd) {
 
@@ -36,6 +37,19 @@ export namespace ZftResponder {
                 const pxDestruir = zEvento.dato.buffer.dato as CM.IPxDestruir;
                 destruirPx(pxDestruir.px);
                 break;
+
+            case ZCommon.Constants.ComandoEnum.CM_PXARRIVAR:
+
+                const pxArrivarBuffer = zEvento.dato.buffer.dato as CM.IPxArrivar;
+
+                const zPantexArrivar = {
+                    numPx:pxArrivarBuffer.px,
+                    zFormaTablaList: null
+                } as IZPantex;
+
+                dispatch(ZPantex.Actions.ZPantexModule.ponerAlTope(zPantexArrivar));
+                
+            break;
         }
     }
 
