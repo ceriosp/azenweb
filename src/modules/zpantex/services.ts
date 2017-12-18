@@ -174,7 +174,7 @@ export namespace Services {
                 case Constants.ComandoEnum.CM_CONSULTAR:
                     return "glyphicon glyphicon-book";
                 case Constants.ComandoEnum.CM_CERRAR:
-                    return "glyphicon glyphicon-log-out";
+                    return "glyphicon glyphicon-remove";
                 case Constants.ComandoEnum.CM_PRIMERO:
                     return "glyphicon glyphicon-fast-backward";
                 case Constants.ComandoEnum.CM_ANTREG:

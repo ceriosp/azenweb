@@ -6,13 +6,13 @@ import {
 
 import { IZFormaTabla } from '../../zcommon/contracts';
 import { ZFormaTablaContainer } from "../containers/ZFormaTablaContainer";
+import { Constants } from "../constants";
 
 export interface OwnProps {
     zFormaTabla: IZFormaTabla;
     zRegionIndex: number;
+    px: number;
 }
-
-import { Constants } from "../constants";
 
 export interface ConnectedState {
     pxAlTope: number;
@@ -32,6 +32,7 @@ export class ZRegion extends React.Component<OwnProps & ConnectedState & Connect
                 <ZFormaTablaContainer
                     zFormaTabla={zFormaTabla}
                     zFormaIndex={this.props.zRegionIndex}
+                    px={this.props.px}
                 />
             </div>
         );

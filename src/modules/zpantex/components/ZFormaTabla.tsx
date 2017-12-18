@@ -32,6 +32,7 @@ import { Constants } from "../constants";
 export interface OwnProps {
     zFormaTabla: IZFormaTabla;
     zFormaIndex: number;
+    px: number;
 }
 
 export interface ConnectedState {
@@ -50,7 +51,7 @@ export class ZFormaTabla extends React.Component<OwnProps & ConnectedState & Con
             <div>
                 <Form
                     horizontal
-                    id={Constants.PX_PREFIJO_ID + this.props.pxAlTope + Constants.ZFT_PREFIJO_ID + this.props.zFormaIndex}
+                    id={Constants.PX_PREFIJO_ID + this.props.px + Constants.ZFT_PREFIJO_ID + this.props.zFormaIndex}
                 >
                     {this.props.zFormaTabla.cmps.map(this.pintarZCampoEnRecurso.bind(this))}
                 </Form>

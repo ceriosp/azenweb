@@ -8,13 +8,9 @@ import { Constants as ZCommonConstants } from "../../zcommon";
 import { Constants as ZPantexConstants } from "../../zpantex";
 
 import { Services } from "../services";
+import { debug } from 'util';
 
-let querySelector: any;
-
-let zftFormElement: HTMLFormElement;
 let zftFormInputElement: any;
-
-let zftCamposState: Array<IZCampo>;
 let zftCampo: any;
 
 export namespace ZcmpResponder {
@@ -33,14 +29,14 @@ export namespace ZcmpResponder {
 
         const dato = zEvento.dato.buffer.dato as CM.ISincCampo;
 
-        if (!querySelector) {
-            querySelector = `#${ZPantexConstants.PX_PREFIJO_ID}${getState().zPantexModule.pxAlTope.toString()}${ZPantexConstants.ZFT_PREFIJO_ID}0`;
+        let querySelector = `#${ZPantexConstants.PX_PREFIJO_ID}${getState().zPantexModule.pxAlTope.toString()}${ZPantexConstants.ZFT_PREFIJO_ID}0`;
 
-            zftFormElement = document.querySelector(querySelector) as HTMLFormElement;
-            zftCamposState = getState().zPantexModule.pilaPantex[dato.px - 1].zFormaTablaList[dato.rg - 1].cmps as Array<IZCampo>;
-        }
+        let zftFormElement = document.querySelector(querySelector) as HTMLFormElement;
+        let zftCamposState = getState().zPantexModule.pilaPantex[dato.px - 1].zFormaTablaList[dato.rg - 1].cmps as Array<IZCampo>;
 
-        zftFormInputElement = zftFormElement.elements.namedItem(dato.nc);
+        debugger;
+        //let zftFormInputElement = zftFormElement.elements.namedItem(dato.nc);
+        zftFormInputElement = zftFormElement.elements[dato.nc as any];
 
         if (zftFormInputElement) {
             zftCampo = Services.Responder.obtenerDefinicionesCampo(zftCamposState, dato);

@@ -53,8 +53,8 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
         return (
             <div
                 style={{
-                    //display: this.props.zPantex.numPx == this.props.pxAlTope ? 'block' : 'none',
-                    display:'block',
+                    display: this.props.zPantex.numPx == this.props.pxAlTope ? 'block' : 'none',
+                    //display:'block',
                     padding: '10px'
                 }}
             >
@@ -71,6 +71,7 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
                                 <ZRegionContainer
                                     zFormaTabla={zFormaTablaI}
                                     zRegionIndex={index}
+                                    px={this.props.zPantex.numPx}
                                 />
                                 <ZBarraComandosContainer
                                     zComandosList={zFormaTablaI.btns}
