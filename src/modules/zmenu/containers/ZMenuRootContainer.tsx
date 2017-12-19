@@ -18,7 +18,8 @@ import {
 import * as ZAplicacion from '../../zaplicacion';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
-    zMenu:appState.zMenuModule.zmenu    
+    zMenu:appState.zMenuModule.zmenu,
+    nomApl: appState.nomApl  
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({

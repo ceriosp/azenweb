@@ -52,9 +52,10 @@ declare let window: any;
 let store = null
 
 let idApl = ZUtils.Services.getQueryStringParameter('idApl');
+let nomApl = ZUtils.Services.getQueryStringParameter('nomApl');
 let lanzarMenu = ZUtils.Services.getQueryStringParameter('lanzarMenu');
 
-const obtenerEstadoInicial = (idApl: string) => {
+const obtenerEstadoInicial = () => {
 
     if (__DEV__) {
         return createStore(
@@ -70,7 +71,7 @@ const obtenerEstadoInicial = (idApl: string) => {
 }
 
 if (idApl) {
-    store = obtenerEstadoInicial(idApl);
+    store = obtenerEstadoInicial();
 
     ReactDOM.render(
         <Provider store={store}>
@@ -79,7 +80,7 @@ if (idApl) {
         document.getElementById("app-container")
     );
 
-    store.dispatch(zAplicationActions.lanzarAplicacion(idApl, lanzarMenu));
+    store.dispatch(zAplicationActions.lanzarAplicacion(idApl, nomApl, lanzarMenu));
 }
 else {
 

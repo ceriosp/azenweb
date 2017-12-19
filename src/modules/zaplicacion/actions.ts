@@ -16,9 +16,10 @@ import { ZclienteResponder } from "./clientzmnjs/zclienteResponder";
 
 export namespace Actions {
 
-    export const lanzarAplicacion = (idApl: string, lanzarMenu: string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
+    export const lanzarAplicacion = (idApl: string, nomApl: string, lanzarMenu: string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
 
         dispatch(App.Actions.setIdApl(idApl));
+        dispatch(App.Actions.setNomApl(nomApl));
 
         return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
             dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({

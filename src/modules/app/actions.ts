@@ -7,4 +7,9 @@ export namespace Actions {
         idApl
     });
 
+    export const setNomApl = (nomApl: string = null): ActionTypes.Action => ({
+        type: ActionTypes.SET_NOMAPL,
+        nomApl
+    });
+
 }

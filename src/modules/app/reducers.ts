@@ -20,6 +20,16 @@ export namespace Reducers {
         return state;
     }
 
+    export const nomApl = (state: string = null, action: ActionTypes.Action): string => {
+
+        switch (action.type) {
+            case ActionTypes.SET_NOMAPL:
+                return action.nomApl
+        }
+
+        return state;
+    }
+
     export const estaProcesandoRequestServidor = (state: boolean = false, action: ZComunicaciones.ActionTypes.Action): boolean => {
 
         switch (action.type) {
@@ -32,6 +42,7 @@ export namespace Reducers {
 
     export const zaplState: Reducer<IZAplState> = combineReducers<IZAplState>({
         idApl: idApl,
+        nomApl: nomApl,
         estaProcesandoRequestServidor: estaProcesandoRequestServidor,
         zMenuModule: ZMenu.Reducers.ZMenuModule.impl,
         zPantexModule: ZPantex.Reducers.ZPantexModule.impl,

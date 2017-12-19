@@ -393,6 +393,7 @@ interface IZPantexNormalized {
 
 export interface IZAplState {
     idApl: string;
+    nomApl: string;
     estaProcesandoRequestServidor: boolean;
     zMenuModule: IZMenuModule;
     zPantexModule: IZPantexModule;

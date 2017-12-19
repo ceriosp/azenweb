@@ -23,8 +23,7 @@ import {
     State,
     ZMenuState,
     IZMenu,
-    IZMenuItem,
-
+    IZMenuItem
 } from '../../zcommon';
 
 export interface OwnProps {
@@ -33,7 +32,8 @@ export interface OwnProps {
 }
 
 export interface ConnectedState {
-    zMenu: IZMenu
+    zMenu: IZMenu;
+    nomApl: string;
 }
 
 export interface ConnectedDispatch {
@@ -52,7 +52,7 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
 
     render() {
 
-        let { zMenu, index } = this.props;
+        let { zMenu, index, nomApl } = this.props;
 
         return (
             <Row>
@@ -63,7 +63,7 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
                         style={this.props.sobrePonerse ? { zIndex: 1000000 } : null}>
                         <Navbar.Header>
                             <Navbar.Brand>
-                                <a href="#">Azen contabilidad</a>
+                                <a href="#">Azen {nomApl}</a>
                             </Navbar.Brand>
                             <Navbar.Toggle>
                             </Navbar.Toggle>
