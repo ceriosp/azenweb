@@ -26,7 +26,8 @@ export namespace Actions {
 
                 dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
                     cmd: ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN,
-                    buffer: `<cm>LOGIN</cm><usr>${zLoginModule.username}</usr><vc>${zLoginModule.password}</vc>`
+                    buffer: `<cm>LOGIN</cm><usr>${zLoginModule.username}</usr><vc>${zLoginModule.password}</vc>`,
+                    tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL
                 }))
                     .then((resultadoCmAcceptLogin: ResultadoActionConDato<IZColaEventos>) => {
                         if (resultadoCmAcceptLogin.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {

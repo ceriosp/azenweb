@@ -49,6 +49,7 @@ export interface IZColaEventos {
 export interface IZEnviarComandoParams {
     cmd: Constants.ComandoEnum;
     buffer: string;
+    tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
 }
 
 export interface IZMenu {
@@ -211,7 +212,7 @@ export namespace CM {
     export interface IAdicionar {
         /**
          * Número de la ventana a cambiar título
-         */ 
+         */
         px: number;
 
         /**
@@ -339,8 +340,8 @@ export namespace CM {
          */
         px: number
     }
-    
-    
+
+
     /**
      *  Responde a zcommon.Constants.ComandoEnum.CM_PXARRIVAR - 122
      */
@@ -394,6 +395,7 @@ interface IZPantexNormalized {
 export interface IZAplState {
     idApl: string;
     nomApl: string;
+    tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
     estaProcesandoRequestServidor: boolean;
     zMenuModule: IZMenuModule;
     zPantexModule: IZPantexModule;

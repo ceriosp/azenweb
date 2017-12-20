@@ -8,6 +8,8 @@ import * as ZPantex from '../zpantex';
 
 import { ActionTypes } from "./actionTypes";
 
+import * as ZCommon from "../zcommon";
+
 export namespace Reducers {
 
     export const idApl = (state: string = null, action: ActionTypes.Action): string => {
@@ -30,6 +32,16 @@ export namespace Reducers {
         return state;
     }
 
+    export const tipoAJAXIndicador = (state: ZCommon.Constants.TipoAJAXIndicadorEnum = ZCommon.Constants.TipoAJAXIndicadorEnum.NIGUNO, action: ZComunicaciones.ActionTypes.Action): ZCommon.Constants.TipoAJAXIndicadorEnum => {
+
+        switch (action.type) {
+            case ZComunicaciones.ActionTypes.SET_TIPOAJAXINDICADOR:
+                return action.tipoAJAXIndicador
+        }
+
+        return state;
+    }
+
     export const estaProcesandoRequestServidor = (state: boolean = false, action: ZComunicaciones.ActionTypes.Action): boolean => {
 
         switch (action.type) {
@@ -43,6 +55,7 @@ export namespace Reducers {
     export const zaplState: Reducer<IZAplState> = combineReducers<IZAplState>({
         idApl: idApl,
         nomApl: nomApl,
+        tipoAJAXIndicador: tipoAJAXIndicador,
         estaProcesandoRequestServidor: estaProcesandoRequestServidor,
         zMenuModule: ZMenu.Reducers.ZMenuModule.impl,
         zPantexModule: ZPantex.Reducers.ZPantexModule.impl,

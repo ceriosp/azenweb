@@ -41,6 +41,7 @@ export interface ConnectedDispatch {
 }
 
 import { ZMenuItemContainer } from '../containers/ZMenuItemContainer';
+import { ZProcesandoNoModalContainer } from "../../zaplicacion/containers/ZProcesandoNoModalContainer";
 
 export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
@@ -83,7 +84,8 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
 
                                 <NavItem eventKey={1} href="#">
                                     <Glyphicon glyph="user" /> Usuario: Carlos Ríos
-                                    </NavItem>
+                                    <ZProcesandoNoModalContainer/>
+                                </NavItem>
                             </Nav>
                         </Navbar.Collapse>
                     </Navbar>

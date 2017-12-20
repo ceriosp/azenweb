@@ -8,7 +8,6 @@ import { IZAplState, IZColaEventos, IZEnviarComandoParams } from "../zcommon/con
 import { ActionTypes } from "./actionTypes";
 
 import { Selectors as AppSelectors } from "../app/selectors";
-import { Constants } from '../zcommon/constants';
 
 export namespace Actions {
 
@@ -26,7 +25,7 @@ export namespace Actions {
             console.time(`${ZCommon.Constants.ComandoEnum[cmd]}`);
             console.log("request: " + requestUrl);
 
-            dispatch(setEstaProcesandoRequestServidor(true));
+            dispatch(setProcesosServidor(true, parametros.tipoAJAXIndicador))
             fetch(requestUrl, {
                 //fetch(`http://localhost:8585/azenweb/server/despacharRecurso.php`, {
                 /*
@@ -38,10 +37,10 @@ export namespace Actions {
                 method: 'GET',
             })
                 .then((response) => {
-                    dispatch(setEstaProcesandoRequestServidor(false));
+                    dispatch(setProcesosServidor(false, parametros.tipoAJAXIndicador))                    
                     return response.text();
                 })
-                .then((retornoStr: string) => {     
+                .then((retornoStr: string) => {
                     console.timeEnd(`${ZCommon.Constants.ComandoEnum[cmd]}`);
                     console.log(retornoStr);
                     if (retornoStr[retornoStr.length - 1] != '}') {
@@ -61,15 +60,26 @@ export namespace Actions {
                     resultadoActionError.traza = error;
                     console.error("Comunicaciones/services/enviarRequestComando");
                     console.error(resultadoActionError);
-                    dispatch(setEstaProcesandoRequestServidor(false));
+                    dispatch(setProcesosServidor(false, parametros.tipoAJAXIndicador))
                     reject(resultadoActionError);
                 });
         });
     }
 
+    export const setProcesosServidor = (estaProcesandoRequestServidor: boolean, tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum) => (dispatch: (p: any) => any, getState: () => IZAplState) => {
+        dispatch(setEstaProcesandoRequestServidor(estaProcesandoRequestServidor));
+        dispatch(setTipoAJAXIndicador(tipoAJAXIndicador));
+    }
+
+
     export const setEstaProcesandoRequestServidor = (valor: boolean): ActionTypes.Action => ({
         type: ActionTypes.SET_ESTAPROCESANDOREQUESTSERVIDOR,
         valor
+    });
+
+    export const setTipoAJAXIndicador = (tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum = ZCommon.Constants.TipoAJAXIndicadorEnum.NIGUNO): ActionTypes.Action => ({
+        type: ActionTypes.SET_TIPOAJAXINDICADOR,
+        tipoAJAXIndicador
     });
 
 }

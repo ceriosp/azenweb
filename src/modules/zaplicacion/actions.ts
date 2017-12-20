@@ -24,7 +24,8 @@ export namespace Actions {
         return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
             dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
                 cmd: ZCommon.Constants.ComandoEnum.CM_APLICACION,
-                buffer: 'azen'
+                buffer: 'azen',
+                tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL
             }))
                 .then(
                 (resultadoCmAplicacion: ResultadoActionConDato<IZColaEventos>) => {
@@ -46,7 +47,8 @@ export namespace Actions {
         return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
             dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
                 cmd: ZCommon.Constants.ComandoEnum.CM_EJECOPCION,
-                buffer: ctx
+                buffer: ctx,
+                tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL
             })).then(
                 (resultadoCmEjecOption: ResultadoActionConDato<IZColaEventos>) => {
                     if (resultadoCmEjecOption.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {

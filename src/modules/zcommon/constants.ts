@@ -29,6 +29,12 @@ export namespace Constants {
         EVT_RATON
     }
 
+    export enum TipoAJAXIndicadorEnum {
+        NIGUNO,
+        MODAL,
+        NO_MODAL
+    }
+
     export enum ComandoEnum {
         CM_NADA,	//0
         CM_SI,	//1	

@@ -26,7 +26,8 @@ export namespace Actions {
         return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
             dispatch(ZComunicaciones.Actions.enviarRequestComando<Object>({
                 cmd: ZCommon.Constants.ComandoEnum.CM_DEFMENU,
-                buffer: 'azen'
+                buffer: 'azen',
+                tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL
             }))
                 .then((resultadoCmDefMenu: ResultadoActionConDato<IZColaEventos>) => {
                     if (resultadoCmDefMenu.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {

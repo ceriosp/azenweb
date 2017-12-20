@@ -32,26 +32,26 @@ export interface OwnProps {
 }
 
 export interface ConnectedState {
-    show:boolean;
+    show: boolean;
+    tipoAJAXIndicador: number;
 }
 
 export interface ConnectedDispatch {
-    
+
 }
 
 export class ZProcesando extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
-
         super(props);
     }
 
     render() {
         return (
-            <Modal  
-                show={this.props.show}
+            <Modal
+                show={this.props.show && this.props.tipoAJAXIndicador == ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL}
                 onHide={null}
-                bsSize="small" 
+                bsSize="small"
                 aria-labelledby="contained-modal-title-sm"
             >
                 <Modal.Body>

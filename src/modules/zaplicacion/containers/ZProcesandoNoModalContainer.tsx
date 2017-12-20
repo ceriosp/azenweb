@@ -5,15 +5,11 @@ import { connect } from 'react-redux';
 import { IZAplState } from "../../zcommon/contracts";
 
 import {
-    Actions as ZComunicacionesActions
-} from '../../zcomunicaciones';
-
-import {
     OwnProps,
     ConnectedState,
     ConnectedDispatch,
-    ZProcesando,
-} from '../components/ZProcesando';
+    ZProcesandoNoModal,
+} from '../components/ZProcesandoNoModal';
 
 import * as ZAplicacion from '../../zaplicacion';
 
@@ -26,5 +22,5 @@ const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch =>
     
 });
 
-export const ZProcesandoContainer: React.ComponentClass<OwnProps> =
-    connect<ConnectedState, ConnectedDispatch, OwnProps>(mapStateToProps, mapDispatchToProps)(ZProcesando);
+export const ZProcesandoNoModalContainer: React.ComponentClass<OwnProps> =
+    connect<ConnectedState, ConnectedDispatch, OwnProps>(mapStateToProps, mapDispatchToProps)(ZProcesandoNoModal);
