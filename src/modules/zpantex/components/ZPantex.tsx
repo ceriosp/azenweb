@@ -14,7 +14,8 @@ import {
     NavDropdown,
     MenuItem,
     Form,
-    Panel
+    Panel,
+    Modal
 } from 'react-bootstrap';
 
 import {
@@ -30,6 +31,7 @@ import { Constants } from "../constants";
 
 export interface OwnProps {
     zPantex: IZPantex;
+    container:HTMLDivElement;
 }
 
 export interface ConnectedState {
@@ -53,33 +55,67 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
         return (
             <div
                 style={{
-                    display: this.props.zPantex.numPx == this.props.pxAlTope ? 'block' : 'none',
+                    display: this.props.zPantex.numPx == this.props.pxAlTope ? 'block' : 'block',
                     //display:'block',
                     padding: '10px'
                 }}
+                className="azen-zpantex-container"
             >
-                {this.props.zPantex.zFormaTablaList.map((zFormaTablaI: IZFormaTabla, index: number) => {
-                    return (
-                        <div id={Constants.PX_PREFIJO_ID + zFormaTablaI.ven.numPx} key={zFormaTablaI.ven.numPx}>
-                            <Panel header={titulo} bsStyle="primary">
-                                <ZLineaEstadoContainer
-                                    linEst={zFormaTablaI.linEst}
-                                />
-                                <ZBarraComandosContainer
-                                    zComandosList={zFormaTablaI.btns}
-                                />
-                                <ZRegionContainer
-                                    zFormaTabla={zFormaTablaI}
-                                    zRegionIndex={index}
-                                    px={this.props.zPantex.numPx}
-                                />
-                                <ZBarraComandosContainer
-                                    zComandosList={zFormaTablaI.btns}
-                                />
-                            </Panel>
-                        </div>
-                    );
-                })}
+
+                <div 
+                    
+                    style={{
+                        top:"50px"
+                    }}
+                >
+                    <Modal 
+                        onHide={function () { }} 
+                        show={true}
+                        container={this.props.container}
+                        backdrop={true}
+                        autoFocus={false}
+                        enforceFocus={false}
+                        bsSize={"large"}
+                        aria-labelledby="contained-modal-title"
+                        style={{
+                            top:"50px"
+                        }}                 
+                    >
+                        <Modal.Header>
+                            <Modal.Title>Modal title</Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>
+                            {this.props.zPantex.zFormaTablaList.map((zFormaTablaI: IZFormaTabla, index: number) => {
+                                return (
+                                    <div id={Constants.PX_PREFIJO_ID + zFormaTablaI.ven.numPx} key={zFormaTablaI.ven.numPx}>
+                                        <Panel header={titulo} bsStyle="primary">
+                                            <ZLineaEstadoContainer
+                                                linEst={zFormaTablaI.linEst}
+                                            />
+                                            <ZBarraComandosContainer
+                                                zComandosList={zFormaTablaI.btns}
+                                            />
+                                            <ZRegionContainer
+                                                zFormaTabla={zFormaTablaI}
+                                                zRegionIndex={index}
+                                                px={this.props.zPantex.numPx}
+                                            />
+                                            <ZBarraComandosContainer
+                                                zComandosList={zFormaTablaI.btns}
+                                            />
+                                        </Panel>
+                                    </div>
+                                );
+                            })}
+                        </Modal.Body>
+
+                        <Modal.Footer>
+                            FOOTER
+                        </Modal.Footer>
+
+                    </Modal>
+                </div>
             </div>
         );
     }

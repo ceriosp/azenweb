@@ -37,14 +37,19 @@ export interface ConnectedDispatch
 
 export class ZAplicacion extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
+    private divZAplicacion:HTMLDivElement;
+
     render(): any {
         return (
-            <div>
+            <div ref={(div:HTMLDivElement)=>{
+                this.divZAplicacion = div;
+            }}>
                 {this.props.zPantexModule.pilaPantex.map((zPantexI:IZPantex, index:number)=>{
                     return (
                         <ZPantexContainer
                             key={index}
                             zPantex={zPantexI}
+                            container={this.divZAplicacion}
                         />
                     );
                 })}

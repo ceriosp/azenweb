@@ -25,7 +25,6 @@ import {
     //Components
     ZVentanaRecurso
 } from "../../zpantex";
-import { ZMenuRootContainer } from "../../zmenu/containers/ZMenuRootContainer";
 
 export interface OwnProps {
 

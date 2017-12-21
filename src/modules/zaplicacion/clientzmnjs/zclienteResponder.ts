@@ -16,8 +16,8 @@ import { Services } from '../../zaplicacion';
 import * as zCommon from "../../zcommon";
 
 export namespace ZclienteResponder {
-    export const responderEventoCliente = (zComando: ZCommon.Constants.ComandoEnum) => (dispatch: (p: any) => any, getState: () => IZAplState) => {
-
+    export const responderEventoCliente = (zComando: ZCommon.Constants.ComandoEnum, buffer = "") => (dispatch: (p: any) => any, getState: () => IZAplState) => {
+        
         let tipoAJAXIndicador: zCommon.Constants.TipoAJAXIndicadorEnum;
 
         switch (zComando) {
@@ -29,6 +29,8 @@ export namespace ZclienteResponder {
             case ZCommon.Constants.ComandoEnum.CM_RETOCAR:
                 tipoAJAXIndicador = zCommon.Constants.TipoAJAXIndicadorEnum.NO_MODAL;
                 break;
+
+            case ZCommon.Constants.ComandoEnum.CM_EJECOPCION:
             default:
                 tipoAJAXIndicador = zCommon.Constants.TipoAJAXIndicadorEnum.MODAL;
                 break;
@@ -36,7 +38,7 @@ export namespace ZclienteResponder {
 
         dispatch(zComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
             cmd: zComando,
-            buffer: '',
+            buffer: buffer,
             tipoAJAXIndicador: tipoAJAXIndicador
         }))
             .then((resultadoClienteCm: ResultadoActionConDato<IZColaEventos>) => {

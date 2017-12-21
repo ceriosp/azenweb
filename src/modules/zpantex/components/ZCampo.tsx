@@ -5,7 +5,8 @@ import {
     FormControl,
     Row,
     Col,
-    ControlLabel
+    ControlLabel,
+    Label
 } from 'react-bootstrap';
 
 
@@ -74,6 +75,8 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
             return <ZCampoCheckbox zCampoModel={zCampo} />;
+        } else{
+            return <span>{zCampo.etq}</span>;
         }
     }
 }

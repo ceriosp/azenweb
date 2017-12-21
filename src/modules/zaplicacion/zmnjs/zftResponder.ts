@@ -10,6 +10,7 @@ export namespace ZftResponder {
 
         switch (zEvento.dato.cmd) {
 
+            case ZCommon.Constants.ComandoEnum.CM_PXCREARMENSAJE:
             case ZCommon.Constants.ComandoEnum.CM_PXCREAR:
                 const zPantex = zEvento.dato.buffer.dato as IZPantex;
                 dispatch(ZPantex.Actions.ZPantexModule.ponerAlTope(zPantex));

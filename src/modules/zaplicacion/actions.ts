@@ -43,22 +43,8 @@ export namespace Actions {
         });
     }
 
-    export const lanzarOpcion = (ctx: string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
-        return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
-            dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
-                cmd: ZCommon.Constants.ComandoEnum.CM_EJECOPCION,
-                buffer: ctx,
-                tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL
-            })).then(
-                (resultadoCmEjecOption: ResultadoActionConDato<IZColaEventos>) => {
-                    if (resultadoCmEjecOption.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {
-                        reject(resultadoCmEjecOption);
-                        return;
-                    }
-                    Services.Responder.procesarZColaEventos(resultadoCmEjecOption.retorno, dispatch, getState);
-                }
-                )
-        });
+    export const lanzarOpcion = (ctx: string) => (dispatch: (p: any) => any, getState: () => IZAplState) => {
+        dispatch(ZclienteResponder.responderEventoCliente(ZCommon.Constants.ComandoEnum.CM_EJECOPCION, ctx));
     }
 
     export const despacharEventoCliente = (cmd: ZCommon.Constants.ComandoEnum) => (dispatch: (p: any) => any, getState: () => IZAplState) => {

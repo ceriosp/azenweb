@@ -91,7 +91,7 @@ export namespace Services {
                     }
                 }
                 catch (e) {
-                    console.error(`zaplicacion/services/Services/Responder: procesando evento ${JSON.stringify(zColaEventos.eventos[i])}`);
+                    console.error(`zaplicacion/services/Services/Responder: procesando evento ${ZCommon.Constants.ComandoEnum[zColaEventos.eventos[i].dato.cmd]} - ${JSON.stringify(zColaEventos.eventos[i])}`);
                     console.error(e.message);
                 }
             }
