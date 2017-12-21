@@ -104,3 +104,20 @@
         opacity: 0;
     }
 }
+
+.zaplicacion-zprocesando-loader > h4, .sk-folding-cube {
+    display: inline-block;
+}
+
+.zaplicacion-zprocesando-no-modal-loader > div {
+    display: inline-block;
+}
+
+.zaplicacion-zprocesando-no-modal-loader > :last-child {
+    float: right;
+    margin-top: 10px;
+}
+
+.modal-lg {
+    width: 95% !important;
+}

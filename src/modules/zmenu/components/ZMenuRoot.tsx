@@ -28,12 +28,12 @@ import {
 
 export interface OwnProps {
     index: number;
-    sobrePonerse: boolean;
 }
 
 export interface ConnectedState {
     zMenu: IZMenu;
     nomApl: string;
+    sobrePonerse: boolean;
 }
 
 export interface ConnectedDispatch {
@@ -41,7 +41,6 @@ export interface ConnectedDispatch {
 }
 
 import { ZMenuItemContainer } from '../containers/ZMenuItemContainer';
-import { ZProcesandoNoModalContainer } from "../../zaplicacion/containers/ZProcesandoNoModalContainer";
 
 export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
@@ -56,41 +55,36 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
         let { zMenu, index, nomApl } = this.props;
 
         return (
-            <Row>
-                <Col md={12}>
-                    <Navbar
-                        collapseOnSelect
-                        staticTop
-                        style={this.props.sobrePonerse ? { zIndex: 1000000 } : null}>
-                        <Navbar.Header>
-                            <Navbar.Brand>
-                                <a href="#">Azen {nomApl}</a>
-                            </Navbar.Brand>
-                            <Navbar.Toggle>
-                            </Navbar.Toggle>
-                        </Navbar.Header>
-                        <Navbar.Collapse>
-                            <Nav>
-                                {zMenu.menu.map((zMenuItem: IZMenuItem, i: number) => {
-                                    let key: string = zMenuItem.ctx;
-                                    return (
-                                        <ZMenuItemContainer
-                                            key={key}
-                                            zmenuItem={zMenuItem}
-                                            despacharOpcionMenuFn={this.despacharOpcionMenu}
-                                            parentLevel={0} />
-                                    );
-                                })}
+            <Navbar
+                collapseOnSelect
+                staticTop
+                style={!this.props.sobrePonerse ? { zIndex: 1000000 } : null}>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <a href="#">Azen {nomApl}</a>
+                    </Navbar.Brand>
+                    <Navbar.Toggle>
+                    </Navbar.Toggle>
+                </Navbar.Header>
+                <Navbar.Collapse>
+                    <Nav>
+                        {zMenu.menu.map((zMenuItem: IZMenuItem, i: number) => {
+                            let key: string = zMenuItem.ctx;
+                            return (
+                                <ZMenuItemContainer
+                                    key={key}
+                                    zmenuItem={zMenuItem}
+                                    despacharOpcionMenuFn={this.despacharOpcionMenu}
+                                    parentLevel={0} />
+                            );
+                        })}
 
-                                <NavItem eventKey={1} href="#">
-                                    <Glyphicon glyph="user" /> Usuario: Carlos Ríos
-                                    <ZProcesandoNoModalContainer/>
+                        <NavItem eventKey={1} href="#">
+                            <Glyphicon glyph="user" /> Usuario: Carlos Ríos
                                 </NavItem>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Navbar>
-                </Col>
-            </Row>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
         );
     }
 

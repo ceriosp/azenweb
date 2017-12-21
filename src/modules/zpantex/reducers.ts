@@ -35,13 +35,15 @@ export namespace Reducers {
 
         const zPantexModule = {
             pilaPantex: [],
-            pxAlTope: -1
+            pxAlTope: -1,
+            esPxModal: false
         } as IZPantexModule;
 
         export const impl = (state: IZPantexModule = zPantexModule, action: ActionTypes.ZPantexModule.Action) => {
 
             switch (action.type) {
-                case ActionTypes.ZPantexModule.PONER_AL_TOPE:                    
+
+                case ActionTypes.ZPantexModule.PONER_AL_TOPE:
 
                     const pilaPantex = state.pilaPantex;
 
@@ -58,8 +60,14 @@ export namespace Reducers {
                         } as IZPantexModule, state);
                     }
 
-                    return u({                        
+                    return u({
                         pxAlTope: action.zPantex.numPx
+                    } as IZPantexModule, state);
+
+
+                case ActionTypes.ZPantexModule.SET_ESPXMODAL:
+                    return u({
+                        esPxModal: action.esPxModal
                     } as IZPantexModule, state);
             }
 

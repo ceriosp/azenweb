@@ -4,11 +4,11 @@ export namespace ActionTypes {
 
     export namespace Types {
         export type SET_ESTAPROCESANDOREQUESTSERVIDOR = "zcomunicaciones/SET_ESTAPROCESANDOREQUESTSERVIDOR";
-        export type SET_TIPOAJAXINDICADOR = "App/SET_TIPOAJAXINDICADOR";
+        export type SET_TIPOAJAXINDICADOR = "zcomunicaciones/SET_TIPOAJAXINDICADOR";
     }
 
     export const SET_ESTAPROCESANDOREQUESTSERVIDOR: Types.SET_ESTAPROCESANDOREQUESTSERVIDOR = "zcomunicaciones/SET_ESTAPROCESANDOREQUESTSERVIDOR";
-    export const SET_TIPOAJAXINDICADOR: Types.SET_TIPOAJAXINDICADOR = "App/SET_TIPOAJAXINDICADOR";
+    export const SET_TIPOAJAXINDICADOR: Types.SET_TIPOAJAXINDICADOR = "zcomunicaciones/SET_TIPOAJAXINDICADOR";
 
     export type Action =
         { type: Types.SET_ESTAPROCESANDOREQUESTSERVIDOR, valor: boolean } |

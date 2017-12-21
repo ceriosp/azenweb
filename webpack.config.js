@@ -36,7 +36,13 @@ module.exports = {
                     }
                 ]
             },
-            { test: /\.css$/, loader: "style-loader!css-loader" },
+            {
+                test: /\.css$/,
+                use: [
+                    { loader: 'style-loader' },
+                    { loader: 'css-loader' }
+                ]
+            }
             /*
             //Bootstrap
             { test: /\.png$/, loader: "url-loader?limit=100000" },

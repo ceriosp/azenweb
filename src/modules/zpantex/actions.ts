@@ -37,12 +37,12 @@ export namespace Actions {
             type: ActionTypes.ZPantexModule.PONER_AL_TOPE,
             zPantex
         });
+
+        export const setEsPxModal = (esPxModal: boolean): ActionTypes.ZPantexModule.Action => ({
+            type: ActionTypes.ZPantexModule.SET_ESPXMODAL,
+            esPxModal
+        });
     }
-
-
-
-
-    
 
 
 

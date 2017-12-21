@@ -12,30 +12,12 @@ import {
 
 import * as ZCommon from '../../zcommon';
 import {
-
-    //Models
-    ZRecursoModel,
-    ZRecursoViewModel,
-    ZReferenciaViewModel,
-
-    //State
-    ZAplicationState,
-
-    //Utils
-    EntityNormalizedObj,
-
     //Contracts
     IZLoginModule,
     IZApl,
-
 } from "../../zcommon";
 
-import {
-    //Components
-    ZVentanaRecurso
-} from "../../zpantex";
 import { ZProcesandoContainer } from "../../zaplicacion/containers/ZProcesandoContainer";
-import { ZAplicacionContainer } from "../../zaplicacion/containers/ZAplicacionContainer";
 import { ZLoginContainer } from '../../zlogin/containers/ZLoginContainer';
 
 export interface OwnProps {

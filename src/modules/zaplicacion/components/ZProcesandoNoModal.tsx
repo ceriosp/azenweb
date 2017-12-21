@@ -24,7 +24,7 @@ export class ZProcesandoNoModal extends React.Component<OwnProps & ConnectedStat
 
     render() {
         return (
-            <div style={{ display: "inline-block" }}>
+            <div>
                 {(this.props.show && this.props.tipoAJAXIndicador == ZCommon.Constants.TipoAJAXIndicadorEnum.NO_MODAL) && (
                     <div className="sk-folding-cube">
                         <div className="sk-cube1 sk-cube"></div>

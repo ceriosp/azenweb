@@ -185,9 +185,7 @@ export namespace CM {
          * número de la región 
          */
         rg: number;
-
     }
-
 
     /**
      * Responde a zcommon.Constants.ComandoEnum.CM_PXARRIVAR - 122
@@ -200,8 +198,6 @@ export namespace CM {
          * Número de la ventana a poner al frente.
          */
         px: number;
-
-
     }
 
     /**
@@ -239,45 +235,6 @@ export namespace CM {
     }
 
     /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_CONSULTAR - 61
-     * Pone título a la ventana
-     * Estado: implementado
-     */
-    export interface IConsultar {
-        /**
-         * Número de la ventana a cambiar título
-         */
-        px: number;
-
-        /**
-         * Título a poner a la ventana
-         */
-        vc: string;
-    }
-
-    /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_ARRIVARCMP - 77
-     * Pone el foco en el campo (campo actual)
-     * Estado: Por implementar 
-     */
-    export interface IArrivarCmp {
-        /**
-         * Numero de la ventana
-         */
-        px: number;
-
-        /**
-         * Número de la región
-         */
-        rg: number;
-
-        /**
-         * Nombre del campo (nomCmp) a poner el foco.
-         */
-        nc: string;
-    }
-
-    /**
      * Responde a zcommon.Constants.ComandoEnum.CM_PRENDERMODO - 51
      * Estado: Por implementar 
      */
@@ -301,6 +258,45 @@ export namespace CM {
          * 
          */
         mc: number;
+    }
+
+    /**
+     * Responde a zcommon.Constants.ComandoEnum.CM_CONSULTAR - 61
+     * Pone título a la ventana
+     * Estado: implementado
+     */
+    export interface IConsultar {
+        /**
+         * Número de la ventana a cambiar título
+         */
+        px: number;
+
+        /**
+         * Título a poner a la ventana
+         */
+        vc: string;
+    }
+
+    /**
+         * Responde a zcommon.Constants.ComandoEnum.CM_ARRIVARCMP - 77
+         * Pone el foco en el campo (campo actual)
+         * Estado: Por implementar 
+         */
+    export interface IArrivarCmp {
+        /**
+         * Numero de la ventana
+         */
+        px: number;
+
+        /**
+         * Número de la región
+         */
+        rg: number;
+
+        /**
+         * Nombre del campo (nomCmp) a poner el foco.
+         */
+        nc: string;
     }
 
     /**
@@ -341,7 +337,6 @@ export namespace CM {
         px: number
     }
 
-
     /**
      *  Responde a zcommon.Constants.ComandoEnum.CM_PXARRIVAR - 122
      */
@@ -372,6 +367,25 @@ export namespace CM {
         vc: number
     }
 
+    /**
+     *  Responde a zcommon.Constants.ComandoEnum.CM_PONERMODAL - 169
+     */
+    export interface IPonerModal {
+        /**
+         * 
+         */
+        px: number
+    }
+
+    /**
+     *  Responde a zcommon.Constants.ComandoEnum.CM_QUITARMODAL - 170
+     */
+    export interface IQuitarModal {
+        /**
+         * 
+         */
+        px: number
+    }
 }
 //#endregion
 
@@ -395,8 +409,8 @@ interface IZPantexNormalized {
 export interface IZAplState {
     idApl: string;
     nomApl: string;
-    tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
     estaProcesandoRequestServidor: boolean;
+    tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
     zMenuModule: IZMenuModule;
     zPantexModule: IZPantexModule;
     zLoginModule: IZLoginModule;
@@ -409,6 +423,7 @@ export interface IZMenuModule {
 
 export interface IZPantexModule {
     pxAlTope: number;
+    esPxModal: boolean;
     pilaPantex: Array<IZPantex>;
     iconosBotonesList: Array<ZIconoBoton>;
     pantexMap: EntityNormalizedObj<IZPantexNormalized>;

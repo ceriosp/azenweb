@@ -16,6 +16,7 @@ import {
 import ZCampoButton from './ZCampoButton';
 
 import { Services } from "../services";
+import { ZProcesandoNoModalContainer } from "../../zaplicacion/containers/ZProcesandoNoModalContainer";
 
 export interface OwnProperties {
     zComandosList: Array<IZComandoForma>,
@@ -42,31 +43,34 @@ export class ZBarraComandos extends React.PureComponent<OwnProperties & Connecte
         let zPantexServies = new Services.ZRecursoServices();
         return (
             <Well bsSize="small">
-                <ButtonToolbar>
-                    {zComandosList.map((zComandoI: IZComandoForma, index: number) => {
-                        let iconName = zPantexServies.getCMIcon(zComandoI);
-                        let tooltip = (<Tooltip key={index} id={`tooltip` + index}>{zComandoI.etq}</Tooltip>);
-                        return (
-                            <OverlayTrigger key={index} placement="top" overlay={tooltip}>
-                                <Button
-                                    key={index}
-                                    disabled={zComandoI.desh == 1}
-                                    onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
-                                >
-                                    {(!iconName) &&
-                                        zComandoI.etq
-                                    }
-                                    <span className={iconName} aria-hidden="true"></span>
-                                </Button>
-                            </OverlayTrigger>
-                        );
-                    })}
-                </ButtonToolbar>
+                <div className="zaplicacion-zprocesando-no-modal-loader">
+                    <ButtonToolbar>
+                        {zComandosList.map((zComandoI: IZComandoForma, index: number) => {
+                            let iconName = zPantexServies.getCMIcon(zComandoI);
+                            let tooltip = (<Tooltip key={index} id={`tooltip` + index}>{zComandoI.etq}</Tooltip>);
+                            return (
+                                <OverlayTrigger key={index} placement="top" overlay={tooltip}>
+                                    <Button
+                                        key={index}
+                                        disabled={zComandoI.desh == 1}
+                                        onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
+                                    >
+                                        {(!iconName) &&
+                                            zComandoI.etq
+                                        }
+                                        <span className={iconName} aria-hidden="true"></span>
+                                    </Button>
+                                </OverlayTrigger>
+                            );
+                        })}
+                    </ButtonToolbar>
+                    <ZProcesandoNoModalContainer />
+                </div>
             </Well>
         );
     }
 
     despacharEventoCliente(cmd: ZCommon.Constants.ComandoEnum) {
-        return;
+        this.props.despacharEventoCliente(cmd);
     }
 }

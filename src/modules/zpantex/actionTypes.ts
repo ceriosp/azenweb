@@ -12,18 +12,17 @@ export namespace ActionTypes {
     export namespace ZPantexModule {
 
         export namespace Types {
-            export type PONER_AL_TOPE = "IZPantexModule/PONER_AL_TOPE";            
+            export type PONER_AL_TOPE = "IZPantexModule/PONER_AL_TOPE";
+            export type SET_ESPXMODAL = "IZPantexModule/SET_ESPXMODAL";
         }
 
-        export const PONER_AL_TOPE: Types.PONER_AL_TOPE = "IZPantexModule/PONER_AL_TOPE";        
+        export const PONER_AL_TOPE: Types.PONER_AL_TOPE = "IZPantexModule/PONER_AL_TOPE";
+        export const SET_ESPXMODAL: Types.SET_ESPXMODAL = "IZPantexModule/SET_ESPXMODAL";
 
         export type Action =
-            { type: Types.PONER_AL_TOPE, zPantex: IZPantex }
+            { type: Types.PONER_AL_TOPE, zPantex: IZPantex } |
+            { type: Types.SET_ESPXMODAL, esPxModal: boolean }
     }
-
-
-
-
 
 
 

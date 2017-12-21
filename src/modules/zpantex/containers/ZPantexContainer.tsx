@@ -18,11 +18,12 @@ import {
 import * as ZAplicacion from '../../zaplicacion';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
-    pxAlTope:appState.zPantexModule.pxAlTope
+    pxAlTope: appState.zPantexModule.pxAlTope,
+    esPxModal: appState.zPantexModule.esPxModal
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-    
+
 });
 
 export const ZPantexContainer: React.ComponentClass<OwnProps> =

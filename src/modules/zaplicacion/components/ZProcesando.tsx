@@ -52,9 +52,20 @@ export class ZProcesando extends React.Component<OwnProps & ConnectedState & Con
                 onHide={null}
                 bsSize="small"
                 aria-labelledby="contained-modal-title-sm"
+                style={{
+                    top: "50px"
+                }}
             >
                 <Modal.Body>
-                    <h4>Procesando...</h4>
+                    <div className="zaplicacion-zprocesando-loader">
+                        <div className="sk-folding-cube">
+                            <div className="sk-cube1 sk-cube"></div>
+                            <div className="sk-cube2 sk-cube"></div>
+                            <div className="sk-cube4 sk-cube"></div>
+                            <div className="sk-cube3 sk-cube"></div>
+                        </div>
+                        <h4>&nbsp;&nbsp;&nbsp;Procesando</h4>                        
+                    </div>
                 </Modal.Body>
             </Modal>
         );

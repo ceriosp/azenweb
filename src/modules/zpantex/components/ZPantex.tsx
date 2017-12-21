@@ -36,6 +36,7 @@ export interface OwnProps {
 
 export interface ConnectedState {
     pxAlTope: number;
+    esPxModal: boolean;
 }
 
 export interface ConnectedDispatch {
@@ -58,26 +59,38 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
                     onHide={function () { }}
                     show={this.props.zPantex.numPx == this.props.pxAlTope}
                     container={this.props.container}
-                    backdrop={true}
+                    backdrop={this.props.esPxModal}
                     autoFocus={false}
                     enforceFocus={false}
-                    bsSize={"large"}
+                    bsSize="large"
                     aria-labelledby="contained-modal-title"
                     style={{
                         top: "50px"
                     }}
                 >
-                    <Modal.Body>
+                    <Modal.Body
+                        style={{
+                            padding: "0px"
+                        }}
+                    >
                         {this.props.zPantex.zFormaTablaList.map((zFormaTablaI: IZFormaTabla, index: number) => {
                             return (
                                 <div id={Constants.PX_PREFIJO_ID + zFormaTablaI.ven.numPx} key={zFormaTablaI.ven.numPx}>
-                                    <Panel header={titulo} bsStyle="primary">
+                                    <Panel
+                                        header={titulo}
+                                        bsStyle="primary"
+                                        style={{
+                                            marginBottom: "0px"
+                                        }}
+                                    >
                                         <ZLineaEstadoContainer
                                             linEst={zFormaTablaI.linEst}
                                         />
-                                        <ZBarraComandosContainer
-                                            zComandosList={zFormaTablaI.btns}
-                                        />
+                                        {!this.props.esPxModal && (
+                                            <ZBarraComandosContainer
+                                                zComandosList={zFormaTablaI.btns}
+                                            />
+                                        )}
                                         <ZRegionContainer
                                             zFormaTabla={zFormaTablaI}
                                             zRegionIndex={index}

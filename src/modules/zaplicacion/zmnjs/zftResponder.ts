@@ -6,7 +6,7 @@ import { debug } from 'util';
 
 export namespace ZftResponder {
 
-    export const responder = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {        
+    export const responder = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
         switch (zEvento.dato.cmd) {
 
@@ -14,6 +14,22 @@ export namespace ZftResponder {
             case ZCommon.Constants.ComandoEnum.CM_PXCREAR:
                 const zPantex = zEvento.dato.buffer.dato as IZPantex;
                 dispatch(ZPantex.Actions.ZPantexModule.ponerAlTope(zPantex));
+                break;
+
+            case ZCommon.Constants.ComandoEnum.CM_PONERMODAL:
+                const ponerModal = zEvento.dato.buffer.dato as CM.IPonerModal;
+
+                if (ponerModal.px == getState().zPantexModule.pxAlTope) {
+                    dispatch(ZPantex.Actions.ZPantexModule.setEsPxModal(true));
+                }
+                break;
+
+            case ZCommon.Constants.ComandoEnum.CM_QUITARMODAL:
+                const quitarModal = zEvento.dato.buffer.dato as CM.IQuitarModal;
+                
+                if (quitarModal.px == getState().zPantexModule.pxAlTope) {
+                    dispatch(ZPantex.Actions.ZPantexModule.setEsPxModal(false));
+                }
                 break;
 
             case ZCommon.Constants.ComandoEnum.CM_CONSULTAR:
@@ -44,13 +60,13 @@ export namespace ZftResponder {
                 const pxArrivarBuffer = zEvento.dato.buffer.dato as CM.IPxArrivar;
 
                 const zPantexArrivar = {
-                    numPx:pxArrivarBuffer.px,
+                    numPx: pxArrivarBuffer.px,
                     zFormaTablaList: null
                 } as IZPantex;
 
                 dispatch(ZPantex.Actions.ZPantexModule.ponerAlTope(zPantexArrivar));
-                
-            break;
+
+                break;
         }
     }
 
