@@ -15,8 +15,26 @@ interface OwnProperties {
     zCampoModel: IZCampo;
 }
 
-export default class ZCampoTextbox extends React.PureComponent<OwnProperties, undefined>
+interface OwnState {
+    hasChanged:boolean;
+    value:string;
+}
+
+export default class ZCampoTextbox extends React.PureComponent<OwnProperties, OwnState>
 {
+
+    constructor(props: OwnProperties){
+        super(props);
+
+        this.state = {
+            hasChanged:false,
+            value : ""
+        } as OwnState;
+
+        this.handleChange = this.handleChange.bind(this);
+        this.onChange = this.onChange.bind(this);
+    }
+
     render() {
         const { zCampoModel } = this.props;
         return (
@@ -29,10 +47,27 @@ export default class ZCampoTextbox extends React.PureComponent<OwnProperties, un
                         <FormControl
                             type="text"
                             name={zCampoModel.nomCmp}
+                            onChange={this.onChange}
+                            onBlur={this.handleChange}                            
                         />
                     </Col>
                 </Col>
             </FormGroup>
         );
     }
+    
+    handleChange(e:any){
+        if(this.state.hasChanged && this.state.value != e.target.value){
+            this.setState({
+                value : e.target.value
+            } as OwnState);
+            console.log("evt changed.");
+        }
+    }
+
+    onChange(e:any){
+        this.setState({
+            hasChanged:true
+        } as OwnState);    
+    }    
 }
