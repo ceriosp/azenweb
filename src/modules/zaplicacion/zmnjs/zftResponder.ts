@@ -52,7 +52,7 @@ export namespace ZftResponder {
 
             case ZCommon.Constants.ComandoEnum.CM_PXDESTRUIR:
                 const pxDestruir = zEvento.dato.buffer.dato as CM.IPxDestruir;
-                destruirPx(pxDestruir.px);
+                dispatch(ZPantex.Actions.ZPantexModule.pxDestruir(pxDestruir));
                 break;
 
             case ZCommon.Constants.ComandoEnum.CM_PXARRIVAR:
@@ -90,10 +90,4 @@ export namespace ZftResponder {
             });
         }
     }
-
-    const destruirPx = (px: number) => {
-        let pantex = document.querySelector("#" + ZPantexConstants.PX_PREFIJO_ID + px);
-        pantex.parentNode.removeChild(pantex);
-    }
-
 }

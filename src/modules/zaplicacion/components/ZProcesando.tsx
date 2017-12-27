@@ -46,28 +46,38 @@ export class ZProcesando extends React.Component<OwnProps & ConnectedState & Con
     }
 
     render() {
-        return (
-            <Modal
-                show={this.props.show && this.props.tipoAJAXIndicador == ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL}
-                onHide={null}
-                bsSize="small"
-                aria-labelledby="contained-modal-title-sm"
-                style={{
-                    top: "50px"
-                }}
-            >
-                <Modal.Body>
-                    <div className="zaplicacion-zprocesando-loader">
-                        <div className="sk-folding-cube">
-                            <div className="sk-cube1 sk-cube"></div>
-                            <div className="sk-cube2 sk-cube"></div>
-                            <div className="sk-cube4 sk-cube"></div>
-                            <div className="sk-cube3 sk-cube"></div>
-                        </div>
-                        <h4>&nbsp;&nbsp;&nbsp;Procesando</h4>                        
-                    </div>
-                </Modal.Body>
-            </Modal>
-        );
+
+        if (this.props.show && this.props.tipoAJAXIndicador == ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL) {
+            return (
+                <div className="static-modal">
+                    <Modal
+                        show={true}
+                        backdrop="static"
+                        onHide={null}
+                        autoFocus={true}                                                
+                        aria-labelledby="contained-modal-title-sm"
+                        style={{
+                            top: "50px"
+                        }}
+                    >
+                        <Modal.Body>
+                            <div className="zaplicacion-zprocesando-loader">
+                                <div className="sk-folding-cube">
+                                    <div className="sk-cube1 sk-cube"></div>
+                                    <div className="sk-cube2 sk-cube"></div>
+                                    <div className="sk-cube4 sk-cube"></div>
+                                    <div className="sk-cube3 sk-cube"></div>
+                                </div>
+                                <h4>&nbsp;&nbsp;&nbsp;Procesando</h4>
+                            </div>
+                        </Modal.Body>
+                    </Modal>
+                </div>
+            );
+        }
+        else {
+            return (<span></span>);
+        }
+
     }
 }

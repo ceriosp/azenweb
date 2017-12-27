@@ -121,3 +121,7 @@
 .modal-lg {
     width: 95% !important;
 }
+
+.ReactModal__Overlay {
+    z-index: 10000;
+}

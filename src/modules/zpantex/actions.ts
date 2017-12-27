@@ -12,6 +12,8 @@ import {
     IZAplState,
     IZPantex,
 
+    CM,
+
 } from "../zcommon";
 
 import * as ZMenu from '../zmenu';
@@ -42,6 +44,11 @@ export namespace Actions {
             type: ActionTypes.ZPantexModule.SET_ESPXMODAL,
             esPxModal
         });
+
+        export const pxDestruir = (pxDestruirParams: CM.IPxDestruir): ActionTypes.ZPantexModule.Action => ({
+            type: ActionTypes.ZPantexModule.PX_DESTRUIR,
+            pxDestruirParams
+        });        
     }
 
 

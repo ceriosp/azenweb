@@ -57,7 +57,8 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
             <div>
                 <Modal
                     onHide={function () { }}
-                    show={this.props.zPantex.numPx == this.props.pxAlTope}
+                    show={true}
+                    //show={this.props.zPantex.numPx == this.props.pxAlTope}
                     container={this.props.container}
                     backdrop={this.props.esPxModal}
                     autoFocus={false}
@@ -65,7 +66,8 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
                     bsSize="large"
                     aria-labelledby="contained-modal-title"
                     style={{
-                        top: "50px"
+                        top: "50px",
+                        visibility: this.props.zPantex.numPx == this.props.pxAlTope ? "visible" : "hidden"
                     }}
                 >
                     <Modal.Body

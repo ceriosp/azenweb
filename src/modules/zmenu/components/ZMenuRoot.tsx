@@ -14,6 +14,8 @@ import {
     NavDropdown
 } from 'react-bootstrap';
 
+import * as ZCommon from '../../zcommon';
+
 import * as ZMenu from '../index';
 
 import {
@@ -33,7 +35,9 @@ export interface OwnProps {
 export interface ConnectedState {
     zMenu: IZMenu;
     nomApl: string;
-    sobrePonerse: boolean;
+    exPxModal: boolean;
+    estaProcesandoRequestServidor:boolean;
+    tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum
 }
 
 export interface ConnectedDispatch {
@@ -58,7 +62,10 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
             <Navbar
                 collapseOnSelect
                 staticTop
-                style={!this.props.sobrePonerse ? { zIndex: 1000000 } : null}>
+                style={this.props.exPxModal || 
+                    (this.props.tipoAJAXIndicador == ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL && this.props.estaProcesandoRequestServidor)
+                    ? null 
+                    : { zIndex: 1000000 }}>
                 <Navbar.Header>
                     <Navbar.Brand>
                         <a href="#">Azen {nomApl}</a>

@@ -44,7 +44,7 @@ export class ZAplicacion extends React.Component<OwnProps & ConnectedState & Con
             <div ref={(div:HTMLDivElement)=>{
                 this.divZAplicacion = div;
             }}>
-                {this.props.zPantexModule.pilaPantex.map((zPantexI:IZPantex, index:number)=>{
+                {this.props.zPantexModule.pilaPantex.map((zPantexI:IZPantex, index:number)=>{                    
                     return (
                         <ZPantexContainer
                             key={index}

@@ -43,7 +43,7 @@ export namespace Reducers {
 
             switch (action.type) {
 
-                case ActionTypes.ZPantexModule.PONER_AL_TOPE:
+                case ActionTypes.ZPantexModule.PONER_AL_TOPE:{
 
                     const pilaPantex = state.pilaPantex;
 
@@ -64,11 +64,31 @@ export namespace Reducers {
                         pxAlTope: action.zPantex.numPx
                     } as IZPantexModule, state);
 
+                }
 
                 case ActionTypes.ZPantexModule.SET_ESPXMODAL:
                     return u({
                         esPxModal: action.esPxModal
                     } as IZPantexModule, state);
+
+                case ActionTypes.ZPantexModule.PX_DESTRUIR:{
+                    const pilaPantex = state.pilaPantex;
+
+                    const indxZPantex = state.pilaPantex.findIndex(
+                        (zPantexi: IZPantex) => {
+                            return zPantexi.numPx == action.pxDestruirParams.px
+                        }
+                    );
+
+                    if (indxZPantex == -1) {
+                        console.error("zPantex/reducers: px no encontrado");
+                        return state;
+                    }
+
+                    return u({
+                        pilaPantex: pilaPantex.slice(0,indxZPantex).concat(pilaPantex.slice(indxZPantex+1)),                        
+                    } as IZPantexModule, state);
+                }
             }
 
             return state;
