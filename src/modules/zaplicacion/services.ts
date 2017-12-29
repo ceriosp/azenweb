@@ -53,6 +53,7 @@ import * as ZLogin from '../zlogin';
 import { ZftResponder } from './zmnjs/zftResponder';
 import { ZmenuResponder } from './zmnjs/zmenuResponder';
 import { ZcmpResponder } from "./zmnjs/zcmpResponder";
+import { ZrptResponder } from './zmnjs/zrptResponder';
 import { Constants as ZCommonConstants } from "../zcommon";
 import { Constants as ZPantexConstants } from "../zpantex";
 
@@ -73,6 +74,7 @@ const responderArray: Array<(zEvento: IZEvento, dispatch: (p: any) => any, getSt
     ZmenuResponder.responder,
     ZftResponder.responder,
     ZcmpResponder.responder,
+    ZrptResponder.responder,
     procesarEventoNada
 ];
 
