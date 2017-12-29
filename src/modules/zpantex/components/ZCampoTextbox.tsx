@@ -8,31 +8,43 @@ import {
 } from 'react-bootstrap';
 
 import {
-    ZCampoModel, IZCampo
+    ZCampoModel,
+    IZCampo,
+    Constants as ZCommonConstants
 } from "../../zcommon";
+import { setTimeout } from 'timers';
 
-interface OwnProperties {
+export interface OwnProps {
     zCampoModel: IZCampo;
 }
 
-interface OwnState {
-    hasChanged:boolean;
-    value:string;
+export interface ConnectedState {
 }
 
-export default class ZCampoTextbox extends React.PureComponent<OwnProperties, OwnState>
-{
+export interface ConnectedDispatch {
+    sincronizarCampo: (buffer: string) => void;
+}
 
-    constructor(props: OwnProperties){
+interface OwnState {
+    hasChanged: boolean;
+    value: string;
+}
+
+export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, OwnState>
+{
+    private buffer: string;
+
+    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
         this.state = {
-            hasChanged:false,
-            value : ""
+            hasChanged: false,
+            value: ""
         } as OwnState;
 
         this.handleChange = this.handleChange.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.sincronizarCampo = this.sincronizarCampo.bind(this);
     }
 
     render() {
@@ -48,26 +60,31 @@ export default class ZCampoTextbox extends React.PureComponent<OwnProperties, Ow
                             type="text"
                             name={zCampoModel.nomCmp}
                             onChange={this.onChange}
-                            onBlur={this.handleChange}                            
+                            onBlur={this.handleChange}
                         />
                     </Col>
                 </Col>
             </FormGroup>
         );
     }
-    
-    handleChange(e:any){
-        if(this.state.hasChanged && this.state.value != e.target.value){
+
+    handleChange(e: any) {
+        if (this.state.hasChanged && this.state.value != e.target.value) {
             this.setState({
-                value : e.target.value
+                value: e.target.value
             } as OwnState);
-            console.log("evt changed.");
+            this.sincronizarCampo(e.target);
         }
     }
 
-    onChange(e:any){
+    onChange(e: any) {
         this.setState({
-            hasChanged:true
-        } as OwnState);    
-    }    
+            hasChanged: true
+        } as OwnState);
+    }
+
+    sincronizarCampo(target: any) {
+        this.buffer = `<nc>${target.name}</nc><vc>${target.value}</vc>`;
+        this.props.sincronizarCampo(this.buffer);
+    }
 }

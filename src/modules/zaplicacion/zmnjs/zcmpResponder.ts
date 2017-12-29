@@ -4,14 +4,20 @@ import {
     IZCampo,
     CM
 } from '../../zcommon/contracts';
-import { Constants as ZCommonConstants, IZPantex } from "../../zcommon";
-import { Constants as ZPantexConstants } from "../../zpantex";
 
+import {
+    Constants as ZCommonConstants,
+    Services as ZCommonServices,
+    IZPantex
+} from "../../zcommon";
+
+import { Constants as ZPantexConstants } from "../../zpantex";
 import { Services } from "../services";
 import { debug } from 'util';
 
 let zftFormInputElement: any;
 let zftCampo: any;
+let commonServices: any = null;
 
 export namespace ZcmpResponder {
 
@@ -28,10 +34,12 @@ export namespace ZcmpResponder {
     const sincronizarCampo = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
         const dato = zEvento.dato.buffer.dato as CM.ISincCampo;
+        
+        if (commonServices == null) {
+            commonServices = new ZCommonServices.ZCommonServices();
+        }
 
-        let querySelector = `#${ZPantexConstants.PX_PREFIJO_ID}${dato.px}${ZPantexConstants.ZFT_PREFIJO_ID}0`;
-
-        let zftFormElement = document.querySelector(querySelector) as HTMLFormElement;
+        let zftFormElement = document.querySelector(commonServices.getZFormaTablaId(dato.px, 0, true)) as HTMLFormElement;
 
         const indxZPantex = getState().zPantexModule.pilaPantex.findIndex(
             (zPantexi: IZPantex) => {

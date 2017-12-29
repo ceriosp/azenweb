@@ -22,21 +22,8 @@ export namespace Actions {
 
     }
 
-    export const lanzarMenu = () => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
-        return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
-            dispatch(ZComunicaciones.Actions.enviarRequestComando<Object>({
-                cmd: ZCommon.Constants.ComandoEnum.CM_DEFMENU,
-                buffer: 'azen',
-                tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL
-            }))
-                .then((resultadoCmDefMenu: ResultadoActionConDato<IZColaEventos>) => {
-                    if (resultadoCmDefMenu.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {
-                        reject(resultadoCmDefMenu);
-                        return;
-                    }
-                    ZAplicacion.Services.Responder.procesarZColaEventos(resultadoCmDefMenu.retorno, dispatch, getState);
-                });
-        });
+    export const lanzarMenu = () => (dispatch: (p: any) => any, getState: () => IZAplState) => {
+        dispatch(ZAplicacion.Actions.despacharEventoCliente(ZCommon.Constants.ComandoEnum.CM_DEFMENU, 'azen'));
     }
 
     export const cargarMenu = (appName: string): ActionTypes.Action => ({

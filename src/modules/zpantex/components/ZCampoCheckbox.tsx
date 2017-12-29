@@ -9,21 +9,44 @@ import {
     ZCampoModel, IZCampo
 } from "../../zcommon";
 
-interface OwnProperties
-{
-    zCampoModel:IZCampo;
+export interface OwnProps {
+    zCampoModel: IZCampo;
 }
 
-export default class ZCampoCheckbox extends React.PureComponent<OwnProperties, undefined>
+export interface ConnectedState {
+}
+
+export interface ConnectedDispatch {
+    sincronizarCampo: (buffer: string) => void;
+}
+
+export class ZCampoCheckbox extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    render(){
+    private buffer: string;
+
+    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
+        super(props);
+
+        this.sincronizarCampo = this.sincronizarCampo.bind(this);
+    }
+
+    render(): any {
 
         const { zCampoModel } = this.props;
 
-        return (            
-                <Checkbox name={zCampoModel.nomCmp} value={zCampoModel.lon}>
-                    {zCampoModel.etq.replace("[ ]", "")}
-                </Checkbox>
+        return (
+            <Checkbox
+                name={zCampoModel.nomCmp}
+                value={zCampoModel.lon}
+                onChange={this.sincronizarCampo}
+            >
+                {zCampoModel.etq.replace("[ ]", "")}
+            </Checkbox>
         );
+    }
+
+    sincronizarCampo(e: any) {
+        this.buffer = `<nc>${this.props.zCampoModel.nomCmp}</nc><vc>${e.target.checked ? "X" : " "}</vc><pb>${this.props.zCampoModel.lon}</pb>`;
+        this.props.sincronizarCampo(this.buffer);
     }
 }

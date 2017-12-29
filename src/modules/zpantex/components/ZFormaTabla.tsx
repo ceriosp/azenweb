@@ -23,6 +23,7 @@ import {
     IZMenuItem,
     IZMenu
 } from '../../zcommon/contracts';
+import { Services as ZCommonServices } from "../../zcommon/services";
 import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma } from "../../zcommon";
 import { ZVentana } from "./ZVentana";
 import ZCampo from "./ZCampo";
@@ -40,18 +41,25 @@ export interface ConnectedState {
 }
 
 export interface ConnectedDispatch {
-
 }
 
 export class ZFormaTabla extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
+    private commonServices: ZCommonServices.ZCommonServices;
+
+    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
+        super(props);
+
+        this.commonServices = new ZCommonServices.ZCommonServices();
+    }
+
     render(): any {
 
         return (
             <div>
                 <Form
                     horizontal
-                    id={Constants.PX_PREFIJO_ID + this.props.px + Constants.ZFT_PREFIJO_ID + this.props.zFormaIndex}
+                    id={this.commonServices.getZFormaTablaId(this.props.px, this.props.zFormaIndex, false)}
                 >
                     {this.props.zFormaTabla.cmps.map(this.pintarZCampoEnRecurso.bind(this))}
                 </Form>

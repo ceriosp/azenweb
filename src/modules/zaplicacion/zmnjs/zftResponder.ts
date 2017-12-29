@@ -1,8 +1,12 @@
 import * as ZCommon from '../../zcommon';
 import * as ZPantex from '../../zpantex';
 import { IZPantex, IZMenu, IZAplState, IZEvento, CM } from '../../zcommon/contracts';
+import { Services as ZCommonServices } from '../../zcommon/services';
+
 import { Constants as ZPantexConstants } from "../../zpantex/constants";
 import { debug } from 'util';
+
+let commonServices: any = null;
 
 export namespace ZftResponder {
 
@@ -26,7 +30,7 @@ export namespace ZftResponder {
 
             case ZCommon.Constants.ComandoEnum.CM_QUITARMODAL:
                 const quitarModal = zEvento.dato.buffer.dato as CM.IQuitarModal;
-                
+
                 if (quitarModal.px == getState().zPantexModule.pxAlTope) {
                     dispatch(ZPantex.Actions.ZPantexModule.setEsPxModal(false));
                 }
@@ -71,17 +75,27 @@ export namespace ZftResponder {
     }
 
     const changeZPantexTitle = (px: number, vc: string) => {
-        let pxTitleHeader = document.querySelector("#" + ZPantexConstants.PX_PREFIJO_TITLE_ID + px);
+        
+        if (commonServices == null) {
+            commonServices = new ZCommonServices.ZCommonServices();
+        }
+
+        let pxTitleHeader = document.querySelector(commonServices.getZPantexTitleId(px, true));
         pxTitleHeader.textContent = vc;
     }
 
     const setZFormaTablaState = (setReadOnly: boolean, px: number, dispatch: (p: any) => any, getState: () => IZAplState) => {
+        
         let zFormaTablaCount = getState().zPantexModule.pilaPantex[0].zFormaTablaList.length;
         let form: any;
         let arrayInput: any;
 
+        if (commonServices == null) {
+            commonServices = new ZCommonServices.ZCommonServices();
+        }
+
         for (let i = 0; i < zFormaTablaCount; i++) {
-            form = document.querySelector("#" + ZPantexConstants.PX_PREFIJO_ID + px + ZPantexConstants.ZFT_PREFIJO_ID + i);
+            form = document.querySelector(commonServices.getZFormaTablaId(px, i, true));
 
             arrayInput = form.querySelectorAll('input');
 

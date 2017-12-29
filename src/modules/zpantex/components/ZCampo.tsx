@@ -22,11 +22,11 @@ import {
 
 import * as ZRecursos from "../../zpantex";
 
-import ZCampoTextbox from './ZCampoTextbox';
-import ZCampoRadio from './ZCampoRadio';
-import ZCampoCheckbox from './ZCampoCheckbox';
-import ZCampoGrafico from './ZCampoGrafico';
 import ZCampoZoom from './ZCampoZoom';
+import ZCampoGrafico from './ZCampoGrafico';
+import { ZCampoRadioContainer } from '../containers/ZCampoRadioContainer';
+import { ZCampoCheckboxContainer } from '../containers/ZCampoCheckboxContainer';
+import { ZCampoTextboxContainer } from '../containers/ZCampoTextboxContainer';
 
 interface OwnProperties {
     zFormaTabla: IZFormaTabla;
@@ -65,17 +65,17 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
         const { claseInd, nomCmp, cmps } = zCampo;
 
         if (cmps) {
-            return <ZCampoGrafico zCampoGrafico={zCampo} zFormaTabla={zFormaTabla}  />
+            return <ZCampoGrafico zCampoGrafico={zCampo} zFormaTabla={zFormaTabla} />
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_NOINDICADOR) {
-            return <ZCampoTextbox zCampoModel={zCampo} />;
+            return <ZCampoTextboxContainer zCampoModel={zCampo} />;
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_RADIO) {
-            return <ZCampoRadio zCampoModel={zCampo} />;
+            return <ZCampoRadioContainer zCampoModel={zCampo} />;
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
-            return <ZCampoCheckbox zCampoModel={zCampo} />;
-        } else{
+            return <ZCampoCheckboxContainer zCampoModel={zCampo} />;
+        } else {
             return <span>{zCampo.etq}</span>;
         }
     }

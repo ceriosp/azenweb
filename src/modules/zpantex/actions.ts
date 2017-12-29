@@ -23,6 +23,8 @@ import {
 } from './actionTypes';
 import { ResultadoAction } from "../zutils";
 
+import { Actions as ZAplicacionAction } from "../zaplicacion/actions";
+
 export namespace DTO {
     export class DespacharOpcionMenuParamsDTO {
         tipoRecurso: ZCommon.Constants.TipoRecurso;
@@ -48,7 +50,7 @@ export namespace Actions {
         export const pxDestruir = (pxDestruirParams: CM.IPxDestruir): ActionTypes.ZPantexModule.Action => ({
             type: ActionTypes.ZPantexModule.PX_DESTRUIR,
             pxDestruirParams
-        });        
+        });
     }
 
 

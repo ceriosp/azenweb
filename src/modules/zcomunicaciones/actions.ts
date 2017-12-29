@@ -47,6 +47,9 @@ export namespace Actions {
                         retornoStr = retornoStr.substring(0, retornoStr.length - 1);
                     }
                     retornoStr = retornoStr.replace('<usr>null</usr>', '');
+                    retornoStr = retornoStr.replace('La edicion de "Cuentas" presenta modificaciones.', 'La edicion de Cuentas presenta modificaciones.');
+                    retornoStr = retornoStr.replace('La edicion de "Tercero" presenta modificaciones.', 'La edicion de Tercero presenta modificaciones.');
+
                     let retorno: TRetorno = JSON.parse(retornoStr);
                     let resultadoActionExito = new ResultadoActionConDato<TRetorno>();
                     resultadoActionExito.retorno = retorno;

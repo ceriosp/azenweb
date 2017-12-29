@@ -24,6 +24,7 @@ import {
 } from '../../zcommon/contracts';
 
 import { IZPantex, IZFormaTabla } from '../../zcommon';
+import { Services as ZCommonServices } from "../../zcommon/services";
 import { ZRegionContainer } from '../containers/ZRegionContainer';
 import { ZLineaEstadoContainer } from '../containers/ZLineaEstadoContainer';
 import { ZBarraComandosContainer } from '../containers/ZBarraComandosContainer';
@@ -40,15 +41,22 @@ export interface ConnectedState {
 }
 
 export interface ConnectedDispatch {
-
 }
 
 export class ZPantex extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
+    private commonServices: ZCommonServices.ZCommonServices;;
+
+    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
+        super(props);
+
+        this.commonServices = new ZCommonServices.ZCommonServices();
+    }
+
     render(): any {
 
         const titulo = (
-            <h3 id={Constants.PX_PREFIJO_TITLE_ID + this.props.zPantex.zFormaTablaList[0].ven.numPx}>
+            <h3 id={this.commonServices.getZPantexTitleId(this.props.zPantex.zFormaTablaList[0].ven.numPx, false)}>
                 {this.props.zPantex.zFormaTablaList[0].ven.descr}
             </h3>
         );
@@ -77,7 +85,7 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
                     >
                         {this.props.zPantex.zFormaTablaList.map((zFormaTablaI: IZFormaTabla, index: number) => {
                             return (
-                                <div id={Constants.PX_PREFIJO_ID + zFormaTablaI.ven.numPx} key={zFormaTablaI.ven.numPx}>
+                                <div id={this.commonServices.getZPantexId(zFormaTablaI.ven.numPx, false)} key={zFormaTablaI.ven.numPx}>
                                     <Panel
                                         header={titulo}
                                         bsStyle="primary"
