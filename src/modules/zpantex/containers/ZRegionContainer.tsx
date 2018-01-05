@@ -15,8 +15,6 @@ import {
     ZRegion
 } from '../components/ZRegion';
 
-import * as ZAplicacion from '../../zaplicacion';
-
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     pxAlTope: appState.zPantexModule.pxAlTope
 });

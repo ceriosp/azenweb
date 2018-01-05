@@ -21,30 +21,30 @@ import {
 } from '../../zcommon/contracts';
 import { IZPantex, IZFormaTabla, IZPantexModule } from "../../zcommon";
 import { ZPantexContainer } from "../../zpantex/containers/ZPantexContainer";
+import { LanzarVisorReporteContainer } from "../../zrpt/containers/LanzarVisorReporteContainer";
 
 export interface OwnProps {
 
 }
 
 export interface ConnectedState {
-    zPantexModule:IZPantexModule;
+    zPantexModule: IZPantexModule;
 }
 
-export interface ConnectedDispatch
-{
-    
+export interface ConnectedDispatch {
+
 }
 
 export class ZAplicacion extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    private divZAplicacion:HTMLDivElement;
+    private divZAplicacion: HTMLDivElement;
 
     render(): any {
         return (
-            <div ref={(div:HTMLDivElement)=>{
+            <div ref={(div: HTMLDivElement) => {
                 this.divZAplicacion = div;
             }}>
-                {this.props.zPantexModule.pilaPantex.map((zPantexI:IZPantex, index:number)=>{                    
+                {this.props.zPantexModule.pilaPantex.map((zPantexI: IZPantex, index: number) => {
                     return (
                         <ZPantexContainer
                             key={index}
@@ -53,6 +53,7 @@ export class ZAplicacion extends React.Component<OwnProps & ConnectedState & Con
                         />
                     );
                 })}
+                <LanzarVisorReporteContainer />
             </div>
         );
     }

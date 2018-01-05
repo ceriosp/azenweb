@@ -15,8 +15,6 @@ import {
     ZPantex,
 } from '../components/ZPantex';
 
-import * as ZAplicacion from '../../zaplicacion';
-
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     pxAlTope: appState.zPantexModule.pxAlTope,
     esPxModal: appState.zPantexModule.esPxModal

@@ -348,6 +348,16 @@ export namespace CM {
     }
 
     /**
+     * Responde a zcommon.Constants.ComandoEnum.CM_PXVISUALIZARRPT - 123
+     */
+    export interface IPxVisualizarRpt {
+        /**
+         * 
+         */
+        vc: string
+    }
+
+    /**
      * Responde a zcommon.Constants.ComandoEnum.CM_SINCBOTON - 140
      */
     export interface ISincBoton {
@@ -414,6 +424,7 @@ export interface IZAplState {
     zMenuModule: IZMenuModule;
     zPantexModule: IZPantexModule;
     zLoginModule: IZLoginModule;
+    zrptModule: IZrptModule;
 }
 
 export interface IZMenuModule {
@@ -435,4 +446,10 @@ export interface IZLoginModule {
     zAplList: IZAplList;
     resultadoAction: ResultadoAction;
 }
+
+export interface IZrptModule {
+    mostrarReporte: boolean;
+    rutaReporte: string;
+}
+
 //#endregion

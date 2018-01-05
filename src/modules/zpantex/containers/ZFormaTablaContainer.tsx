@@ -15,8 +15,6 @@ import {
     ZFormaTabla
 } from '../components/ZFormaTabla';
 
-import * as ZAplicacion from '../../zaplicacion';
-
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     pxAlTope: appState.zPantexModule.pxAlTope
 });

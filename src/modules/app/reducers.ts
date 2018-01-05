@@ -5,6 +5,7 @@ import * as ZComunicaciones from '../zcomunicaciones';
 import * as ZLogin from '../zlogin';
 import * as ZMenu from '../zmenu';
 import * as ZPantex from '../zpantex';
+import * as Zrpt from '../zrpt';
 
 import { ActionTypes } from "./actionTypes";
 
@@ -60,5 +61,6 @@ export namespace Reducers {
         zMenuModule: ZMenu.Reducers.ZMenuModule.impl,
         zPantexModule: ZPantex.Reducers.ZPantexModule.impl,
         zLoginModule: ZLogin.Reducers.ZLoginModule.impl,
+        zrptModule: Zrpt.Reducers.ZrptModule.impl
     });
 }

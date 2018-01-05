@@ -6,6 +6,8 @@ import { Services as ZCommonServices } from '../../zcommon/services';
 import { Constants as ZPantexConstants } from "../../zpantex/constants";
 import { debug } from 'util';
 
+import { Actions as ZrptActions } from "../../zrpt/actions";
+
 let commonServices: any = null;
 
 export namespace ZrptResponder {
@@ -15,7 +17,10 @@ export namespace ZrptResponder {
         switch (zEvento.dato.cmd) {
 
             case ZCommon.Constants.ComandoEnum.CM_PXVISUALIZARRPT:
-                console.log("visualizar rpt");
+                let visualizarRtp = zEvento.dato.buffer.dato as ZCommon.CM.IPxVisualizarRpt
+                
+                dispatch(ZrptActions.ZrptModule.setMostrarReporte(true));
+                dispatch(ZrptActions.ZrptModule.setRutaReporte(visualizarRtp.vc));
                 break;
         }
     }
