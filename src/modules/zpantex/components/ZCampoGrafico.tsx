@@ -10,14 +10,19 @@ import * as ZRecursos from "../../zpantex";
 
 import {
     IZCampo,
-    IZFormaTabla
+    IZFormaTabla,
+    IZCampoState,
+    IZFormaTablaState
 } from "../../zcommon";
 
 import ZCampo from './ZCampo';
 
 interface OwnProperties {
-    zFormaTabla: IZFormaTabla;
-    zCampoGrafico: IZCampo;
+    zFormaTabla: IZFormaTablaState;
+    zCampoGrafico: IZCampoState;    
+
+    px: number;
+    zftIndex: number;
 }
 
 export default class ZCampoGrafico extends React.PureComponent<OwnProperties, undefined>
@@ -32,15 +37,15 @@ export default class ZCampoGrafico extends React.PureComponent<OwnProperties, un
 
         return (
             <Panel header={zCampoGrafico.etq.replace("@R", "")} bsStyle="info">
-                {zCampoGrafico.cmps.map((zCampoI: IZCampo, index: number) => {
+                {zCampoGrafico.cmpsState.map((zCampoI: IZCampoState, index: number) => {
                     return (
-                        <Col xs={12} sm={4} md={4} key={index}>
-                            {
-                                <ZCampo
-                                    zCampo={zCampoI}
-                                    zFormaTabla={zFormaTabla}
-                                />
-                            }
+                        <Col key={index} xs={12} sm={4} md={4}>
+                            <ZCampo                                
+                                zCampo={zCampoI}                                
+                                zFormaTabla={zFormaTabla}
+                                px={this.props.px}
+                                zftIndex={this.props.zftIndex}
+                            />
                         </Col>
                     );
                 })}

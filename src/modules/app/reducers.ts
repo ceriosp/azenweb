@@ -10,6 +10,7 @@ import * as Zrpt from '../zrpt';
 import { ActionTypes } from "./actionTypes";
 
 import * as ZCommon from "../zcommon";
+import { start } from 'repl';
 
 export namespace Reducers {
 
@@ -44,7 +45,7 @@ export namespace Reducers {
     }
 
     export const estaProcesandoRequestServidor = (state: boolean = false, action: ZComunicaciones.ActionTypes.Action): boolean => {
-
+        
         switch (action.type) {
             case ZComunicaciones.ActionTypes.SET_ESTAPROCESANDOREQUESTSERVIDOR:
                 return action.valor;
@@ -60,6 +61,7 @@ export namespace Reducers {
         estaProcesandoRequestServidor: estaProcesandoRequestServidor,
         zMenuModule: ZMenu.Reducers.ZMenuModule.impl,
         zPantexModule: ZPantex.Reducers.ZPantexModule.impl,
+        zPantexStateModule: ZPantex.Reducers.ZPantexStateModule.impl,
         zLoginModule: ZLogin.Reducers.ZLoginModule.impl,
         zrptModule: Zrpt.Reducers.ZrptModule.impl
     });

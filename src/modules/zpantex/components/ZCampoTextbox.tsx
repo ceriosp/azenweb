@@ -10,12 +10,14 @@ import {
 import {
     ZCampoModel,
     IZCampo,
-    Constants as ZCommonConstants
+    Constants as ZCommonConstants,
+    IZCampoState
 } from "../../zcommon";
-import { setTimeout } from 'timers';
 
 export interface OwnProps {
-    zCampoModel: IZCampo;
+    zCampoModel: IZCampoState;
+    px:number;
+    zftIndex:number;    
 }
 
 export interface ConnectedState {
@@ -49,15 +51,16 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
 
     render() {
         const { zCampoModel } = this.props;
+        let idCampo = this.props.px.toString() + "_" + this.props.zftIndex.toString() + "_" + zCampoModel.nomCmp;
         return (
-            <FormGroup controlId={zCampoModel.nomCmp} bsSize="small">
+            <FormGroup controlId={idCampo} bsSize="small">
                 <Col md={12}>
                     <Col componentClass={ControlLabel}>
                         {zCampoModel.etq}
                     </Col>
                     <Col>
                         <FormControl
-                            type="text"
+                            type="text"                                                        
                             name={zCampoModel.nomCmp}
                             onChange={this.onChange}
                             onBlur={this.handleChange}
@@ -84,7 +87,6 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
     }
 
     sincronizarCampo(target: any) {
-        this.buffer = `<nc>${target.name}</nc><vc>${target.value}</vc>`;
-        this.props.sincronizarCampo(this.buffer);
+        this.buffer = `<nc>${target.name}</nc><vc>${target.value}</vc>`;        
     }
 }

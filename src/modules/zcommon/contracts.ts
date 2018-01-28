@@ -5,20 +5,30 @@ import { ZIconoBoton } from "./index";
 
 //#region =============================================== UTILS ===============================================
 
-class EntityNormalizedObj<TEntity>{
+export class IdEntityBase {
+    id: number;
+}
+
+export interface IEntityNormalizeObj {
+    byId: any;
+    allIds: Array<number>
+}
+
+export class EntityNormalizedObj<TEntity>{
 
     constructor() {
         this.byId = {};
-        this.allIds = Array<string>();
+        this.allIds = [];
     }
 
     byId: EntityMap<TEntity>;
-    allIds: Array<string>
+    allIds: Array<number>
 }
 
-interface EntityMap<TEntity> {
-    [id: string]: TEntity;
+export class EntityMap<TEntity>{
+    [id: number]: TEntity;
 }
+
 //#endregion
 
 //#region =============================================== DOMAIN ===============================================
@@ -78,11 +88,8 @@ export interface IZFormaTabla { //zft
 
     linEst: Array<IZComandoForma>;
     btns: Array<IZComandoForma>;
-    cmps: Array<IZCampo>;
-}
 
-export interface IZLineaEstado {
-    linEst: Array<IZComandoForma>;
+    cmps: Array<IZCampo>;
 }
 
 /**
@@ -95,11 +102,16 @@ export interface IZComandoForma {
     desh: number; //1:deshabilitado, 0:habilitado
 }
 
-export interface IZVentana {
+export interface IZVentanaBase {
     numPx: number;
     descr: string;
     nomTbl: string;
     nomRcrZoom: string;
+    numLinsDatos: number; //Si es multi > 1
+}
+
+export interface IZVentana extends IZVentanaBase {
+
     nfils: number;
     ncols: number;
     fil: number;
@@ -108,20 +120,23 @@ export interface IZVentana {
     cmdsBtn: number;
     cmdsLE: number;
     numLinsEnc: number;
-    numLinsDatos: number;
+
     ctx: number;
     nfilsrx: number;
     ncolsrx: number;
 }
 
-export interface IZCampo {
+export interface IZCampoBase {
     nomCmp: string;
     etq: string;
+    claseInd: Constants.ClaseIndicadorEnum;
+    lon: number;
+}
+
+export interface IZCampo extends IZCampoBase {
     lonv: number;
     posbit: number;
-    claseInd: Constants.ClaseIndicadorEnum;
     tipo: number;
-    lon: number;
     noEnTabla: number;
     modo: number; //Constants.ModoCampo namespace
     numDec: number;
@@ -137,6 +152,172 @@ export interface IZApl {
     descr: string;
 }
 
+//#region =============================================== Own state ===============================================
+export interface IZPantexState extends IdEntityBase {
+    id: number; //px
+    zFormaTablaStateListIds: Array<number>;
+
+    //Propiedades del state
+    zFormaTablaListState: Array<IZFormaTablaState>;    
+}
+
+export class ZPantexState implements IZPantexState {
+
+    constructor(numPx: number) {
+        this.id = numPx;
+        this.zFormaTablaStateListIds = new Array<number>();
+    }
+
+    id: number; //px
+    zFormaTablaStateListIds: Array<number>;
+    zFormaTablaListState: Array<IZFormaTablaState>;    
+}
+
+export interface IZFormaTablaState extends IdEntityBase { //zft
+    id: number;
+    idZVentana: number;
+    zCampoStateListIds: Array<number>;
+    linEstListIds: Array<number>;
+    btnsListIds: Array<number>;
+
+    venState: IZVentanaState;
+    cmpsState: Array<IZCampoState>;
+    linEstState: Array<IZComandoFormaState>;
+    btnsState: Array<IZComandoFormaState>;
+}
+
+export class ZFormaTablaState implements IZFormaTablaState { //zft
+
+    constructor(id:number) {        
+        this.id = id;
+        this.zCampoStateListIds = new Array<number>();
+        this.linEstListIds = new Array<number>();
+        this.btnsListIds = new Array<number>();
+    }
+
+    id: number;
+    idZVentana: number;
+
+    //Propiedades IZFormaTablaState
+    zCampoStateListIds: Array<number>;
+    linEstListIds: Array<number>;
+    btnsListIds: Array<number>;
+
+    //GUI calculated properties
+    venState: IZVentanaState;
+    cmpsState: Array<IZCampoState>;
+    linEstState: Array<IZComandoFormaState>;
+    btnsState: Array<IZComandoFormaState>;
+}
+
+export interface IZCampoState extends IdEntityBase, IZCampoBase {
+    id: number;
+    value: string;
+    readOnly: boolean;
+
+    //Propiedades para manejo de estado
+    esCampoGrafico: boolean;
+
+    //Para campos dentro de un campo gráfico
+    parentId?: number;
+
+    cmpsState: Array<IZCampoState>;
+}
+
+export class ZCampoState implements IZCampoState {
+
+    constructor(zcampo: IZCampo, id:number) {
+
+        this.id = id;
+
+        this.nomCmp = zcampo.nomCmp;
+        this.etq = zcampo.etq;
+        this.claseInd = zcampo.claseInd;
+        this.lon = zcampo.lon;
+
+        this.readOnly = false;
+        this.value = "";
+
+        this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;
+    }
+
+    id: number;
+    value: string;
+    readOnly: boolean;
+
+    parentId?: number; //Para campos dentro de un campo gráfico
+
+    //Propiedades IZCampo
+    nomCmp: string;
+    etq: string;
+    claseInd: Constants.ClaseIndicadorEnum;
+    lon: number;
+
+    //Propiedades para manejo de estado
+    esCampoGrafico: boolean;
+    cmpsState: Array<IZCampoState>;    
+}
+
+export interface IZComandoFormaState extends IZComandoForma {
+    id: number;
+}
+
+export class ZComandoFormaState implements IZComandoFormaState {
+
+    constructor(zComandoForma: IZComandoForma, id:number) {
+
+        this.id = id;
+
+        if(!zComandoForma){
+            return;
+        }
+
+        this.etq = zComandoForma.etq;
+        this.tec = zComandoForma.tec;
+        this.cmd = zComandoForma.cmd;
+        this.desh = zComandoForma.desh;
+    }
+
+    id: number;
+
+    //Propiedades de IZComandoFormaState
+    etq: string;
+    tec: number;
+    cmd: Constants.ComandoEnum;
+    desh: number; //1:deshabilitado, 0:habilitado    
+}
+
+export interface IZVentanaState extends IZVentanaBase {
+    id: number;
+}
+
+export class ZVentanaState implements IZVentanaState {
+
+    constructor(zVentana: IZVentana, id:number) {
+
+        this.id = id;
+
+        this.numPx = zVentana.numPx;
+        this.descr = zVentana.descr;
+        this.nomTbl = zVentana.nomTbl;
+        this.nomRcrZoom = zVentana.nomRcrZoom;
+        this.numLinsDatos = zVentana.numLinsDatos;
+    }
+
+    id: number;
+
+    //Propiedades IZVentanaBase
+    numPx: number;
+    descr: string;
+    nomTbl: string;
+    nomRcrZoom: string;
+    numLinsDatos: number; //Si es multi > 1    
+}
+
+
+//#endregion
+
+//#region =============================================== Comandos ===============================================
 /**
  * Namespace de comandos, 
  * see: zcommon.Constants.ComandoEnum
@@ -399,21 +580,6 @@ export namespace CM {
 }
 //#endregion
 
-//#region =========================================== CUSTOM DOMAIN ===========================================
-
-interface IZCamposRegion {
-    rg: number;
-    camposMap: EntityNormalizedObj<IZCampo>
-}
-
-interface IZPantexNormalized {
-    px: number;
-    zPantex: IZPantex;
-    zftMap: EntityNormalizedObj<IZCamposRegion>
-}
-
-//#endregion
-
 //#region =============================================== STATE ===============================================
 
 export interface IZAplState {
@@ -423,6 +589,7 @@ export interface IZAplState {
     tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
     zMenuModule: IZMenuModule;
     zPantexModule: IZPantexModule;
+    zPantexStateModule: IZPantexStateModule;
     zLoginModule: IZLoginModule;
     zrptModule: IZrptModule;
 }
@@ -433,11 +600,26 @@ export interface IZMenuModule {
 }
 
 export interface IZPantexModule {
+
+    pilaPantex: Array<IZPantex>;
+
+    azenURL: string;
+
     pxAlTope: number;
     esPxModal: boolean;
-    pilaPantex: Array<IZPantex>;
     iconosBotonesList: Array<ZIconoBoton>;
-    pantexMap: EntityNormalizedObj<IZPantexNormalized>;
+}
+
+export interface IZPantexStateModule {
+    
+    pilaPx: Array<number>;
+    pxAlTope:number;
+
+    pilaPantexState: EntityNormalizedObj<IZPantexState>;
+    zFormaTablaState: EntityNormalizedObj<IZFormaTablaState>;
+    zCampoState: EntityNormalizedObj<IZCampoState>;
+    zComandoFormaState: EntityNormalizedObj<IZComandoFormaState>;
+    zVentanaState: EntityNormalizedObj<IZVentanaState>;
 }
 
 export interface IZLoginModule {
@@ -450,6 +632,21 @@ export interface IZLoginModule {
 export interface IZrptModule {
     mostrarReporte: boolean;
     rutaReporte: string;
+}
+
+//#endregion
+
+//#region =========================================== CUSTOM DOMAIN ===========================================
+
+interface IZCamposRegion {
+    rg: number;
+    camposMap: EntityNormalizedObj<IZCampo>
+}
+
+interface IZPantexNormalized {
+    px: number;
+    zPantex: IZPantex;
+    zftMap: EntityNormalizedObj<IZCamposRegion>
 }
 
 //#endregion

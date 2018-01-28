@@ -4,11 +4,11 @@ import {
     CSSProperties
 } from 'react';
 
+var Modal = require('react-bootstrap-modal');
+
 import {
     Row,
     Col,
-    Form,
-    Modal,
     Button
 } from 'react-bootstrap';
 

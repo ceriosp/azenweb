@@ -1,9 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import {
-    Modal
-} from 'react-bootstrap';
+var Modal = require('react-bootstrap-modal');
 
 import * as ZCommon from '../../zcommon';
 import {
@@ -53,8 +51,7 @@ export class ZProcesando extends React.Component<OwnProps & ConnectedState & Con
                     <Modal
                         show={true}
                         backdrop="static"
-                        onHide={null}
-                        autoFocus={true}                                                
+                        onHide={null}                        
                         aria-labelledby="contained-modal-title-sm"
                         style={{
                             top: "50px"

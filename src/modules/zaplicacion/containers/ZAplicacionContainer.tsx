@@ -5,8 +5,12 @@ import { connect } from 'react-redux';
 import { IZAplState } from "../../zcommon/contracts";
 
 import {
-    Actions as ZComunicacionesActions
+    Actions as ZComunicacionesActions,    
 } from '../../zcomunicaciones';
+
+import {
+    Selectors as ZPantexSelectors
+} from '../../zpantex/selectors';
 
 import {
     OwnProps,
@@ -16,7 +20,9 @@ import {
 } from '../components/ZAplicacion';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
-    zPantexModule:appState.zPantexModule
+    //estaProcesandoServidor: appState.estaProcesandoRequestServidor,    
+    pilaZPantexState: ZPantexSelectors.getZPilaPantexState(appState),    
+    pxAlTope: appState.zPantexModule.pxAlTope,
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({

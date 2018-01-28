@@ -16,7 +16,7 @@ import {
 } from '../components/ZPantex';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
-    pxAlTope: appState.zPantexModule.pxAlTope,
+    pxAlTope: appState.zPantexStateModule.pxAlTope,
     esPxModal: appState.zPantexModule.esPxModal
 });
 

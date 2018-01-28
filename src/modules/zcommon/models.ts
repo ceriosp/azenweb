@@ -2,21 +2,6 @@ import {
     Constants
 } from './constants';
 
-class EntityNormalizedObj<TEntity>{
-
-    constructor(){
-        this.byId = {};
-        this.allIds = Array<string>();
-    }
-
-    byId: EntityMap<TEntity>;
-    allIds: Array<string>
-}
-
-class EntityMap<TEntity>{
-    [id: string]: TEntity;
-}
-
 class ZRecursoModel
 {
     ven: ZVentanaModel;
@@ -156,7 +141,5 @@ export
     ZMenuModel,
 
     //Utils
-    EntityNormalizedObj,
-    EntityMap,
     ZIconoBoton,
 }

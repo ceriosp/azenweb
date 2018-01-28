@@ -5,8 +5,8 @@ import {
     ZRecursoViewModel,
 
     //Utils
-    EntityNormalizedObj
 } from './models';
+import { EntityNormalizedObj } from './contracts';
 
 class ZMenuState
 {

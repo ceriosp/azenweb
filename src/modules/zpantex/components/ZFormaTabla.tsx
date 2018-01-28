@@ -24,30 +24,30 @@ import {
     IZMenu
 } from '../../zcommon/contracts';
 import { Services as ZCommonServices } from "../../zcommon/services";
-import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma } from "../../zcommon";
+import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma, IZFormaTablaState, IZCampoState } from "../../zcommon";
 import { ZVentana } from "./ZVentana";
 import ZCampo from "./ZCampo";
 
 import { Constants } from "../constants";
 
 export interface OwnProps {
-    zFormaTabla: IZFormaTabla;
+    zFormaTabla: IZFormaTablaState;
     zFormaIndex: number;
     px: number;
-}
-
-export interface ConnectedState {
-    pxAlTope: number;
 }
 
 export interface ConnectedDispatch {
 }
 
-export class ZFormaTabla extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
+export interface ConnectedState {
+}
+
+
+export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatch, ConnectedState>
 {
     private commonServices: ZCommonServices.ZCommonServices;
 
-    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
+    constructor(props: OwnProps & ConnectedDispatch) {
         super(props);
 
         this.commonServices = new ZCommonServices.ZCommonServices();
@@ -61,7 +61,21 @@ export class ZFormaTabla extends React.Component<OwnProps & ConnectedState & Con
                     horizontal
                     id={this.commonServices.getZFormaTablaId(this.props.px, this.props.zFormaIndex, false)}
                 >
-                    {this.props.zFormaTabla.cmps.map(this.pintarZCampoEnRecurso.bind(this))}
+                    {this.props.zFormaTabla.cmpsState.map((zcampoAPintar: IZCampoState, index: number) => {
+                        return (
+                            <Col
+                                key={index}
+                                md={4}
+                            >
+                                <ZCampo
+                                    zFormaTabla={this.props.zFormaTabla}
+                                    zCampo={zcampoAPintar}                                    
+                                    px={this.props.px}
+                                    zftIndex={this.props.zFormaIndex}
+                                />
+                            </Col>
+                        );
+                    })}
                 </Form>
                 <div
                     style={{
@@ -72,17 +86,4 @@ export class ZFormaTabla extends React.Component<OwnProps & ConnectedState & Con
             </div>
         );
     }
-
-    pintarZCampoEnRecurso(zcampoAPintar: IZCampo, index: number) {
-        return (
-            <Col key={index} md={4}>
-                <ZCampo
-                    key={index}
-                    zFormaTabla={this.props.zFormaTabla}
-                    zCampo={zcampoAPintar}
-                />
-            </Col>
-        );
-    }
-
 }

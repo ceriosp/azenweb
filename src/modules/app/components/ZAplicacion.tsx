@@ -19,6 +19,8 @@ import {
 
     //Utils
     EntityNormalizedObj,
+    ZPantexState,
+    IZPantexState,
 
 } from "../../zcommon";
 
@@ -29,13 +31,14 @@ import {
 import { ZMenuRootContainer } from "../../zmenu/containers/ZMenuRootContainer";
 import { ZProcesandoContainer } from "../../zaplicacion/containers/ZProcesandoContainer";
 import { ZAplicacionContainer } from "../../zaplicacion/containers/ZAplicacionContainer";
+import { ZPantexContainer } from '../../zpantex/containers/ZPantexContainer';
 
 export interface OwnProps {
 
 }
 
 export interface ConnectedState {
-
+    pilaZPantexState: Array<ZPantexState>;
 }
 
 export interface ConnectedDispatch {
@@ -44,6 +47,8 @@ export interface ConnectedDispatch {
 
 export class ZAplicacion extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
+    private zAplicacionDivElement: HTMLDivElement;
+
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
     }
@@ -55,7 +60,11 @@ export class ZAplicacion extends React.Component<OwnProps & ConnectedState & Con
                     index={0}
                 />
                 <ZAplicacionContainer />
-                <ZProcesandoContainer />
+
+                <div>
+                    <ZProcesandoContainer />
+                </div>
+                
             </div>
         );
     }

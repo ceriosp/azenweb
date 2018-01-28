@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 
-const LiveReloadPlugin = require('webpack-livereload-plugin');
+//const LiveReloadPlugin = require('webpack-livereload-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
@@ -61,7 +61,7 @@ module.exports = {
             __DEV__: true
         }),
 
-        new LiveReloadPlugin({ appendScriptTag: true })
+        //new LiveReloadPlugin({ appendScriptTag: true })
         /*
                 new CompressionPlugin({
                     asset: "[path].gz[query]",

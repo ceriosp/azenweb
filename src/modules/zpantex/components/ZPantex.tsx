@@ -4,18 +4,10 @@ import {
     CSSProperties
 } from 'react';
 
+var Modal = require('react-bootstrap-modal');
+
 import {
-    Row,
-    Col,
-    Glyphicon,
-    Nav,
-    Navbar,
-    NavItem,
-    NavDropdown,
-    MenuItem,
-    Form,
     Panel,
-    Modal
 } from 'react-bootstrap';
 
 import {
@@ -23,7 +15,7 @@ import {
     IZMenu
 } from '../../zcommon/contracts';
 
-import { IZPantex, IZFormaTabla } from '../../zcommon';
+import { IZPantex, IZFormaTabla, IZPantexState, IZFormaTablaState } from '../../zcommon';
 import { Services as ZCommonServices } from "../../zcommon/services";
 import { ZRegionContainer } from '../containers/ZRegionContainer';
 import { ZLineaEstadoContainer } from '../containers/ZLineaEstadoContainer';
@@ -31,7 +23,7 @@ import { ZBarraComandosContainer } from '../containers/ZBarraComandosContainer';
 import { Constants } from "../constants";
 
 export interface OwnProps {
-    zPantex: IZPantex;
+    zPantex: IZPantexState;
     container: HTMLDivElement;
 }
 
@@ -43,49 +35,46 @@ export interface ConnectedState {
 export interface ConnectedDispatch {
 }
 
-export class ZPantex extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
+export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    private commonServices: ZCommonServices.ZCommonServices;;
+    private commonServices: ZCommonServices.ZCommonServices;
 
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
         this.commonServices = new ZCommonServices.ZCommonServices();
+
+        //console.log("creando zpantex: " + this.props.zPantex.zFormaTablaList[0].ven.descr);
     }
 
     render(): any {
-
         const titulo = (
-            <h3 id={this.commonServices.getZPantexTitleId(this.props.zPantex.zFormaTablaList[0].ven.numPx, false)}>
-                {this.props.zPantex.zFormaTablaList[0].ven.descr}
+            <h3>
+                {this.props.zPantex.zFormaTablaListState[0].venState.descr}
             </h3>
         );
 
+        console.log("rendering: " + this.props.zPantex.zFormaTablaListState[0].venState.descr);
+
         return (
-            <div>
+            <div className="static-modal">
                 <Modal
-                    onHide={function () { }}
+                    onHide={null}
                     show={true}
-                    //show={this.props.zPantex.numPx == this.props.pxAlTope}
-                    container={this.props.container}
-                    backdrop={this.props.esPxModal}
-                    autoFocus={false}
-                    enforceFocus={false}
-                    bsSize="large"
-                    aria-labelledby="contained-modal-title"
-                    style={{
-                        top: "50px",
-                        visibility: this.props.zPantex.numPx == this.props.pxAlTope ? "visible" : "hidden"
-                    }}
-                >
+                    backdrop="static"                    
+                    aria-labelledby="contained-modal-title-sm"                
+                    container={this.props.container}                                      
+                >                                    
                     <Modal.Body
                         style={{
                             padding: "0px"
                         }}
                     >
-                        {this.props.zPantex.zFormaTablaList.map((zFormaTablaI: IZFormaTabla, index: number) => {
+                        {this.props.zPantex.zFormaTablaListState.map((zFormaTablaI: IZFormaTablaState, index: number) => {
                             return (
-                                <div id={this.commonServices.getZPantexId(zFormaTablaI.ven.numPx, false)} key={zFormaTablaI.ven.numPx}>
+                                <div
+                                    key={index}
+                                >
                                     <Panel
                                         header={titulo}
                                         bsStyle="primary"
@@ -94,20 +83,20 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
                                         }}
                                     >
                                         <ZLineaEstadoContainer
-                                            linEst={zFormaTablaI.linEst}
+                                            linEst={zFormaTablaI.linEstState}
                                         />
                                         {!this.props.esPxModal && (
                                             <ZBarraComandosContainer
-                                                zComandosList={zFormaTablaI.btns}
+                                                zComandosList={zFormaTablaI.btnsState}
                                             />
                                         )}
                                         <ZRegionContainer
                                             zFormaTabla={zFormaTablaI}
                                             zRegionIndex={index}
-                                            px={this.props.zPantex.numPx}
+                                            px={this.props.zPantex.id}
                                         />
                                         <ZBarraComandosContainer
-                                            zComandosList={zFormaTablaI.btns}
+                                            zComandosList={zFormaTablaI.btnsState}
                                         />
                                     </Panel>
                                 </div>
@@ -117,5 +106,9 @@ export class ZPantex extends React.Component<OwnProps & ConnectedState & Connect
                 </Modal>
             </div>
         );
+    }
+    
+    shouldComponentUpdate(nextProps: ConnectedState, nextState: any) {
+        return this.props.zPantex.id == this.props.pxAlTope;
     }
 }

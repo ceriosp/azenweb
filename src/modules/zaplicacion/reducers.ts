@@ -34,11 +34,10 @@ export namespace Reducers {
     export const zaplicacionReducer = (state: ZAplicationState = {} as ZAplicationState, action: any): ZAplicationState => {
 
         switch (action.type) {
-            case ZMenu.ActionTypes.DESPACHAR_OPCION_MENU:
+            case ZMenu.ActionTypes.DESPACHAR_OPCION_MENU:                
                 return {
                     ...state,
-                    mostrandoVentanaModal: false,
-                    recursosViewModel: ZRecursos.Reducers.recursosViewModel.recursosViewModel(state.recursosViewModel, action)
+                    mostrandoVentanaModal: false                    
                 };
         }
 

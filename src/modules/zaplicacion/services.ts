@@ -86,15 +86,9 @@ export namespace Services {
 
         export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
-                try {
-                    parseDataEventoToJSON(zColaEventos.eventos[i]);
-                    for (let j = 0; j < responderArray.length; j++) {
-                        responderArray[j](zColaEventos.eventos[i], dispatch, getState);
-                    }
-                }
-                catch (e) {
-                    console.error(`zaplicacion/services/Services/Responder: procesando evento ${ZCommon.Constants.ComandoEnum[zColaEventos.eventos[i].dato.cmd]} - ${JSON.stringify(zColaEventos.eventos[i])}`);
-                    console.error(e.message);
+                parseDataEventoToJSON(zColaEventos.eventos[i]);
+                for (let j = 0; j < responderArray.length; j++) {
+                    responderArray[j](zColaEventos.eventos[i], dispatch, getState);
                 }
             }
         }

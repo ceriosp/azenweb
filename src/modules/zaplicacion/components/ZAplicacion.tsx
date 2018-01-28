@@ -19,7 +19,7 @@ import {
     IZMenuItem,
     IZMenu
 } from '../../zcommon/contracts';
-import { IZPantex, IZFormaTabla, IZPantexModule } from "../../zcommon";
+import { IZPantex, IZFormaTabla, IZPantexModule, ZPantexState, IZPantexState } from "../../zcommon";
 import { ZPantexContainer } from "../../zpantex/containers/ZPantexContainer";
 import { LanzarVisorReporteContainer } from "../../zrpt/containers/LanzarVisorReporteContainer";
 
@@ -28,28 +28,28 @@ export interface OwnProps {
 }
 
 export interface ConnectedState {
-    zPantexModule: IZPantexModule;
+    pilaZPantexState: Array<ZPantexState>;
+    pxAlTope: number;
 }
 
 export interface ConnectedDispatch {
 
 }
 
-export class ZAplicacion extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
+export class ZAplicacion extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    private divZAplicacion: HTMLDivElement;
+    private zAplicacionDivElement: HTMLDivElement;
 
     render(): any {
+        console.log("render zaplicacion");
         return (
-            <div ref={(div: HTMLDivElement) => {
-                this.divZAplicacion = div;
-            }}>
-                {this.props.zPantexModule.pilaPantex.map((zPantexI: IZPantex, index: number) => {
+            <div ref={(div: HTMLDivElement) => { this.zAplicacionDivElement = div; }}>
+                {this.props.pilaZPantexState.map((zPantexI: IZPantexState, index: number) => {
                     return (
                         <ZPantexContainer
                             key={index}
                             zPantex={zPantexI}
-                            container={this.divZAplicacion}
+                            container={this.zAplicacionDivElement}
                         />
                     );
                 })}

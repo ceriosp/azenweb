@@ -4,29 +4,28 @@ import {
     CSSProperties
 } from 'react';
 
-import { IZFormaTabla } from '../../zcommon/contracts';
+import { IZFormaTabla, IZFormaTablaState } from '../../zcommon/contracts';
 import { Services as ZCommonServices } from "../../zcommon/services";
 import { ZFormaTablaContainer } from "../containers/ZFormaTablaContainer";
 import { Constants } from "../constants";
 
 export interface OwnProps {
-    zFormaTabla: IZFormaTabla;
+    zFormaTabla: IZFormaTablaState;
     zRegionIndex: number;
     px: number;
-}
-
-export interface ConnectedState {
-    pxAlTope: number;
 }
 
 export interface ConnectedDispatch {
 }
 
-export class ZRegion extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
+export interface ConnectedState {
+}
+
+export class ZRegion extends React.PureComponent<OwnProps & ConnectedDispatch, undefined>
 {
     private commonServices: ZCommonServices.ZCommonServices;;
 
-    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
+    constructor(props: OwnProps & ConnectedDispatch) {
         super(props);
 
         this.commonServices = new ZCommonServices.ZCommonServices();
@@ -35,9 +34,7 @@ export class ZRegion extends React.Component<OwnProps & ConnectedState & Connect
     render(): any {
         const { zFormaTabla } = this.props;
         return (
-            <div
-                id={this.commonServices.getZRegionId(this.props.pxAlTope, this.props.zRegionIndex, false)}
-            >
+            <div>
                 <ZFormaTablaContainer
                     zFormaTabla={zFormaTabla}
                     zFormaIndex={this.props.zRegionIndex}

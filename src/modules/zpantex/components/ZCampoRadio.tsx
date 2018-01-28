@@ -5,11 +5,11 @@ import {
 } from 'react-bootstrap';
 
 import {
-    ZCampoModel, IZCampo
+    ZCampoModel, IZCampo, IZCampoState
 } from "../../zcommon";
 
 export interface OwnProps {
-    zCampoModel: IZCampo;
+    zCampoModel: IZCampoState;
 }
 
 export interface ConnectedState {
@@ -37,7 +37,7 @@ export class ZCampoRadio extends React.PureComponent<OwnProps & ConnectedState &
             <Radio
                 inline
                 name={zCampoModel.nomCmp}
-                value={zCampoModel.lon}
+                value={zCampoModel.lon}                
                 onClick={this.sincronizarCampo}
             >
                 {zCampoModel.etq.replace("( )", "")}

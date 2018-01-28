@@ -17,7 +17,19 @@ export namespace ZftResponder {
             case ZCommon.Constants.ComandoEnum.CM_PXCREARMENSAJE:
             case ZCommon.Constants.ComandoEnum.CM_PXCREAR:
                 const zPantex = zEvento.dato.buffer.dato as IZPantex;
-                dispatch(ZPantex.Actions.ZPantexModule.ponerAlTope(zPantex));
+                dispatch(ZPantex.Actions.ZPantexModule.pxCrear(zPantex));
+                break;
+
+            case ZCommon.Constants.ComandoEnum.CM_PXARRIVAR:
+
+                const pxArrivarBuffer = zEvento.dato.buffer.dato as CM.IPxArrivar;
+
+                const pxArrivarParams = {
+                    px:pxArrivarBuffer.px
+                } as CM.IPxArrivar;
+
+                dispatch(ZPantex.Actions.ZPantexModule.pxArrivar(pxArrivarParams));
+
                 break;
 
             case ZCommon.Constants.ComandoEnum.CM_PONERMODAL:
@@ -35,7 +47,7 @@ export namespace ZftResponder {
                     dispatch(ZPantex.Actions.ZPantexModule.setEsPxModal(false));
                 }
                 break;
-
+/*
             case ZCommon.Constants.ComandoEnum.CM_CONSULTAR:
                 const consultar = zEvento.dato.buffer.dato as CM.IConsultar;
                 changeZPantexTitle(consultar.px, consultar.vc);
@@ -53,29 +65,16 @@ export namespace ZftResponder {
                 changeZPantexTitle(modificar.px, modificar.vc);
                 setZFormaTablaState(false, modificar.px, dispatch, getState);
                 break;
-
+*/
             case ZCommon.Constants.ComandoEnum.CM_PXDESTRUIR:
                 const pxDestruir = zEvento.dato.buffer.dato as CM.IPxDestruir;
                 dispatch(ZPantex.Actions.ZPantexModule.pxDestruir(pxDestruir));
-                break;
-
-            case ZCommon.Constants.ComandoEnum.CM_PXARRIVAR:
-
-                const pxArrivarBuffer = zEvento.dato.buffer.dato as CM.IPxArrivar;
-
-                const zPantexArrivar = {
-                    numPx: pxArrivarBuffer.px,
-                    zFormaTablaList: null
-                } as IZPantex;
-
-                dispatch(ZPantex.Actions.ZPantexModule.ponerAlTope(zPantexArrivar));
-
                 break;
         }
     }
 
     const changeZPantexTitle = (px: number, vc: string) => {
-        
+
         if (commonServices == null) {
             commonServices = new ZCommonServices.ZCommonServices();
         }
@@ -85,7 +84,7 @@ export namespace ZftResponder {
     }
 
     const setZFormaTablaState = (setReadOnly: boolean, px: number, dispatch: (p: any) => any, getState: () => IZAplState) => {
-        
+
         let zFormaTablaCount = getState().zPantexModule.pilaPantex[0].zFormaTablaList.length;
         let form: any;
         let arrayInput: any;

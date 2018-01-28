@@ -2,15 +2,16 @@ import * as React from 'react';
 
 import {
     Col,
-    Checkbox
+    Checkbox,
+    FormGroup
 } from 'react-bootstrap';
 
 import {
-    ZCampoModel, IZCampo
+    ZCampoModel, IZCampo, IZCampoState
 } from "../../zcommon";
 
 export interface OwnProps {
-    zCampoModel: IZCampo;
+    zCampoModel: IZCampoState;
 }
 
 export interface ConnectedState {
@@ -22,8 +23,6 @@ export interface ConnectedDispatch {
 
 export class ZCampoCheckbox extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    private buffer: string;
-
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
@@ -35,18 +34,20 @@ export class ZCampoCheckbox extends React.PureComponent<OwnProps & ConnectedStat
         const { zCampoModel } = this.props;
 
         return (
-            <Checkbox
-                name={zCampoModel.nomCmp}
-                value={zCampoModel.lon}
-                onChange={this.sincronizarCampo}
-            >
-                {zCampoModel.etq.replace("[ ]", "")}
-            </Checkbox>
+            <FormGroup>
+                <Checkbox
+                    name={zCampoModel.nomCmp}
+                    value={zCampoModel.lon}
+                    onChange={this.sincronizarCampo}
+                >
+                    {zCampoModel.etq.replace("[ ]", "")}
+                </Checkbox>
+            </FormGroup>
         );
     }
 
     sincronizarCampo(e: any) {
-        this.buffer = `<nc>${this.props.zCampoModel.nomCmp}</nc><vc>${e.target.checked ? "X" : " "}</vc><pb>${this.props.zCampoModel.lon}</pb>`;
-        this.props.sincronizarCampo(this.buffer);
+        let buffer = `<nc>${this.props.zCampoModel.nomCmp}</nc><vc>${e.target.checked ? "X" : " "}</vc><pb>${this.props.zCampoModel.lon}</pb>`;
+        this.props.sincronizarCampo(buffer);
     }
 }
