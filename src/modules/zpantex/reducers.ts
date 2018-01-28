@@ -162,7 +162,7 @@ export namespace Reducers {
                         ponerModal: action.ponerModal
                     } as IZPantexStateModule, state);
 
-                case ActionTypes.ZPantexStateModule.CM_PXARRIVAR:                   
+                case ActionTypes.ZPantexStateModule.CM_PXARRIVAR:
                     let indicePxArrivar = state.pilaPx.indexOf(parseInt(action.pxArrivarParams.px.toString()));
                     //Es diferente del último en la pila, se debe reacomodar
                     if (indicePxArrivar != -1 &&
@@ -172,6 +172,18 @@ export namespace Reducers {
                             pxAlTope: action.pxArrivarParams.px
                         } as IZPantexStateModule, state);
                     }
+                    break;
+
+                case ActionTypes.ZPantexStateModule.CM_PXDESTRUIR:
+                    let indicePxDestruir = state.pilaPx.indexOf(parseInt(action.pxDestruirParams.px.toString()));
+                    if (indicePxDestruir != -1) {
+                        return u({
+                            pilaPx: state.pilaPx.slice(0, indicePxDestruir).concat(state.pilaPx.slice(indicePxDestruir + 1)),
+                            pxAlTope: state.pilaPx.length > 1 ? state.pilaPx[state.pilaPx.length - 2] : -1
+                        } as IZPantexStateModule, state);                        
+                    }
+                    break;
+
             }
 
             return state;

@@ -28,7 +28,7 @@ export namespace ZftResponder {
                     px:pxArrivarBuffer.px
                 } as CM.IPxArrivar;
 
-                dispatch(ZPantex.Actions.ZPantexStateModule.pxArrivar(pxArrivarParams));
+                dispatch(ZPantex.Actions.ZPantexStateModule.cmPxArrivar(pxArrivarParams));
 
                 break;
 
@@ -68,7 +68,7 @@ export namespace ZftResponder {
 */
             case ZCommon.Constants.ComandoEnum.CM_PXDESTRUIR:
                 const pxDestruir = zEvento.dato.buffer.dato as CM.IPxDestruir;
-                dispatch(ZPantex.Actions.ZPantexStateModule.pxDestruir(pxDestruir));
+                dispatch(ZPantex.Actions.ZPantexStateModule.cmPxDestruir(pxDestruir));
                 break;
         }
     }

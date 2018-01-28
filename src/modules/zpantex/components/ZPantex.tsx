@@ -73,7 +73,7 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                         {this.props.zPantex.zFormaTablaListState.map((zFormaTablaI: IZFormaTablaState, index: number) => {
                             return (
                                 <div
-                                    key={index}
+                                    key={zFormaTablaI.id}
                                 >
                                     <Panel
                                         header={titulo}
@@ -108,7 +108,9 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
         );
     }
     
-    shouldComponentUpdate(nextProps: ConnectedState, nextState: any) {
+    /*
+    shouldComponentUpdate(nextProps: ConnectedState, nextState: any) {        
         return this.props.zPantex.id == this.props.pxAlTope;
     }
+    */
 }

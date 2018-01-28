@@ -40,15 +40,16 @@ export namespace ActionTypes {
 
     export namespace ZPantexStateModule {
         export namespace Types {
-            export type CM_PXCREAR = "zrecursos/CM_PXCREAR";
-            export type CM_PONERMODAL = "zrecursos/CM_PONERMODAL";
-            export type CM_PXARRIVAR = "zrecursos/CM_PXARRIVAR";
-            
+            export type CM_PXCREAR = "ZPantexStateModule/CM_PXCREAR";
+            export type CM_PONERMODAL = "ZPantexStateModule/CM_PONERMODAL";
+            export type CM_PXARRIVAR = "ZPantexStateModule/CM_PXARRIVAR";
+            export type CM_PXDESTRUIR = "ZPantexStateModule/CM_PXDESTRUIR";            
         }
 
-        export const CM_PXCREAR: Types.CM_PXCREAR = "zrecursos/CM_PXCREAR";
-        export const CM_PONERMODAL: Types.CM_PONERMODAL = "zrecursos/CM_PONERMODAL";
-        export const CM_PXARRIVAR: Types.CM_PXARRIVAR = "zrecursos/CM_PXARRIVAR";
+        export const CM_PXCREAR: Types.CM_PXCREAR = "ZPantexStateModule/CM_PXCREAR";
+        export const CM_PONERMODAL: Types.CM_PONERMODAL = "ZPantexStateModule/CM_PONERMODAL";
+        export const CM_PXARRIVAR: Types.CM_PXARRIVAR = "ZPantexStateModule/CM_PXARRIVAR";
+        export const CM_PXDESTRUIR: Types.CM_PXDESTRUIR = "ZPantexStateModule/CM_PXDESTRUIR";
 
         export type Action =        
         {
@@ -67,7 +68,11 @@ export namespace ActionTypes {
         {
             type: Types.CM_PXARRIVAR,
             pxArrivarParams:CM.IPxArrivar
-        }                
+        }|
+        {
+            type: Types.CM_PXDESTRUIR,
+            pxDestruirParams:CM.IPxDestruir
+        }        
     }
 
     export namespace Types {

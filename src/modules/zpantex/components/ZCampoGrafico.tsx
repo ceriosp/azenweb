@@ -39,7 +39,7 @@ export default class ZCampoGrafico extends React.PureComponent<OwnProperties, un
             <Panel header={zCampoGrafico.etq.replace("@R", "")} bsStyle="info">
                 {zCampoGrafico.cmpsState.map((zCampoI: IZCampoState, index: number) => {
                     return (
-                        <Col key={index} xs={12} sm={4} md={4}>
+                        <Col key={zCampoI.id} xs={12} sm={4} md={4}>
                             <ZCampo                                
                                 zCampo={zCampoI}                                
                                 zFormaTabla={zFormaTabla}

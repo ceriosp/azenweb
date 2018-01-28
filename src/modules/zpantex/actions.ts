@@ -219,7 +219,7 @@ export namespace Actions {
             ponerModal
         });
         
-        export const pxArrivar = (pxArrivarParams: CM.IPxArrivar): ActionTypes.ZPantexStateModule.Action => ({
+        export const cmPxArrivar = (pxArrivarParams: CM.IPxArrivar): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.CM_PXARRIVAR,
             pxArrivarParams,
         });
@@ -229,6 +229,11 @@ export namespace Actions {
             esPxModal
         });
 
+        export const cmPxDestruir = (pxDestruirParams: CM.IPxDestruir): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.CM_PXDESTRUIR,
+            pxDestruirParams,
+        });
+        
         export const pxDestruir = (pxDestruirParams: CM.IPxDestruir): ActionTypes.ZPantexModule.Action => ({
             type: ActionTypes.ZPantexModule.PX_DESTRUIR,
             pxDestruirParams

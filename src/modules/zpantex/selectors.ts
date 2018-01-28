@@ -165,9 +165,11 @@ export namespace Selectors {
 
             let pilaZPantexState = new Array<IZPantexState>();
 
+            /*
             if (getZPantexStateMap.allIds.length != getPilaPx.length) {
                 return pilaZPantexState;
             }
+            */
 
             //zpantex
             for (let i = 0; i < getPilaPx.length; i++) {

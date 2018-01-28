@@ -64,7 +64,7 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
                     {this.props.zFormaTabla.cmpsState.map((zcampoAPintar: IZCampoState, index: number) => {
                         return (
                             <Col
-                                key={index}
+                                key={zcampoAPintar.id}
                                 md={4}
                             >
                                 <ZCampo
