@@ -20,7 +20,7 @@ import * as ZAplicacion from '../../zaplicacion';
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     zMenu:appState.zMenuModule.zmenu,
     nomApl: appState.nomApl,
-    exPxModal: appState.zPantexModule.esPxModal,
+    ponerModal: appState.zPantexStateModule.ponerModal,
 
     estaProcesandoRequestServidor:appState.estaProcesandoRequestServidor,
     tipoAJAXIndicador:appState.tipoAJAXIndicador,

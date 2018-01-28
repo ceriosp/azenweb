@@ -17,7 +17,7 @@ import {
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     pxAlTope: appState.zPantexStateModule.pxAlTope,
-    esPxModal: appState.zPantexModule.esPxModal
+    ponerModal: appState.zPantexStateModule.ponerModal
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({

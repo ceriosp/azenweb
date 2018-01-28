@@ -49,7 +49,6 @@ export namespace Reducers {
         const zPantexModule = {
             pilaPantex: [],
             pxAlTope: -1,
-            esPxModal: false,
         } as IZPantexModule;
 
         export const impl = (state: IZPantexModule = zPantexModule, action: ActionTypes.ZPantexModule.Action) => {
@@ -92,11 +91,6 @@ export namespace Reducers {
                     }
                     break;
 
-                case ActionTypes.ZPantexModule.SET_ESPXMODAL:
-                    return u({
-                        esPxModal: action.esPxModal
-                    } as IZPantexModule, state);
-
                 case ActionTypes.ZPantexModule.PX_DESTRUIR: {
                     const pilaPantex = state.pilaPantex;
 
@@ -122,229 +116,10 @@ export namespace Reducers {
     }
 
     export namespace ZPantexStateModule {
-
-        namespace ZPantexState {
-
-            const byId = (state: EntityMap<IZPantexState> = new EntityMap<IZPantexState>(), action: ActionTypes.ZPantexState.Action): EntityMap<IZPantexState> => {
-
-                switch (action.type) {
-
-                    case ActionTypes.ZPantexState.STORE:
-                        return UtilsServices.storeById<IZPantexState>(state, action.zPantexState);
-
-                    case ActionTypes.ZPantexState.REMOVE:
-                        return UtilsServices.removeById<IZPantexState>(state, action.id);
-
-                    case ActionTypes.ZPantexState.ADD_ZFT:
-                        return u({
-                            [action.id]: {
-                                zFormaTablaStateListIds: [...state[action.id].zFormaTablaStateListIds, action.newZftId]
-                            } as IZPantexState
-                        } as EntityMap<IZPantexState>, state);
-                }
-
-                return state;
-            }
-
-            const allIds = (state: Array<number> = new Array<number>(), action: ActionTypes.ZPantexState.Action): Array<number> => {
-
-                switch (action.type) {
-                    case ActionTypes.ZPantexState.STORE:
-                        return UtilsServices.storeByAllIds(state, action.zPantexState);
-
-                    case ActionTypes.ZPantexState.REMOVE:
-                        return UtilsServices.removeByAllIds(state, action.id);
-                }
-
-                return state;
-            }
-
-            export const impl: Reducer<EntityNormalizedObj<IZPantexState>> = combineReducers<EntityNormalizedObj<IZPantexState>>({
-                byId,
-                allIds
-            });
-        }
-
-        namespace ZFormaTablaState {
-
-            const byId = (state: EntityMap<IZFormaTablaState> = new EntityMap<IZFormaTablaState>(), action: ActionTypes.ZFormaTablaState.Action): EntityMap<IZFormaTablaState> => {
-
-                switch (action.type) {
-
-                    case ActionTypes.ZFormaTablaState.STORE:
-                        return UtilsServices.storeById<IZFormaTablaState>(state, action.zFormaTablaState);
-
-                    case ActionTypes.ZFormaTablaState.REMOVE:
-                        return UtilsServices.removeById<IZFormaTablaState>(state, action.id);
-
-                    case ActionTypes.ZFormaTablaState.SET_IDZVENTANA:
-                        return u({
-                            [action.id]: {
-                                idZVentana: action.zventanaId
-                            } as IZFormaTablaState
-                        } as EntityMap<IZFormaTablaState>, state);
-
-                    case ActionTypes.ZFormaTablaState.ADD_ZCAMPO:
-                        return u({
-                            [action.id]: {
-                                zCampoStateListIds: [...state[action.id].zCampoStateListIds, action.zcampoId]
-                            } as IZFormaTablaState
-                        } as EntityMap<IZFormaTablaState>, state);
-
-                    case ActionTypes.ZFormaTablaState.ADD_COMANDO_LINEST:
-                        return u({
-                            [action.id]: {
-                                linEstListIds: [...state[action.id].linEstListIds, action.zcomandoId]
-                            } as IZFormaTablaState
-                        } as EntityMap<IZFormaTablaState>, state);
-
-                    case ActionTypes.ZFormaTablaState.ADD_COMANDO_BTNS:
-                        return u({
-                            [action.id]: {
-                                btnsListIds: [...state[action.id].btnsListIds, action.zcomandoId]
-                            } as IZFormaTablaState
-                        } as EntityMap<IZFormaTablaState>, state);
-
-                }
-
-                return state;
-            }
-
-            const allIds = (state: Array<number> = new Array<number>(), action: ActionTypes.ZFormaTablaState.Action): Array<number> => {
-
-                switch (action.type) {
-                    case ActionTypes.ZFormaTablaState.STORE:
-                        return UtilsServices.storeByAllIds(state, action.zFormaTablaState);
-
-                    case ActionTypes.ZFormaTablaState.REMOVE:
-                        return UtilsServices.removeByAllIds(state, action.id);
-                }
-
-                return state;
-            }
-
-            export const impl: Reducer<EntityNormalizedObj<IZFormaTablaState>> = combineReducers<EntityNormalizedObj<IZFormaTablaState>>({
-                byId,
-                allIds
-            });
-        }
-
-        namespace ZCampoState {
-            const byId = (state: EntityMap<IZCampoState> = new EntityMap<IZCampoState>(), action: ActionTypes.ZCampoState.Action): EntityMap<IZCampoState> => {
-
-                switch (action.type) {
-
-                    case ActionTypes.ZCampoState.STORE:
-                        return UtilsServices.storeById<IZCampoState>(state, action.zCampoState);
-
-                    case ActionTypes.ZCampoState.REMOVE:
-                        return UtilsServices.removeById<IZCampoState>(state, action.id);
-
-                }
-
-                return state;
-            }
-
-            const allIds = (state: Array<number> = new Array<number>(), action: ActionTypes.ZCampoState.Action): Array<number> => {
-
-                switch (action.type) {
-                    case ActionTypes.ZCampoState.STORE:
-                        return UtilsServices.storeByAllIds(state, action.zCampoState);
-
-                    case ActionTypes.ZCampoState.REMOVE:
-                        return UtilsServices.removeByAllIds(state, action.id);
-                }
-
-                return state;
-            }
-
-            export const impl: Reducer<EntityNormalizedObj<IZCampoState>> = combineReducers<EntityNormalizedObj<IZCampoState>>({
-                byId,
-                allIds
-            });
-        }
-
-        namespace ZComandoFormaState {
-            const byId = (state: EntityMap<IZComandoFormaState> = new EntityMap<IZComandoFormaState>(), action: ActionTypes.ZComandoFormaState.Action): EntityMap<IZComandoFormaState> => {
-
-                switch (action.type) {
-
-                    case ActionTypes.ZComandoFormaState.STORE:
-                        return UtilsServices.storeById<IZComandoFormaState>(state, action.zComandoFormaState);
-
-                    case ActionTypes.ZComandoFormaState.REMOVE:
-                        return UtilsServices.removeById<IZComandoFormaState>(state, action.id);
-
-                }
-
-                return state;
-            }
-
-            const allIds = (state: Array<number> = new Array<number>(), action: ActionTypes.ZComandoFormaState.Action): Array<number> => {
-
-                switch (action.type) {
-                    case ActionTypes.ZComandoFormaState.STORE:
-                        return UtilsServices.storeByAllIds(state, action.zComandoFormaState);
-
-                    case ActionTypes.ZComandoFormaState.REMOVE:
-                        return UtilsServices.removeByAllIds(state, action.id);
-                }
-
-                return state;
-            }
-
-            export const impl: Reducer<EntityNormalizedObj<IZComandoFormaState>> = combineReducers<EntityNormalizedObj<IZComandoFormaState>>({
-                byId,
-                allIds
-            });
-        }
-
-        namespace ZVentanaState {
-            const byId = (state: EntityMap<IZVentanaState> = new EntityMap<IZVentanaState>(), action: ActionTypes.ZVentanaState.Action): EntityMap<IZVentanaState> => {
-
-                switch (action.type) {
-
-                    case ActionTypes.ZVentanaState.STORE:
-                        return UtilsServices.storeById<IZVentanaState>(state, action.zVentanaState);
-
-                    case ActionTypes.ZVentanaState.REMOVE:
-                        return UtilsServices.removeById<IZVentanaState>(state, action.id);
-
-                }
-
-                return state;
-            }
-
-            const allIds = (state: Array<number> = new Array<number>(), action: ActionTypes.ZVentanaState.Action): Array<number> => {
-
-                switch (action.type) {
-                    case ActionTypes.ZVentanaState.STORE:
-                        return UtilsServices.storeByAllIds(state, action.zVentanaState);
-
-                    case ActionTypes.ZVentanaState.REMOVE:
-                        return UtilsServices.removeByAllIds(state, action.id);
-                }
-
-                return state;
-            }
-
-            export const impl: Reducer<EntityNormalizedObj<IZVentanaState>> = combineReducers<EntityNormalizedObj<IZVentanaState>>({
-                byId,
-                allIds
-            });
-        }
-
-        export const implOld: Reducer<IZPantexStateModule> = combineReducers<IZPantexStateModule>({
-            pilaPantexState: ZPantexState.impl,
-            zFormaTablaState: ZFormaTablaState.impl,
-            zCampoState: ZCampoState.impl,
-            zComandoFormaState: ZComandoFormaState.impl,
-            zVentanaState: ZVentanaState.impl
-        });
-
         const zPantexStateModuleInicial = {
-            pilaPx:[],
-            pxAlTope:-1,
+            pilaPx: [],
+            pxAlTope: -1,
+            ponerModal: false,
             pilaPantexState: new EntityNormalizedObj(),
             zFormaTablaState: new EntityNormalizedObj(),
             zVentanaState: new EntityNormalizedObj(),
@@ -358,8 +133,8 @@ export namespace Reducers {
 
                 case ActionTypes.ZPantexStateModule.CM_PXCREAR:
                     return {
-                        pilaPx:[...state.pilaPx, action.px],
-                        pxAlTope:action.px,
+                        pilaPx: [...state.pilaPx, action.px],
+                        pxAlTope: action.px,
                         pilaPantexState: {
                             byId: { ...state.pilaPantexState.byId, ...action.pilaPantexState.byId },
                             allIds: [...state.pilaPantexState.allIds, ...action.pilaPantexState.allIds],
@@ -371,21 +146,25 @@ export namespace Reducers {
                         zVentanaState: {
                             byId: { ...state.zVentanaState.byId, ...action.zVentanaState.byId },
                             allIds: [...state.zVentanaState.allIds, ...action.zVentanaState.allIds],
-                        },                        
+                        },
                         zCampoState: {
                             byId: { ...state.zCampoState.byId, ...action.zCampoState.byId },
                             allIds: [...state.zCampoState.allIds, ...action.zCampoState.allIds],
-                        },                                           
+                        },
                         zComandoFormaState: {
                             byId: { ...state.zComandoFormaState.byId, ...action.zComandoFormaState.byId },
                             allIds: [...state.zComandoFormaState.allIds, ...action.zComandoFormaState.allIds],
-                        },                                                             
+                        },
                     } as IZPantexStateModule;
+
+                case ActionTypes.ZPantexStateModule.CM_PONERMODAL:
+                    return u({
+                        ponerModal:action.ponerModal
+                    } as IZPantexStateModule, state);
             }
 
             return state;
         }
-
     }
 
 

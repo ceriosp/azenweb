@@ -35,7 +35,7 @@ export interface OwnProps {
 export interface ConnectedState {
     zMenu: IZMenu;
     nomApl: string;
-    exPxModal: boolean;
+    ponerModal: boolean;
     estaProcesandoRequestServidor:boolean;
     tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum
 }
@@ -62,7 +62,7 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
             <Navbar
                 collapseOnSelect
                 staticTop
-                style={this.props.exPxModal || 
+                style={this.props.ponerModal || 
                     (this.props.tipoAJAXIndicador == ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL && this.props.estaProcesandoRequestServidor)
                     ? null 
                     : { zIndex: 1000000 }}>

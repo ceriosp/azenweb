@@ -17,7 +17,7 @@ export namespace ZftResponder {
             case ZCommon.Constants.ComandoEnum.CM_PXCREARMENSAJE:
             case ZCommon.Constants.ComandoEnum.CM_PXCREAR:
                 const zPantex = zEvento.dato.buffer.dato as IZPantex;
-                dispatch(ZPantex.Actions.ZPantexModule.pxCrear(zPantex));
+                dispatch(ZPantex.Actions.ZPantexStateModule.pxCrear(zPantex));
                 break;
 
             case ZCommon.Constants.ComandoEnum.CM_PXARRIVAR:
@@ -28,23 +28,23 @@ export namespace ZftResponder {
                     px:pxArrivarBuffer.px
                 } as CM.IPxArrivar;
 
-                dispatch(ZPantex.Actions.ZPantexModule.pxArrivar(pxArrivarParams));
+                dispatch(ZPantex.Actions.ZPantexStateModule.pxArrivar(pxArrivarParams));
 
                 break;
 
             case ZCommon.Constants.ComandoEnum.CM_PONERMODAL:
                 const ponerModal = zEvento.dato.buffer.dato as CM.IPonerModal;
 
-                if (ponerModal.px == getState().zPantexModule.pxAlTope) {
-                    dispatch(ZPantex.Actions.ZPantexModule.setEsPxModal(true));
+                if (ponerModal.px == getState().zPantexStateModule.pxAlTope) {
+                    dispatch(ZPantex.Actions.ZPantexStateModule.ponerModal(true));
                 }
                 break;
 
             case ZCommon.Constants.ComandoEnum.CM_QUITARMODAL:
                 const quitarModal = zEvento.dato.buffer.dato as CM.IQuitarModal;
 
-                if (quitarModal.px == getState().zPantexModule.pxAlTope) {
-                    dispatch(ZPantex.Actions.ZPantexModule.setEsPxModal(false));
+                if (quitarModal.px == getState().zPantexStateModule.pxAlTope) {
+                    dispatch(ZPantex.Actions.ZPantexStateModule.ponerModal(false));
                 }
                 break;
 /*
@@ -68,7 +68,7 @@ export namespace ZftResponder {
 */
             case ZCommon.Constants.ComandoEnum.CM_PXDESTRUIR:
                 const pxDestruir = zEvento.dato.buffer.dato as CM.IPxDestruir;
-                dispatch(ZPantex.Actions.ZPantexModule.pxDestruir(pxDestruir));
+                dispatch(ZPantex.Actions.ZPantexStateModule.pxDestruir(pxDestruir));
                 break;
         }
     }

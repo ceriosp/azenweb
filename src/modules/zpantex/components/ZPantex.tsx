@@ -29,7 +29,7 @@ export interface OwnProps {
 
 export interface ConnectedState {
     pxAlTope: number;
-    esPxModal: boolean;
+    ponerModal: boolean;
 }
 
 export interface ConnectedDispatch {
@@ -85,7 +85,7 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                         <ZLineaEstadoContainer
                                             linEst={zFormaTablaI.linEstState}
                                         />
-                                        {!this.props.esPxModal && (
+                                        {!this.props.ponerModal && (
                                             <ZBarraComandosContainer
                                                 zComandosList={zFormaTablaI.btnsState}
                                             />

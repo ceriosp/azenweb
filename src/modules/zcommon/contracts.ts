@@ -605,8 +605,7 @@ export interface IZPantexModule {
 
     azenURL: string;
 
-    pxAlTope: number;
-    esPxModal: boolean;
+    pxAlTope: number;    
     iconosBotonesList: Array<ZIconoBoton>;
 }
 
@@ -614,6 +613,7 @@ export interface IZPantexStateModule {
     
     pilaPx: Array<number>;
     pxAlTope:number;
+    ponerModal:boolean;
 
     pilaPantexState: EntityNormalizedObj<IZPantexState>;
     zFormaTablaState: EntityNormalizedObj<IZFormaTablaState>;

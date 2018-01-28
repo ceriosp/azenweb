@@ -51,11 +51,9 @@ export namespace DTO {
 
 export namespace Actions {
 
-    export namespace ZPantexModule {
+    export namespace ZPantexStateModule {
 
         export const pxCrear = (zPantex: IZPantex) => (dispatch: any, getStateFn: () => IZAplState) => {
-
-            //dispatch(lanzarPxCrear(zPantex));
 
             let zFormaTablaState: EntityNormalizedObj<ZFormaTablaState> = new EntityNormalizedObj();
             let zVentanaState: EntityNormalizedObj<IZVentanaState> = new EntityNormalizedObj();
@@ -80,11 +78,6 @@ export namespace Actions {
                 zVentanaState,
                 zCampoState,
                 zComandoFormaState));
-            /*            
-            let zPantexState = new ZPantexStateModel(zPantex.numPx);
-            dispatch(ZPantexStateModule.ZPantexState.adicionar(zPantexState));
-            dispatch(ZPantexStateModule.ZPantexState.agregarZfts(zPantex));
-            */
         }
 
         const agregarZFormaTablasState = (getStateFn: () => IZAplState,
@@ -221,11 +214,11 @@ export namespace Actions {
             zComandoFormaState
         });
 
-        const lanzarPxCrear = (zPantex: IZPantex): ActionTypes.ZPantexModule.Action => ({
-            type: ActionTypes.ZPantexModule.CM_PXCREAR,
-            zPantex,
+        export const ponerModal = (ponerModal: boolean): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.CM_PONERMODAL,
+            ponerModal
         });
-
+        
         export const pxArrivar = (pxArrivar: CM.IPxArrivar): ActionTypes.ZPantexModule.Action => ({
             type: ActionTypes.ZPantexModule.CM_PXARRIVAR,
             pxArrivar,
@@ -240,256 +233,6 @@ export namespace Actions {
             type: ActionTypes.ZPantexModule.PX_DESTRUIR,
             pxDestruirParams
         });
-    }
-
-
-    export namespace ZPantexStateModule {
-
-        export namespace ZPantexState {
-
-            export const adicionar = (zPantextState: IZPantexState) => (dispatch: any, getStateNotTyped: () => IZAplState): Promise<ResultadoActionConDato<IZPantexState>> =>
-                new Promise<ResultadoActionConDato<IZPantexState>>((resolve, reject) => {
-
-                    let actionResultReturn = new ResultadoActionConDato<IZPantexState>();
-
-                    dispatch(store(zPantextState));
-
-                    actionResultReturn.resultado = ZUtilsConstants.ResultadoAccionEnum.EXITO;
-                    actionResultReturn.retorno = zPantextState;
-                    resolve(actionResultReturn);
-                });
-
-            const store = (zPantexState: IZPantexState): ActionTypes.ZPantexState.Action => ({
-                type: ActionTypes.ZPantexState.STORE,
-                zPantexState
-            });
-
-            export const remove = (id: number): ActionTypes.ZPantexState.Action => ({
-                type: ActionTypes.ZPantexState.REMOVE,
-                id
-            });
-
-            export const addZft = (id: number, newZftId: number): ActionTypes.ZPantexState.Action => ({
-                type: ActionTypes.ZPantexState.ADD_ZFT,
-                id,
-                newZftId
-            });
-
-            export const agregarZfts = (zPantex: IZPantex) => (dispatch: any, getState: () => IZAplState) => {
-                if (zPantex.zFormaTablaList) {
-                    for (let i = 0; i < zPantex.zFormaTablaList.length; i++) {
-                        let zFormaTablaState = new ZFormaTablaStateModel(1);
-                        dispatch(ZPantexStateModule.ZFormaTablaState.adicionar(zPantex.zFormaTablaList[i], zFormaTablaState)).then(
-                            (actionResult: ResultadoActionConDato<IZFormaTablaState>) => {
-                                dispatch(ZPantexStateModule.ZPantexState.addZft(zPantex.numPx, actionResult.retorno.id));
-                            }
-                        );
-                    }
-                }
-            }
-        }
-
-        export namespace ZFormaTablaState {
-
-            export const adicionar = (zFormaTabla: IZFormaTabla, zFormaTablaState: IZFormaTablaState) => (dispatch: any, getStateNotTyped: () => IZAplState): Promise<ResultadoActionConDato<IZFormaTablaState>> =>
-                new Promise<ResultadoActionConDato<IZFormaTablaState>>((resolve, reject) => {
-
-                    let actionResultReturn = new ResultadoActionConDato<IZFormaTablaState>();
-
-                    if (!Selectors.ZPantexStateModule.ZFormaTablaState.getZFormaTablaStateMap(getStateNotTyped()).byId[zFormaTablaState.id]) {
-                        zFormaTablaState.id = Selectors.ZPantexStateModule.ZFormaTablaState.getNextZFormaTablaStateId(getStateNotTyped());
-                    }
-
-                    dispatch(store(zFormaTablaState));
-                    dispatch(ZFormaTablaState.agregarZVentana(zFormaTabla, zFormaTablaState));
-                    dispatch(ZFormaTablaState.agregarZCampos(zFormaTabla, zFormaTablaState));
-                    dispatch(ZFormaTablaState.agregarZComandos(zFormaTabla, zFormaTablaState));
-
-                    actionResultReturn.resultado = ZUtilsConstants.ResultadoAccionEnum.EXITO;
-                    actionResultReturn.retorno = zFormaTablaState;
-                    resolve(actionResultReturn);
-                });
-
-            const store = (zFormaTablaState: IZFormaTablaState): ActionTypes.ZFormaTablaState.Action => ({
-                type: ActionTypes.ZFormaTablaState.STORE,
-                zFormaTablaState
-            });
-
-            export const remove = (id: number): ActionTypes.ZFormaTablaState.Action => ({
-                type: ActionTypes.ZFormaTablaState.REMOVE,
-                id
-            });
-
-            export const agregarZVentana = (zFormaTabla: IZFormaTabla, zFormaTablaState: IZFormaTablaState) => (dispatch: any, getState: () => IZAplState) => {
-
-                let zVentanaState = new ZVentanaStateModel(zFormaTabla.ven, 1);
-                dispatch(ZPantexStateModule.ZVentanaState.adicionar(zVentanaState)).then(
-                    (actionResultZVentana: ResultadoActionConDato<IZVentanaState>) => {
-                        dispatch(ZFormaTablaState.setIdZVentana(zFormaTablaState.id, actionResultZVentana.retorno.id));
-                    }
-                );
-            }
-
-            export const agregarZCampos = (zFormaTabla: IZFormaTabla, zFormaTablaState: IZFormaTablaState) => (dispatch: any, getState: () => IZAplState) => {
-                if (zFormaTabla.cmps) {
-                    for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                        let zCampoState = new ZCampoStateModel(zFormaTabla.cmps[i], 1);
-                        dispatch(ZPantexStateModule.ZCampoState.adicionar(zCampoState)).then(
-                            (actionResultZCampo: ResultadoActionConDato<IZCampoState>) => {
-                                dispatch(ZFormaTablaState.addZCampo(zFormaTablaState.id, actionResultZCampo.retorno.id));
-                                if (zFormaTabla.cmps[i].cmps && zFormaTabla.cmps[i].cmps.length > 0) {
-                                    for (let j = 0; j < zFormaTabla.cmps[i].cmps.length; j++) {
-                                        let zCampoHijoState = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], 1);
-                                        zCampoHijoState.parentId = actionResultZCampo.retorno.id;
-                                        dispatch(ZPantexStateModule.ZCampoState.adicionar(zCampoHijoState)).then(
-                                            (actionResultZCampoHijo: ResultadoActionConDato<IZFormaTablaState>) => {
-                                                dispatch(ZFormaTablaState.addZCampo(zFormaTablaState.id, actionResultZCampoHijo.retorno.id));
-                                            }
-                                        );
-                                    }
-                                }
-                            }
-                        );
-                    }
-                }
-            }
-
-            export const agregarZComandos = (zFormaTabla: IZFormaTabla, zFormaTablaState: IZFormaTablaState) => (dispatch: any, getState: () => IZAplState) => {
-
-                if (zFormaTabla.cmps) {
-                    for (let i = 0; i < zFormaTabla.linEst.length; i++) {
-                        let zComandoFormaState = new ZComandoFormaStateModel(zFormaTabla.linEst[i], 1);
-                        dispatch(ZPantexStateModule.ZComandoFormaState.adicionar(zComandoFormaState)).then(
-                            (actionResultZComandoForma: ResultadoActionConDato<IZComandoFormaState>) => {
-                                dispatch(ZFormaTablaState.addComandoLinEst(zFormaTablaState.id, actionResultZComandoForma.retorno.id));
-                            }
-                        );
-                    }
-
-                    for (let i = 0; i < zFormaTabla.btns.length; i++) {
-                        let zComandoFormaState = new ZComandoFormaStateModel(zFormaTabla.btns[i], 1);
-                        dispatch(ZPantexStateModule.ZComandoFormaState.adicionar(zComandoFormaState)).then(
-                            (actionResultZComandoForma: ResultadoActionConDato<IZComandoFormaState>) => {
-                                dispatch(ZFormaTablaState.addComandoBtns(zFormaTablaState.id, actionResultZComandoForma.retorno.id));
-                            }
-                        );
-                    }
-                }
-            }
-
-
-            export const setIdZVentana = (id: number, zventanaId: number): ActionTypes.ZFormaTablaState.Action => ({
-                type: ActionTypes.ZFormaTablaState.SET_IDZVENTANA,
-                id,
-                zventanaId
-            });
-
-            export const addZCampo = (id: number, zcampoId: number): ActionTypes.ZFormaTablaState.Action => ({
-                type: ActionTypes.ZFormaTablaState.ADD_ZCAMPO,
-                id,
-                zcampoId
-            });
-
-            export const addComandoLinEst = (id: number, zcomandoId: number): ActionTypes.ZFormaTablaState.Action => ({
-                type: ActionTypes.ZFormaTablaState.ADD_COMANDO_LINEST,
-                id,
-                zcomandoId
-            });
-
-            export const addComandoBtns = (id: number, zcomandoId: number): ActionTypes.ZFormaTablaState.Action => ({
-                type: ActionTypes.ZFormaTablaState.ADD_COMANDO_BTNS,
-                id,
-                zcomandoId
-            });
-
-        }
-
-        export namespace ZCampoState {
-
-            export const adicionar = (zCampoState: IZCampoState) => (dispatch: any, getStateNotTyped: () => IZAplState): Promise<ResultadoActionConDato<IZCampoState>> =>
-                new Promise<ResultadoActionConDato<IZCampoState>>((resolve, reject) => {
-
-                    let actionResultReturn = new ResultadoActionConDato<IZCampoState>();
-
-                    if (!Selectors.ZPantexStateModule.ZCampoState.getZCampoStateMap(getStateNotTyped()).byId[zCampoState.id]) {
-                        zCampoState.id = Selectors.ZPantexStateModule.ZCampoState.getNextZCampoStateId(getStateNotTyped());
-                    }
-
-                    dispatch(store(zCampoState));
-
-                    actionResultReturn.resultado = ZUtilsConstants.ResultadoAccionEnum.EXITO;
-                    actionResultReturn.retorno = zCampoState;
-                    resolve(actionResultReturn);
-                });
-
-            const store = (zCampoState: IZCampoState): ActionTypes.ZCampoState.Action => ({
-                type: ActionTypes.ZCampoState.STORE,
-                zCampoState
-            });
-
-            export const remove = (id: number): ActionTypes.ZCampoState.Action => ({
-                type: ActionTypes.ZCampoState.REMOVE,
-                id
-            });
-        }
-
-        export namespace ZComandoFormaState {
-
-            export const adicionar = (zComandoFormaState: IZComandoFormaState) => (dispatch: any, getStateNotTyped: () => IZAplState): Promise<ResultadoActionConDato<IZComandoFormaState>> =>
-                new Promise<ResultadoActionConDato<IZComandoFormaState>>((resolve, reject) => {
-
-                    let actionResultReturn = new ResultadoActionConDato<IZComandoFormaState>();
-
-                    if (!Selectors.ZPantexStateModule.ZComandoFormaState.getZComandoFormaStateMap(getStateNotTyped()).byId[zComandoFormaState.id]) {
-                        zComandoFormaState.id = Selectors.ZPantexStateModule.ZComandoFormaState.getNextZComandoFormaStateId(getStateNotTyped());
-                    }
-
-                    dispatch(store(zComandoFormaState));
-
-                    actionResultReturn.resultado = ZUtilsConstants.ResultadoAccionEnum.EXITO;
-                    actionResultReturn.retorno = zComandoFormaState;
-                    resolve(actionResultReturn);
-                });
-
-            const store = (zComandoFormaState: IZComandoFormaState): ActionTypes.ZComandoFormaState.Action => ({
-                type: ActionTypes.ZComandoFormaState.STORE,
-                zComandoFormaState
-            });
-
-            export const remove = (id: number): ActionTypes.ZComandoFormaState.Action => ({
-                type: ActionTypes.ZComandoFormaState.REMOVE,
-                id
-            });
-        }
-
-        export namespace ZVentanaState {
-
-            export const adicionar = (zVentanaState: IZVentanaState) => (dispatch: any, getStateNotTyped: () => IZAplState): Promise<ResultadoActionConDato<IZVentanaState>> =>
-                new Promise<ResultadoActionConDato<IZVentanaState>>((resolve, reject) => {
-
-                    let actionResultReturn = new ResultadoActionConDato<IZVentanaState>();
-
-                    if (!Selectors.ZPantexStateModule.ZVentanaState.getZVentanaStateMap(getStateNotTyped()).byId[zVentanaState.id]) {
-                        zVentanaState.id = Selectors.ZPantexStateModule.ZVentanaState.getNextZVentanaStateId(getStateNotTyped());
-                    }
-
-                    dispatch(store(zVentanaState));
-
-                    actionResultReturn.resultado = ZUtilsConstants.ResultadoAccionEnum.EXITO;
-                    actionResultReturn.retorno = zVentanaState;
-                    resolve(actionResultReturn);
-                });
-
-            const store = (zVentanaState: IZVentanaState): ActionTypes.ZVentanaState.Action => ({
-                type: ActionTypes.ZVentanaState.STORE,
-                zVentanaState
-            });
-
-            export const remove = (id: number): ActionTypes.ZVentanaState.Action => ({
-                type: ActionTypes.ZVentanaState.REMOVE,
-                id
-            });
-        }
     }
 
     export const despacharOpcionMenu = (zmenuItemModel: ZMenuItemModel): ActionTypes.Action => ({
