@@ -42,11 +42,13 @@ export namespace ActionTypes {
         export namespace Types {
             export type CM_PXCREAR = "zrecursos/CM_PXCREAR";
             export type CM_PONERMODAL = "zrecursos/CM_PONERMODAL";
+            export type CM_PXARRIVAR = "zrecursos/CM_PXARRIVAR";
             
         }
 
         export const CM_PXCREAR: Types.CM_PXCREAR = "zrecursos/CM_PXCREAR";
         export const CM_PONERMODAL: Types.CM_PONERMODAL = "zrecursos/CM_PONERMODAL";
+        export const CM_PXARRIVAR: Types.CM_PXARRIVAR = "zrecursos/CM_PXARRIVAR";
 
         export type Action =        
         {
@@ -57,12 +59,15 @@ export namespace ActionTypes {
             zVentanaState: EntityNormalizedObj<IZVentanaState>,
             zCampoState: EntityNormalizedObj<IZCampoState>,
             zComandoFormaState: EntityNormalizedObj<IZComandoFormaState>
-        } 
-        |
+        }|
         {
             type: Types.CM_PONERMODAL,
             ponerModal:boolean
-        }        
+        }|
+        {
+            type: Types.CM_PXARRIVAR,
+            pxArrivarParams:CM.IPxArrivar
+        }                
     }
 
     export namespace Types {

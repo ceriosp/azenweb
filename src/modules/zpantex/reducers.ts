@@ -34,7 +34,7 @@ import {
 } from "../zpantex";
 
 import {
-    Services as UtilsServices
+    Services as ZUtilsServices
 } from "../zutils";
 
 import { ActionTypes } from './actionTypes';
@@ -159,8 +159,19 @@ export namespace Reducers {
 
                 case ActionTypes.ZPantexStateModule.CM_PONERMODAL:
                     return u({
-                        ponerModal:action.ponerModal
+                        ponerModal: action.ponerModal
                     } as IZPantexStateModule, state);
+
+                case ActionTypes.ZPantexStateModule.CM_PXARRIVAR:                   
+                    let indicePxArrivar = state.pilaPx.indexOf(parseInt(action.pxArrivarParams.px.toString()));
+                    //Es diferente del último en la pila, se debe reacomodar
+                    if (indicePxArrivar != -1 &&
+                        state.pilaPx[indicePxArrivar] != state.pilaPx[state.pilaPx.length - 1]) {
+                        return u({
+                            pilaPx: ZUtilsServices.Inmutable.intercambiarElementosArray(state.pilaPx, state.pilaPx[indicePxArrivar], state.pilaPx[state.pilaPx.length - 1]),
+                            pxAlTope: action.pxArrivarParams.px
+                        } as IZPantexStateModule, state);
+                    }
             }
 
             return state;

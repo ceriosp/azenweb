@@ -1,5 +1,5 @@
-import { 
-    EntityNormalizedObj, IdEntityBase, EntityMap 
+import {
+    EntityNormalizedObj, IdEntityBase, EntityMap
 } from "../zcommon";
 
 const u = require('updeep');
@@ -78,19 +78,21 @@ export namespace Services {
     }
 
     export const removeByAllIds = (previousIdsList: Array<number>, id: number): Array<number> => {
-        return u(u.reject((entityId:number) => entityId == id), previousIdsList);
+        return u(u.reject((entityId: number) => entityId == id), previousIdsList);
     }
 
-    export const swapByAllIds = (previousIdsList: Array<number>, firstId: number, secondId: number): Array<number> => {
+    export namespace Inmutable {
+        export const intercambiarElementosArray = (previousIdsList: Array<number>, firstId: number, secondId: number): Array<number> => {
 
-        let firstIndex = previousIdsList.indexOf(firstId);
-        let secondIndex = previousIdsList.indexOf(secondId);
+            let firstIndex = previousIdsList.indexOf(firstId);
+            let secondIndex = previousIdsList.indexOf(secondId);
 
-        const newIdsList = previousIdsList.slice();
-        const firstItem = previousIdsList[firstIndex];
-        newIdsList[firstIndex] = previousIdsList[secondIndex];
-        newIdsList[secondIndex] = firstItem;
+            const newIdsList = previousIdsList.slice();
+            const firstItem = previousIdsList[firstIndex];
+            newIdsList[firstIndex] = previousIdsList[secondIndex];
+            newIdsList[secondIndex] = firstItem;
 
-        return newIdsList;
-    }    
+            return newIdsList;
+        }
+    }
 }

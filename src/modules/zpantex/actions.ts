@@ -219,9 +219,9 @@ export namespace Actions {
             ponerModal
         });
         
-        export const pxArrivar = (pxArrivar: CM.IPxArrivar): ActionTypes.ZPantexModule.Action => ({
-            type: ActionTypes.ZPantexModule.CM_PXARRIVAR,
-            pxArrivar,
+        export const pxArrivar = (pxArrivarParams: CM.IPxArrivar): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.CM_PXARRIVAR,
+            pxArrivarParams,
         });
 
         export const setEsPxModal = (esPxModal: boolean): ActionTypes.ZPantexModule.Action => ({
