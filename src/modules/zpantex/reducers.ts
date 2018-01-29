@@ -23,6 +23,7 @@ import {
     IZCampoState,
     IZComandoFormaState,
     IZVentanaState,
+    ZCampoState,
 
 } from '../zcommon';
 
@@ -150,7 +151,7 @@ export namespace Reducers {
                         zCampoState: {
                             byId: { ...state.zCampoState.byId, ...action.zCampoState.byId },
                             allIds: [...state.zCampoState.allIds, ...action.zCampoState.allIds],
-                        },
+                        } as EntityNormalizedObj<IZCampoState>,
                         zComandoFormaState: {
                             byId: { ...state.zComandoFormaState.byId, ...action.zComandoFormaState.byId },
                             allIds: [...state.zComandoFormaState.allIds, ...action.zComandoFormaState.allIds],
@@ -180,10 +181,58 @@ export namespace Reducers {
                         return u({
                             pilaPx: state.pilaPx.slice(0, indicePxDestruir).concat(state.pilaPx.slice(indicePxDestruir + 1)),
                             pxAlTope: state.pilaPx.length > 1 ? state.pilaPx[state.pilaPx.length - 2] : -1
-                        } as IZPantexStateModule, state);                        
+                        } as IZPantexStateModule, state);
                     }
                     break;
 
+                case ActionTypes.ZPantexStateModule.CM_SINCCAMPO:
+
+                    //let zCampoStateById:EntityMap<ZCampoState> = JSON.stringify(state.zCampoState.byId);
+
+
+                    const actualizarValorCampo = (zcampoState: IZCampoState): IZCampoState => {
+                        if (zcampoState.px == action.px) {
+                            if (action.hashCampoValor.has(zcampoState.nomCmp)) {
+                                return u({
+                                    value: action.hashCampoValor.get(zcampoState.nomCmp).vc,
+                                } as IZCampoState, zcampoState);
+                            }
+                        }
+
+                        return zcampoState;
+                    }
+
+                    if (action.hashCampoValor.size > 0) {
+                        return u({
+                            zCampoState: {
+                                byId: u.map(actualizarValorCampo)
+                            } as any,
+                        } as IZPantexStateModule, state);
+                    }
+                    break;
+
+                case ActionTypes.ZPantexStateModule.ON_CAMPOCHANGE:
+                    return u({
+                        zCampoState: {
+                            byId: {
+                                [action.zcampoState.id]:{
+                                    value: action.valor,
+                                    haCambiado:true,
+                                } as IZCampoState
+                            }
+                        } as any,
+                    } as IZPantexStateModule, state);
+
+                case ActionTypes.ZPantexStateModule.SET_ZCAMPOSTATE_HACAMBIADO:
+                    return u({
+                        zCampoState: {
+                            byId: {
+                                [action.idZCampoState]:{
+                                    haCambiado:action.haCambiado,
+                                } as IZCampoState
+                            }
+                        } as any,
+                    } as IZPantexStateModule, state);                
             }
 
             return state;

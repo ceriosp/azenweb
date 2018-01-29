@@ -28,6 +28,7 @@ import {
     ZFormaTablaState,
     ZComandoFormaState,
     ZVentanaModel,
+    IZColaEventos,
 
 } from "../zcommon";
 
@@ -38,7 +39,7 @@ import {
 } from './actionTypes';
 import { ResultadoAction, ResultadoActionConDato, Constants as ZUtilsConstants } from "../zutils";
 
-import { Actions as ZAplicacionAction } from "../zaplicacion/actions";
+import { Actions as ZAplicacionActions } from "../zaplicacion/actions";
 import { Selectors } from "./selectors";
 
 export namespace DTO {
@@ -95,7 +96,7 @@ export namespace Actions {
                     agregarZVentanaState(getStateFn, zPantex.zFormaTablaList[i], zVentanaState);
 
                 zFormaTablaState.byId[id].zCampoStateListIds =
-                    agregarZCamposState(getStateFn, zPantex.zFormaTablaList[i], zCampoState);
+                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zCampoState);
 
                 zFormaTablaState.byId[id].btnsListIds =
                     agregarZComandosBtnsFormaState(getStateFn, zPantex.zFormaTablaList[i], zComandoFormaState);
@@ -127,6 +128,7 @@ export namespace Actions {
         }
 
         const agregarZCamposState = (getStateFn: () => IZAplState,
+            zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
             zCampoState: EntityNormalizedObj<IZCampoState>): Array<number> => {
 
@@ -134,7 +136,7 @@ export namespace Actions {
 
             let id = Selectors.ZPantexStateModule.ZCampoState.getNextZCampoStateId(getStateFn());
             for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id);
+                zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx);
                 zCampoState.allIds.push(id);
                 zFormaTablaCmpsIds.push(id);
                 if (zFormaTabla.cmps[i].cmps) {
@@ -142,7 +144,7 @@ export namespace Actions {
                     zCampoState.byId[id].esCampoGrafico = true;
                     for (let j = 0; j < zFormaTabla.cmps[i].cmps.length; j++) {
                         id++;
-                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id);
+                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id, zPantex.numPx);
                         zCampoState.byId[id].parentId = parentId;
                         zCampoState.allIds.push(id);
                         zFormaTablaCmpsIds.push(id);
@@ -198,7 +200,7 @@ export namespace Actions {
             return zFormaTablaLinEstIds;
         }
 
-        const cmPxCrear = (px:number,
+        const cmPxCrear = (px: number,
             pilaPantexState: EntityNormalizedObj<IZPantexState>,
             zFormaTablaState: EntityNormalizedObj<IZFormaTablaState>,
             zVentanaState: EntityNormalizedObj<IZVentanaState>,
@@ -218,12 +220,46 @@ export namespace Actions {
             type: ActionTypes.ZPantexStateModule.CM_PONERMODAL,
             ponerModal
         });
-        
+
         export const cmPxArrivar = (pxArrivarParams: CM.IPxArrivar): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.CM_PXARRIVAR,
             pxArrivarParams,
         });
 
+        export const sincCampo = (px: number, hashCampoValor: Map<string, CM.ISincCampo>) => (dispatch: any, getStateFn: () => IZAplState) => {
+            dispatch(cmSincCampo(px, hashCampoValor));
+        }
+
+        export const cmSincCampo = (px: number, hashCampoValor: Map<string, CM.ISincCampo>): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.CM_SINCCAMPO,
+            px,
+            hashCampoValor,
+        });
+
+        export const onCampoChanged = (zcampoState: IZCampoState, valor: string): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.ON_CAMPOCHANGE,
+            zcampoState,
+            valor,
+        });
+
+        export const setZCampoHaCambiado = (idZCampoState: number, haCambiado: boolean): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.SET_ZCAMPOSTATE_HACAMBIADO,
+            idZCampoState,
+            haCambiado,
+        });
+
+        export const onCampoBlur = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+            if (zcampoState.haCambiado) {
+                let buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${zcampoState.value}</vc>`;
+                dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
+                    (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
+                        dispatch(setZCampoHaCambiado(zcampoState.id, false));
+                    }
+                );
+            }
+        }
+
+        /********************* */
         export const setEsPxModal = (esPxModal: boolean): ActionTypes.ZPantexModule.Action => ({
             type: ActionTypes.ZPantexModule.SET_ESPXMODAL,
             esPxModal
@@ -233,7 +269,7 @@ export namespace Actions {
             type: ActionTypes.ZPantexStateModule.CM_PXDESTRUIR,
             pxDestruirParams,
         });
-        
+
         export const pxDestruir = (pxDestruirParams: CM.IPxDestruir): ActionTypes.ZPantexModule.Action => ({
             type: ActionTypes.ZPantexModule.PX_DESTRUIR,
             pxDestruirParams

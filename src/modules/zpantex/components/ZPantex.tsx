@@ -15,6 +15,8 @@ import {
     IZMenu
 } from '../../zcommon/contracts';
 
+import { Constants as ZCommonConstants } from "../../zcommon/constants";
+
 import { IZPantex, IZFormaTabla, IZPantexState, IZFormaTablaState } from '../../zcommon';
 import { Services as ZCommonServices } from "../../zcommon/services";
 import { ZRegionContainer } from '../containers/ZRegionContainer';
@@ -29,6 +31,7 @@ export interface OwnProps {
 
 export interface ConnectedState {
     pxAlTope: number;
+    ultimoComandoEnviado: ZCommonConstants.ComandoEnum,
     ponerModal: boolean;
 }
 
@@ -61,10 +64,10 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                 <Modal
                     onHide={null}
                     show={true}
-                    backdrop="static"                    
-                    aria-labelledby="contained-modal-title-sm"                
-                    container={this.props.container}                                      
-                >                                    
+                    backdrop="static"
+                    aria-labelledby="contained-modal-title-sm"
+                    container={this.props.container}
+                >
                     <Modal.Body
                         style={{
                             padding: "0px"
@@ -107,10 +110,10 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
             </div>
         );
     }
-    
-    /*
-    shouldComponentUpdate(nextProps: ConnectedState, nextState: any) {        
-        return this.props.zPantex.id == this.props.pxAlTope;
+
+    shouldComponentUpdate(nextProps: ConnectedState, nextState: any) {
+        return this.props.ultimoComandoEnviado == ZCommonConstants.ComandoEnum.CM_CERRAR ||
+            this.props.zPantex.id == this.props.pxAlTope;
     }
-    */
+
 }

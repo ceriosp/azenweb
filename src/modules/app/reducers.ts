@@ -34,6 +34,16 @@ export namespace Reducers {
         return state;
     }
 
+    export const ultimoComandoEnviado = (state: ZCommon.Constants.ComandoEnum = null, action: ActionTypes.Action): ZCommon.Constants.ComandoEnum => {
+
+        switch (action.type) {
+            case ActionTypes.SET_ULTIMOCOMANDOENVIADO:
+                return action.cmd
+        }
+
+        return state;
+    }
+
     export const tipoAJAXIndicador = (state: ZCommon.Constants.TipoAJAXIndicadorEnum = ZCommon.Constants.TipoAJAXIndicadorEnum.NIGUNO, action: ZComunicaciones.ActionTypes.Action): ZCommon.Constants.TipoAJAXIndicadorEnum => {
 
         switch (action.type) {
@@ -58,6 +68,7 @@ export namespace Reducers {
         idApl: idApl,
         nomApl: nomApl,
         tipoAJAXIndicador: tipoAJAXIndicador,
+        ultimoComandoEnviado:ultimoComandoEnviado,
         estaProcesandoRequestServidor: estaProcesandoRequestServidor,
         zMenuModule: ZMenu.Reducers.ZMenuModule.impl,
         zPantexModule: ZPantex.Reducers.ZPantexModule.impl,

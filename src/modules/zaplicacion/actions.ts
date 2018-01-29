@@ -47,8 +47,8 @@ export namespace Actions {
         dispatch(ZclienteResponder.responderEventoCliente(ZCommon.Constants.ComandoEnum.CM_EJECOPCION, ctx));
     }
 
-    export const despacharEventoCliente = (cmd: ZCommon.Constants.ComandoEnum, buffer: string = "") => (dispatch: (p: any) => any, getState: () => IZAplState) => {
-        dispatch(ZclienteResponder.responderEventoCliente(cmd, buffer));
+    export const despacharEventoCliente = (cmd: ZCommon.Constants.ComandoEnum, buffer: string = "") => (dispatch: (p: any) => any, getState: () => IZAplState) : Promise<ResultadoActionConDato<IZColaEventos>> => {
+        return dispatch(ZclienteResponder.responderEventoCliente(cmd, buffer));
     }
 
     export namespace ZAplState {

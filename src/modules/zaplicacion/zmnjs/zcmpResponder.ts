@@ -25,7 +25,8 @@ export namespace ZcmpResponder {
 
         switch (zEvento.dato.cmd) {
 
-            case ZCommonConstants.ComandoEnum.CM_SINCCAMPO:
+            case ZCommonConstants.ComandoEnum.CM_SINCCAMPO:    
+                console.log("responder SINC-CAMPO");            
                 //sincronizarCampo(zEvento, dispatch, getState);
                 break;
         }

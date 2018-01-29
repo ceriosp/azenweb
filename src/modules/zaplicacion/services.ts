@@ -85,11 +85,36 @@ export namespace Services {
         //#region Public methods
 
         export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
+
+            //valores de los campos de un px: <nombreCampo, valor> 
+            let hashCampoValor = new Map<string, CM.ISincCampo>();     
+            let sincCampoParametros : CM.ISincCampo;       
+            let px:number;
+
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
                 parseDataEventoToJSON(zColaEventos.eventos[i]);
+
+                if(zColaEventos.eventos[i].dato.cmd == ZCommonConstants.ComandoEnum.CM_SINCCAMPO){                                          
+                    sincCampoParametros = zColaEventos.eventos[i].dato.buffer.dato as CM.ISincCampo;
+                    if(!px){
+                        px = sincCampoParametros.px;
+                    }
+                    if(!hashCampoValor.has(sincCampoParametros.nc)){
+                        hashCampoValor.set(sincCampoParametros.nc, zColaEventos.eventos[i].dato.buffer.dato as CM.ISincCampo);
+                    }else{
+                        hashCampoValor.get(sincCampoParametros.nc).vc = sincCampoParametros.vc;
+                    }
+                    continue;
+                }
+
                 for (let j = 0; j < responderArray.length; j++) {
                     responderArray[j](zColaEventos.eventos[i], dispatch, getState);
                 }
+            }
+
+            //Hay campos para sincronizar
+            if(hashCampoValor.size > 0){                
+                dispatch(ZPantex.Actions.ZPantexStateModule.sincCampo(px, hashCampoValor));
             }
         }
 

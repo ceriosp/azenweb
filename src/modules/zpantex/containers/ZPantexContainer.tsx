@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { IZAplState } from "../../zcommon/contracts";
 
+
 import {
     Actions as ZComunicacionesActions
 } from '../../zcomunicaciones';
@@ -17,6 +18,7 @@ import {
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     pxAlTope: appState.zPantexStateModule.pxAlTope,
+    ultimoComandoEnviado: appState.ultimoComandoEnviado,
     ponerModal: appState.zPantexStateModule.ponerModal
 });
 

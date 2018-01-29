@@ -211,24 +211,26 @@ export class ZFormaTablaState implements IZFormaTablaState { //zft
 }
 
 export interface IZCampoState extends IdEntityBase, IZCampoBase {
+            
     id: number;
+    px:number;
     value: string;
-    readOnly: boolean;
-
-    //Propiedades para manejo de estado
+    readOnly: boolean;    
     esCampoGrafico: boolean;
+    haCambiado:boolean;
 
     //Para campos dentro de un campo gráfico
     parentId?: number;
-
     cmpsState: Array<IZCampoState>;
 }
 
 export class ZCampoState implements IZCampoState {
 
-    constructor(zcampo: IZCampo, id:number) {
+    constructor(zcampo: IZCampo, id:number, px:number) {
 
         this.id = id;
+        this.px = px;
+        this.haCambiado = false;
 
         this.nomCmp = zcampo.nomCmp;
         this.etq = zcampo.etq;
@@ -241,21 +243,21 @@ export class ZCampoState implements IZCampoState {
         this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;
     }
 
-    id: number;
+    //Propiedades para manejo de estado
+    id: number;    
+    px:number;
     value: string;
-    readOnly: boolean;
-
+    readOnly: boolean;    
+    esCampoGrafico: boolean;
+    haCambiado:boolean;    
     parentId?: number; //Para campos dentro de un campo gráfico
+    cmpsState: Array<IZCampoState>;    
 
     //Propiedades IZCampo
     nomCmp: string;
     etq: string;
     claseInd: Constants.ClaseIndicadorEnum;
-    lon: number;
-
-    //Propiedades para manejo de estado
-    esCampoGrafico: boolean;
-    cmpsState: Array<IZCampoState>;    
+    lon: number;    
 }
 
 export interface IZComandoFormaState extends IZComandoForma {
@@ -586,6 +588,7 @@ export interface IZAplState {
     idApl: string;
     nomApl: string;
     estaProcesandoRequestServidor: boolean;
+    ultimoComandoEnviado:Constants.ComandoEnum;
     tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
     zMenuModule: IZMenuModule;
     zPantexModule: IZPantexModule;

@@ -44,13 +44,24 @@ export namespace ActionTypes {
             export type CM_PONERMODAL = "ZPantexStateModule/CM_PONERMODAL";
             export type CM_PXARRIVAR = "ZPantexStateModule/CM_PXARRIVAR";
             export type CM_PXDESTRUIR = "ZPantexStateModule/CM_PXDESTRUIR";            
+            export type CM_SINCCAMPO = "ZPantexStateModule/CM_SINCCAMPO";            
+
+            export type ON_CAMPOCHANGE = "ZPantexStateModule/ON_CAMPOCHANGE";            
+
+            export type SET_ZCAMPOSTATE_HACAMBIADO = "ZPantexStateModule/SET_ZCAMPOSTATE_HACAMBIADO";            
         }
 
         export const CM_PXCREAR: Types.CM_PXCREAR = "ZPantexStateModule/CM_PXCREAR";
         export const CM_PONERMODAL: Types.CM_PONERMODAL = "ZPantexStateModule/CM_PONERMODAL";
         export const CM_PXARRIVAR: Types.CM_PXARRIVAR = "ZPantexStateModule/CM_PXARRIVAR";
         export const CM_PXDESTRUIR: Types.CM_PXDESTRUIR = "ZPantexStateModule/CM_PXDESTRUIR";
+        export const CM_SINCCAMPO: Types.CM_SINCCAMPO = "ZPantexStateModule/CM_SINCCAMPO";
 
+        export const ON_CAMPOCHANGE: Types.ON_CAMPOCHANGE = "ZPantexStateModule/ON_CAMPOCHANGE";        
+        
+        export const SET_ZCAMPOSTATE_HACAMBIADO: Types.SET_ZCAMPOSTATE_HACAMBIADO = "ZPantexStateModule/SET_ZCAMPOSTATE_HACAMBIADO";        
+
+        
         export type Action =        
         {
             type: Types.CM_PXCREAR,
@@ -72,7 +83,22 @@ export namespace ActionTypes {
         {
             type: Types.CM_PXDESTRUIR,
             pxDestruirParams:CM.IPxDestruir
-        }        
+        }|
+        {
+            type: Types.CM_SINCCAMPO,
+            px:number,
+            hashCampoValor:Map<string, CM.ISincCampo>
+        }|
+        {
+            type: Types.ON_CAMPOCHANGE,
+            zcampoState:IZCampoState,
+            valor:string
+        }|
+        {
+            type: Types.SET_ZCAMPOSTATE_HACAMBIADO,
+            idZCampoState:number,
+            haCambiado:boolean
+        }
     }
 
     export namespace Types {

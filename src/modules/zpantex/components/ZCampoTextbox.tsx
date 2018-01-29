@@ -16,37 +16,28 @@ import {
 
 export interface OwnProps {
     zCampoModel: IZCampoState;
-    px:number;
-    zftIndex:number;    
+    px: number;
+    zftIndex: number;
 }
 
 export interface ConnectedState {
+    estaProcesandoRequestServidor:boolean
 }
 
 export interface ConnectedDispatch {
-    sincronizarCampo: (buffer: string) => void;
+    onCampoChanged: (zcampoState: IZCampoState, valor: string) => void;
+    onCampoBlur: (zcampoState: IZCampoState) => void;
 }
 
-interface OwnState {
-    hasChanged: boolean;
-    value: string;
-}
-
-export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, OwnState>
+export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
     private buffer: string;
 
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
-        this.state = {
-            hasChanged: false,
-            value: ""
-        } as OwnState;
-
-        this.handleChange = this.handleChange.bind(this);
         this.onChange = this.onChange.bind(this);
-        this.sincronizarCampo = this.sincronizarCampo.bind(this);
+        this.onBlur = this.onBlur.bind(this);
     }
 
     render() {
@@ -60,10 +51,16 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
                     </Col>
                     <Col>
                         <FormControl
-                            type="text"                                                        
+                            type="text"
                             name={zCampoModel.nomCmp}
+                            value={zCampoModel.value}
                             onChange={this.onChange}
-                            onBlur={this.handleChange}
+                            onBlur={this.onBlur}
+                            maxLength={zCampoModel.lon}
+                            disabled={this.props.estaProcesandoRequestServidor}
+                            style={{
+                                borderColor: zCampoModel.haCambiado ? '#337AB7' : ''
+                            }}
                         />
                     </Col>
                 </Col>
@@ -71,22 +68,11 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
         );
     }
 
-    handleChange(e: any) {
-        if (this.state.hasChanged && this.state.value != e.target.value) {
-            this.setState({
-                value: e.target.value
-            } as OwnState);
-            this.sincronizarCampo(e.target);
-        }
-    }
-
     onChange(e: any) {
-        this.setState({
-            hasChanged: true
-        } as OwnState);
+        this.props.onCampoChanged(this.props.zCampoModel, e.target.value);
     }
 
-    sincronizarCampo(target: any) {
-        this.buffer = `<nc>${target.name}</nc><vc>${target.value}</vc>`;        
+    onBlur(e: any) {
+        this.props.onCampoBlur(this.props.zCampoModel);
     }
 }
