@@ -39,7 +39,7 @@ export class ZCampoRadio extends React.PureComponent<OwnProps & ConnectedState &
             <Radio
                 inline
                 name={zCampoModel.nomCmp}
-                checked={zCampoModel.lon == zCampoModel.lonv}
+                defaultChecked={zCampoModel.lon == zCampoModel.lonv}
                 value={zCampoModel.lon}                
                 onClick={this.sincronizarCampo}
                 disabled={
