@@ -150,7 +150,7 @@ export namespace Services {
                 }
             }
 
-            console.log(hashZCampoState);
+            //console.log(hashZCampoState);
             //Hay campos para sincronizar      
             if (hashZCampoState.size > 0) {
                 dispatch(ZPantex.Actions.ZPantexStateModule.sincCampo(px, hashZCampoState));
