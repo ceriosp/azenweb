@@ -34,7 +34,7 @@ export class EntityMap<TEntity>{
 //#region =============================================== DOMAIN ===============================================
 export interface IZBuffer {
     fto: string;
-    dato: string | IZMenu | IZPantex | IZAplList | CM.ISincCampo;
+    dato: string | IZMenu | IZPantex | IZAplList | CM.ISincCampo | CM.IPrenderControl;
 }
 
 export interface IZDatoEvento {
@@ -131,6 +131,7 @@ export interface IZCampoBase {
     etq: string;
     claseInd: Constants.ClaseIndicadorEnum;
     lon: number;
+    lonv: number;
 }
 
 export interface IZCampo extends IZCampoBase {
@@ -219,6 +220,9 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
     esCampoGrafico: boolean;
     haCambiado:boolean;
 
+    controlCampo:Constants.ControlCampoEnum;
+    modoCampo: Constants.ModoCampoEnum;
+
     //Para campos dentro de un campo gráfico
     parentId?: number;
     cmpsState: Array<IZCampoState>;
@@ -236,6 +240,7 @@ export class ZCampoState implements IZCampoState {
         this.etq = zcampo.etq;
         this.claseInd = zcampo.claseInd;
         this.lon = zcampo.lon;
+        this.lonv = zcampo.lonv;        
 
         this.readOnly = false;
         this.value = "";
@@ -251,13 +256,16 @@ export class ZCampoState implements IZCampoState {
     esCampoGrafico: boolean;
     haCambiado:boolean;    
     parentId?: number; //Para campos dentro de un campo gráfico
-    cmpsState: Array<IZCampoState>;    
+    cmpsState: Array<IZCampoState>;
+    controlCampo:Constants.ControlCampoEnum;
+    modoCampo: Constants.ModoCampoEnum;
 
     //Propiedades IZCampo
     nomCmp: string;
     etq: string;
     claseInd: Constants.ClaseIndicadorEnum;
     lon: number;    
+    lonv: number;
 }
 
 export interface IZComandoFormaState extends IZComandoForma {

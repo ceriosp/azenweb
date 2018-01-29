@@ -5,7 +5,8 @@ import {
 } from 'react-bootstrap';
 
 import {
-    ZCampoModel, IZCampo, IZCampoState
+    ZCampoModel, IZCampo, IZCampoState,
+    Constants as ZCommonConstants,
 } from "../../zcommon";
 
 export interface OwnProps {
@@ -13,6 +14,7 @@ export interface OwnProps {
 }
 
 export interface ConnectedState {
+    estaProcesandoRequestServidor:boolean
 }
 
 export interface ConnectedDispatch {
@@ -37,8 +39,16 @@ export class ZCampoRadio extends React.PureComponent<OwnProps & ConnectedState &
             <Radio
                 inline
                 name={zCampoModel.nomCmp}
+                checked={zCampoModel.lon == zCampoModel.lonv}
                 value={zCampoModel.lon}                
                 onClick={this.sincronizarCampo}
+                disabled={
+                    this.props.estaProcesandoRequestServidor
+                    || zCampoModel.controlCampo == ZCommonConstants.ControlCampoEnum.ZCMP_VISUAL
+                    || zCampoModel.modoCampo == ZCommonConstants.ModoCampoEnum.ZCMP_MSOLOVISUAL
+                    || zCampoModel.modoCampo == ZCommonConstants.ModoCampoEnum.ZCMP_MNOARRIVABLE                                
+                }
+    
             >
                 {zCampoModel.etq.replace("( )", "")}
             </Radio>

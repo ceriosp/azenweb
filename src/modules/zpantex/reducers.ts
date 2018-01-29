@@ -133,30 +133,7 @@ export namespace Reducers {
             switch (action.type) {
 
                 case ActionTypes.ZPantexStateModule.CM_PXCREAR:
-                    return {
-                        pilaPx: [...state.pilaPx, action.px],
-                        pxAlTope: action.px,
-                        pilaPantexState: {
-                            byId: { ...state.pilaPantexState.byId, ...action.pilaPantexState.byId },
-                            allIds: [...state.pilaPantexState.allIds, ...action.pilaPantexState.allIds],
-                        },
-                        zFormaTablaState: {
-                            byId: { ...state.zFormaTablaState.byId, ...action.zFormaTablaState.byId },
-                            allIds: [...state.zFormaTablaState.allIds, ...action.zFormaTablaState.allIds],
-                        },
-                        zVentanaState: {
-                            byId: { ...state.zVentanaState.byId, ...action.zVentanaState.byId },
-                            allIds: [...state.zVentanaState.allIds, ...action.zVentanaState.allIds],
-                        },
-                        zCampoState: {
-                            byId: { ...state.zCampoState.byId, ...action.zCampoState.byId },
-                            allIds: [...state.zCampoState.allIds, ...action.zCampoState.allIds],
-                        } as EntityNormalizedObj<IZCampoState>,
-                        zComandoFormaState: {
-                            byId: { ...state.zComandoFormaState.byId, ...action.zComandoFormaState.byId },
-                            allIds: [...state.zComandoFormaState.allIds, ...action.zComandoFormaState.allIds],
-                        },
-                    } as IZPantexStateModule;
+                    return cmPxCrear(state, action);
 
                 case ActionTypes.ZPantexStateModule.CM_PONERMODAL:
                     return u({
@@ -186,38 +163,15 @@ export namespace Reducers {
                     break;
 
                 case ActionTypes.ZPantexStateModule.CM_SINCCAMPO:
-
-                    //let zCampoStateById:EntityMap<ZCampoState> = JSON.stringify(state.zCampoState.byId);
-
-
-                    const actualizarValorCampo = (zcampoState: IZCampoState): IZCampoState => {
-                        if (zcampoState.px == action.px) {
-                            if (action.hashCampoValor.has(zcampoState.nomCmp)) {
-                                return u({
-                                    value: action.hashCampoValor.get(zcampoState.nomCmp).vc,
-                                } as IZCampoState, zcampoState);
-                            }
-                        }
-
-                        return zcampoState;
-                    }
-
-                    if (action.hashCampoValor.size > 0) {
-                        return u({
-                            zCampoState: {
-                                byId: u.map(actualizarValorCampo)
-                            } as any,
-                        } as IZPantexStateModule, state);
-                    }
-                    break;
+                    return cmSincCampo(state, action);
 
                 case ActionTypes.ZPantexStateModule.ON_CAMPOCHANGE:
                     return u({
                         zCampoState: {
                             byId: {
-                                [action.zcampoState.id]:{
+                                [action.zcampoState.id]: {
                                     value: action.valor,
-                                    haCambiado:true,
+                                    haCambiado: true,
                                 } as IZCampoState
                             }
                         } as any,
@@ -227,15 +181,76 @@ export namespace Reducers {
                     return u({
                         zCampoState: {
                             byId: {
-                                [action.idZCampoState]:{
-                                    haCambiado:action.haCambiado,
+                                [action.idZCampoState]: {
+                                    haCambiado: action.haCambiado,
                                 } as IZCampoState
                             }
                         } as any,
-                    } as IZPantexStateModule, state);                
+                    } as IZPantexStateModule, state);
             }
 
             return state;
+        }
+
+        const cmPxCrear = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
+            if (action.type != ActionTypes.ZPantexStateModule.CM_PXCREAR) {
+                return state;
+            }
+            return {
+                pilaPx: [...state.pilaPx, action.px],
+                pxAlTope: action.px,
+                pilaPantexState: {
+                    byId: { ...state.pilaPantexState.byId, ...action.pilaPantexState.byId },
+                    allIds: [...state.pilaPantexState.allIds, ...action.pilaPantexState.allIds],
+                },
+                zFormaTablaState: {
+                    byId: { ...state.zFormaTablaState.byId, ...action.zFormaTablaState.byId },
+                    allIds: [...state.zFormaTablaState.allIds, ...action.zFormaTablaState.allIds],
+                },
+                zVentanaState: {
+                    byId: { ...state.zVentanaState.byId, ...action.zVentanaState.byId },
+                    allIds: [...state.zVentanaState.allIds, ...action.zVentanaState.allIds],
+                },
+                zCampoState: {
+                    byId: { ...state.zCampoState.byId, ...action.zCampoState.byId },
+                    allIds: [...state.zCampoState.allIds, ...action.zCampoState.allIds],
+                } as EntityNormalizedObj<IZCampoState>,
+                zComandoFormaState: {
+                    byId: { ...state.zComandoFormaState.byId, ...action.zComandoFormaState.byId },
+                    allIds: [...state.zComandoFormaState.allIds, ...action.zComandoFormaState.allIds],
+                },
+            } as IZPantexStateModule;
+        }
+
+        const cmSincCampo = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
+
+            if (action.type != ActionTypes.ZPantexStateModule.CM_SINCCAMPO) {
+                return state;
+            }
+
+            const actualizarValorCampo = (zcampoState: IZCampoState): IZCampoState => {                
+
+                if (zcampoState.px == action.px) {
+                    if (action.hashCampoValor.has(zcampoState.nomCmp)) {
+                        const zCampoEnHash = action.hashCampoValor.get(zcampoState.nomCmp);
+                        return u({
+                            value: zCampoEnHash.value,
+                            controlCampo: zCampoEnHash.controlCampo != undefined ? zCampoEnHash.controlCampo : zcampoState.controlCampo,
+                            modoCampo: zCampoEnHash.modoCampo != undefined ? zCampoEnHash.modoCampo : zCampoEnHash.modoCampo,
+                        } as IZCampoState, zcampoState);
+                    }
+                }
+
+                return zcampoState;
+            }
+
+            if (action.hashCampoValor.size > 0) {
+                return u({
+                    zCampoState: {
+                        byId: u.map(actualizarValorCampo)
+                    } as any,
+                } as IZPantexStateModule, state);
+            }
         }
     }
 

@@ -44,7 +44,7 @@ const recursosZoomList: Array<string> =
 
 import * as ZCommon from '../zcommon';
 import {
-    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList, IZCampo, CM
+    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList, IZCampo, CM, IZCampoState
 } from '../zcommon';
 
 import * as ZMenu from '../zmenu';
@@ -87,24 +87,62 @@ export namespace Services {
         export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
             //valores de los campos de un px: <nombreCampo, valor> 
-            let hashCampoValor = new Map<string, CM.ISincCampo>();     
-            let sincCampoParametros : CM.ISincCampo;       
-            let px:number;
+            let hashZCampoState = new Map<string, IZCampoState>();
+            let cmSincCampoParametros: CM.ISincCampo;
+            let cmPrenderControlParametros: CM.IPrenderControl;
+            let cmPrenderModoParametros: CM.IPrenderModo;
+            let px: number;
 
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
+
                 parseDataEventoToJSON(zColaEventos.eventos[i]);
 
-                if(zColaEventos.eventos[i].dato.cmd == ZCommonConstants.ComandoEnum.CM_SINCCAMPO){                                          
-                    sincCampoParametros = zColaEventos.eventos[i].dato.buffer.dato as CM.ISincCampo;
-                    if(!px){
-                        px = sincCampoParametros.px;
-                    }
-                    if(!hashCampoValor.has(sincCampoParametros.nc)){
-                        hashCampoValor.set(sincCampoParametros.nc, zColaEventos.eventos[i].dato.buffer.dato as CM.ISincCampo);
-                    }else{
-                        hashCampoValor.get(sincCampoParametros.nc).vc = sincCampoParametros.vc;
-                    }
-                    continue;
+                const cmd = zColaEventos.eventos[i].dato.cmd;
+                switch (cmd) {
+                    case ZCommonConstants.ComandoEnum.CM_SINCCAMPO:
+                        cmSincCampoParametros = zColaEventos.eventos[i].dato.buffer.dato as CM.ISincCampo;
+                        if (!px) {
+                            px = cmSincCampoParametros.px;
+                        }
+                        if (!hashZCampoState.has(cmSincCampoParametros.nc)) {
+                            hashZCampoState.set(cmSincCampoParametros.nc, {
+                                px: cmSincCampoParametros.px,
+                                value: cmSincCampoParametros.vc
+                            } as IZCampoState);
+                        } else {
+                            hashZCampoState.get(cmSincCampoParametros.nc).value = cmSincCampoParametros.vc;
+                        }
+                        continue;
+
+                    case ZCommonConstants.ComandoEnum.CM_PRENDERCONTROL:
+                    case ZCommonConstants.ComandoEnum.CM_APAGARCONTROL:
+                        cmPrenderControlParametros = zColaEventos.eventos[i].dato.buffer.dato as CM.IPrenderControl;
+                        const controlCampo = cmd == ZCommonConstants.ComandoEnum.CM_PRENDERCONTROL
+                            ? cmPrenderControlParametros.mc
+                            : ZCommonConstants.ControlCampoEnum.ZCMP_APAGADO
+                        if (!hashZCampoState.has(cmPrenderControlParametros.nc)) {
+                            hashZCampoState.set(cmPrenderControlParametros.nc, {
+                                controlCampo: controlCampo
+                            } as IZCampoState);
+                        } else {
+                            hashZCampoState.get(cmPrenderControlParametros.nc).controlCampo = controlCampo;
+                        }
+                        continue;
+
+                    case ZCommonConstants.ComandoEnum.CM_PRENDERMODO:
+                    case ZCommonConstants.ComandoEnum.CM_APAGARMODO:
+                        cmPrenderModoParametros = zColaEventos.eventos[i].dato.buffer.dato as CM.IPrenderModo;
+                        const modoCampo = cmd == ZCommonConstants.ComandoEnum.CM_PRENDERMODO
+                            ? cmPrenderModoParametros.mc
+                            : ZCommonConstants.ModoCampoEnum.ZCMP_APAGADO
+                        if (!hashZCampoState.has(cmPrenderModoParametros.nc)) {
+                            hashZCampoState.set(cmPrenderModoParametros.nc, {
+                                modoCampo: modoCampo
+                            } as IZCampoState);
+                        } else {
+                            hashZCampoState.get(cmPrenderModoParametros.nc).modoCampo = modoCampo;
+                        }
+                        continue;
                 }
 
                 for (let j = 0; j < responderArray.length; j++) {
@@ -112,9 +150,10 @@ export namespace Services {
                 }
             }
 
-            //Hay campos para sincronizar
-            if(hashCampoValor.size > 0){                
-                dispatch(ZPantex.Actions.ZPantexStateModule.sincCampo(px, hashCampoValor));
+            console.log(hashZCampoState);
+            //Hay campos para sincronizar      
+            if (hashZCampoState.size > 0) {
+                dispatch(ZPantex.Actions.ZPantexStateModule.sincCampo(px, hashZCampoState));
             }
         }
 

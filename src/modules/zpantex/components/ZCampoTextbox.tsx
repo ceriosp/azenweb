@@ -57,7 +57,12 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
                             onChange={this.onChange}
                             onBlur={this.onBlur}
                             maxLength={zCampoModel.lon}
-                            disabled={this.props.estaProcesandoRequestServidor}
+                            disabled={
+                                this.props.estaProcesandoRequestServidor
+                                || zCampoModel.controlCampo == ZCommonConstants.ControlCampoEnum.ZCMP_VISUAL
+                                || zCampoModel.modoCampo == ZCommonConstants.ModoCampoEnum.ZCMP_MSOLOVISUAL
+                                || zCampoModel.modoCampo == ZCommonConstants.ModoCampoEnum.ZCMP_MNOARRIVABLE                                
+                            }
                             style={{
                                 borderColor: zCampoModel.haCambiado ? '#337AB7' : ''
                             }}

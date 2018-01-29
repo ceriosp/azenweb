@@ -248,33 +248,35 @@ export namespace Constants {
         ZCMP_RADIO
     }
 
-    export namespace ModoCampo {
+    export enum ModoCampoEnum {
+        ZCMP_APAGADO = -1,
         /* modos b sicos para el campo - zcmp.modo */
-        export const ZCMP_MSOLOVISUAL = 0x01; /* sólo es visualizable */
-        export const ZCMP_MFIJO = 0x02;	/* nunca se puede mover */
-        export const ZCMP_MCOLUMNARIO = 0x04; /* ubicación etiqueta columnaria */
-        export const ZCMP_MNOARRIVABLE = 0x08	/* no se arriva en navegación */
-        export const ZCMP_MDETALLABLE = 0x10 /* pone ícono "detallable" */
-        export const ZCMP_MNOLIMPIABLE = 0x20 /* inhibe al zcmp_Limpiar() */
-        export const ZCMP_CLAVE = 0x40;	/* para clave de acceso */
-        export const ZCMP_DESCRJUNTURA = 0x80;	/* es un campo descripción de una juntura */
+        ZCMP_MSOLOVISUAL = 1, /* sólo es visualizable */
+        ZCMP_MFIJO = 2,	/* nunca se puede mover */
+        ZCMP_MCOLUMNARIO = 4, /* ubicación etiqueta columnaria */
+        ZCMP_MNOARRIVABLE = 8,	/* no se arriva en navegación */
+        ZCMP_MDETALLABLE = 10, /* pone ícono "detallable" */
+        ZCMP_MNOLIMPIABLE = 20, /* inhibe al zcmp_Limpiar() */
+        ZCMP_CLAVE = 40,	/* para clave de acceso */
+        ZCMP_DESCRJUNTURA = 80,	/* es un campo descripción de una juntura */
         // CERios Nov 11 de 2005. Para tener en cuenta en modo C/S
-        export const ZCMP_ESLLAVEPRIMARIA = 0x100;	/* es un campo que pertenece a la llave primaria  */
+        ZCMP_ESLLAVEPRIMARIA = 100,	/* es un campo que pertenece a la llave primaria  */
 
         // CERios Ago 2006. Identificacion de lista estatica
-        export const ZCMP_LISTAESTATICA = 0x200;	/* es lista estatica. No se indica en tipos de indicador porque  
+        ZCMP_LISTAESTATICA = 200,	/* es lista estatica. No se indica en tipos de indicador porque  
         con ellos se hace uso del campo lonv, y se  requiere 
         en el caso de listas estaticas */
     }
 
-    export namespace ControlCampo {
+    export enum ControlCampoEnum {
+        ZCMP_APAGADO = -1,
         /* Control para la edición de campo */
-        export const ZCMP_EDINIT = 1;   /* Borra contenido al editar*/
-        export const ZCMP_UPCASE = 2;  /* Edición en mayúscula */
-        export const ZCMP_INS = 4;     /* Edición modo inserción */
-        export const ZCMP_EDIT = 8;    /* Edición mormal */
-        export const ZCMP_EDIZQ	= 16;  /* Edición poniendo cursor al inicio */ 
-        export const ZCMP_VISUAL = 32; /* Solo visual */
-        export const ZCMP_INTRACMP = 64; /* */
+        ZCMP_EDINIT = 1,   /* Borra contenido al editar*/
+        ZCMP_UPCASE = 2,  /* Edición en mayúscula */
+        ZCMP_INS = 4,  /* Edición modo inserción */
+        ZCMP_EDIT = 8,    /* Edición mormal */
+        ZCMP_EDIZQ	= 16,  /* Edición poniendo cursor al inicio */ 
+        ZCMP_VISUAL = 32, /* Solo visual */
+        ZCMP_INTRACMP = 64, /* */
     }
 }

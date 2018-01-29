@@ -226,11 +226,11 @@ export namespace Actions {
             pxArrivarParams,
         });
 
-        export const sincCampo = (px: number, hashCampoValor: Map<string, CM.ISincCampo>) => (dispatch: any, getStateFn: () => IZAplState) => {
+        export const sincCampo = (px: number, hashCampoValor: Map<string, IZCampoState>) => (dispatch: any, getStateFn: () => IZAplState) => {
             dispatch(cmSincCampo(px, hashCampoValor));
         }
 
-        export const cmSincCampo = (px: number, hashCampoValor: Map<string, CM.ISincCampo>): ActionTypes.ZPantexStateModule.Action => ({
+        export const cmSincCampo = (px: number, hashCampoValor: Map<string, IZCampoState>): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.CM_SINCCAMPO,
             px,
             hashCampoValor,
