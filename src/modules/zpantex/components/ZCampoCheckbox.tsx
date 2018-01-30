@@ -15,6 +15,7 @@ export interface OwnProps {
 }
 
 export interface ConnectedState {
+    estaProcesandoRequestServidor:boolean;
 }
 
 export interface ConnectedDispatch {
@@ -39,6 +40,10 @@ export class ZCampoCheckbox extends React.PureComponent<OwnProps & ConnectedStat
                     name={zCampoModel.nomCmp}
                     value={zCampoModel.lon}
                     onChange={this.sincronizarCampo}
+                    disabled={
+                        this.props.estaProcesandoRequestServidor
+                        || zCampoModel.readOnly
+                    }                        
                 >
                     {zCampoModel.etq.replace("[ ]", "")}
                 </Checkbox>

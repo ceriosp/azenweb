@@ -24,6 +24,7 @@ import {
     IZComandoFormaState,
     IZVentanaState,
     ZCampoState,
+    Constants as ZCommonConstants
 
 } from '../zcommon';
 
@@ -228,15 +229,36 @@ export namespace Reducers {
                 return state;
             }
 
-            const actualizarValorCampo = (zcampoState: IZCampoState): IZCampoState => {                
+            const actualizarDefinicionCampo = (zcampoState: IZCampoState): IZCampoState => {
 
                 if (zcampoState.px == action.px) {
-                    if (action.hashCampoValor.has(zcampoState.nomCmp)) {
-                        const zCampoEnHash = action.hashCampoValor.get(zcampoState.nomCmp);
-                        return u({
+                    if (action.hashDefinicionCampos.has(zcampoState.nomCmp)) {
+                        const zCampoEnHash = action.hashDefinicionCampos.get(zcampoState.nomCmp);
+                        const zCampoActualizado = {
+
                             value: zCampoEnHash.value,
-                            controlCampo: zCampoEnHash.controlCampo != undefined ? zCampoEnHash.controlCampo : zcampoState.controlCampo,
-                            modoCampo: zCampoEnHash.modoCampo != undefined ? zCampoEnHash.modoCampo : zCampoEnHash.modoCampo,
+
+                            controlCampo:
+                                zCampoEnHash.controlCampo == undefined
+                                    ? zcampoState.controlCampo
+                                    : zCampoEnHash.controlCampo,
+
+                            modoCampo:
+                                zCampoEnHash.modoCampo == undefined
+                                    ? zcampoState.modoCampo
+                                    : zCampoEnHash.modoCampo,
+
+                        } as IZCampoState;
+
+                        return u({
+                            value: zCampoActualizado.value,
+                            controlCampo: zCampoActualizado.controlCampo,
+                            modoCampo: zCampoActualizado.modoCampo,
+                            readOnly:
+                                zCampoActualizado.controlCampo == ZCommonConstants.ControlCampoEnum.ZCMP_VISUAL
+                                || zCampoActualizado.modoCampo == ZCommonConstants.ModoCampoEnum.ZCMP_MSOLOVISUAL
+                                || zCampoActualizado.modoCampo == ZCommonConstants.ModoCampoEnum.ZCMP_MNOARRIVABLE
+
                         } as IZCampoState, zcampoState);
                     }
                 }
@@ -244,10 +266,10 @@ export namespace Reducers {
                 return zcampoState;
             }
 
-            if (action.hashCampoValor.size > 0) {
+            if (action.hashDefinicionCampos.size > 0) {
                 return u({
                     zCampoState: {
-                        byId: u.map(actualizarValorCampo)
+                        byId: u.map(actualizarDefinicionCampo)
                     } as any,
                 } as IZPantexStateModule, state);
             }

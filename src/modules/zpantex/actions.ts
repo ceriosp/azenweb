@@ -230,10 +230,10 @@ export namespace Actions {
             dispatch(cmSincCampo(px, hashCampoValor));
         }
 
-        export const cmSincCampo = (px: number, hashCampoValor: Map<string, IZCampoState>): ActionTypes.ZPantexStateModule.Action => ({
+        export const cmSincCampo = (px: number, hashDefinicionCampos: Map<string, IZCampoState>): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.CM_SINCCAMPO,
             px,
-            hashCampoValor,
+            hashDefinicionCampos,
         });
 
         export const onCampoChanged = (zcampoState: IZCampoState, valor: string): ActionTypes.ZPantexStateModule.Action => ({

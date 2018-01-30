@@ -1,5 +1,9 @@
 import {
-    EntityNormalizedObj, IdEntityBase, EntityMap
+    EntityNormalizedObj,
+    IdEntityBase,
+    EntityMap,
+    ZCampoState,
+    Constants as ZCommonConstants,
 } from "../zcommon";
 
 const u = require('updeep');

@@ -16,6 +16,7 @@ import {
 import { Actions } from "../actions";
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
+    estaProcesandoRequestServidor:appState.estaProcesandoRequestServidor
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({

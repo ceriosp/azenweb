@@ -14,7 +14,7 @@ export interface OwnProps {
 }
 
 export interface ConnectedState {
-    estaProcesandoRequestServidor:boolean
+    estaProcesandoRequestServidor:boolean;
 }
 
 export interface ConnectedDispatch {
@@ -44,11 +44,8 @@ export class ZCampoRadio extends React.PureComponent<OwnProps & ConnectedState &
                 onClick={this.sincronizarCampo}
                 disabled={
                     this.props.estaProcesandoRequestServidor
-                    || zCampoModel.controlCampo == ZCommonConstants.ControlCampoEnum.ZCMP_VISUAL
-                    || zCampoModel.modoCampo == ZCommonConstants.ModoCampoEnum.ZCMP_MSOLOVISUAL
-                    || zCampoModel.modoCampo == ZCommonConstants.ModoCampoEnum.ZCMP_MNOARRIVABLE                                
-                }
-    
+                    || zCampoModel.readOnly
+                }    
             >
                 {zCampoModel.etq.replace("( )", "")}
             </Radio>

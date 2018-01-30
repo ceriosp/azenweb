@@ -87,7 +87,7 @@ export namespace ActionTypes {
         {
             type: Types.CM_SINCCAMPO,
             px:number,
-            hashCampoValor:Map<string, IZCampoState>
+            hashDefinicionCampos:Map<string, IZCampoState>
         }|
         {
             type: Types.ON_CAMPOCHANGE,
