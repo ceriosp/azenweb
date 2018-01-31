@@ -169,23 +169,26 @@ export namespace Reducers {
                 case ActionTypes.ZPantexStateModule.ON_CAMPOCHANGE:
                     const zCampoState = state.zCampoState.byId[action.zcampoState.id];
 
-                    let valorRadioOChequeo:boolean = undefined;
-                    if(zCampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO){
+                    let valorRadioOChequeo: boolean = undefined;
+                    if (zCampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO) {
                         valorRadioOChequeo = action.valor == "*";
-                    }else if(zCampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_CHEQUEO){
+                    } else if (zCampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
                         valorRadioOChequeo = action.valor == "X";
-                    }                    
+                    }
                     return u({
                         zCampoState: {
                             byId: {
                                 [action.zcampoState.id]: {
                                     value: valorRadioOChequeo ? zCampoState.value : action.valor,
                                     haCambiado: true,
-                                    checked : valorRadioOChequeo
+                                    checked: valorRadioOChequeo
                                 } as IZCampoState
                             }
                         } as any,
                     } as IZPantexStateModule, state);
+
+                case ActionTypes.ZPantexStateModule.ON_CAMPORADIOCHANGE:
+                    return onCampoRadioChange(state, action);
 
                 case ActionTypes.ZPantexStateModule.SET_ZCAMPOSTATE_HACAMBIADO:
                     return u({
@@ -293,6 +296,43 @@ export namespace Reducers {
                     } as any,
                 } as IZPantexStateModule, state);
             }
+        }
+
+        const onCampoRadioChange = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
+
+            if (action.type != ActionTypes.ZPantexStateModule.ON_CAMPORADIOCHANGE) {
+                return state;
+            }
+
+            let zcampoRadioPadre: IZCampoState = state.zCampoState.byId[action.zcampoState.parentId];
+            if (!zcampoRadioPadre) {
+                console.error("Campo " + action.zcampoState.nomCmp + " no tiene parentId asociado");
+                return state;
+            }
+
+            const actualizarCamposRadios = (zcampoState: IZCampoState): IZCampoState => {
+
+                if (zcampoState.px == action.zcampoState.px) {
+                    if (zcampoState.parentId == zcampoRadioPadre.id) {
+                        if (zcampoState.id == action.zcampoState.id) {
+                            return u({                                
+                                checked: true,
+                            } as IZCampoState, zcampoState);
+                        }
+                        return u({
+                            checked: false,
+                        } as IZCampoState, zcampoState);
+                    }
+                }
+
+                return zcampoState;
+            }
+
+            return u({
+                zCampoState: {
+                    byId: u.map(actualizarCamposRadios)
+                } as any,
+            } as IZPantexStateModule, state);
         }
     }
 

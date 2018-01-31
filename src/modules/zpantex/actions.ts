@@ -141,13 +141,13 @@ export namespace Actions {
                 zFormaTablaCmpsIds.push(id);
                 if (zFormaTabla.cmps[i].cmps) {
                     let parentId = id;
-                    zCampoState.byId[id].esCampoGrafico = true;
+                    zCampoState.byId[id].esCampoGrafico = true;                    
                     for (let j = 0; j < zFormaTabla.cmps[i].cmps.length; j++) {
                         id++;
                         zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id, zPantex.numPx);
                         zCampoState.byId[id].parentId = parentId;
                         zCampoState.allIds.push(id);
-                        zFormaTablaCmpsIds.push(id);
+                        zFormaTablaCmpsIds.push(id);                        
                     }
                 }
                 id++;
@@ -242,6 +242,12 @@ export namespace Actions {
             valor,
         });
 
+        export const onCampoRadioChanged = (zcampoState: IZCampoState, valor: any): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.ON_CAMPORADIOCHANGE,
+            zcampoState,
+            valor,
+        });
+        
         export const setZCampoHaCambiado = (idZCampoState: number, haCambiado: boolean): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.SET_ZCAMPOSTATE_HACAMBIADO,
             idZCampoState,
@@ -259,8 +265,8 @@ export namespace Actions {
             }
         }
 
-        export const notificarCambioCampo = (zcampoState: IZCampoState, valor: any) => (dispatch: any, getStateFn: () => IZAplState) => {
-            dispatch(onCampoChanged(zcampoState, valor));
+        export const prenderValorBit = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+            dispatch(onCampoRadioChanged(zcampoState, zcampoState.lon));
             const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>*</vc><pb>${zcampoState.lon}</pb>`;
             dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
                 (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {

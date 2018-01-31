@@ -47,6 +47,7 @@ export namespace ActionTypes {
             export type CM_SINCCAMPO = "ZPantexStateModule/CM_SINCCAMPO";            
 
             export type ON_CAMPOCHANGE = "ZPantexStateModule/ON_CAMPOCHANGE";            
+            export type ON_CAMPORADIOCHANGE = "ZPantexStateModule/ON_CAMPORADIOCHANGE";
 
             export type SET_ZCAMPOSTATE_HACAMBIADO = "ZPantexStateModule/SET_ZCAMPOSTATE_HACAMBIADO";            
         }
@@ -57,7 +58,8 @@ export namespace ActionTypes {
         export const CM_PXDESTRUIR: Types.CM_PXDESTRUIR = "ZPantexStateModule/CM_PXDESTRUIR";
         export const CM_SINCCAMPO: Types.CM_SINCCAMPO = "ZPantexStateModule/CM_SINCCAMPO";
 
-        export const ON_CAMPOCHANGE: Types.ON_CAMPOCHANGE = "ZPantexStateModule/ON_CAMPOCHANGE";        
+        export const ON_CAMPOCHANGE: Types.ON_CAMPOCHANGE = "ZPantexStateModule/ON_CAMPOCHANGE";
+        export const ON_CAMPORADIOCHANGE: Types.ON_CAMPORADIOCHANGE = "ZPantexStateModule/ON_CAMPORADIOCHANGE";
         
         export const SET_ZCAMPOSTATE_HACAMBIADO: Types.SET_ZCAMPOSTATE_HACAMBIADO = "ZPantexStateModule/SET_ZCAMPOSTATE_HACAMBIADO";        
 
@@ -94,6 +96,11 @@ export namespace ActionTypes {
             zcampoState:IZCampoState,
             valor:any
         }|
+        {
+            type: Types.ON_CAMPORADIOCHANGE,
+            zcampoState:IZCampoState,
+            valor:string
+        }|        
         {
             type: Types.SET_ZCAMPOSTATE_HACAMBIADO,
             idZCampoState:number,

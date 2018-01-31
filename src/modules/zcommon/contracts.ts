@@ -253,7 +253,7 @@ export class ZCampoState implements IZCampoState {
         this.value = "";
         this.checked = false;
 
-        this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;        
+        this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;                
     }
 
     //Propiedades para manejo de estado
@@ -271,7 +271,7 @@ export class ZCampoState implements IZCampoState {
     
     controlCampo:Constants.ControlCampoEnum;
     modoCampo: Constants.ModoCampoEnum;
-    checked:boolean;
+    checked:boolean;    
 
     //Propiedades IZCampo
     nomCmp: string;
