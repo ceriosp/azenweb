@@ -37,8 +37,8 @@ export class ZCampoCheckbox extends React.PureComponent<OwnProps & ConnectedStat
         return (
             <FormGroup>
                 <Checkbox
-                    name={zCampoModel.nomCmp}
                     value={zCampoModel.lon}
+                    checked={zCampoModel.checked}
                     onChange={this.sincronizarCampo}
                     disabled={
                         this.props.estaProcesandoRequestServidor

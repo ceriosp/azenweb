@@ -236,7 +236,7 @@ export namespace Actions {
             hashDefinicionCampos,
         });
 
-        export const onCampoChanged = (zcampoState: IZCampoState, valor: string): ActionTypes.ZPantexStateModule.Action => ({
+        export const onCampoChanged = (zcampoState: IZCampoState, valor: any): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.ON_CAMPOCHANGE,
             zcampoState,
             valor,
@@ -246,11 +246,11 @@ export namespace Actions {
             type: ActionTypes.ZPantexStateModule.SET_ZCAMPOSTATE_HACAMBIADO,
             idZCampoState,
             haCambiado,
-        });
+        });        
 
         export const onCampoBlur = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
             if (zcampoState.haCambiado) {
-                let buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${zcampoState.value}</vc>`;
+                const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${zcampoState.value}</vc>`;
                 dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
                     (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
                         dispatch(setZCampoHaCambiado(zcampoState.id, false));
@@ -258,6 +258,17 @@ export namespace Actions {
                 );
             }
         }
+
+        export const notificarCambioCampo = (zcampoState: IZCampoState, valor: any) => (dispatch: any, getStateFn: () => IZAplState) => {
+            dispatch(onCampoChanged(zcampoState, valor));
+            const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>*</vc><pb>${zcampoState.lon}</pb>`;
+            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
+                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
+                    
+                }
+            );        
+        }
+        
 
         /********************* */
         export const setEsPxModal = (esPxModal: boolean): ActionTypes.ZPantexModule.Action => ({

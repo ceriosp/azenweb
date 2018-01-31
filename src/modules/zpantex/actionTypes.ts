@@ -92,7 +92,7 @@ export namespace ActionTypes {
         {
             type: Types.ON_CAMPOCHANGE,
             zcampoState:IZCampoState,
-            valor:string
+            valor:any
         }|
         {
             type: Types.SET_ZCAMPOSTATE_HACAMBIADO,

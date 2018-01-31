@@ -167,12 +167,21 @@ export namespace Reducers {
                     return cmSincCampo(state, action);
 
                 case ActionTypes.ZPantexStateModule.ON_CAMPOCHANGE:
+                    const zCampoState = state.zCampoState.byId[action.zcampoState.id];
+
+                    let valorRadioOChequeo:boolean = undefined;
+                    if(zCampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO){
+                        valorRadioOChequeo = action.valor == "*";
+                    }else if(zCampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_CHEQUEO){
+                        valorRadioOChequeo = action.valor == "X";
+                    }                    
                     return u({
                         zCampoState: {
                             byId: {
                                 [action.zcampoState.id]: {
-                                    value: action.valor,
+                                    value: valorRadioOChequeo ? zCampoState.value : action.valor,
                                     haCambiado: true,
+                                    checked : valorRadioOChequeo
                                 } as IZCampoState
                             }
                         } as any,
@@ -234,9 +243,11 @@ export namespace Reducers {
                 if (zcampoState.px == action.px) {
                     if (action.hashDefinicionCampos.has(zcampoState.nomCmp)) {
                         const zCampoEnHash = action.hashDefinicionCampos.get(zcampoState.nomCmp);
-                        const zCampoActualizado = {
+                        let zCampoActualizado = {
 
-                            value: zCampoEnHash.value,
+                            value: zCampoEnHash.value == undefined
+                                ? zcampoState.value
+                                : zCampoEnHash.value,
 
                             controlCampo:
                                 zCampoEnHash.controlCampo == undefined
@@ -250,8 +261,17 @@ export namespace Reducers {
 
                         } as IZCampoState;
 
+                        if (zcampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO
+                            || zcampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
+                            if (zCampoEnHash.posBitsOn
+                                && zCampoEnHash.posBitsOn.indexOf(zcampoState.lon) != -1) {
+                                zCampoActualizado.checked = true;
+                            }
+                        }
+
                         return u({
                             value: zCampoActualizado.value,
+                            checked: zCampoActualizado.checked, //para radio/checkbox
                             controlCampo: zCampoActualizado.controlCampo,
                             modoCampo: zCampoActualizado.modoCampo,
                             readOnly:

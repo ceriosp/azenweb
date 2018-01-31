@@ -132,11 +132,12 @@ export interface IZCampoBase {
     claseInd: Constants.ClaseIndicadorEnum;
     lon: number;
     lonv: number;
+
+    posbit: number;
 }
 
 export interface IZCampo extends IZCampoBase {
-    lonv: number;
-    posbit: number;
+    lonv: number;    
     tipo: number;
     noEnTabla: number;
     modo: number; //Constants.ModoCampo namespace
@@ -215,10 +216,14 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
             
     id: number;
     px:number;
-    value: string;
+    value: any;
     readOnly: boolean;    
     esCampoGrafico: boolean;
     haCambiado:boolean;
+    checked:boolean;
+    
+    //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
+    posBitsOn:Array<number>;
 
     controlCampo:Constants.ControlCampoEnum;
     modoCampo: Constants.ModoCampoEnum;
@@ -240,12 +245,15 @@ export class ZCampoState implements IZCampoState {
         this.etq = zcampo.etq;
         this.claseInd = zcampo.claseInd;
         this.lon = zcampo.lon;
-        this.lonv = zcampo.lonv;        
+        this.lonv = zcampo.lonv;
+        this.posbit = zcampo.posbit;
+                
 
         this.readOnly = false;
         this.value = "";
+        this.checked = false;
 
-        this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;
+        this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;        
     }
 
     //Propiedades para manejo de estado
@@ -257,15 +265,21 @@ export class ZCampoState implements IZCampoState {
     haCambiado:boolean;    
     parentId?: number; //Para campos dentro de un campo gráfico
     cmpsState: Array<IZCampoState>;
+
+    //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
+    posBitsOn:Array<number>;
+    
     controlCampo:Constants.ControlCampoEnum;
     modoCampo: Constants.ModoCampoEnum;
+    checked:boolean;
 
     //Propiedades IZCampo
     nomCmp: string;
     etq: string;
     claseInd: Constants.ClaseIndicadorEnum;
     lon: number;    
-    lonv: number;
+    lonv: number;    
+    posbit:number;
 }
 
 export interface IZComandoFormaState extends IZComandoForma {
