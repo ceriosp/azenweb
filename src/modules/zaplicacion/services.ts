@@ -85,13 +85,15 @@ export namespace Services {
         //#region Public methods
 
         //valores de los campos de un px: <nombreCampo, valor> 
+        let listaPxCampos: Array<number>; //Lista px para actualizar campos
         let hashZCampoState = new Map<string, IZCampoState>();
-        let hashZComandoState = new Map<string, IZComandoFormaState>();
         let cmSincCampoParametros: CM.ISincCampo;
         let cmPrenderControlParametros: CM.IPrenderControl;
         let cmPrenderModoParametros: CM.IPrenderModo;
-        let listaPxCampos: Array<number>; //Lista px para actualizar campos
+
         let listaPxComandos: Array<number>; //Lista px para actualizar comandos
+        let hashZComandoState = new Map<ZCommonConstants.ComandoEnum, IZComandoFormaState>();
+        let cmSincBotonParametros: CM.ISincBoton;
 
         export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
@@ -99,6 +101,9 @@ export namespace Services {
             hashZCampoState = new Map<string, IZCampoState>();
             listaPxCampos = [];
 
+            hashZComandoState = new Map<ZCommonConstants.ComandoEnum, IZComandoFormaState>();
+            listaPxComandos = [];
+            
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
 
                 parseDataEventoToJSON(zColaEventos.eventos[i]);
@@ -118,6 +123,10 @@ export namespace Services {
                     case ZCommonConstants.ComandoEnum.CM_APAGARMODO:
                         cmPrenderApagarModo(zColaEventos.eventos[i], cmd);
                         continue;
+
+                    case ZCommonConstants.ComandoEnum.CM_SINCBOTON:
+                        cmSincBoton(zColaEventos.eventos[i]);
+                        continue;
                 }
 
                 for (let j = 0; j < responderArray.length; j++) {
@@ -125,9 +134,12 @@ export namespace Services {
                 }
             }
 
-
-            console.log("module/zaplicacion/services- px: " + JSON.stringify(listaPxCampos));
+            console.log("module/zaplicacion/services- listaPxCampos: " + JSON.stringify(listaPxCampos));
             console.log(hashZCampoState);
+
+            console.log("module/zaplicacion/services- listaPxComandos: " + JSON.stringify(listaPxComandos));
+            console.log(hashZComandoState);
+            
             //Hay campos para sincronizar      
             if (hashZCampoState.size > 0) {
                 dispatch(ZPantex.Actions.ZPantexStateModule.cmSincPx(listaPxCampos, hashZCampoState, listaPxComandos, hashZComandoState));
@@ -199,6 +211,26 @@ export namespace Services {
                 } as IZCampoState);
             } else {
                 hashZCampoState.get(cmPrenderModoParametros.nc).modoCampo = modoCampo;
+            }
+        }
+
+        const cmSincBoton = (infoEvento: IZEvento) => {
+            cmSincBotonParametros = infoEvento.dato.buffer.dato as CM.ISincBoton;
+            cmSincBotonParametros.px = parseInt(cmSincBotonParametros.px.toString());
+            cmSincBotonParametros.nc = parseInt(cmSincBotonParametros.nc.toString());
+            if (listaPxComandos.indexOf(cmSincBotonParametros.px) == -1) {
+                listaPxComandos.push(cmSincBotonParametros.px);
+            }
+            if (!hashZComandoState.has(cmSincBotonParametros.nc)) {
+                let zComandFormaEnHash = {
+                    desh: cmSincBotonParametros.vc
+                } as IZComandoFormaState;
+
+                hashZComandoState.set(cmSincBotonParametros.nc, zComandFormaEnHash);
+
+            } else {
+                const zComandFormaEnHash = hashZComandoState.get(cmSincBotonParametros.nc);
+                zComandFormaEnHash.desh = cmSincBotonParametros.vc;
             }
         }
 

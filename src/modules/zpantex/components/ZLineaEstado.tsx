@@ -52,7 +52,7 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
                 <ButtonGroup bsSize="small">
                     {linEst.map((zComandoI: IZComandoForma, index: number) => {
                         let iconName = zPantexServies.getCMIcon(zComandoI);
-                        let tooltip = (<Tooltip key={index} id={`tooltip_` + index}>{zComandoI.etq}</Tooltip>);
+                        let tooltip = (<Tooltip key={index} id={`tooltip_` + index}>{zComandoI.etq + zComandoI.cmd}</Tooltip>);
                         return (
                             <OverlayTrigger key={index} placement="top" overlay={tooltip}>
                                 <Button
@@ -64,6 +64,7 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
                                     {(!iconName) &&
                                         zComandoI.etq
                                     }
+                                    {zComandoI.cmd}
                                     <span className={iconName} aria-hidden="true"></span>
                                 </Button>
                             </OverlayTrigger>

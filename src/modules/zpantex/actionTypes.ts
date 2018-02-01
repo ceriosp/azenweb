@@ -95,7 +95,7 @@ export namespace ActionTypes {
                 hashZCampos: Map<string, IZCampoState>,
 
                 listaPxComandos: Array<number>,
-                hashZComandos: Map<string, IZComandoFormaState>
+                hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>
             } |
             {
                 type: Types.ON_CAMPOCHANGE,

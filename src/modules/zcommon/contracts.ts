@@ -34,7 +34,7 @@ export class EntityMap<TEntity>{
 //#region =============================================== DOMAIN ===============================================
 export interface IZBuffer {
     fto: string;
-    dato: string | IZMenu | IZPantex | IZAplList | CM.ISincCampo | CM.IPrenderControl;
+    dato: string | IZMenu | IZPantex | IZAplList | CM.ISincCampo | CM.IPrenderControl | CM.ISincBoton;
 }
 
 export interface IZDatoEvento {
@@ -137,7 +137,7 @@ export interface IZCampoBase {
 }
 
 export interface IZCampo extends IZCampoBase {
-    lonv: number;    
+    lonv: number;
     tipo: number;
     noEnTabla: number;
     modo: number; //Constants.ModoCampo namespace
@@ -160,7 +160,7 @@ export interface IZPantexState extends IdEntityBase {
     zFormaTablaStateListIds: Array<number>;
 
     //Propiedades del state
-    zFormaTablaListState: Array<IZFormaTablaState>;    
+    zFormaTablaListState: Array<IZFormaTablaState>;
 }
 
 export class ZPantexState implements IZPantexState {
@@ -172,7 +172,7 @@ export class ZPantexState implements IZPantexState {
 
     id: number; //px
     zFormaTablaStateListIds: Array<number>;
-    zFormaTablaListState: Array<IZFormaTablaState>;    
+    zFormaTablaListState: Array<IZFormaTablaState>;
 }
 
 export interface IZFormaTablaState extends IdEntityBase { //zft
@@ -190,7 +190,7 @@ export interface IZFormaTablaState extends IdEntityBase { //zft
 
 export class ZFormaTablaState implements IZFormaTablaState { //zft
 
-    constructor(id:number) {        
+    constructor(id: number) {
         this.id = id;
         this.zCampoStateListIds = new Array<number>();
         this.linEstListIds = new Array<number>();
@@ -213,19 +213,19 @@ export class ZFormaTablaState implements IZFormaTablaState { //zft
 }
 
 export interface IZCampoState extends IdEntityBase, IZCampoBase {
-            
-    id: number;
-    px:number;
-    value: any;
-    readOnly: boolean;    
-    esCampoGrafico: boolean;
-    haCambiado:boolean;
-    checked:boolean;
-    
-    //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
-    posBitsOn:Array<number>;
 
-    controlCampo:Constants.ControlCampoEnum;
+    id: number;
+    px: number;
+    value: any;
+    readOnly: boolean;
+    esCampoGrafico: boolean;
+    haCambiado: boolean;
+    checked: boolean;
+
+    //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
+    posBitsOn: Array<number>;
+
+    controlCampo: Constants.ControlCampoEnum;
     modoCampo: Constants.ModoCampoEnum;
 
     //Para campos dentro de un campo gráfico
@@ -235,7 +235,7 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
 
 export class ZCampoState implements IZCampoState {
 
-    constructor(zcampo: IZCampo, id:number, px:number) {
+    constructor(zcampo: IZCampo, id: number, px: number) {
 
         this.id = id;
         this.px = px;
@@ -247,52 +247,54 @@ export class ZCampoState implements IZCampoState {
         this.lon = zcampo.lon;
         this.lonv = zcampo.lonv;
         this.posbit = zcampo.posbit;
-                
+
 
         this.readOnly = false;
         this.value = "";
         this.checked = false;
 
-        this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;                
+        this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;
     }
 
     //Propiedades para manejo de estado
-    id: number;    
-    px:number;
+    id: number;
+    px: number;
     value: string;
-    readOnly: boolean;    
+    readOnly: boolean;
     esCampoGrafico: boolean;
-    haCambiado:boolean;    
+    haCambiado: boolean;
     parentId?: number; //Para campos dentro de un campo gráfico
     cmpsState: Array<IZCampoState>;
 
     //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
-    posBitsOn:Array<number>;
-    
-    controlCampo:Constants.ControlCampoEnum;
+    posBitsOn: Array<number>;
+
+    controlCampo: Constants.ControlCampoEnum;
     modoCampo: Constants.ModoCampoEnum;
-    checked:boolean;    
+    checked: boolean;
 
     //Propiedades IZCampo
     nomCmp: string;
     etq: string;
     claseInd: Constants.ClaseIndicadorEnum;
-    lon: number;    
-    lonv: number;    
-    posbit:number;
+    lon: number;
+    lonv: number;
+    posbit: number;
 }
 
 export interface IZComandoFormaState extends IZComandoForma {
     id: number;
+    px: number;
 }
 
 export class ZComandoFormaState implements IZComandoFormaState {
 
-    constructor(zComandoForma: IZComandoForma, id:number) {
+    constructor(zComandoForma: IZComandoForma, id: number, px:number) {
 
         this.id = id;
+        this.px = px;
 
-        if(!zComandoForma){
+        if (!zComandoForma) {
             return;
         }
 
@@ -303,6 +305,7 @@ export class ZComandoFormaState implements IZComandoFormaState {
     }
 
     id: number;
+    px: number;
 
     //Propiedades de IZComandoFormaState
     etq: string;
@@ -317,7 +320,7 @@ export interface IZVentanaState extends IZVentanaBase {
 
 export class ZVentanaState implements IZVentanaState {
 
-    constructor(zVentana: IZVentana, id:number) {
+    constructor(zVentana: IZVentana, id: number) {
 
         this.id = id;
 
@@ -574,7 +577,7 @@ export namespace CM {
         /**
          * 
          */
-        nc: number,
+        nc: Constants.ComandoEnum,
 
         /**
          * 
@@ -609,9 +612,9 @@ export namespace CM {
 export interface IZAplState {
     idApl: string;
     nomApl: string;
-    azenURL: string; 
+    azenURL: string;
     estaProcesandoRequestServidor: boolean;
-    ultimoComandoEnviado:Constants.ComandoEnum;
+    ultimoComandoEnviado: Constants.ComandoEnum;
     tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
     zMenuModule: IZMenuModule;
     zPantexModule: IZPantexModule;
@@ -631,15 +634,15 @@ export interface IZPantexModule {
 
     azenURL: string;
 
-    pxAlTope: number;    
+    pxAlTope: number;
     iconosBotonesList: Array<ZIconoBoton>;
 }
 
 export interface IZPantexStateModule {
-    
+
     pilaPx: Array<number>;
-    pxAlTope:number;
-    ponerModal:boolean;
+    pxAlTope: number;
+    ponerModal: boolean;
 
     pilaPantexState: EntityNormalizedObj<IZPantexState>;
     zFormaTablaState: EntityNormalizedObj<IZFormaTablaState>;

@@ -244,7 +244,7 @@ export namespace Reducers {
                 return state;
             }
 
-            const actualizarDefinicionCampo = (zcampoState: IZCampoState): IZCampoState => {
+            const actualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
 
                 if (action.listaPxCampos.indexOf(zcampoState.px) != -1) {
                     if (action.hashZCampos.has(zcampoState.nomCmp)) {
@@ -296,11 +296,28 @@ export namespace Reducers {
                 return zcampoState;
             }
 
+            const actualizarBoton = (zcomandoFormaState: IZComandoFormaState): IZComandoFormaState => {
+
+                if (action.listaPxComandos.indexOf(zcomandoFormaState.px) != -1) {
+                    if (action.hashZComandos.has(zcomandoFormaState.cmd)) {
+                        const zComandoFormaEnHash = action.hashZComandos.get(zcomandoFormaState.cmd);
+                        return u({
+                            desh:zComandoFormaEnHash.desh
+                        } as IZComandoFormaState, zcomandoFormaState);
+                    }
+                }
+
+                return zcomandoFormaState;
+            }
+
             if (action.hashZCampos.size > 0) {
                 return u({
                     zCampoState: {
-                        byId: u.map(actualizarDefinicionCampo)
+                        byId: u.map(actualizarZCampo)
                     } as any,
+                    zComandoFormaState:{
+                        byId: u.map(actualizarBoton)
+                    } as any,                    
                 } as IZPantexStateModule, state);
             }
         }

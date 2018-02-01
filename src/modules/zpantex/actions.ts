@@ -99,10 +99,10 @@ export namespace Actions {
                     agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zCampoState);
 
                 zFormaTablaState.byId[id].btnsListIds =
-                    agregarZComandosBtnsFormaState(getStateFn, zPantex.zFormaTablaList[i], zComandoFormaState);
+                    agregarZComandosBtnsFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zComandoFormaState);
 
                 zFormaTablaState.byId[id].linEstListIds =
-                    agregarZComandosLinEstFormaState(getStateFn, zPantex.zFormaTablaList[i], zComandoFormaState);
+                    agregarZComandosLinEstFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zComandoFormaState);
 
                 zFormaTablaState.allIds.push(id);
 
@@ -157,6 +157,7 @@ export namespace Actions {
         }
 
         const agregarZComandosBtnsFormaState = (getStateFn: () => IZAplState,
+            zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
             zComandosFormaState: EntityNormalizedObj<IZComandoFormaState>): Array<number> => {
 
@@ -168,7 +169,7 @@ export namespace Actions {
 
             let id = Selectors.ZPantexStateModule.ZComandoFormaState.getNextZComandoFormaStateId(getStateFn());
             for (let i = 0; i < zFormaTabla.btns.length; i++) {
-                zComandosFormaState.byId[id] = new ZComandoFormaState(zFormaTabla.btns[i], id);
+                zComandosFormaState.byId[id] = new ZComandoFormaState(zFormaTabla.btns[i], id, zPantex.numPx);
                 zComandosFormaState.allIds.push(id);
                 zFormaTablaBtnsIds.push(id);
                 id++;
@@ -178,6 +179,7 @@ export namespace Actions {
         }
 
         const agregarZComandosLinEstFormaState = (getStateFn: () => IZAplState,
+            zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
             zComandosFormaState: EntityNormalizedObj<IZComandoFormaState>): Array<number> => {
 
@@ -191,7 +193,7 @@ export namespace Actions {
             id = id + zComandosFormaState.allIds.length + 1;
 
             for (let i = 0; i < zFormaTabla.linEst.length; i++) {
-                zComandosFormaState.byId[id] = new ZComandoFormaState(zFormaTabla.linEst[i], id);
+                zComandosFormaState.byId[id] = new ZComandoFormaState(zFormaTabla.linEst[i], id, zPantex.numPx);
                 zComandosFormaState.allIds.push(id);
                 zFormaTablaLinEstIds.push(id);
                 id++;
@@ -226,13 +228,16 @@ export namespace Actions {
             pxArrivarParams,
         });
 
-        export const cmSincPx = (listaPxCampos: Array<number>, hashZCampos: Map<string, IZCampoState>, listaPxComandos: Array<number>, hashZComandos: Map<string, IZComandoFormaState>): ActionTypes.ZPantexStateModule.Action => ({
-            type: ActionTypes.ZPantexStateModule.CM_SINCCAMPO,
-            listaPxCampos,
-            hashZCampos,
-            listaPxComandos,
-            hashZComandos
-        });
+        export const cmSincPx = (listaPxCampos: Array<number>,
+            hashZCampos: Map<string, IZCampoState>,
+            listaPxComandos: Array<number>,
+            hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>): ActionTypes.ZPantexStateModule.Action => ({
+                type: ActionTypes.ZPantexStateModule.CM_SINCCAMPO,
+                listaPxCampos,
+                hashZCampos,
+                listaPxComandos,
+                hashZComandos
+            });
 
         export const onCampoChanged = (zcampoState: IZCampoState, valor: any): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.ON_CAMPOCHANGE,

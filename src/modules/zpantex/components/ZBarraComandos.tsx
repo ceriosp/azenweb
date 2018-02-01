@@ -47,7 +47,7 @@ export class ZBarraComandos extends React.PureComponent<OwnProperties & Connecte
                     <ButtonToolbar>
                         {zComandosList.map((zComandoI: IZComandoForma, index: number) => {
                             let iconName = zPantexServies.getCMIcon(zComandoI);
-                            let tooltip = (<Tooltip key={index} id={`tooltip` + index}>{zComandoI.etq}</Tooltip>);
+                            let tooltip = (<Tooltip key={index} id={`tooltip` + index}>{zComandoI.etq + zComandoI.cmd}</Tooltip>);
                             return (
                                 <OverlayTrigger key={index} placement="top" overlay={tooltip}>
                                     <Button
@@ -57,7 +57,8 @@ export class ZBarraComandos extends React.PureComponent<OwnProperties & Connecte
                                     >
                                         {(!iconName) &&
                                             zComandoI.etq
-                                        }
+                                        } 
+                                        {zComandoI.cmd}
                                         <span className={iconName} aria-hidden="true"></span>
                                     </Button>
                                 </OverlayTrigger>
