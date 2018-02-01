@@ -43,14 +43,14 @@ export namespace ActionTypes {
             export type CM_PXCREAR = "ZPantexStateModule/CM_PXCREAR";
             export type CM_PONERMODAL = "ZPantexStateModule/CM_PONERMODAL";
             export type CM_PXARRIVAR = "ZPantexStateModule/CM_PXARRIVAR";
-            export type CM_PXDESTRUIR = "ZPantexStateModule/CM_PXDESTRUIR";            
-            export type CM_SINCCAMPO = "ZPantexStateModule/CM_SINCCAMPO";            
+            export type CM_PXDESTRUIR = "ZPantexStateModule/CM_PXDESTRUIR";
+            export type CM_SINCCAMPO = "ZPantexStateModule/CM_SINCCAMPO";
 
-            export type ON_CAMPOCHANGE = "ZPantexStateModule/ON_CAMPOCHANGE";            
+            export type ON_CAMPOCHANGE = "ZPantexStateModule/ON_CAMPOCHANGE";
             export type ON_CAMPORADIOCHANGE = "ZPantexStateModule/ON_CAMPORADIOCHANGE";
             export type ON_CAMPOCHECKBOXCHANGE = "ZPantexStateModule/ON_CAMPOCHECKBOXCHANGE";
 
-            export type SET_ZCAMPOSTATE_HACAMBIADO = "ZPantexStateModule/SET_ZCAMPOSTATE_HACAMBIADO";            
+            export type SET_ZCAMPOSTATE_HACAMBIADO = "ZPantexStateModule/SET_ZCAMPOSTATE_HACAMBIADO";
         }
 
         export const CM_PXCREAR: Types.CM_PXCREAR = "ZPantexStateModule/CM_PXCREAR";
@@ -62,57 +62,61 @@ export namespace ActionTypes {
         export const ON_CAMPOCHANGE: Types.ON_CAMPOCHANGE = "ZPantexStateModule/ON_CAMPOCHANGE";
         export const ON_CAMPORADIOCHANGE: Types.ON_CAMPORADIOCHANGE = "ZPantexStateModule/ON_CAMPORADIOCHANGE";
         export const ON_CAMPOCHECKBOXCHANGE: Types.ON_CAMPOCHECKBOXCHANGE = "ZPantexStateModule/ON_CAMPOCHECKBOXCHANGE";
-        
-        export const SET_ZCAMPOSTATE_HACAMBIADO: Types.SET_ZCAMPOSTATE_HACAMBIADO = "ZPantexStateModule/SET_ZCAMPOSTATE_HACAMBIADO";        
 
-        
-        export type Action =        
-        {
-            type: Types.CM_PXCREAR,
-            px:number,
-            pilaPantexState: EntityNormalizedObj<IZPantexState>,
-            zFormaTablaState: EntityNormalizedObj<IZFormaTablaState>,
-            zVentanaState: EntityNormalizedObj<IZVentanaState>,
-            zCampoState: EntityNormalizedObj<IZCampoState>,
-            zComandoFormaState: EntityNormalizedObj<IZComandoFormaState>
-        }|
-        {
-            type: Types.CM_PONERMODAL,
-            ponerModal:boolean
-        }|
-        {
-            type: Types.CM_PXARRIVAR,
-            pxArrivarParams:CM.IPxArrivar
-        }|
-        {
-            type: Types.CM_PXDESTRUIR,
-            pxDestruirParams:CM.IPxDestruir
-        }|
-        {
-            type: Types.CM_SINCCAMPO,
-            listaPx:Array<number>,
-            hashZCampos:Map<string, IZCampoState>
-        }|
-        {
-            type: Types.ON_CAMPOCHANGE,
-            zcampoState:IZCampoState,
-            valor:any
-        }|
-        {
-            type: Types.ON_CAMPORADIOCHANGE,
-            zcampoState:IZCampoState,
-            valor:string
-        }|        
-        {
-            type: Types.ON_CAMPOCHECKBOXCHANGE,
-            zcampoState:IZCampoState,
-            valor:boolean
-        }|                
-        {
-            type: Types.SET_ZCAMPOSTATE_HACAMBIADO,
-            idZCampoState:number,
-            haCambiado:boolean
-        }
+        export const SET_ZCAMPOSTATE_HACAMBIADO: Types.SET_ZCAMPOSTATE_HACAMBIADO = "ZPantexStateModule/SET_ZCAMPOSTATE_HACAMBIADO";
+
+
+        export type Action =
+            {
+                type: Types.CM_PXCREAR,
+                px: number,
+                pilaPantexState: EntityNormalizedObj<IZPantexState>,
+                zFormaTablaState: EntityNormalizedObj<IZFormaTablaState>,
+                zVentanaState: EntityNormalizedObj<IZVentanaState>,
+                zCampoState: EntityNormalizedObj<IZCampoState>,
+                zComandoFormaState: EntityNormalizedObj<IZComandoFormaState>
+            } |
+            {
+                type: Types.CM_PONERMODAL,
+                ponerModal: boolean
+            } |
+            {
+                type: Types.CM_PXARRIVAR,
+                pxArrivarParams: CM.IPxArrivar
+            } |
+            {
+                type: Types.CM_PXDESTRUIR,
+                pxDestruirParams: CM.IPxDestruir
+            } |
+            {
+                type: Types.CM_SINCCAMPO,
+
+                listaPxCampos: Array<number>,
+                hashZCampos: Map<string, IZCampoState>,
+
+                listaPxComandos: Array<number>,
+                hashZComandos: Map<string, IZComandoFormaState>
+            } |
+            {
+                type: Types.ON_CAMPOCHANGE,
+                zcampoState: IZCampoState,
+                valor: any
+            } |
+            {
+                type: Types.ON_CAMPORADIOCHANGE,
+                zcampoState: IZCampoState,
+                valor: string
+            } |
+            {
+                type: Types.ON_CAMPOCHECKBOXCHANGE,
+                zcampoState: IZCampoState,
+                valor: boolean
+            } |
+            {
+                type: Types.SET_ZCAMPOSTATE_HACAMBIADO,
+                idZCampoState: number,
+                haCambiado: boolean
+            }
     }
 
     export namespace Types {

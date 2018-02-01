@@ -246,7 +246,7 @@ export namespace Reducers {
 
             const actualizarDefinicionCampo = (zcampoState: IZCampoState): IZCampoState => {
 
-                if (action.listaPx.indexOf(zcampoState.px) != -1) {
+                if (action.listaPxCampos.indexOf(zcampoState.px) != -1) {
                     if (action.hashZCampos.has(zcampoState.nomCmp)) {
                         const zCampoEnHash = action.hashZCampos.get(zcampoState.nomCmp);
                         let zCampoActualizado = {
@@ -261,7 +261,7 @@ export namespace Reducers {
                                 zCampoEnHash.controlCampo == undefined
                                     ? zcampoState.controlCampo
                                     : zCampoEnHash.controlCampo,
-                                    
+
                             modoCampo:
                                 zCampoEnHash.modoCampo == undefined
                                     ? zcampoState.modoCampo
@@ -274,7 +274,7 @@ export namespace Reducers {
                             if (zCampoEnHash.posBitsOn
                                 && zCampoEnHash.posBitsOn.indexOf(zcampoState.lon) != -1) {
                                 zCampoActualizado.checked = true;
-                            }else{
+                            } else {
                                 zCampoActualizado.checked = false;
                             }
                         }

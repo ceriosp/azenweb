@@ -44,7 +44,7 @@ const recursosZoomList: Array<string> =
 
 import * as ZCommon from '../zcommon';
 import {
-    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList, IZCampo, CM, IZCampoState
+    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList, IZCampo, CM, IZCampoState, IZComandoFormaState
 } from '../zcommon';
 
 import * as ZMenu from '../zmenu';
@@ -86,16 +86,18 @@ export namespace Services {
 
         //valores de los campos de un px: <nombreCampo, valor> 
         let hashZCampoState = new Map<string, IZCampoState>();
+        let hashZComandoState = new Map<string, IZComandoFormaState>();
         let cmSincCampoParametros: CM.ISincCampo;
         let cmPrenderControlParametros: CM.IPrenderControl;
         let cmPrenderModoParametros: CM.IPrenderModo;
-        let listaPx:Array<number>; //Lista px para actualizar campos
+        let listaPxCampos: Array<number>; //Lista px para actualizar campos
+        let listaPxComandos: Array<number>; //Lista px para actualizar comandos
 
         export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
             //valores de los campos de un px: <nombreCampo, valor> 
             hashZCampoState = new Map<string, IZCampoState>();
-            listaPx = [];
+            listaPxCampos = [];
 
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
 
@@ -124,19 +126,19 @@ export namespace Services {
             }
 
 
-            console.log("module/zaplicacion/services- px: " + JSON.stringify(listaPx));
+            console.log("module/zaplicacion/services- px: " + JSON.stringify(listaPxCampos));
             console.log(hashZCampoState);
             //Hay campos para sincronizar      
             if (hashZCampoState.size > 0) {
-                dispatch(ZPantex.Actions.ZPantexStateModule.cmSincCampo(listaPx, hashZCampoState));
+                dispatch(ZPantex.Actions.ZPantexStateModule.cmSincPx(listaPxCampos, hashZCampoState, listaPxComandos, hashZComandoState));
             }
         }
 
         const cmSincCampo = (infoEvento: IZEvento) => {
             cmSincCampoParametros = infoEvento.dato.buffer.dato as CM.ISincCampo;
             cmSincCampoParametros.px = parseInt(cmSincCampoParametros.px.toString());
-            if (listaPx.indexOf(cmSincCampoParametros.px) == -1 ) {
-                listaPx.push(cmSincCampoParametros.px);
+            if (listaPxCampos.indexOf(cmSincCampoParametros.px) == -1) {
+                listaPxCampos.push(cmSincCampoParametros.px);
             }
             if (!hashZCampoState.has(cmSincCampoParametros.nc)) {
                 let zCampoEnHash = {
@@ -152,9 +154,9 @@ export namespace Services {
                         zCampoEnHash.posBitsOn.push(parseInt(cmSincCampoParametros.pb.toString()));
                     }
                 }
-                
+
                 hashZCampoState.set(cmSincCampoParametros.nc, zCampoEnHash);
-                
+
             } else {
                 const zCampoEnHash = hashZCampoState.get(cmSincCampoParametros.nc);
                 zCampoEnHash.value = cmSincCampoParametros.vc;
