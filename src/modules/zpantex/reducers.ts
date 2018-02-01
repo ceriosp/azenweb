@@ -167,21 +167,12 @@ export namespace Reducers {
                     return cmSincCampo(state, action);
 
                 case ActionTypes.ZPantexStateModule.ON_CAMPOCHANGE:
-                    const zCampoState = state.zCampoState.byId[action.zcampoState.id];
-
-                    let valorRadioOChequeo: boolean = undefined;
-                    if (zCampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO) {
-                        valorRadioOChequeo = action.valor == "*";
-                    } else if (zCampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
-                        valorRadioOChequeo = action.valor == "X";
-                    }
                     return u({
                         zCampoState: {
                             byId: {
                                 [action.zcampoState.id]: {
-                                    value: valorRadioOChequeo ? zCampoState.value : action.valor,
+                                    value: action.valor,
                                     haCambiado: true,
-                                    checked: valorRadioOChequeo
                                 } as IZCampoState
                             }
                         } as any,
@@ -189,6 +180,18 @@ export namespace Reducers {
 
                 case ActionTypes.ZPantexStateModule.ON_CAMPORADIOCHANGE:
                     return onCampoRadioChange(state, action);
+
+                case ActionTypes.ZPantexStateModule.ON_CAMPOCHECKBOXCHANGE:
+                    return u({
+                        zCampoState: {
+                            byId: {
+                                [action.zcampoState.id]: {
+                                    checked: action.valor,
+                                    haCambiado: true,
+                                } as IZCampoState
+                            }
+                        } as any,
+                    } as IZPantexStateModule, state);
 
                 case ActionTypes.ZPantexStateModule.SET_ZCAMPOSTATE_HACAMBIADO:
                     return u({
@@ -252,11 +255,13 @@ export namespace Reducers {
                                 ? zcampoState.value
                                 : zCampoEnHash.value,
 
+                            checked: zcampoState.checked,
+
                             controlCampo:
                                 zCampoEnHash.controlCampo == undefined
                                     ? zcampoState.controlCampo
                                     : zCampoEnHash.controlCampo,
-
+                                    
                             modoCampo:
                                 zCampoEnHash.modoCampo == undefined
                                     ? zcampoState.modoCampo
@@ -269,6 +274,8 @@ export namespace Reducers {
                             if (zCampoEnHash.posBitsOn
                                 && zCampoEnHash.posBitsOn.indexOf(zcampoState.lon) != -1) {
                                 zCampoActualizado.checked = true;
+                            }else{
+                                zCampoActualizado.checked = false;
                             }
                         }
 
@@ -315,7 +322,7 @@ export namespace Reducers {
                 if (zcampoState.px == action.zcampoState.px) {
                     if (zcampoState.parentId == zcampoRadioPadre.id) {
                         if (zcampoState.id == action.zcampoState.id) {
-                            return u({                                
+                            return u({
                                 checked: true,
                             } as IZCampoState, zcampoState);
                         }

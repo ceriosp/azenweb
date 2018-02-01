@@ -136,21 +136,32 @@ export namespace Services {
                 px = cmSincCampoParametros.px;
             }
             if (!hashZCampoState.has(cmSincCampoParametros.nc)) {
-                hashZCampoState.set(cmSincCampoParametros.nc, {
+                let zCampoEnHash = {
                     px: cmSincCampoParametros.px,
                     value: cmSincCampoParametros.vc,
-                    posBitsOn:[],
-                } as IZCampoState);
+                } as IZCampoState;
+
+                //Es radio o checkbox
+                if (cmSincCampoParametros.pb) {
+                    zCampoEnHash.posBitsOn = [];
+                    if (cmSincCampoParametros.vc == "X" || cmSincCampoParametros.vc == "*") {
+                        zCampoEnHash.value = undefined;
+                        zCampoEnHash.posBitsOn.push(parseInt(cmSincCampoParametros.pb.toString()));
+                    }
+                }
+                
+                hashZCampoState.set(cmSincCampoParametros.nc, zCampoEnHash);
+                
             } else {
-                const zCampoEnHash = hashZCampoState.get(cmSincCampoParametros.nc);                                
+                const zCampoEnHash = hashZCampoState.get(cmSincCampoParametros.nc);
                 zCampoEnHash.value = cmSincCampoParametros.vc;
 
                 //Es radio o checkbox
-                if(cmSincCampoParametros.pb){
-                    if(!zCampoEnHash.posBitsOn){
+                if (cmSincCampoParametros.pb) {
+                    if (!zCampoEnHash.posBitsOn) {
                         zCampoEnHash.posBitsOn = [];
                     }
-                    if(cmSincCampoParametros.vc == "X" || cmSincCampoParametros.vc == "*"){
+                    if (cmSincCampoParametros.vc == "X" || cmSincCampoParametros.vc == "*") {
                         zCampoEnHash.value = undefined;
                         zCampoEnHash.posBitsOn.push(parseInt(cmSincCampoParametros.pb.toString()));
                     }

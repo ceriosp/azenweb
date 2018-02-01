@@ -247,6 +247,12 @@ export namespace Actions {
             zcampoState,
             valor,
         });
+
+        export const onCampoCheckboxChanged = (zcampoState: IZCampoState, valor: boolean): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.ON_CAMPOCHECKBOXCHANGE,
+            zcampoState,
+            valor,
+        });
         
         export const setZCampoHaCambiado = (idZCampoState: number, haCambiado: boolean): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.SET_ZCAMPOSTATE_HACAMBIADO,
@@ -265,9 +271,20 @@ export namespace Actions {
             }
         }
 
-        export const prenderValorBit = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+        export const prenderValorBitRadio = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
             dispatch(onCampoRadioChanged(zcampoState, zcampoState.lon));
             const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>*</vc><pb>${zcampoState.lon}</pb>`;
+            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
+                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
+                    
+                }
+            );        
+        }
+
+        export const notificarCambioCheckbox = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+            const value:boolean = !zcampoState.checked;
+            dispatch(onCampoCheckboxChanged(zcampoState, value));
+            let buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${value ? "X" : " "}</vc><pb>${zcampoState.lon}</pb>`;
             dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
                 (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
                     

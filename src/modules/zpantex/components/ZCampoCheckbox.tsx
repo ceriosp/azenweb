@@ -19,15 +19,14 @@ export interface ConnectedState {
 }
 
 export interface ConnectedDispatch {
-    sincronizarCampo: (buffer: string) => void;
+    notificarCambioCheckbox: (zcampoState: IZCampoState) => void;
 }
 
 export class ZCampoCheckbox extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
-
-        this.sincronizarCampo = this.sincronizarCampo.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     render(): any {
@@ -36,10 +35,9 @@ export class ZCampoCheckbox extends React.PureComponent<OwnProps & ConnectedStat
 
         return (
             <FormGroup>
-                <Checkbox
-                    value={zCampoModel.lon}
+                <Checkbox                    
                     checked={zCampoModel.checked}
-                    onChange={this.sincronizarCampo}
+                    onChange={this.onClick}
                     disabled={
                         this.props.estaProcesandoRequestServidor
                         || zCampoModel.readOnly
@@ -51,8 +49,7 @@ export class ZCampoCheckbox extends React.PureComponent<OwnProps & ConnectedStat
         );
     }
 
-    sincronizarCampo(e: any) {
-        let buffer = `<nc>${this.props.zCampoModel.nomCmp}</nc><vc>${e.target.checked ? "X" : " "}</vc><pb>${this.props.zCampoModel.lon}</pb>`;
-        this.props.sincronizarCampo(buffer);
+    onClick(e: any) {
+        this.props.notificarCambioCheckbox(this.props.zCampoModel);
     }
 }

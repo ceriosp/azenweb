@@ -18,7 +18,7 @@ export interface ConnectedState {
 }
 
 export interface ConnectedDispatch {
-    prenderValorBit: (zcampoState: IZCampoState) => void;
+    prenderValorBitRadio: (zcampoState: IZCampoState) => void;
 }
 
 export class ZCampoRadio extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
@@ -51,6 +51,6 @@ export class ZCampoRadio extends React.PureComponent<OwnProps & ConnectedState &
 
     
     onClick(e: any) {
-        this.props.prenderValorBit(this.props.zCampoModel);
+        this.props.prenderValorBitRadio(this.props.zCampoModel);
     }
 }

@@ -20,8 +20,8 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-    prenderValorBit: (zcampoState: IZCampoState) =>
-        dispatch(Actions.ZPantexStateModule.prenderValorBit(zcampoState)),
+    prenderValorBitRadio: (zcampoState: IZCampoState) =>
+        dispatch(Actions.ZPantexStateModule.prenderValorBitRadio(zcampoState)),
 });
 
 export const ZCampoRadioContainer: React.ComponentClass<OwnProps> =

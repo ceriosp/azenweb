@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as redux from 'redux';
 import { connect } from 'react-redux';
 
-import { IZAplState } from "../../zcommon/contracts";
+import { IZAplState, IZCampoState } from "../../zcommon/contracts";
 import { Constants as ZCommonConstants } from "../../zcommon/constants";
 import { Actions as ZAplicacionActions } from "../../zaplicacion/actions";
 
@@ -20,8 +20,8 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-    sincronizarCampo: (buffer: string) =>
-        dispatch(ZAplicacionActions.despacharEventoCliente(ZCommonConstants.ComandoEnum.CM_CAMBIOCMPIND, buffer))
+    notificarCambioCheckbox: (zcampoState: IZCampoState) =>
+        dispatch(Actions.ZPantexStateModule.notificarCambioCheckbox(zcampoState))
 });
 
 export const ZCampoCheckboxContainer: React.ComponentClass<OwnProps> =
