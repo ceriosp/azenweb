@@ -30,11 +30,11 @@ import {
 
     //Models
     ZRecursoViewModel,
-    State,
 
     //Utils
     EntityNormalizedObj,
     IZAplState,
+    Constants
 
 } from "./modules/zcommon";
 
@@ -55,17 +55,23 @@ let idApl = ZUtils.Services.getQueryStringParameter('idApl');
 let nomApl = ZUtils.Services.getQueryStringParameter('nomApl');
 let lanzarMenu = ZUtils.Services.getQueryStringParameter('lanzarMenu');
 
+let appInitialState = {
+    azenURL: Constants.AZEN_URL
+} as IZAplState;
+
 const obtenerEstadoInicial = () => {
 
     if (__DEV__) {
         return createStore(
             App.Reducers.zaplState,
+            appInitialState,
             redux.compose(redux.applyMiddleware(...middlewares), window.devToolsExtension ? window.devToolsExtension() : (f: any) => f)
         );
     }
 
     return createStore(
         App.Reducers.zaplState,
+        appInitialState,
         redux.compose(redux.applyMiddleware(...middlewares))
     );
 }
@@ -86,6 +92,7 @@ else {
 
     store = createStore(
         App.Reducers.zaplState,
+        appInitialState,
         redux.compose(redux.applyMiddleware(...middlewares), window.devToolsExtension ? window.devToolsExtension() : (f: any) => f)
     );
 

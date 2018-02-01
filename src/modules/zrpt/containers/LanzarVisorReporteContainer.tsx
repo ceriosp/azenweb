@@ -12,6 +12,7 @@ import {
 } from '../components/LanzarVisorReporte';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
+    azenURL: appState.azenURL,
     mostrarReporte: appState.zrptModule.mostrarReporte,
     rutaReporte: appState.zrptModule.rutaReporte
 });

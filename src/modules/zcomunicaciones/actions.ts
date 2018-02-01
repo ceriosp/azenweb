@@ -7,19 +7,18 @@ import {
 import { IZAplState, IZColaEventos, IZEnviarComandoParams } from "../zcommon/contracts";
 import { ActionTypes } from "./actionTypes";
 
-import { Selectors as AppSelectors } from "../app/selectors";
-
 export namespace Actions {
 
     export const enviarRequestComando = <TRetorno>(parametros: IZEnviarComandoParams) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<TRetorno>> => {
         return new Promise<ResultadoActionConDato<TRetorno>>((resolve, reject) => {
 
-            let idApl = AppSelectors.getIdApl(getState());
+            let idApl = getState().idApl;
+            let azenURL = getState().azenURL;
 
             let { cmd, buffer } = parametros;
             let dominioComponentes = window.location.href.split("/");
             let dominio = dominioComponentes[0] + "//" + dominioComponentes[2];
-            let requestUrl = `http://52.42.49.101:8080/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}&dominio=${dominio}`;
+            let requestUrl = azenURL + `/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}&dominio=${dominio}`;
 
             console.log("----------------------------------------------------------------");
             console.time(`${ZCommon.Constants.ComandoEnum[cmd]}`);
@@ -27,7 +26,7 @@ export namespace Actions {
 
             dispatch(setProcesosServidor(true, parametros.tipoAJAXIndicador))
             fetch(requestUrl, {
-                //fetch(`http://localhost:8585/azenweb/server/despacharRecurso.php`, {
+                //fetch(azenURL + `/azenweb/server/despacharRecurso.php`, {
                 /*
                 headers: {
                     'Content-Type': 'application/json'

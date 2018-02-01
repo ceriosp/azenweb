@@ -34,6 +34,16 @@ export namespace Reducers {
         return state;
     }
 
+    export const azenURL = (state: string = null, action: ActionTypes.Action): string => {
+
+        switch (action.type) {
+            case ActionTypes.SET_AZENURL:
+                return action.azenURL
+        }
+
+        return state;
+    }
+
     export const ultimoComandoEnviado = (state: ZCommon.Constants.ComandoEnum = null, action: ActionTypes.Action): ZCommon.Constants.ComandoEnum => {
 
         switch (action.type) {
@@ -67,6 +77,7 @@ export namespace Reducers {
     export const zaplState: Reducer<IZAplState> = combineReducers<IZAplState>({
         idApl: idApl,
         nomApl: nomApl,
+        azenURL: azenURL,
         tipoAJAXIndicador: tipoAJAXIndicador,
         ultimoComandoEnviado:ultimoComandoEnviado,
         estaProcesandoRequestServidor: estaProcesandoRequestServidor,

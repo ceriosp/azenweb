@@ -15,6 +15,11 @@ export namespace Actions {
         type: ActionTypes.SET_NOMAPL,
         nomApl
     });
+    
+    export const setAzenUrl = (azenURL: string = null): ActionTypes.Action => ({
+        type: ActionTypes.SET_AZENURL,
+        azenURL
+    });
 
     export const setUltimoComandoEnviado = (cmd: ZCommonConstants.ComandoEnum): ActionTypes.Action => ({
         type: ActionTypes.SET_ULTIMOCOMANDOENVIADO,

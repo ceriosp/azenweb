@@ -1,5 +1,7 @@
 export namespace Constants {
 
+    export const AZEN_URL: string = "http://52.42.49.101:8080";
+
     export enum FormatoDatoEventoEnum {
         XML = "xml",
         JSON = "json"
@@ -275,7 +277,7 @@ export namespace Constants {
         ZCMP_UPCASE = 2,  /* Edición en mayúscula */
         ZCMP_INS = 4,  /* Edición modo inserción */
         ZCMP_EDIT = 8,    /* Edición mormal */
-        ZCMP_EDIZQ	= 16,  /* Edición poniendo cursor al inicio */ 
+        ZCMP_EDIZQ = 16,  /* Edición poniendo cursor al inicio */
         ZCMP_VISUAL = 32, /* Solo visual */
         ZCMP_INTRACMP = 64, /* */
     }

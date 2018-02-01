@@ -609,6 +609,7 @@ export namespace CM {
 export interface IZAplState {
     idApl: string;
     nomApl: string;
+    azenURL: string; 
     estaProcesandoRequestServidor: boolean;
     ultimoComandoEnviado:Constants.ComandoEnum;
     tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
