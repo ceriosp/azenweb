@@ -225,15 +225,11 @@ export namespace Actions {
             type: ActionTypes.ZPantexStateModule.CM_PXARRIVAR,
             pxArrivarParams,
         });
-
-        export const sincCampo = (px: number, hashCampoValor: Map<string, IZCampoState>) => (dispatch: any, getStateFn: () => IZAplState) => {
-            dispatch(cmSincCampo(px, hashCampoValor));
-        }
-
-        export const cmSincCampo = (px: number, hashDefinicionCampos: Map<string, IZCampoState>): ActionTypes.ZPantexStateModule.Action => ({
+                    
+        export const cmSincCampo = (listaPx:Array<number>, hashZCampos:Map<string, IZCampoState>): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.CM_SINCCAMPO,
-            px,
-            hashDefinicionCampos,
+            listaPx,
+            hashZCampos,
         });
 
         export const onCampoChanged = (zcampoState: IZCampoState, valor: any): ActionTypes.ZPantexStateModule.Action => ({

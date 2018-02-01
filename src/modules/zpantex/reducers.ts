@@ -246,9 +246,9 @@ export namespace Reducers {
 
             const actualizarDefinicionCampo = (zcampoState: IZCampoState): IZCampoState => {
 
-                if (zcampoState.px == action.px) {
-                    if (action.hashDefinicionCampos.has(zcampoState.nomCmp)) {
-                        const zCampoEnHash = action.hashDefinicionCampos.get(zcampoState.nomCmp);
+                if (action.listaPx.indexOf(zcampoState.px) != -1) {
+                    if (action.hashZCampos.has(zcampoState.nomCmp)) {
+                        const zCampoEnHash = action.hashZCampos.get(zcampoState.nomCmp);
                         let zCampoActualizado = {
 
                             value: zCampoEnHash.value == undefined
@@ -296,7 +296,7 @@ export namespace Reducers {
                 return zcampoState;
             }
 
-            if (action.hashDefinicionCampos.size > 0) {
+            if (action.hashZCampos.size > 0) {
                 return u({
                     zCampoState: {
                         byId: u.map(actualizarDefinicionCampo)

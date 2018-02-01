@@ -90,8 +90,8 @@ export namespace ActionTypes {
         }|
         {
             type: Types.CM_SINCCAMPO,
-            px:number,
-            hashDefinicionCampos:Map<string, IZCampoState>
+            listaPx:Array<number>,
+            hashZCampos:Map<string, IZCampoState>
         }|
         {
             type: Types.ON_CAMPOCHANGE,

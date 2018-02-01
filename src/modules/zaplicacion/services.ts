@@ -89,13 +89,13 @@ export namespace Services {
         let cmSincCampoParametros: CM.ISincCampo;
         let cmPrenderControlParametros: CM.IPrenderControl;
         let cmPrenderModoParametros: CM.IPrenderModo;
-        let px: number;
+        let listaPx:Array<number>; //Lista px para actualizar campos
 
         export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
             //valores de los campos de un px: <nombreCampo, valor> 
             hashZCampoState = new Map<string, IZCampoState>();
-            px = undefined;
+            listaPx = [];
 
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
 
@@ -123,17 +123,20 @@ export namespace Services {
                 }
             }
 
+
+            console.log("module/zaplicacion/services- px: " + JSON.stringify(listaPx));
             console.log(hashZCampoState);
             //Hay campos para sincronizar      
             if (hashZCampoState.size > 0) {
-                dispatch(ZPantex.Actions.ZPantexStateModule.sincCampo(px, hashZCampoState));
+                dispatch(ZPantex.Actions.ZPantexStateModule.cmSincCampo(listaPx, hashZCampoState));
             }
         }
 
         const cmSincCampo = (infoEvento: IZEvento) => {
             cmSincCampoParametros = infoEvento.dato.buffer.dato as CM.ISincCampo;
-            if (!px) {
-                px = cmSincCampoParametros.px;
+            cmSincCampoParametros.px = parseInt(cmSincCampoParametros.px.toString());
+            if (listaPx.indexOf(cmSincCampoParametros.px) == -1 ) {
+                listaPx.push(cmSincCampoParametros.px);
             }
             if (!hashZCampoState.has(cmSincCampoParametros.nc)) {
                 let zCampoEnHash = {
