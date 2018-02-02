@@ -60,7 +60,7 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
         console.log("rendering: " + this.props.zPantex.zFormaTablaListState[0].venState.descr);
 
         return (
-            <div className="static-modal">
+            <div>
                 <Modal
                     onHide={null}
                     show={true}
@@ -70,7 +70,7 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                 >
                     <Modal.Body
                         style={{
-                            padding: "0px"
+                            padding: "0px",
                         }}
                     >
                         {this.props.zPantex.zFormaTablaListState.map((zFormaTablaI: IZFormaTablaState, index: number) => {

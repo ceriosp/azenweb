@@ -56,15 +56,20 @@ export class ZAplicacion extends React.Component<OwnProps & ConnectedState & Con
     render() {
         return (
             <div>
-                <ZMenuRootContainer
-                    index={0}
-                />
-                <ZAplicacionContainer />
+                <div>
+                    <ZMenuRootContainer
+                        index={0}
+                    />
+                </div>
+
+                <div>
+                    <ZAplicacionContainer />
+                </div>
 
                 <div>
                     <ZProcesandoContainer />
                 </div>
-                
+
             </div>
         );
     }
