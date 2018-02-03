@@ -12,17 +12,16 @@ import {
 
 import {
     ZCampoModel,
-    ZReferenciaModel,
-    ZReferenciaViewModel
+    IZCampo,
+    Constants as ZCommonConstants,
+    IZCampoState
 } from "../../zcommon";
 
 interface OwnProps {
-    zcampoModel: ZCampoModel;
-    zreferenciaViewModel:ZReferenciaViewModel;
-    onCampoZoomClick?:(zreferenciaViewModel:ZReferenciaViewModel) => void
+    zCampoModel: IZCampoState;    
 }
 
-export default class ZCampoZoom extends React.PureComponent<OwnProps, void>
+export default class ZCampoDetallable extends React.PureComponent<OwnProps, void>
 {
     constructor(props:OwnProps){
         super(props);
@@ -31,7 +30,7 @@ export default class ZCampoZoom extends React.PureComponent<OwnProps, void>
     }
 
     render() {
-        const { zcampoModel } = this.props;
+        const zcampoModel = this.props.zCampoModel;
         return (
             <FormGroup controlId={zcampoModel.nomCmp} bsSize="small">
                 <Col md={12}>
@@ -41,7 +40,7 @@ export default class ZCampoZoom extends React.PureComponent<OwnProps, void>
                     <Col>
                         <InputGroup>
                             <FormControl type="text" />
-                            <InputGroup.Addon style={{cursor:"pointer"}} onClick={this.onCampoZoomClick}>
+                            <InputGroup.Addon style={{cursor:"pointer"}}>
                                 <Glyphicon glyph="list"/>
                             </InputGroup.Addon>                            
                         </InputGroup>
@@ -52,8 +51,6 @@ export default class ZCampoZoom extends React.PureComponent<OwnProps, void>
     }
 
     onCampoZoomClick(){
-        if(this.props.onCampoZoomClick){
-            this.props.onCampoZoomClick(this.props.zreferenciaViewModel)
-        }
+        
     }
 }

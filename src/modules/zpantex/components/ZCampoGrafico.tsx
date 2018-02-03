@@ -20,9 +20,6 @@ import ZCampo from './ZCampo';
 interface OwnProperties {
     zFormaTabla: IZFormaTablaState;
     zCampoGrafico: IZCampoState;    
-
-    px: number;
-    zftIndex: number;
 }
 
 export default class ZCampoGrafico extends React.PureComponent<OwnProperties, undefined>
@@ -43,8 +40,6 @@ export default class ZCampoGrafico extends React.PureComponent<OwnProperties, un
                             <ZCampo                                
                                 zCampo={zCampoI}                                
                                 zFormaTabla={zFormaTabla}
-                                px={this.props.px}
-                                zftIndex={this.props.zftIndex}
                             />
                         </Col>
                     );

@@ -16,8 +16,6 @@ import {
 
 export interface OwnProps {
     zCampoModel: IZCampoState;
-    px: number;
-    zftIndex: number;
 }
 
 export interface ConnectedState {
@@ -42,9 +40,8 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
 
     render() {
         const { zCampoModel } = this.props;
-        let idCampo = this.props.px.toString() + "_" + this.props.zftIndex.toString() + "_" + zCampoModel.nomCmp;
         return (
-            <FormGroup controlId={idCampo} bsSize="small">
+            <FormGroup bsSize="small">
                 <Col md={12}>
                     <Col componentClass={ControlLabel}>
                         {zCampoModel.etq}

@@ -103,7 +103,7 @@ export namespace Services {
 
             hashZComandoState = new Map<ZCommonConstants.ComandoEnum, IZComandoFormaState>();
             listaPxComandos = [];
-            
+
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
 
                 parseDataEventoToJSON(zColaEventos.eventos[i]);
@@ -115,13 +115,19 @@ export namespace Services {
                         continue;
 
                     case ZCommonConstants.ComandoEnum.CM_PRENDERCONTROL:
+                        cmPrenderControl(zColaEventos.eventos[i], cmd);
+                        continue;
+
                     case ZCommonConstants.ComandoEnum.CM_APAGARCONTROL:
-                        cmPrenderApagarControl(zColaEventos.eventos[i], cmd);
+                        cmApagarControl(zColaEventos.eventos[i], cmd);
                         continue;
 
                     case ZCommonConstants.ComandoEnum.CM_PRENDERMODO:
+                        cmPrenderModo(zColaEventos.eventos[i], cmd);
+                        continue;
+
                     case ZCommonConstants.ComandoEnum.CM_APAGARMODO:
-                        cmPrenderApagarModo(zColaEventos.eventos[i], cmd);
+                        cmApagarModo(zColaEventos.eventos[i], cmd);
                         continue;
 
                     case ZCommonConstants.ComandoEnum.CM_SINCBOTON:
@@ -139,7 +145,7 @@ export namespace Services {
 
             console.log("module/zaplicacion/services- listaPxComandos: " + JSON.stringify(listaPxComandos));
             console.log(hashZComandoState);
-            
+
             //Hay campos para sincronizar      
             if (hashZCampoState.size > 0) {
                 dispatch(ZPantex.Actions.ZPantexStateModule.cmSincPx(listaPxCampos, hashZCampoState, listaPxComandos, hashZComandoState));
@@ -186,31 +192,47 @@ export namespace Services {
             }
         }
 
-        const cmPrenderApagarControl = (infoEvento: IZEvento, cmd: ZCommonConstants.ComandoEnum) => {
+        const cmPrenderControl = (infoEvento: IZEvento, cmd: ZCommonConstants.ComandoEnum) => {
             cmPrenderControlParametros = infoEvento.dato.buffer.dato as CM.IPrenderControl;
-            const controlCampo = cmd == ZCommonConstants.ComandoEnum.CM_PRENDERCONTROL
-                ? cmPrenderControlParametros.mc
-                : ZCommonConstants.ControlCampoEnum.ZCMP_APAGADO
             if (!hashZCampoState.has(cmPrenderControlParametros.nc)) {
                 hashZCampoState.set(cmPrenderControlParametros.nc, {
-                    controlCampo: controlCampo
+                    bitPrenderControl: Math.log2(cmPrenderControlParametros.mc)
                 } as IZCampoState);
             } else {
-                hashZCampoState.get(cmPrenderControlParametros.nc).controlCampo = controlCampo;
+                hashZCampoState.get(cmPrenderControlParametros.nc).bitPrenderControl = Math.log2(cmPrenderControlParametros.mc);
             }
         }
 
-        const cmPrenderApagarModo = (infoEvento: IZEvento, cmd: ZCommonConstants.ComandoEnum) => {
-            cmPrenderModoParametros = infoEvento.dato.buffer.dato as CM.IPrenderModo;
-            const modoCampo = cmd == ZCommonConstants.ComandoEnum.CM_PRENDERMODO
-                ? cmPrenderModoParametros.mc
-                : ZCommonConstants.ModoCampoEnum.ZCMP_APAGADO
-            if (!hashZCampoState.has(cmPrenderModoParametros.nc)) {
-                hashZCampoState.set(cmPrenderModoParametros.nc, {
-                    modoCampo: modoCampo
+        const cmApagarControl = (infoEvento: IZEvento, cmd: ZCommonConstants.ComandoEnum) => {
+            cmPrenderControlParametros = infoEvento.dato.buffer.dato as CM.IPrenderControl;
+            if (!hashZCampoState.has(cmPrenderControlParametros.nc)) {
+                hashZCampoState.set(cmPrenderControlParametros.nc, {
+                    bitApagarControl: Math.log2(cmPrenderControlParametros.mc)
                 } as IZCampoState);
             } else {
-                hashZCampoState.get(cmPrenderModoParametros.nc).modoCampo = modoCampo;
+                hashZCampoState.get(cmPrenderControlParametros.nc).bitApagarControl = Math.log2(cmPrenderControlParametros.mc);
+            }
+        }
+
+        const cmPrenderModo = (infoEvento: IZEvento, cmd: ZCommonConstants.ComandoEnum) => {
+            cmPrenderModoParametros = infoEvento.dato.buffer.dato as CM.IPrenderModo;
+            if (!hashZCampoState.has(cmPrenderModoParametros.nc)) {
+                hashZCampoState.set(cmPrenderModoParametros.nc, {
+                    bitPrenderModo: Math.log2(cmPrenderModoParametros.mc)
+                } as IZCampoState);
+            } else {
+                hashZCampoState.get(cmPrenderModoParametros.nc).bitPrenderModo = Math.log2(cmPrenderModoParametros.mc);
+            }
+        }
+
+        const cmApagarModo = (infoEvento: IZEvento, cmd: ZCommonConstants.ComandoEnum) => {
+            cmPrenderModoParametros = infoEvento.dato.buffer.dato as CM.IPrenderModo;
+            if (!hashZCampoState.has(cmPrenderModoParametros.nc)) {
+                hashZCampoState.set(cmPrenderModoParametros.nc, {
+                    bitApagarModo: Math.log2(cmPrenderModoParametros.mc)
+                } as IZCampoState);
+            } else {
+                hashZCampoState.get(cmPrenderModoParametros.nc).bitApagarModo = Math.log2(cmPrenderModoParametros.mc);
             }
         }
 

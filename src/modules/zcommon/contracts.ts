@@ -132,7 +132,8 @@ export interface IZCampoBase {
     claseInd: Constants.ClaseIndicadorEnum;
     lon: number;
     lonv: number;
-
+    control: number;
+    modo: number; //Constants.ModoCampo namespace
     posbit: number;
 }
 
@@ -140,7 +141,6 @@ export interface IZCampo extends IZCampoBase {
     lonv: number;
     tipo: number;
     noEnTabla: number;
-    modo: number; //Constants.ModoCampo namespace
     numDec: number;
     cmps?: Array<IZCampo>;
 }
@@ -225,12 +225,15 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
     //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
     posBitsOn: Array<number>;
 
-    controlCampo: Constants.ControlCampoEnum;
-    modoCampo: Constants.ModoCampoEnum;
-
     //Para campos dentro de un campo gráfico
     parentId?: number;
     cmpsState: Array<IZCampoState>;
+
+    //Propiedades para sincronizar valores
+    bitPrenderControl: number;
+    bitApagarControl: number;
+    bitPrenderModo: number;
+    bitApagarModo: number;    
 }
 
 export class ZCampoState implements IZCampoState {
@@ -248,8 +251,10 @@ export class ZCampoState implements IZCampoState {
         this.lonv = zcampo.lonv;
         this.posbit = zcampo.posbit;
 
+        this.control = zcampo.control;
+        this.modo = zcampo.modo;
+        this.readOnly = ContractsServices.esCampoControlLectura(zcampo.control) || ContractsServices.esCampoModoLectura(zcampo.modo);
 
-        this.readOnly = false;
         this.value = "";
         this.checked = false;
 
@@ -269,8 +274,6 @@ export class ZCampoState implements IZCampoState {
     //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
     posBitsOn: Array<number>;
 
-    controlCampo: Constants.ControlCampoEnum;
-    modoCampo: Constants.ModoCampoEnum;
     checked: boolean;
 
     //Propiedades IZCampo
@@ -280,6 +283,14 @@ export class ZCampoState implements IZCampoState {
     lon: number;
     lonv: number;
     posbit: number;
+    control: number;
+    modo: number;
+
+    //Propiedades para sincronizar valores
+    bitPrenderControl: number;
+    bitApagarControl: number;
+    bitPrenderModo: number;
+    bitApagarModo: number;    
 }
 
 export interface IZComandoFormaState extends IZComandoForma {
@@ -289,7 +300,7 @@ export interface IZComandoFormaState extends IZComandoForma {
 
 export class ZComandoFormaState implements IZComandoFormaState {
 
-    constructor(zComandoForma: IZComandoForma, id: number, px:number) {
+    constructor(zComandoForma: IZComandoForma, id: number, px: number) {
 
         this.id = id;
         this.px = px;
@@ -679,3 +690,33 @@ interface IZPantexNormalized {
 }
 
 //#endregion
+
+
+export namespace ContractsServices {
+
+    export const esCampoModoLectura = (modo: number): boolean => {
+        return modo
+            && (Binario.estaPrendidoBit(modo, Constants.ModoCampoEnum.ZCMP_MNOARRIVABLE)
+                ||
+                Binario.estaPrendidoBit(modo, Constants.ModoCampoEnum.ZCMP_MSOLOVISUAL)
+            )
+    }
+
+    export const esCampoControlLectura = (control:number) => {
+        return control && Binario.estaPrendidoBit(control, Constants.ControlCampoEnum.ZCMP_VISUAL);
+    }
+
+    export namespace Binario {
+        export const estaPrendidoBit = (num: number, bit: number) => {
+            return ((num >> bit) % 2 != 0);
+        }
+
+        export const prenderBit = (num: number, bit: number) => {
+            return num | 1 << bit;
+        }
+
+        export const apagarBit = (num: number, bit: number) => {
+            return num & ~(1 << bit);
+        }
+    }
+}

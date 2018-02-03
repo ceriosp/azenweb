@@ -1,7 +1,8 @@
 import { Constants as ZPantexConstants } from "../zpantex";
+import { Constants } from "./constants";
 
 namespace Services {
-
+        
     export class MapServices<TKey, TValue>
     {
         public getMapIndexByKey(map: Map<TKey, TValue>, key: TKey) {

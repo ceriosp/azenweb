@@ -69,18 +69,14 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
                             >
                                 <ZCampo
                                     zFormaTabla={this.props.zFormaTabla}
-                                    zCampo={zcampoAPintar}                                    
-                                    px={this.props.px}
-                                    zftIndex={this.props.zFormaIndex}
+                                    zCampo={zcampoAPintar}
                                 />
                             </Col>
                         );
                     })}
                 </Form>
                 <div
-                    style={{
-                        clear: 'both'
-                    }}
+                    style={{ clear: 'both' }}
                 >
                 </div>
             </div>

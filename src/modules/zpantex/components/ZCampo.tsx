@@ -24,7 +24,7 @@ import {
 
 import * as ZRecursos from "../../zpantex";
 
-import ZCampoZoom from './ZCampoZoom';
+import ZCampoDetallable from './ZCampoDetallable';
 import ZCampoGrafico from './ZCampoGrafico';
 import { ZCampoRadioContainer } from '../containers/ZCampoRadioContainer';
 import { ZCampoCheckboxContainer } from '../containers/ZCampoCheckboxContainer';
@@ -33,10 +33,6 @@ import { ZCampoTextboxContainer } from '../containers/ZCampoTextboxContainer';
 interface OwnProperties {
     zFormaTabla: IZFormaTablaState;
     zCampo: IZCampoState;    
-
-    px:number;
-    zftIndex:number;    
-    
     /*
     esCheckboxAislado?: boolean; //Si es checkbox group = true, sirve un sólo checkbox = false. Ej. ter.noActivo        
     zcamposEnRegionList?: Array<ZCampoModel>;
@@ -51,12 +47,12 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
 
     constructor(props:OwnProperties){
         super(props);
-        console.log("instancing 1 zcampo " + this.props.px + " - " + this.props.zCampo.nomCmp + " - " + this.props.zFormaTabla.venState.descr);
+        console.log("instancing 1 zcampo " + this.props.zCampo.px + " - " + this.props.zCampo.nomCmp + " - " + this.props.zFormaTabla.venState.descr);
     }
 
     render() {
 
-        console.log("rendering 1 zcampo " + this.props.px + " - " + this.props.zCampo.nomCmp + " - " + this.props.zFormaTabla.venState.descr);
+        console.log("rendering 1 zcampo " + this.props.zCampo.px + " - " + this.props.zCampo.nomCmp + " - " + this.props.zFormaTabla.venState.descr);
 
         const { zCampo } = this.props;
         const claseInd: number = zCampo.claseInd;
@@ -82,15 +78,11 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
             return <ZCampoGrafico 
                 zCampoGrafico={zCampo} 
                 zFormaTabla={zFormaTabla} 
-                px={this.props.px} 
-                zftIndex={this.props.zftIndex}
             />
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_NOINDICADOR) {
             return <ZCampoTextboxContainer 
-                zCampoModel={zCampo} 
-                px={this.props.px} 
-                zftIndex={this.props.zftIndex} 
+                zCampoModel={zCampo}
             />;
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_RADIO) {

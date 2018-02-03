@@ -24,7 +24,8 @@ import {
     IZComandoFormaState,
     IZVentanaState,
     ZCampoState,
-    Constants as ZCommonConstants
+    Constants as ZCommonConstants,
+    ContractsServices
 
 } from '../zcommon';
 
@@ -256,38 +257,58 @@ export namespace Reducers {
                                 : zCampoEnHash.value,
 
                             checked: zcampoState.checked,
-
-                            controlCampo:
-                                zCampoEnHash.controlCampo == undefined
-                                    ? zcampoState.controlCampo
-                                    : zCampoEnHash.controlCampo,
-
-                            modoCampo:
-                                zCampoEnHash.modoCampo == undefined
-                                    ? zcampoState.modoCampo
-                                    : zCampoEnHash.modoCampo,
-
+                            /*                            
+                                                        controlCampo:
+                                                            zCampoEnHash.controlCampo == undefined
+                                                                ? zcampoState.controlCampo
+                                                                : zCampoEnHash.controlCampo,
+                            
+                                                        modoCampo:
+                                                            zCampoEnHash.modoCampo == undefined
+                                                                ? zcampoState.modoCampo
+                                                                : zCampoEnHash.modoCampo,
+                            */
                         } as IZCampoState;
 
                         if (zcampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO
                             || zcampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
-                            if (zCampoEnHash.posBitsOn
-                                && zCampoEnHash.posBitsOn.indexOf(zcampoState.lon) != -1) {
-                                zCampoActualizado.checked = true;
-                            } else {
-                                zCampoActualizado.checked = false;
+                            if (zCampoEnHash.posBitsOn) {
+                                if (zCampoEnHash.posBitsOn.indexOf(zcampoState.lon) != -1) {
+                                    zCampoActualizado.checked = true;
+                                } else {
+                                    zCampoActualizado.checked = false;
+                                }
                             }
+                        }
+
+                        if (zCampoEnHash.bitPrenderControl) {
+                            zCampoActualizado.control = ContractsServices.Binario.prenderBit(zcampoState.control, zCampoEnHash.bitPrenderControl);
+                        }
+
+                        if (zCampoEnHash.bitApagarControl) {
+                            zCampoActualizado.control = ContractsServices.Binario.apagarBit(zcampoState.control, zCampoEnHash.bitApagarControl);
+                        }
+
+                        if (zCampoEnHash.bitPrenderModo) {
+                            zCampoActualizado.modo = ContractsServices.Binario.prenderBit(zcampoState.modo, zCampoEnHash.bitPrenderModo);
+                        }
+
+                        if (zCampoEnHash.bitApagarModo) {
+                            zCampoActualizado.modo = ContractsServices.Binario.apagarBit(zcampoState.modo, zCampoEnHash.bitApagarModo);
                         }
 
                         return u({
                             value: zCampoActualizado.value,
                             checked: zCampoActualizado.checked, //para radio/checkbox
-                            controlCampo: zCampoActualizado.controlCampo,
-                            modoCampo: zCampoActualizado.modoCampo,
-                            readOnly:
-                                zCampoActualizado.controlCampo == ZCommonConstants.ControlCampoEnum.ZCMP_VISUAL
-                                || zCampoActualizado.modoCampo == ZCommonConstants.ModoCampoEnum.ZCMP_MSOLOVISUAL
-                                || zCampoActualizado.modoCampo == ZCommonConstants.ModoCampoEnum.ZCMP_MNOARRIVABLE
+                            control: zCampoActualizado.control,
+                            modo: zCampoActualizado.modo,
+                            readOnly: ContractsServices.esCampoControlLectura(zCampoActualizado.control)
+                                || ContractsServices.esCampoModoLectura(zCampoActualizado.modo),
+
+                            //controlCampo: zCampoActualizado.controlCampo,
+                            //modoCampo: zCampoActualizado.modoCampo,
+                            //readOnly: ZCommon.Services.esCampoModoLectura(zCampoActualizado.modoCampo)
+                            //    || ZCommon.Services.esCampoControlLectura(zCampoActualizado.controlCampo)
 
                         } as IZCampoState, zcampoState);
                     }
@@ -302,7 +323,7 @@ export namespace Reducers {
                     if (action.hashZComandos.has(zcomandoFormaState.cmd)) {
                         const zComandoFormaEnHash = action.hashZComandos.get(zcomandoFormaState.cmd);
                         return u({
-                            desh:zComandoFormaEnHash.desh
+                            desh: 0//zComandoFormaEnHash.desh
                         } as IZComandoFormaState, zcomandoFormaState);
                     }
                 }
@@ -315,9 +336,9 @@ export namespace Reducers {
                     zCampoState: {
                         byId: u.map(actualizarZCampo)
                     } as any,
-                    zComandoFormaState:{
+                    zComandoFormaState: {
                         byId: u.map(actualizarBoton)
-                    } as any,                    
+                    } as any,
                 } as IZPantexStateModule, state);
             }
         }

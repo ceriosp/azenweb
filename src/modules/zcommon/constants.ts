@@ -253,19 +253,20 @@ export namespace Constants {
     export enum ModoCampoEnum {
         ZCMP_APAGADO = -1,
         /* modos b sicos para el campo - zcmp.modo */
-        ZCMP_MSOLOVISUAL = 1, /* sólo es visualizable */
-        ZCMP_MFIJO = 2,	/* nunca se puede mover */
-        ZCMP_MCOLUMNARIO = 4, /* ubicación etiqueta columnaria */
-        ZCMP_MNOARRIVABLE = 8,	/* no se arriva en navegación */
-        ZCMP_MDETALLABLE = 10, /* pone ícono "detallable" */
-        ZCMP_MNOLIMPIABLE = 20, /* inhibe al zcmp_Limpiar() */
-        ZCMP_CLAVE = 40,	/* para clave de acceso */
-        ZCMP_DESCRJUNTURA = 80,	/* es un campo descripción de una juntura */
+        ZCMP_MSOLOVISUAL = 0, //parseInt("0x01", 16), /* sólo es visualizable */
+        ZCMP_MFIJO = 1, //parseInt("0x02", 16),	/* nunca se puede mover */
+        ZCMP_MCOLUMNARIO = 2, //parseInt("0x04", 16), /* ubicación etiqueta columnaria */
+        ZCMP_MNOARRIVABLE = 3, //parseInt("0x08", 16),	/* no se arriva en navegación */
+        ZCMP_MDETALLABLE = 4, //parseInt("0x10", 16), /* pone ícono "detallable" */
+        ZCMP_MNOLIMPIABLE = 5, //parseInt("0x20", 16), /* inhibe al zcmp_Limpiar() */
+        ZCMP_CLAVE = 6, //parseInt("0x40", 16),	/* para clave de acceso */
+        ZCMP_DESCRJUNTURA = 7, //parseInt("0x80", 16),	/* es un campo descripción de una juntura */
         // CERios Nov 11 de 2005. Para tener en cuenta en modo C/S
-        ZCMP_ESLLAVEPRIMARIA = 100,	/* es un campo que pertenece a la llave primaria  */
+        ZCMP_ESLLAVEPRIMARIA = 8, //parseInt("0x100", 16),	/* es un campo que pertenece a la llave primaria  */
 
         // CERios Ago 2006. Identificacion de lista estatica
-        ZCMP_LISTAESTATICA = 200,	/* es lista estatica. No se indica en tipos de indicador porque  
+        ZCMP_LISTAESTATICA = 9, //parseInt("0x200", 16),	
+        /* es lista estatica. No se indica en tipos de indicador porque  
         con ellos se hace uso del campo lonv, y se  requiere 
         en el caso de listas estaticas */
     }
@@ -273,12 +274,12 @@ export namespace Constants {
     export enum ControlCampoEnum {
         ZCMP_APAGADO = -1,
         /* Control para la edición de campo */
-        ZCMP_EDINIT = 1,   /* Borra contenido al editar*/
-        ZCMP_UPCASE = 2,  /* Edición en mayúscula */
-        ZCMP_INS = 4,  /* Edición modo inserción */
-        ZCMP_EDIT = 8,    /* Edición mormal */
-        ZCMP_EDIZQ = 16,  /* Edición poniendo cursor al inicio */
-        ZCMP_VISUAL = 32, /* Solo visual */
-        ZCMP_INTRACMP = 64, /* */
+        ZCMP_EDINIT = 0,   /* Borra contenido al editar*/
+        ZCMP_UPCASE = 1,  /* Edición en mayúscula */
+        ZCMP_INS = 2,  /* Edición modo inserción */
+        ZCMP_EDIT = 3,    /* Edición mormal */
+        ZCMP_EDIZQ = 4,  /* Edición poniendo cursor al inicio */
+        ZCMP_VISUAL = 5, /* Solo visual */
+        ZCMP_INTRACMP = 6, /* */
     }
 }

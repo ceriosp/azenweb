@@ -25,13 +25,14 @@ export namespace ZcmpResponder {
 
         switch (zEvento.dato.cmd) {
 
-            case ZCommonConstants.ComandoEnum.CM_SINCCAMPO:    
-                console.log("responder SINC-CAMPO");            
+            case ZCommonConstants.ComandoEnum.CM_SINCCAMPO:
+                console.log("responder SINC-CAMPO");
                 //sincronizarCampo(zEvento, dispatch, getState);
                 break;
         }
     }
 
+    /*
     const sincronizarCampo = (zEvento: IZEvento, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
         const dato = zEvento.dato.buffer.dato as CM.ISincCampo;
@@ -92,7 +93,7 @@ export namespace ZcmpResponder {
             }
         }
     }
-
+*/
     const sincronizarTextBox = (dato: CM.ISincCampo) => {
         zftFormInputElement.value = dato.vc;
     }
