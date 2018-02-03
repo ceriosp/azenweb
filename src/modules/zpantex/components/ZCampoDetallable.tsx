@@ -17,32 +17,52 @@ import {
     IZCampoState
 } from "../../zcommon";
 
-interface OwnProps {
-    zCampoModel: IZCampoState;    
+export interface OwnProps {
+    zCampoModel: IZCampoState;
 }
 
-export default class ZCampoDetallable extends React.PureComponent<OwnProps, void>
+export interface ConnectedState {
+    estaProcesandoRequestServidor: boolean
+}
+
+export interface ConnectedDispatch {
+    despacharEventoCliente:(cmd: ZCommonConstants.ComandoEnum, buffer: string) => void;
+}
+
+export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    constructor(props:OwnProps){
+    disabled:boolean;
+
+    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
         this.onCampoZoomClick = this.onCampoZoomClick.bind(this);
     }
 
     render() {
-        const zcampoModel = this.props.zCampoModel;
+        const zCampoModel = this.props.zCampoModel;
+        this.disabled = this.props.estaProcesandoRequestServidor || zCampoModel.readOnly;
+        
         return (
-            <FormGroup controlId={zcampoModel.nomCmp} bsSize="small">
+            <FormGroup bsSize="small">
                 <Col md={12}>
                     <Col componentClass={ControlLabel}>
-                        {zcampoModel.etq}
+                        {zCampoModel.etq}
                     </Col>
                     <Col>
                         <InputGroup>
-                            <FormControl type="text" />
-                            <InputGroup.Addon style={{cursor:"pointer"}}>
-                                <Glyphicon glyph="list"/>
-                            </InputGroup.Addon>                            
+                            <FormControl
+                                type="text"
+                                name={zCampoModel.nomCmp}
+                                value={zCampoModel.value}
+                                maxLength={zCampoModel.lon}
+                                disabled={this.disabled}
+                            />
+                            <InputGroup.Addon
+                                onClick={this.onCampoZoomClick}
+                                style={{ cursor: this.disabled ? "not-allowed" : "pointer" }}>
+                                <Glyphicon glyph="list" />
+                            </InputGroup.Addon>
                         </InputGroup>
                     </Col>
                 </Col>
@@ -50,7 +70,11 @@ export default class ZCampoDetallable extends React.PureComponent<OwnProps, void
         );
     }
 
-    onCampoZoomClick(){
-        
+    onCampoZoomClick() {
+        if(this.disabled){
+            return;
+        }
+        this.props.despacharEventoCliente(ZCommonConstants.ComandoEnum.CM_DETALLAR, 
+            `<nc>${this.props.zCampoModel.nomCmp}</nc>`);
     }
 }

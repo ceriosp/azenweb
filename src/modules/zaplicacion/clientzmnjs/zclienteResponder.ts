@@ -35,13 +35,14 @@ export namespace ZclienteResponder {
                 case ZCommon.Constants.ComandoEnum.CM_CERRAR:
                 case ZCommon.Constants.ComandoEnum.CM_RETOCAR:
                 case ZCommon.Constants.ComandoEnum.CM_CAMBIOCMP:
-                case ZCommon.Constants.ComandoEnum.CM_CAMBIOCMPIND:
+                case ZCommon.Constants.ComandoEnum.CM_CAMBIOCMPIND:                
                     tipoAJAXIndicador = zCommon.Constants.TipoAJAXIndicadorEnum.NO_MODAL;
                     break;
 
                 case ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN:
                 case ZCommon.Constants.ComandoEnum.CM_EJECOPCION:
                 case ZCommon.Constants.ComandoEnum.CM_DEFMENU:
+                case zCommon.Constants.ComandoEnum.CM_DETALLAR:
                 default:
                     tipoAJAXIndicador = zCommon.Constants.TipoAJAXIndicadorEnum.MODAL;
                     break;

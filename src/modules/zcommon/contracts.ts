@@ -222,6 +222,8 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
     haCambiado: boolean;
     checked: boolean;
 
+    esDetallable:boolean;
+
     //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
     posBitsOn: Array<number>;
 
@@ -255,6 +257,8 @@ export class ZCampoState implements IZCampoState {
         this.modo = zcampo.modo;
         this.readOnly = ContractsServices.esCampoControlLectura(zcampo.control) || ContractsServices.esCampoModoLectura(zcampo.modo);
 
+        this.esDetallable = ContractsServices.Binario.estaPrendidoBit(zcampo.modo, Constants.ModoCampoEnum.ZCMP_MDETALLABLE);
+
         this.value = "";
         this.checked = false;
 
@@ -275,6 +279,7 @@ export class ZCampoState implements IZCampoState {
     posBitsOn: Array<number>;
 
     checked: boolean;
+    esDetallable:boolean;
 
     //Propiedades IZCampo
     nomCmp: string;

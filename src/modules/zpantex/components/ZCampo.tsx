@@ -24,15 +24,15 @@ import {
 
 import * as ZRecursos from "../../zpantex";
 
-import ZCampoDetallable from './ZCampoDetallable';
 import ZCampoGrafico from './ZCampoGrafico';
 import { ZCampoRadioContainer } from '../containers/ZCampoRadioContainer';
 import { ZCampoCheckboxContainer } from '../containers/ZCampoCheckboxContainer';
 import { ZCampoTextboxContainer } from '../containers/ZCampoTextboxContainer';
+import { ZCampoDetallableContainer } from '../containers/ZCampoDetallableContainer';
 
 interface OwnProperties {
     zFormaTabla: IZFormaTablaState;
-    zCampo: IZCampoState;    
+    zCampo: IZCampoState;
     /*
     esCheckboxAislado?: boolean; //Si es checkbox group = true, sirve un sólo checkbox = false. Ej. ter.noActivo        
     zcamposEnRegionList?: Array<ZCampoModel>;
@@ -45,7 +45,7 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
 {
     private isRegion: boolean = false;
 
-    constructor(props:OwnProperties){
+    constructor(props: OwnProperties) {
         super(props);
         console.log("instancing 1 zcampo " + this.props.zCampo.px + " - " + this.props.zCampo.nomCmp + " - " + this.props.zFormaTabla.venState.descr);
     }
@@ -72,26 +72,31 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
             zCampo,
         } = this.props;
 
-        const { claseInd, nomCmp, cmpsState, esCampoGrafico } = zCampo;
-        
+        const { claseInd, nomCmp, cmpsState, esCampoGrafico, esDetallable } = zCampo;
+
         if (esCampoGrafico) {
-            return <ZCampoGrafico 
-                zCampoGrafico={zCampo} 
-                zFormaTabla={zFormaTabla} 
+            return <ZCampoGrafico
+                zCampoGrafico={zCampo}
+                zFormaTabla={zFormaTabla}
             />
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_NOINDICADOR) {
-            return <ZCampoTextboxContainer 
+            if (esDetallable) {
+                return <ZCampoDetallableContainer
+                    zCampoModel={zCampo}
+                />;
+            }
+            return <ZCampoTextboxContainer
                 zCampoModel={zCampo}
             />;
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_RADIO) {
-            return <ZCampoRadioContainer 
-                zCampoModel={zCampo} 
+            return <ZCampoRadioContainer
+                zCampoModel={zCampo}
             />;
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
-            return <ZCampoCheckboxContainer 
+            return <ZCampoCheckboxContainer
                 zCampoModel={zCampo}
             />;
         } else {

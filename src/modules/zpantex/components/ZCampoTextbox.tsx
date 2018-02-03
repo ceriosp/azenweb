@@ -29,8 +29,6 @@ export interface ConnectedDispatch {
 
 export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    private buffer: string;
-
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 

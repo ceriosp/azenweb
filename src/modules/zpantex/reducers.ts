@@ -257,17 +257,6 @@ export namespace Reducers {
                                 : zCampoEnHash.value,
 
                             checked: zcampoState.checked,
-                            /*                            
-                                                        controlCampo:
-                                                            zCampoEnHash.controlCampo == undefined
-                                                                ? zcampoState.controlCampo
-                                                                : zCampoEnHash.controlCampo,
-                            
-                                                        modoCampo:
-                                                            zCampoEnHash.modoCampo == undefined
-                                                                ? zcampoState.modoCampo
-                                                                : zCampoEnHash.modoCampo,
-                            */
                         } as IZCampoState;
 
                         if (zcampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO

@@ -16,6 +16,7 @@ export namespace ZftResponder {
 
             case ZCommon.Constants.ComandoEnum.CM_PXCREARMENSAJE:
             case ZCommon.Constants.ComandoEnum.CM_PXCREAR:
+            case ZCommon.Constants.ComandoEnum.CM_PXCREARZOOM:
                 const zPantex = zEvento.dato.buffer.dato as IZPantex;
                 dispatch(ZPantex.Actions.ZPantexStateModule.pxCrear(zPantex));
                 break;
