@@ -71,9 +71,11 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
     }
 
     onCampoZoomClick() {
+        /*
         if(this.disabled){
             return;
         }
+        */
         this.props.despacharEventoCliente(ZCommonConstants.ComandoEnum.CM_DETALLAR, 
             `<nc>${this.props.zCampoModel.nomCmp}</nc>`);
     }

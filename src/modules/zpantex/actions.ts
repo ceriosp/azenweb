@@ -90,7 +90,7 @@ export namespace Actions {
 
             let id = Selectors.ZPantexStateModule.ZFormaTablaState.getNextZFormaTablaStateId(getStateFn());
             for (let i = 0; i < zPantex.zFormaTablaList.length; i++) {
-                zFormaTablaState.byId[id] = new ZFormaTablaStateModel(id);
+                zFormaTablaState.byId[id] = new ZFormaTablaStateModel(id, zPantex.zFormaTablaList[i].cmps.length);
 
                 zFormaTablaState.byId[id].idZVentana =
                     agregarZVentanaState(getStateFn, zPantex.zFormaTablaList[i], zVentanaState);
@@ -135,22 +135,36 @@ export namespace Actions {
             let zFormaTablaCmpsIds = [];
 
             let id = Selectors.ZPantexStateModule.ZCampoState.getNextZCampoStateId(getStateFn());
-            for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx);
-                zCampoState.allIds.push(id);
-                zFormaTablaCmpsIds.push(id);
-                if (zFormaTabla.cmps[i].cmps) {
-                    let parentId = id;
-                    zCampoState.byId[id].esCampoGrafico = true;
-                    for (let j = 0; j < zFormaTabla.cmps[i].cmps.length; j++) {
-                        id++;
-                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id, zPantex.numPx);
-                        zCampoState.byId[id].parentId = parentId;
+
+            //Es multi
+            if (zFormaTabla.ven.numLinsDatos > 0) {
+                for (let fila = 0; fila < zFormaTabla.ven.numLinsDatos; fila++) {
+                    for (let i = 0; i < zFormaTabla.cmps.length; i++) {
+                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx);
                         zCampoState.allIds.push(id);
                         zFormaTablaCmpsIds.push(id);
+                        id++;
                     }
                 }
-                id++;
+            }
+            else { //No es multi
+                for (let i = 0; i < zFormaTabla.cmps.length; i++) {
+                    zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx);
+                    zCampoState.allIds.push(id);
+                    zFormaTablaCmpsIds.push(id);
+                    if (zFormaTabla.cmps[i].cmps) {
+                        let parentId = id;
+                        zCampoState.byId[id].esCampoGrafico = true;
+                        for (let j = 0; j < zFormaTabla.cmps[i].cmps.length; j++) {
+                            id++;
+                            zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id, zPantex.numPx);
+                            zCampoState.byId[id].parentId = parentId;
+                            zCampoState.allIds.push(id);
+                            zFormaTablaCmpsIds.push(id);
+                        }
+                    }
+                    id++;
+                }
             }
 
             return zFormaTablaCmpsIds;

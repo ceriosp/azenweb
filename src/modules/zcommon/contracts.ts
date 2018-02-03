@@ -186,15 +186,21 @@ export interface IZFormaTablaState extends IdEntityBase { //zft
     cmpsState: Array<IZCampoState>;
     linEstState: Array<IZComandoFormaState>;
     btnsState: Array<IZComandoFormaState>;
+
+    //Para zfts que son multi:
+    filasCamposList: Array<IZFilaCamposState>;
+    numCampos: number;
 }
 
 export class ZFormaTablaState implements IZFormaTablaState { //zft
 
-    constructor(id: number) {
+    constructor(id: number, numCampos: number) {
         this.id = id;
         this.zCampoStateListIds = new Array<number>();
         this.linEstListIds = new Array<number>();
         this.btnsListIds = new Array<number>();
+
+        this.numCampos = numCampos;
     }
 
     id: number;
@@ -210,6 +216,23 @@ export class ZFormaTablaState implements IZFormaTablaState { //zft
     cmpsState: Array<IZCampoState>;
     linEstState: Array<IZComandoFormaState>;
     btnsState: Array<IZComandoFormaState>;
+
+    //Para zfts que son multi:
+    filasCamposList: Array<IZFilaCamposState>;
+    numCampos: number;
+}
+
+export interface IZFilaCamposState {
+    cmpsState: Array<IZCampoState>;
+}
+
+export class ZFilaCamposState implements IZFilaCamposState {
+
+    constructor() {
+        this.cmpsState = new Array<IZCampoState>();
+    }
+
+    cmpsState: Array<IZCampoState>;
 }
 
 export interface IZCampoState extends IdEntityBase, IZCampoBase {
@@ -222,7 +245,7 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
     haCambiado: boolean;
     checked: boolean;
 
-    esDetallable:boolean;
+    esDetallable: boolean;
 
     //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
     posBitsOn: Array<number>;
@@ -235,7 +258,7 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
     bitPrenderControl: number;
     bitApagarControl: number;
     bitPrenderModo: number;
-    bitApagarModo: number;    
+    bitApagarModo: number;
 }
 
 export class ZCampoState implements IZCampoState {
@@ -279,7 +302,7 @@ export class ZCampoState implements IZCampoState {
     posBitsOn: Array<number>;
 
     checked: boolean;
-    esDetallable:boolean;
+    esDetallable: boolean;
 
     //Propiedades IZCampo
     nomCmp: string;
@@ -295,7 +318,7 @@ export class ZCampoState implements IZCampoState {
     bitPrenderControl: number;
     bitApagarControl: number;
     bitPrenderModo: number;
-    bitApagarModo: number;    
+    bitApagarModo: number;
 }
 
 export interface IZComandoFormaState extends IZComandoForma {
@@ -707,7 +730,7 @@ export namespace ContractsServices {
             )
     }
 
-    export const esCampoControlLectura = (control:number) => {
+    export const esCampoControlLectura = (control: number) => {
         return control && Binario.estaPrendidoBit(control, Constants.ControlCampoEnum.ZCMP_VISUAL);
     }
 

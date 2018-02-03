@@ -68,7 +68,7 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                     aria-labelledby="contained-modal-title-sm"
                     container={this.props.container}
                 >
-                    <Modal.Body
+                    <Modal.Body                        
                         style={{
                             padding: "0px",
                         }}

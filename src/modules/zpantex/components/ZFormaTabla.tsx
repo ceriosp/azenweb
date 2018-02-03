@@ -5,18 +5,9 @@ import {
 } from 'react';
 
 import {
-    Row,
     Col,
-    Glyphicon,
-    Navbar,
-    Nav,
-    MenuItem,
-    NavItem,
-    NavDropdown,
     Form,
-    Panel,
-    ButtonToolbar,
-    Button
+    Table
 } from 'react-bootstrap';
 
 import {
@@ -24,7 +15,7 @@ import {
     IZMenu
 } from '../../zcommon/contracts';
 import { Services as ZCommonServices } from "../../zcommon/services";
-import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma, IZFormaTablaState, IZCampoState } from "../../zcommon";
+import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma, IZFormaTablaState, IZCampoState, ZFilaCamposState, IZFilaCamposState } from "../../zcommon";
 import { ZVentana } from "./ZVentana";
 import ZCampo from "./ZCampo";
 
@@ -57,14 +48,15 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
 
         return (
             <div>
-                <Form
-                    horizontal
-                    id={this.commonServices.getZFormaTablaId(this.props.px, this.props.zFormaIndex, false)}
-                >
-                    {this.props.zFormaTabla.cmpsState.map((zcampoAPintar: IZCampoState, index: number) => {
-                        return (
+
+                {/*NO Es multi*/}
+                {this.props.zFormaTabla.cmpsState && this.props.zFormaTabla.cmpsState.map((zcampoAPintar: IZCampoState, index: number) => {
+                    return (
+                        <Form
+                            horizontal
+                            key={zcampoAPintar.id}
+                        >
                             <Col
-                                key={zcampoAPintar.id}
                                 md={4}
                             >
                                 <ZCampo
@@ -72,13 +64,35 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
                                     zCampo={zcampoAPintar}
                                 />
                             </Col>
-                        );
-                    })}
-                </Form>
-                <div
-                    style={{ clear: 'both' }}
-                >
-                </div>
+                        </Form>
+                    );
+                })}
+
+                {/*Es multi*/}
+                {this.props.zFormaTabla.filasCamposList &&
+                    (<Table striped condensed hover responsive cellPadding="0" cellSpacing="0" className="azen-multi">
+                        <tbody>
+                            {this.props.zFormaTabla.filasCamposList.map((zfilaCampoState: IZFilaCamposState, index: number) => {
+                                return (
+                                    <tr key={index}>
+                                        {zfilaCampoState.cmpsState.map((zcampoAPintar: IZCampoState, index: number) => {
+                                            return (
+                                                <td key={index}>
+                                                    <ZCampo
+                                                        zFormaTabla={this.props.zFormaTabla}
+                                                        zCampo={zcampoAPintar}
+                                                    />
+                                                </td>
+                                            );
+                                        })}
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </Table>)
+                }
+
+                <div style={{ clear: 'both' }}> </div>
             </div>
         );
     }

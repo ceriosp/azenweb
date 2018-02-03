@@ -17,7 +17,9 @@ import {
     IZComandoFormaState,
     IZVentanaState,
     IZPantex,
-    IEntityNormalizeObj
+    IEntityNormalizeObj,
+    ZFilaCamposState,
+    IZFilaCamposState
 
 } from "../zcommon";
 
@@ -37,7 +39,7 @@ export namespace Selectors {
 
             return appState.zPantexStateModule.pilaPx;
         };
-    
+
         export namespace ZPantexState {
 
             export const getZPantexStateMap = (appState: IZAplState): EntityNormalizedObj<IZPantexState> => {
@@ -195,9 +197,30 @@ export namespace Selectors {
 
                     //zcampos
                     if (getZFormaTablaStateMap.byId[idZft].zCampoStateListIds) {
-                        zPantex.zFormaTablaListState[izft].cmpsState = [];
+
+                        if (zPantex.zFormaTablaListState[izft].venState.numLinsDatos > 0) {
+                            zPantex.zFormaTablaListState[izft].filasCamposList = new Array<IZFilaCamposState>(zPantex.zFormaTablaListState[izft].venState.numLinsDatos);
+                            zPantex.zFormaTablaListState[izft].cmpsState = undefined;
+                        } else {
+                            zPantex.zFormaTablaListState[izft].cmpsState = [];
+                            zPantex.zFormaTablaListState[izft].filasCamposList = undefined;
+                        }
+
+                        let numFilaMulti = -1;
                         for (let i = 0; i < getZFormaTablaStateMap.byId[idZft].zCampoStateListIds.length; i++) {
                             let idZCampo = getZFormaTablaStateMap.byId[idZft].zCampoStateListIds[i];
+
+                            //Es multi
+                            if (zPantex.zFormaTablaListState[izft].venState.numLinsDatos > 0) {
+                                if (i % zPantex.zFormaTablaListState[izft].numCampos == 0) {
+                                    numFilaMulti++;
+                                    zPantex.zFormaTablaListState[izft].filasCamposList[numFilaMulti] = new ZFilaCamposState();
+                                    zPantex.zFormaTablaListState[izft].filasCamposList[numFilaMulti].cmpsState.push(getZCampoStateMap.byId[idZCampo]);
+                                }else{
+                                    zPantex.zFormaTablaListState[izft].filasCamposList[numFilaMulti].cmpsState.push(getZCampoStateMap.byId[idZCampo]);
+                                }
+                                continue;
+                            }
 
                             //es un campo hijo de un gráfico, no va en el array principal, 
                             //sino en el subarray del campo gráfico padre
@@ -238,6 +261,7 @@ export namespace Selectors {
                         }
                     }
                 }
+                
                 pilaZPantexState.push(zPantex);
             }
 

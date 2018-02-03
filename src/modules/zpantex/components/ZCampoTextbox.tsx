@@ -11,15 +11,17 @@ import {
     ZCampoModel,
     IZCampo,
     Constants as ZCommonConstants,
-    IZCampoState
+    IZCampoState,
+    IZFormaTablaState
 } from "../../zcommon";
 
 export interface OwnProps {
     zCampoModel: IZCampoState;
+    zFormaTabla: IZFormaTablaState;
 }
 
 export interface ConnectedState {
-    estaProcesandoRequestServidor:boolean
+    estaProcesandoRequestServidor: boolean
 }
 
 export interface ConnectedDispatch {
@@ -37,14 +39,38 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
     }
 
     render() {
-        const { zCampoModel } = this.props;
-        return (
-            <FormGroup bsSize="small">
-                <Col md={12}>
-                    <Col componentClass={ControlLabel}>
-                        {zCampoModel.etq}
+        const { zCampoModel, zFormaTabla } = this.props;
+        if (zFormaTabla.cmpsState) {
+            return (
+                <FormGroup bsSize="small">
+                    <Col md={12}>
+                        <Col componentClass={ControlLabel}>
+                            {zCampoModel.etq}
+                        </Col>
+                        <Col>
+                            <FormControl
+                                type="text"
+                                name={zCampoModel.nomCmp}
+                                value={zCampoModel.value}
+                                onChange={this.onChange}
+                                onBlur={this.onBlur}
+                                maxLength={zCampoModel.lon}
+                                disabled={
+                                    this.props.estaProcesandoRequestServidor
+                                    || zCampoModel.readOnly
+                                }
+                                style={{
+                                    borderColor: zCampoModel.haCambiado ? '#337AB7' : ''
+                                }}
+                            />
+                        </Col>
                     </Col>
-                    <Col>
+                </FormGroup>
+            );
+        } else {
+            if (zFormaTabla.filasCamposList) { //Es multi
+                return (
+                    <FormGroup bsSize="small">
                         <FormControl
                             type="text"
                             name={zCampoModel.nomCmp}
@@ -60,10 +86,10 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
                                 borderColor: zCampoModel.haCambiado ? '#337AB7' : ''
                             }}
                         />
-                    </Col>
-                </Col>
-            </FormGroup>
-        );
+                    </FormGroup>
+                );
+            }
+        }
     }
 
     onChange(e: any) {
