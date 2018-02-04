@@ -19,7 +19,8 @@ import {
     IZPantex,
     IEntityNormalizeObj,
     ZFilaCamposState,
-    IZFilaCamposState
+    IZFilaCamposState,
+    IZParametrosComando
 
 } from "../zcommon";
 
@@ -51,6 +52,15 @@ export namespace Selectors {
                 return appState.zPantexStateModule.pilaPantexState;
             };
         }
+
+        export const getZParametrosComando = (appState: IZAplState): EntityNormalizedObj<IZParametrosComando> => {
+
+            if (!appState.zPantexStateModule.zParametrosComando) {
+                return new EntityNormalizedObj<IZParametrosComando>();
+            }
+
+            return appState.zPantexStateModule.zParametrosComando;
+        };
 
         export namespace ZFormaTablaState {
 
@@ -216,7 +226,7 @@ export namespace Selectors {
                                     numFilaMulti++;
                                     zPantex.zFormaTablaListState[izft].filasCamposList[numFilaMulti] = new ZFilaCamposState();
                                     zPantex.zFormaTablaListState[izft].filasCamposList[numFilaMulti].cmpsState.push(getZCampoStateMap.byId[idZCampo]);
-                                }else{
+                                } else {
                                     zPantex.zFormaTablaListState[izft].filasCamposList[numFilaMulti].cmpsState.push(getZCampoStateMap.byId[idZCampo]);
                                 }
                                 continue;
@@ -261,7 +271,7 @@ export namespace Selectors {
                         }
                     }
                 }
-                
+
                 pilaZPantexState.push(zPantex);
             }
 

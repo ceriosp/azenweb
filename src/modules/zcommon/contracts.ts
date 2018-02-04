@@ -190,6 +190,7 @@ export interface IZFormaTablaState extends IdEntityBase { //zft
     //Para zfts que son multi:
     filasCamposList: Array<IZFilaCamposState>;
     numCampos: number;
+    indexFilaMultiSeleccionada:number;
 }
 
 export class ZFormaTablaState implements IZFormaTablaState { //zft
@@ -220,6 +221,7 @@ export class ZFormaTablaState implements IZFormaTablaState { //zft
     //Para zfts que son multi:
     filasCamposList: Array<IZFilaCamposState>;
     numCampos: number;
+    indexFilaMultiSeleccionada:number;
 }
 
 export interface IZFilaCamposState {
@@ -623,6 +625,11 @@ export namespace CM {
         px: number
     }
 }
+
+export interface IZParametrosComando extends IdEntityBase {
+    buffer: string;
+}
+
 //#endregion
 
 //#region =============================================== STATE ===============================================
@@ -667,6 +674,8 @@ export interface IZPantexStateModule {
     zCampoState: EntityNormalizedObj<IZCampoState>;
     zComandoFormaState: EntityNormalizedObj<IZComandoFormaState>;
     zVentanaState: EntityNormalizedObj<IZVentanaState>;
+
+    zParametrosComando: EntityNormalizedObj<IZParametrosComando>;
 }
 
 export interface IZLoginModule {

@@ -25,7 +25,9 @@ import {
     IZVentanaState,
     ZCampoState,
     Constants as ZCommonConstants,
-    ContractsServices
+    ContractsServices,
+    IZEnviarComandoParams,
+    IZParametrosComando
 
 } from '../zcommon';
 
@@ -127,7 +129,16 @@ export namespace Reducers {
             zFormaTablaState: new EntityNormalizedObj(),
             zVentanaState: new EntityNormalizedObj(),
             zCampoState: new EntityNormalizedObj(),
-            zComandoFormaState: new EntityNormalizedObj()
+            zComandoFormaState: new EntityNormalizedObj(),
+            zParametrosComando: {
+                byId: {
+                    [ZCommonConstants.ComandoEnum.CM_ACEPTAR]: {
+                        id: ZCommonConstants.ComandoEnum.CM_ACEPTAR,
+                        buffer: ""
+                    }
+                },
+                allIds: [ZCommonConstants.ComandoEnum.CM_ACEPTAR]
+            }
         } as IZPantexStateModule;
 
         export const impl = (state: IZPantexStateModule = zPantexStateModuleInicial, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
@@ -204,6 +215,28 @@ export namespace Reducers {
                             }
                         } as any,
                     } as IZPantexStateModule, state);
+
+                case ActionTypes.ZPantexStateModule.SET_FILAMULTISELECCIONADA:
+                    return u({
+                        zFormaTablaState: {
+                            byId: {
+                                [action.zFormaTablaState.id]: {
+                                    indexFilaMultiSeleccionada: action.indexFilaMultiSeleccionada
+                                } as IZFormaTablaState
+                            }
+                        } as any,
+                    } as IZPantexStateModule, state);
+
+                case ActionTypes.ZPantexStateModule.SET_COMANDOBUFFER:
+                    return u({
+                        zParametrosComando: {
+                            byId: {
+                                [action.cm]: {
+                                    buffer: action.buffer
+                                } as IZParametrosComando
+                            }
+                        } as any,
+                    } as IZPantexStateModule, state);
             }
 
             return state;
@@ -271,6 +304,10 @@ export namespace Reducers {
                                 : zCampoEnHash.value,
 
                             checked: zcampoState.checked,
+
+                            control: zcampoState.control,
+                            modo: zcampoState.modo
+
                         } as IZCampoState;
 
                         if (zcampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO

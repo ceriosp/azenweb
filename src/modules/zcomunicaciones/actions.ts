@@ -40,7 +40,7 @@ export namespace Actions {
                     return response.text();
                 })
                 .then((retornoStr: string) => {
-                    console.timeEnd(`${ZCommon.Constants.ComandoEnum[cmd]}`);
+                    console.timeEnd(`${ZCommon.Constants.ComandoEnum[cmd]} = ${cmd}`);
                     console.log(retornoStr);
                     if (retornoStr[retornoStr.length - 1] != '}') {
                         retornoStr = retornoStr.substring(0, retornoStr.length - 1);
@@ -58,7 +58,7 @@ export namespace Actions {
                 .catch((error) => {
                     let resultadoActionError = new ResultadoAction();
                     resultadoActionError.resultado = ZUtils.Constants.ResultadoAccionEnum.ERROR;
-                    resultadoActionError.mensaje = `Error ejecutando comando ${cmd}`;
+                    resultadoActionError.mensaje = `Error ejecutando comando ${ZCommon.Constants.ComandoEnum[cmd]} = ${cmd}`;
                     resultadoActionError.traza = error;
                     console.error("Comunicaciones/services/enviarRequestComando");
                     console.error(resultadoActionError);

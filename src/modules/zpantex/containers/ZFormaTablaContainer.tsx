@@ -2,11 +2,11 @@ import * as React from 'react';
 import * as redux from 'redux';
 import { connect } from 'react-redux';
 
-import { IZAplState } from "../../zcommon/contracts";
+import { IZAplState, IZFormaTablaState } from "../../zcommon/contracts";
 
 import {
-    Actions as ZComunicacionesActions
-} from '../../zcomunicaciones';
+    Actions
+} from '../actions';
 
 import {
     OwnProps,
@@ -20,7 +20,8 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-
+    onFilaMultiSeleccionada: (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number) =>
+        dispatch(Actions.ZPantexStateModule.onFilaMultiSeleccionada(zFormaTablaState, indexFilaMultiSeleccionada))
 });
 
 export const ZFormaTablaContainer: React.ComponentClass<OwnProps> =

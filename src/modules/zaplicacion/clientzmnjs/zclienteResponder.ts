@@ -6,17 +6,28 @@ import {
 import {
     ResultadoActionConDato
 } from "../../zutils";
+import {
+    Actions as ZPantexActions
+} from '../../zpantex/actions';
+
+import {
+    Selectors as ZPantexSelectors
+} from '../../zpantex/selectors';
+
+
 
 import {
     IZEvento,
     IZAplState,
-    IZColaEventos
+    IZColaEventos,
+    ZPantexState
 } from "../../zcommon";
 
 import * as ZComunicaciones from "../../zcomunicaciones";
 
 import { Services } from '../../zaplicacion';
 import * as zCommon from "../../zcommon";
+import { Actions } from "../../zcomunicaciones";
 
 export namespace ZclienteResponder {
 
@@ -26,6 +37,16 @@ export namespace ZclienteResponder {
             let tipoAJAXIndicador: zCommon.Constants.TipoAJAXIndicadorEnum;
 
             switch (zComando) {
+
+                case ZCommon.Constants.ComandoEnum.CM_ACEPTAR:                
+                    if (ZPantexSelectors.ZPantexStateModule.getZParametrosComando(getState()).byId[ZCommon.Constants.ComandoEnum.CM_ACEPTAR]) {
+                        buffer = ZPantexSelectors.ZPantexStateModule.getZParametrosComando(getState()).byId[ZCommon.Constants.ComandoEnum.CM_ACEPTAR].buffer;
+                    }
+                    tipoAJAXIndicador = zCommon.Constants.TipoAJAXIndicadorEnum.MODAL;
+                    break;
+
+                case ZCommon.Constants.ComandoEnum.CM_CAMBIOCMP:
+                case ZCommon.Constants.ComandoEnum.CM_IRALINEA:
                 case ZCommon.Constants.ComandoEnum.CM_SI:
                 case ZCommon.Constants.ComandoEnum.CM_NO:
                 case zCommon.Constants.ComandoEnum.CM_PRIMERO:
@@ -34,8 +55,7 @@ export namespace ZclienteResponder {
                 case zCommon.Constants.ComandoEnum.CM_ULTIMO:
                 case ZCommon.Constants.ComandoEnum.CM_CERRAR:
                 case ZCommon.Constants.ComandoEnum.CM_RETOCAR:
-                case ZCommon.Constants.ComandoEnum.CM_CAMBIOCMP:
-                case ZCommon.Constants.ComandoEnum.CM_CAMBIOCMPIND:                
+                case ZCommon.Constants.ComandoEnum.CM_CAMBIOCMPIND:
                     tipoAJAXIndicador = zCommon.Constants.TipoAJAXIndicadorEnum.NO_MODAL;
                     break;
 
@@ -43,11 +63,12 @@ export namespace ZclienteResponder {
                 case ZCommon.Constants.ComandoEnum.CM_EJECOPCION:
                 case ZCommon.Constants.ComandoEnum.CM_DEFMENU:
                 case zCommon.Constants.ComandoEnum.CM_DETALLAR:
+
                 default:
                     tipoAJAXIndicador = zCommon.Constants.TipoAJAXIndicadorEnum.MODAL;
                     break;
             }
-            
+
             return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
                 dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
                     cmd: zComando,
@@ -59,12 +80,13 @@ export namespace ZclienteResponder {
                             return;
                         }
                         dispatch(AppActions.setUltimoComandoEnviado(zComando));
-                        Services.Responder.procesarZColaEventos(resultadoClienteCm.retorno, dispatch, getState); 
+                        dispatch(ZPantexActions.ZPantexStateModule.setComandoBuffer(zComando, ""));
+                        Services.Responder.procesarZColaEventos(resultadoClienteCm.retorno, dispatch, getState);
                         resolve(resultadoClienteCm);
                     },
                     () => { }
                     );
-            });                
+            });
         }
 
 }    

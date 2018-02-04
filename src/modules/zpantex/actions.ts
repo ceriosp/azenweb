@@ -96,7 +96,7 @@ export namespace Actions {
                     agregarZVentanaState(getStateFn, zPantex.zFormaTablaList[i], zVentanaState);
 
                 zFormaTablaState.byId[id].zCampoStateListIds =
-                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i+1, zCampoState);
+                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i + 1, zCampoState);
 
                 zFormaTablaState.byId[id].btnsListIds =
                     agregarZComandosBtnsFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zComandoFormaState);
@@ -130,7 +130,7 @@ export namespace Actions {
         const agregarZCamposState = (getStateFn: () => IZAplState,
             zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
-            region:number,
+            region: number,
             zCampoState: EntityNormalizedObj<IZCampoState>): Array<number> => {
 
             let zFormaTablaCmpsIds = [];
@@ -141,7 +141,7 @@ export namespace Actions {
             if (zFormaTabla.ven.numLinsDatos > 0) {
                 for (let fila = 0; fila < zFormaTabla.ven.numLinsDatos; fila++) {
                     for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, fila+1);
+                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, fila + 1);
                         zCampoState.allIds.push(id);
                         zFormaTablaCmpsIds.push(id);
                         id++;
@@ -278,6 +278,28 @@ export namespace Actions {
             haCambiado,
         });
 
+        export const onFilaMultiSeleccionada = (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number) => (dispatch: any, getStateFn: () => IZAplState) => {
+            dispatch(setFilaMultiSeleccionada(zFormaTablaState, indexFilaMultiSeleccionada));
+            const buffer = `<fi>${indexFilaMultiSeleccionada}</fi>`;            
+            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_IRALINEA, buffer)).then(
+                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
+                    dispatch(setComandoBuffer(Constants.ComandoEnum.CM_ACEPTAR, buffer));
+                }
+            );
+        }
+
+        export const setFilaMultiSeleccionada = (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.SET_FILAMULTISELECCIONADA,
+            zFormaTablaState,
+            indexFilaMultiSeleccionada,
+        });
+
+        export const setComandoBuffer = (cm: Constants.ComandoEnum, buffer: string): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.SET_COMANDOBUFFER,
+            cm,
+            buffer,
+        });
+        
         export const onCampoBlur = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
             if (zcampoState.haCambiado) {
                 const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${zcampoState.value}</vc>`;

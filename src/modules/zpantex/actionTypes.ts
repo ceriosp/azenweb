@@ -10,7 +10,8 @@ import {
     IZCampoState,
     IZComandoFormaState,
     IZVentanaState,
-    EntityNormalizedObj
+    EntityNormalizedObj,
+    ZFormaTablaState
 } from "../zcommon";
 
 import * as ZMenu from '../zmenu';
@@ -51,6 +52,8 @@ export namespace ActionTypes {
             export type ON_CAMPOCHECKBOXCHANGE = "ZPantexStateModule/ON_CAMPOCHECKBOXCHANGE";
 
             export type SET_ZCAMPOSTATE_HACAMBIADO = "ZPantexStateModule/SET_ZCAMPOSTATE_HACAMBIADO";
+            export type SET_FILAMULTISELECCIONADA = "ZPantexStateModule/SET_FILAMULTISELECCIONADA";
+            export type SET_COMANDOBUFFER = "ZPantexStateModule/SET_COMANDOBUFFER";
         }
 
         export const CM_PXCREAR: Types.CM_PXCREAR = "ZPantexStateModule/CM_PXCREAR";
@@ -64,6 +67,8 @@ export namespace ActionTypes {
         export const ON_CAMPOCHECKBOXCHANGE: Types.ON_CAMPOCHECKBOXCHANGE = "ZPantexStateModule/ON_CAMPOCHECKBOXCHANGE";
 
         export const SET_ZCAMPOSTATE_HACAMBIADO: Types.SET_ZCAMPOSTATE_HACAMBIADO = "ZPantexStateModule/SET_ZCAMPOSTATE_HACAMBIADO";
+        export const SET_FILAMULTISELECCIONADA: Types.SET_FILAMULTISELECCIONADA = "ZPantexStateModule/SET_FILAMULTISELECCIONADA";
+        export const SET_COMANDOBUFFER: Types.SET_COMANDOBUFFER = "ZPantexStateModule/SET_COMANDOBUFFER";
 
 
         export type Action =
@@ -116,6 +121,16 @@ export namespace ActionTypes {
                 type: Types.SET_ZCAMPOSTATE_HACAMBIADO,
                 idZCampoState: number,
                 haCambiado: boolean
+            }|
+            {
+                type: Types.SET_FILAMULTISELECCIONADA,
+                zFormaTablaState: IZFormaTablaState,
+                indexFilaMultiSeleccionada: number
+            }|
+            {
+                type: Types.SET_COMANDOBUFFER,
+                cm: Constants.ComandoEnum,
+                buffer: string
             }
     }
 
