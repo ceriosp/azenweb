@@ -96,7 +96,7 @@ export namespace Actions {
                     agregarZVentanaState(getStateFn, zPantex.zFormaTablaList[i], zVentanaState);
 
                 zFormaTablaState.byId[id].zCampoStateListIds =
-                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zCampoState);
+                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i+1, zCampoState);
 
                 zFormaTablaState.byId[id].btnsListIds =
                     agregarZComandosBtnsFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zComandoFormaState);
@@ -130,6 +130,7 @@ export namespace Actions {
         const agregarZCamposState = (getStateFn: () => IZAplState,
             zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
+            region:number,
             zCampoState: EntityNormalizedObj<IZCampoState>): Array<number> => {
 
             let zFormaTablaCmpsIds = [];
@@ -140,7 +141,7 @@ export namespace Actions {
             if (zFormaTabla.ven.numLinsDatos > 0) {
                 for (let fila = 0; fila < zFormaTabla.ven.numLinsDatos; fila++) {
                     for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx);
+                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, fila+1);
                         zCampoState.allIds.push(id);
                         zFormaTablaCmpsIds.push(id);
                         id++;
@@ -149,7 +150,7 @@ export namespace Actions {
             }
             else { //No es multi
                 for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                    zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx);
+                    zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, 1);
                     zCampoState.allIds.push(id);
                     zFormaTablaCmpsIds.push(id);
                     if (zFormaTabla.cmps[i].cmps) {
@@ -157,7 +158,7 @@ export namespace Actions {
                         zCampoState.byId[id].esCampoGrafico = true;
                         for (let j = 0; j < zFormaTabla.cmps[i].cmps.length; j++) {
                             id++;
-                            zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id, zPantex.numPx);
+                            zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id, zPantex.numPx, region, 1);
                             zCampoState.byId[id].parentId = parentId;
                             zCampoState.allIds.push(id);
                             zFormaTablaCmpsIds.push(id);

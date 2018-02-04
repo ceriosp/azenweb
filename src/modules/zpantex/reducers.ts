@@ -245,11 +245,25 @@ export namespace Reducers {
                 return state;
             }
 
-            const actualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
+            const esDeMultiRegistro = action.hashZCampos.values().next().value.fi;
 
+            const actualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
                 if (action.listaPxCampos.indexOf(zcampoState.px) != -1) {
-                    if (action.hashZCampos.has(zcampoState.nomCmp)) {
-                        const zCampoEnHash = action.hashZCampos.get(zcampoState.nomCmp);
+
+                    let key = zcampoState.nomCmp;
+                    if (esDeMultiRegistro) {
+                        key = ContractsServices.getSincHashCampo(zcampoState);
+                    }
+
+                    if (action.hashZCampos.has(key)) {
+                        const zCampoEnHash = action.hashZCampos.get(key);
+
+                        if (zCampoEnHash.fi) {
+                            if (zcampoState.rg != zCampoEnHash.rg || zcampoState.fi != zCampoEnHash.fi) {
+                                return zcampoState;
+                            }
+                        }
+
                         let zCampoActualizado = {
 
                             value: zCampoEnHash.value == undefined

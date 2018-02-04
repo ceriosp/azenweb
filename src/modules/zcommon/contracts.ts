@@ -239,6 +239,8 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
 
     id: number;
     px: number;
+    rg: number; //región
+    fi: number; //fila
     value: any;
     readOnly: boolean;
     esCampoGrafico: boolean;
@@ -263,10 +265,12 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
 
 export class ZCampoState implements IZCampoState {
 
-    constructor(zcampo: IZCampo, id: number, px: number) {
+    constructor(zcampo: IZCampo, id: number, px: number, rg:number, fila:number) {
 
         this.id = id;
         this.px = px;
+        this.rg = rg;
+        this.fi = fila;
         this.haCambiado = false;
 
         this.nomCmp = zcampo.nomCmp;
@@ -291,6 +295,8 @@ export class ZCampoState implements IZCampoState {
     //Propiedades para manejo de estado
     id: number;
     px: number;
+    rg: number;
+    fi: number;    
     value: string;
     readOnly: boolean;
     esCampoGrafico: boolean;
@@ -391,12 +397,13 @@ export class ZVentanaState implements IZVentanaState {
 export namespace CM {
 
     /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_SINCCAMPO - 119
-     * Sincroniza el dato del campo entre lógica y presentación
-     * Responder: zcmpResponder
-     * Estado: por implementar
+     * parámetros comunes para los eventos:
+     * CM_SINCCAMPO
+     * CM_PRENDERMODO
+     * CM_PRENDERCONTROL
+     * CM_SINCBOTON
      */
-    export interface ISincCampo {
+    export interface ISincBase {
         /**
          * Identificador de la ventana (px)
          */
@@ -404,8 +411,28 @@ export namespace CM {
 
         /**
          * Nombre del campo (nomCmp)
+         * campo: string
+         * boton: number (comando)
          */
-        nc: string;
+        nc: any;
+
+        /**
+         * Fila
+         */
+        fi: number;
+
+        /**
+         * Region
+         */
+        rg: number;
+    }
+    /**
+     * Responde a zcommon.Constants.ComandoEnum.CM_SINCCAMPO - 119
+     * Sincroniza el dato del campo entre lógica y presentación
+     * Responder: zcmpResponder
+     * Estado: por implementar
+     */
+    export interface ISincCampo extends ISincBase {
 
         /**
          * Valor del campo.
@@ -427,11 +454,6 @@ export namespace CM {
          *  
          */
         pb: number;
-
-        /**
-         * número de la región 
-         */
-        rg: number;
     }
 
     /**
@@ -485,22 +507,7 @@ export namespace CM {
      * Responde a zcommon.Constants.ComandoEnum.CM_PRENDERMODO - 51
      * Estado: Por implementar 
      */
-    export interface IPrenderModo {
-        /**
-         * 
-         */
-        px: number;
-
-        /**
-         * 
-         */
-        nc: string;
-
-        /**
-         * 
-         */
-        rg: number;
-
+    export interface IPrenderModo extends ISincBase {
         /**
          * 
          */
@@ -551,22 +558,7 @@ export namespace CM {
      *  Prende bit control del campo, según zcommon.Constants.ControlCampo
      * Estado: por implementar
      */
-    export interface IPrenderControl {
-        /**
-         * Número de la ventana que contiene el campo
-         */
-        px: number,
-
-        /**
-         * Nombre del campo al cual es le  prende control
-         */
-        nc: string,
-
-        /**
-         * Número de la región que contiene el campo
-         */
-        rg: number,
-
+    export interface IPrenderControl extends ISincBase {
         /**
          * Modo control a poner (manejo bitwise)
          * mc es el valor decimal del bit a prender (ej: 32 corresponde a bit 6)
@@ -607,21 +599,8 @@ export namespace CM {
     /**
      * Responde a zcommon.Constants.ComandoEnum.CM_SINCBOTON - 140
      */
-    export interface ISincBoton {
-        /**
-         * 
-         */
-        px: number,
-
-        /**
-         * 
-         */
-        nc: Constants.ComandoEnum,
-
-        /**
-         * 
-         */
-        vc: number
+    export interface ISincBoton extends ISincBase {
+        vc: string;
     }
 
     /**
@@ -733,6 +712,23 @@ export namespace ContractsServices {
     export const esCampoControlLectura = (control: number) => {
         return control && Binario.estaPrendidoBit(control, Constants.ControlCampoEnum.ZCMP_VISUAL);
     }
+
+    export const getSincHashKey = (sincParams:CM.ISincBase) => {
+
+        //Es evento de multi
+        if(sincParams.fi){
+            return sincParams.px + "|" + sincParams.rg + "|" + sincParams.fi + "|" + sincParams.nc;
+        }
+        
+        return sincParams.nc;
+    }
+
+    export const getSincHashCampo = (zCampoState: IZCampoState) => {
+        //Es evento de multi
+        return zCampoState.px + "|" + zCampoState.rg + "|" + zCampoState.fi + "|" + zCampoState.nomCmp;
+    }
+
+
 
     export namespace Binario {
         export const estaPrendidoBit = (num: number, bit: number) => {

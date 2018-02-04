@@ -44,7 +44,7 @@ const recursosZoomList: Array<string> =
 
 import * as ZCommon from '../zcommon';
 import {
-    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList, IZCampo, CM, IZCampoState, IZComandoFormaState
+    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList, IZCampo, CM, IZCampoState, IZComandoFormaState, ContractsServices
 } from '../zcommon';
 
 import * as ZMenu from '../zmenu';
@@ -154,14 +154,18 @@ export namespace Services {
 
         const cmSincCampo = (infoEvento: IZEvento) => {
             cmSincCampoParametros = infoEvento.dato.buffer.dato as CM.ISincCampo;
+            let hashKey = ContractsServices.getSincHashKey(cmSincCampoParametros);
+
             cmSincCampoParametros.px = parseInt(cmSincCampoParametros.px.toString());
             if (listaPxCampos.indexOf(cmSincCampoParametros.px) == -1) {
                 listaPxCampos.push(cmSincCampoParametros.px);
             }
-            if (!hashZCampoState.has(cmSincCampoParametros.nc)) {
+            if (!hashZCampoState.has(hashKey)) {
                 let zCampoEnHash = {
                     px: cmSincCampoParametros.px,
                     value: cmSincCampoParametros.vc,
+                    rg: cmSincCampoParametros.rg,
+                    fi: cmSincCampoParametros.fi
                 } as IZCampoState;
 
                 //Es radio o checkbox
@@ -173,11 +177,14 @@ export namespace Services {
                     }
                 }
 
-                hashZCampoState.set(cmSincCampoParametros.nc, zCampoEnHash);
+                hashZCampoState.set(hashKey, zCampoEnHash);
 
             } else {
-                const zCampoEnHash = hashZCampoState.get(cmSincCampoParametros.nc);
+                const zCampoEnHash = hashZCampoState.get(hashKey);
                 zCampoEnHash.value = cmSincCampoParametros.vc;
+                zCampoEnHash.value = cmSincCampoParametros.vc,
+                    zCampoEnHash.rg = cmSincCampoParametros.rg,
+                    zCampoEnHash.fi = cmSincCampoParametros.fi
 
                 //Es radio o checkbox
                 if (cmSincCampoParametros.pb) {
@@ -194,45 +201,49 @@ export namespace Services {
 
         const cmPrenderControl = (infoEvento: IZEvento, cmd: ZCommonConstants.ComandoEnum) => {
             cmPrenderControlParametros = infoEvento.dato.buffer.dato as CM.IPrenderControl;
-            if (!hashZCampoState.has(cmPrenderControlParametros.nc)) {
-                hashZCampoState.set(cmPrenderControlParametros.nc, {
+            let hashKey = ContractsServices.getSincHashKey(cmPrenderControlParametros);
+            if (!hashZCampoState.has(hashKey)) {
+                hashZCampoState.set(hashKey, {
                     bitPrenderControl: Math.log2(cmPrenderControlParametros.mc)
                 } as IZCampoState);
             } else {
-                hashZCampoState.get(cmPrenderControlParametros.nc).bitPrenderControl = Math.log2(cmPrenderControlParametros.mc);
+                hashZCampoState.get(hashKey).bitPrenderControl = Math.log2(cmPrenderControlParametros.mc);
             }
         }
 
         const cmApagarControl = (infoEvento: IZEvento, cmd: ZCommonConstants.ComandoEnum) => {
             cmPrenderControlParametros = infoEvento.dato.buffer.dato as CM.IPrenderControl;
-            if (!hashZCampoState.has(cmPrenderControlParametros.nc)) {
-                hashZCampoState.set(cmPrenderControlParametros.nc, {
+            let hashKey = ContractsServices.getSincHashKey(cmPrenderControlParametros);
+            if (!hashZCampoState.has(hashKey)) {
+                hashZCampoState.set(hashKey, {
                     bitApagarControl: Math.log2(cmPrenderControlParametros.mc)
                 } as IZCampoState);
             } else {
-                hashZCampoState.get(cmPrenderControlParametros.nc).bitApagarControl = Math.log2(cmPrenderControlParametros.mc);
+                hashZCampoState.get(hashKey).bitApagarControl = Math.log2(cmPrenderControlParametros.mc);
             }
         }
 
         const cmPrenderModo = (infoEvento: IZEvento, cmd: ZCommonConstants.ComandoEnum) => {
             cmPrenderModoParametros = infoEvento.dato.buffer.dato as CM.IPrenderModo;
-            if (!hashZCampoState.has(cmPrenderModoParametros.nc)) {
-                hashZCampoState.set(cmPrenderModoParametros.nc, {
+            let hashKey = ContractsServices.getSincHashKey(cmPrenderModoParametros);
+            if (!hashZCampoState.has(hashKey)) {
+                hashZCampoState.set(hashKey, {
                     bitPrenderModo: Math.log2(cmPrenderModoParametros.mc)
                 } as IZCampoState);
             } else {
-                hashZCampoState.get(cmPrenderModoParametros.nc).bitPrenderModo = Math.log2(cmPrenderModoParametros.mc);
+                hashZCampoState.get(hashKey).bitPrenderModo = Math.log2(cmPrenderModoParametros.mc);
             }
         }
 
         const cmApagarModo = (infoEvento: IZEvento, cmd: ZCommonConstants.ComandoEnum) => {
             cmPrenderModoParametros = infoEvento.dato.buffer.dato as CM.IPrenderModo;
-            if (!hashZCampoState.has(cmPrenderModoParametros.nc)) {
-                hashZCampoState.set(cmPrenderModoParametros.nc, {
+            let hashKey = ContractsServices.getSincHashKey(cmPrenderModoParametros);
+            if (!hashZCampoState.has(hashKey)) {
+                hashZCampoState.set(hashKey, {
                     bitApagarModo: Math.log2(cmPrenderModoParametros.mc)
                 } as IZCampoState);
             } else {
-                hashZCampoState.get(cmPrenderModoParametros.nc).bitApagarModo = Math.log2(cmPrenderModoParametros.mc);
+                hashZCampoState.get(hashKey).bitApagarModo = Math.log2(cmPrenderModoParametros.mc);
             }
         }
 
@@ -245,14 +256,14 @@ export namespace Services {
             }
             if (!hashZComandoState.has(cmSincBotonParametros.nc)) {
                 let zComandFormaEnHash = {
-                    desh: cmSincBotonParametros.vc
+                    desh: parseInt(cmSincBotonParametros.vc.toString())
                 } as IZComandoFormaState;
 
                 hashZComandoState.set(cmSincBotonParametros.nc, zComandFormaEnHash);
 
             } else {
                 const zComandFormaEnHash = hashZComandoState.get(cmSincBotonParametros.nc);
-                zComandFormaEnHash.desh = cmSincBotonParametros.vc;
+                zComandFormaEnHash.desh = parseInt(cmSincBotonParametros.vc.toString())
             }
         }
 

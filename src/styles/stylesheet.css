@@ -126,3 +126,12 @@
     width: 95% !important;
     top:35px !important;
 }
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    padding: 2px !important;
+    border: none !important;
+}
+
+.azen-multi .form-group{
+    margin-bottom:0px !important;
+}
