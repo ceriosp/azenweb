@@ -1,7 +1,5 @@
 import {
     ZMenuItemModel,
-    ZRecursoViewModel,
-    ZReferenciaViewModel,
     IZPantex,
     CM,
     Constants,
@@ -145,7 +143,5 @@ export namespace ActionTypes {
     //Action parameters
     export type Action =
         //UI  actions
-        { type: ZMenu.ActionTypes.Types.DESPACHAR_OPCION_MENU, zmenuItemModel: ZMenuItemModel } |
-        { type: Types.CERRAR_VENTANA_RECURSO, zrecursoViewModel: ZRecursoViewModel } |
-        { type: Types.ABRIR_VENTANA_ZOOM, zreferenciaViewModel: ZReferenciaViewModel }
+        { type: ZMenu.ActionTypes.Types.DESPACHAR_OPCION_MENU, zmenuItemModel: ZMenuItemModel }
 }

@@ -10,8 +10,7 @@ import {
 } from 'react-bootstrap';
 
 import * as ZCommon from "../../zcommon";
-import {
-    ZCampoModel,
+import {    
     IZComandoForma
 } from "../../zcommon";
 

@@ -9,9 +9,6 @@ import {
     ZMenuModel,
     ZMenuItemModel,
 
-    ZRecursoModel,
-    ZRecursoViewModel,
-
     //Utils
     EntityMap,
     EntityNormalizedObj,
@@ -418,76 +415,6 @@ export namespace Reducers {
                 } as any,
             } as IZPantexStateModule, state);
         }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    export namespace recursosViewModel {
-
-        const initialState = new EntityMap<ZRecursoViewModel>();
-
-        const byId = (state: EntityMap<ZRecursoViewModel> = initialState, action: ActionTypes.Action): EntityMap<ZRecursoViewModel> => {
-
-
-            switch (action.type) {
-
-                case ZMenu.ActionTypes.DESPACHAR_OPCION_MENU:
-                    return byIdDespacharOpcionMenu(state, action);
-
-                default:
-                    return state;
-            }
-        }
-
-        const allIds = (state: Array<string> = [], action: ActionTypes.Action): Array<string> => {
-
-            switch (action.type) {
-                case ZMenu.ActionTypes.DESPACHAR_OPCION_MENU:
-                    if (state.indexOf(action.zmenuItemModel.ctx) != -1) {
-                        return state;
-                    }
-                    return [action.zmenuItemModel.ctx, ...state];
-
-                default:
-                    return state;
-            }
-        }
-
-        const byIdDespacharOpcionMenu = (state: EntityMap<ZRecursoViewModel> = initialState, action: ActionTypes.Action): EntityMap<ZRecursoViewModel> => {
-
-            if (action.type != ZMenu.ActionTypes.DESPACHAR_OPCION_MENU) {
-                return state;
-            }
-
-            let zrecursosService = new Services.ZRecursoServices();
-
-            return zrecursosService.despacharOpcionMenu({
-                idRecurso: action.zmenuItemModel.ctx,
-                tipoRecurso: ZCommon.Constants.TipoRecurso.Basico,
-                zrecursoViewModelEntityMapOld: state
-            });
-        }
-
-        export const recursosViewModel = combineReducers<EntityNormalizedObj<ZRecursoViewModel>>({
-            byId: byId as any,
-            allIds: allIds as any
-        });
     }
 }
 

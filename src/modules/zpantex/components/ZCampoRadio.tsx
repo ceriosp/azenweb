@@ -4,8 +4,8 @@ import {
     Radio
 } from 'react-bootstrap';
 
-import {
-    ZCampoModel, IZCampo, IZCampoState,
+import {    
+    IZCampoState,
     Constants as ZCommonConstants,
 } from "../../zcommon";
 

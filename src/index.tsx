@@ -28,9 +28,6 @@ import { Actions as zAplicationActions } from './modules/zaplicacion/actions'
 
 import {
 
-    //Models
-    ZRecursoViewModel,
-
     //Utils
     EntityNormalizedObj,
     IZAplState,

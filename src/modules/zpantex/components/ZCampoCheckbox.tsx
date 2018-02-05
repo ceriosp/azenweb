@@ -6,8 +6,8 @@ import {
     FormGroup
 } from 'react-bootstrap';
 
-import {
-    ZCampoModel, IZCampo, IZCampoState
+import {    
+    IZCampoState
 } from "../../zcommon";
 
 export interface OwnProps {

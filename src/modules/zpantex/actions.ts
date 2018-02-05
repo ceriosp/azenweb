@@ -3,8 +3,6 @@ import {
 
     //Models
     ZMenuItemModel,
-    ZRecursoViewModel,
-    ZReferenciaViewModel,
 
     //Utils
     EntityMap,
@@ -26,8 +24,7 @@ import {
     IZComandoFormaState,
     IZVentanaState,
     ZFormaTablaState,
-    ZComandoFormaState,
-    ZVentanaModel,
+    ZComandoFormaState,    
     IZColaEventos,
 
 } from "../zcommon";
@@ -46,7 +43,7 @@ export namespace DTO {
     export class DespacharOpcionMenuParamsDTO {
         tipoRecurso: ZCommon.Constants.TipoRecurso;
         idRecurso: string;
-        zrecursoViewModelEntityMapOld: EntityMap<ZRecursoViewModel>;
+        zrecursoViewModelEntityMapOld: EntityMap<any>;
     }
 }
 
@@ -353,15 +350,5 @@ export namespace Actions {
     export const despacharOpcionMenu = (zmenuItemModel: ZMenuItemModel): ActionTypes.Action => ({
         type: ZMenu.ActionTypes.DESPACHAR_OPCION_MENU,
         zmenuItemModel: zmenuItemModel
-    });
-
-    export const cerrarVentanaRecurso = (zRecursoViewModel: ZRecursoViewModel): ActionTypes.Action => ({
-        type: ActionTypes.CERRAR_VENTANA_RECURSO,
-        zrecursoViewModel: zRecursoViewModel
-    });
-
-    export const abrirVentanaZoom = (zreferenciaViewModel: ZReferenciaViewModel): ActionTypes.Action => ({
-        type: ActionTypes.ABRIR_VENTANA_ZOOM,
-        zreferenciaViewModel: zreferenciaViewModel
     });
 }

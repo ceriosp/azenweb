@@ -1,8 +1,7 @@
 import {
 
     //Models
-    ZMenuModel,
-    ZRecursoViewModel,
+    ZMenuModel,    
 
     //Utils
 } from './models';
@@ -22,8 +21,6 @@ interface State
 interface ZAplicationState
 {
     mostrandoVentanaModal:boolean;
-    recursosViewModel: EntityNormalizedObj<ZRecursoViewModel>;
-    recursosZoomViewModel: EntityNormalizedObj<ZRecursoViewModel>;
 }
 
 export{

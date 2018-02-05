@@ -9,11 +9,6 @@ import {
 import * as ZCommon from '../../zcommon';
 import {
 
-    //Models
-    ZRecursoModel,
-    ZRecursoViewModel,
-    ZReferenciaViewModel,
-
     //State
     ZAplicationState,
 

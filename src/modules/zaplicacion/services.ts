@@ -43,8 +43,8 @@ const recursosZoomList: Array<string> =
     ];
 
 import * as ZCommon from '../zcommon';
-import {
-    ZRecursoViewModel, IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList, IZCampo, CM, IZCampoState, IZComandoFormaState, ContractsServices
+import {    
+    IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList, IZCampo, CM, IZCampoState, IZComandoFormaState, ContractsServices
 } from '../zcommon';
 
 import * as ZMenu from '../zmenu';

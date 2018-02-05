@@ -7,9 +7,7 @@ import {
     ControlLabel
 } from 'react-bootstrap';
 
-import {
-    ZCampoModel,
-    IZCampo,
+import {    
     Constants as ZCommonConstants,
     IZCampoState,
     IZFormaTablaState

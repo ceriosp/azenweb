@@ -12,12 +12,6 @@ import {
 
 import * as ZCommon from "../../zcommon";
 import {
-    ZRecursoViewModel,
-    ZCampoModel,
-    ZReferenciaViewModel,
-    IZPantex,
-    IZCampo,
-    IZFormaTabla,
     IZCampoState,
     IZFormaTablaState
 } from "../../zcommon";

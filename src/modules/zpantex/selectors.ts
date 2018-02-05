@@ -2,9 +2,6 @@ import { createSelector } from 'reselect';
 
 import {
 
-    //Models
-    ZRecursoViewModel,
-
     //State
     ZAplicationState,
 
@@ -276,34 +273,6 @@ export namespace Selectors {
             }
 
             return pilaZPantexState;
-        }
-    );
-
-
-
-
-
-
-
-    export const getRecursosViewModel = (zaplicationState: ZAplicationState): EntityNormalizedObj<ZRecursoViewModel> => zaplicationState.recursosViewModel;
-
-    export const getRecursosActivosViewModelList = createSelector(
-        [getRecursosViewModel],
-        (recursosViewModelById: EntityNormalizedObj<ZRecursoViewModel>): Array<ZRecursoViewModel> => {
-
-            console.log("recalculates selector");
-
-            let recursosActivos = new Array<ZRecursoViewModel>();
-
-            if (!recursosViewModelById) {
-                return recursosActivos;
-            }
-
-            if (!recursosViewModelById.allIds) {
-                return recursosActivos;
-            }
-
-            return recursosActivos;
         }
     );
 }

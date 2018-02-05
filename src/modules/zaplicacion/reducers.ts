@@ -7,9 +7,6 @@ import {
     ZMenuModel,
     ZMenuItemModel,
 
-    ZRecursoModel,
-    ZRecursoViewModel,
-
     //state
     ZAplicationState,
 

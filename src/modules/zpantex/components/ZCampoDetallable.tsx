@@ -11,8 +11,6 @@ import {
 } from 'react-bootstrap';
 
 import {
-    ZCampoModel,
-    IZCampo,
     Constants as ZCommonConstants,
     IZCampoState
 } from "../../zcommon";

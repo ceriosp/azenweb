@@ -9,8 +9,8 @@ import {
 } from 'react-bootstrap';
 
 import * as ZCommon from "../../zcommon";
-import {
-    ZCampoModel, IZComandoForma
+import {    
+    IZComandoForma
 } from "../../zcommon";
 
 import { Services } from "../services";
