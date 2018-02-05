@@ -24,8 +24,8 @@ export interface OwnProps {
 }
 
 export interface ConnectedDispatch {
-    onFilaMultiSeleccionada : 
-        (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number) => void;
+    onFilaMultiSeleccionada:
+    (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number) => void;
 }
 
 export interface ConnectedState {
@@ -81,32 +81,44 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
                         </thead>
                         <tbody>
                             {this.props.zFormaTabla.filasCamposList.map((zfilaCampoState: IZFilaCamposState, indexFila: number) => {
-                                return (
-                                    <tr
-                                        key={indexFila}
-                                        style={{
-                                            backgroundColor: this.props.zFormaTabla.indexFilaMultiSeleccionada == indexFila ? "#D9EDF7" : ""
-                                        }}
-                                        onClick={() => this.onFilaClick(indexFila)}
-                                    >
-                                        {zfilaCampoState.cmpsState.map((zcampoI: IZCampoState, indexCampo: number) => {
-                                            return (
-                                                <td key={indexCampo}>
-                                                    {this.props.zFormaTabla.filasCamposList[0].cmpsState[indexCampo].readOnly
-                                                        && zcampoI.value}
-                                                    {!this.props.zFormaTabla.filasCamposList[0].cmpsState[indexCampo].readOnly
-                                                        && (
-                                                            <ZCampo
-                                                                zCampo={zcampoI}
-                                                                zFormaTabla={this.props.zFormaTabla}
-                                                            />
-                                                        )
-                                                    }
-                                                </td>
-                                            );
-                                        })}
-                                    </tr>
-                                );
+
+                                let algunCampoConValor = false;
+
+                                for (let i = 0; i < zfilaCampoState.cmpsState.length; i++) {
+                                    if (zfilaCampoState.cmpsState[i].value) {
+                                        algunCampoConValor = true;
+                                        break;
+                                    }
+                                }
+
+                                if (algunCampoConValor) {
+                                    return (
+                                        <tr
+                                            key={indexFila}
+                                            style={{
+                                                backgroundColor: this.props.zFormaTabla.indexFilaMultiSeleccionada == indexFila ? "#D9EDF7" : ""
+                                            }}
+                                            onClick={() => this.onFilaClick(indexFila)}
+                                        >
+                                            {zfilaCampoState.cmpsState.map((zcampoI: IZCampoState, indexCampo: number) => {
+                                                return (
+                                                    <td key={indexCampo}>
+                                                        {this.props.zFormaTabla.filasCamposList[0].cmpsState[indexCampo].readOnly
+                                                            && zcampoI.value}
+                                                        {!this.props.zFormaTabla.filasCamposList[0].cmpsState[indexCampo].readOnly
+                                                            && (
+                                                                <ZCampo
+                                                                    zCampo={zcampoI}
+                                                                    zFormaTabla={this.props.zFormaTabla}
+                                                                />
+                                                            )
+                                                        }
+                                                    </td>
+                                                );
+                                            })}
+                                        </tr>
+                                    )
+                                }
                             })}
                         </tbody>
                     </Table>)
@@ -119,6 +131,11 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
 
 
     onFilaClick(indexFila: number) {
+
+        if(indexFila == this.props.zFormaTabla.indexFilaMultiSeleccionada){
+            return;
+        }
+        
         this.props.onFilaMultiSeleccionada(this.props.zFormaTabla, indexFila);
     }
 }

@@ -190,7 +190,7 @@ export interface IZFormaTablaState extends IdEntityBase { //zft
     //Para zfts que son multi:
     filasCamposList: Array<IZFilaCamposState>;
     numCampos: number;
-    indexFilaMultiSeleccionada:number;
+    indexFilaMultiSeleccionada: number;
 }
 
 export class ZFormaTablaState implements IZFormaTablaState { //zft
@@ -221,7 +221,7 @@ export class ZFormaTablaState implements IZFormaTablaState { //zft
     //Para zfts que son multi:
     filasCamposList: Array<IZFilaCamposState>;
     numCampos: number;
-    indexFilaMultiSeleccionada:number;
+    indexFilaMultiSeleccionada: number;
 }
 
 export interface IZFilaCamposState {
@@ -267,7 +267,7 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
 
 export class ZCampoState implements IZCampoState {
 
-    constructor(zcampo: IZCampo, id: number, px: number, rg:number, fila:number) {
+    constructor(zcampo: IZCampo, id: number, px: number, rg: number, fila: number) {
 
         this.id = id;
         this.px = px;
@@ -298,7 +298,7 @@ export class ZCampoState implements IZCampoState {
     id: number;
     px: number;
     rg: number;
-    fi: number;    
+    fi: number;
     value: string;
     readOnly: boolean;
     esCampoGrafico: boolean;
@@ -397,6 +397,77 @@ export class ZVentanaState implements IZVentanaState {
  * see: zcommon.Constants.ComandoEnum
  */
 export namespace CM {
+
+    export interface IZComandoDefinicion {
+        icono: string;
+    }
+
+    export const hashInfoComandos = new Map<Constants.ComandoEnum, IZComandoDefinicion>([
+
+        [Constants.ComandoEnum.CM_AYUDA, {
+            icono: "glyphicon glyphicon-info-sign"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_ADICIONAR, {
+            icono: "glyphicon glyphicon-plus"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_MODIFICAR, {
+            icono: "glyphicon glyphicon-pencil"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_CONSULTAR, {
+            icono: "glyphicon glyphicon-book"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_CERRAR, {
+            icono: "glyphicon glyphicon-remove"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_PRIMERO, {
+            icono: "glyphicon glyphicon-fast-backward"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_ANTREG, {
+            icono: "glyphicon glyphicon-step-backward"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_SGTEREG, {
+            icono: "glyphicon glyphicon-step-forward"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_ULTIMO, {
+            icono: "glyphicon glyphicon-fast-forward"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_RETOCAR, {
+            icono: "glyphicon glyphicon-refresh"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_VISUALIZAR, {
+            icono: "glyphicon glyphicon-circle-arrow-down"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_GRABAR, {
+            icono: "glyphicon glyphicon-floppy-save"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_BUSCAR, {
+            icono: "glyphicon glyphicon-search"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_DETALLAR, {
+            icono: "glyphicon glyphicon-open"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_SELECCIONAR, {
+            icono: "glyphicon glyphicon-list"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_BORRAR, {
+            icono: "glyphicon glyphicon-trash"
+        } as IZComandoDefinicion]
+    ]);
 
     /**
      * parámetros comunes para los eventos:
@@ -722,13 +793,13 @@ export namespace ContractsServices {
         return control && Binario.estaPrendidoBit(control, Constants.ControlCampoEnum.ZCMP_VISUAL);
     }
 
-    export const getSincHashKey = (sincParams:CM.ISincBase) => {
+    export const getSincHashKey = (sincParams: CM.ISincBase) => {
 
         //Es evento de multi
-        if(sincParams.fi){
+        if (sincParams.fi) {
             return sincParams.px + "|" + sincParams.rg + "|" + sincParams.fi + "|" + sincParams.nc;
         }
-        
+
         return sincParams.nc;
     }
 

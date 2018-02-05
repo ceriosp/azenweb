@@ -281,5 +281,5 @@ export namespace Constants {
         ZCMP_EDIZQ = 4,  /* Edición poniendo cursor al inicio */
         ZCMP_VISUAL = 5, /* Solo visual */
         ZCMP_INTRACMP = 6, /* */
-    }
+    }    
 }

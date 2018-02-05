@@ -369,8 +369,6 @@ export namespace Reducers {
 
             const actualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
 
-                console.log("actualizar campo called");
-
                 if (action.listaPxCampos.indexOf(zcampoState.px) != -1) {
 
                     let key = zcampoState.nomCmp;

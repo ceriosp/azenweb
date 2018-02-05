@@ -19,7 +19,7 @@ export interface OwnProps {
 }
 
 export interface ConnectedState {
-    estaProcesandoRequestServidor: boolean
+    estaProcesandoRequestServidor: boolean;
 }
 
 export interface ConnectedDispatch {

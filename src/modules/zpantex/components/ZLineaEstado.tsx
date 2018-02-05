@@ -21,7 +21,7 @@ export interface OwnProperties {
 }
 
 export interface ConnectedState {
-
+    estaProcesandoRequestServidor: boolean;
 }
 
 export interface ConnectedDispatch {
@@ -45,23 +45,22 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
                 style={{
                     marginBottom: "10px"
                 }}
-            >
+            >            
                 <ButtonGroup bsSize="small">
                     {linEst.map((zComandoI: IZComandoForma, index: number) => {
                         let iconName = zPantexServies.getCMIcon(zComandoI);
-                        let tooltip = (<Tooltip key={index} id={`tooltip_` + index}>{zComandoI.etq + zComandoI.cmd}</Tooltip>);
+                        let tooltip = (<Tooltip key={index} id={`tooltip_` + index}>{zComandoI.etq}</Tooltip>);
                         return (
                             <OverlayTrigger key={index} placement="top" overlay={tooltip}>
                                 <Button
                                     key={index}
                                     bsStyle="info"
-                                    disabled={zComandoI.desh == 1}
+                                    disabled={this.props.estaProcesandoRequestServidor || zComandoI.desh == 1}
                                     onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
                                 >
                                     {(!iconName) &&
                                         zComandoI.etq
                                     }
-                                    {zComandoI.cmd}
                                     <span className={iconName} aria-hidden="true"></span>
                                 </Button>
                             </OverlayTrigger>

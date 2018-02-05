@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 
 import * as ZCommon from "../../zcommon";
-import {    
+import {
     IZComandoForma
 } from "../../zcommon";
 
@@ -21,7 +21,7 @@ export interface OwnProperties {
 }
 
 export interface ConnectedState {
-
+    estaProcesandoRequestServidor: boolean;
 }
 
 export interface ConnectedDispatch {
@@ -45,18 +45,17 @@ export class ZBarraComandos extends React.PureComponent<OwnProperties & Connecte
                     <ButtonToolbar>
                         {zComandosList.map((zComandoI: IZComandoForma, index: number) => {
                             let iconName = zPantexServies.getCMIcon(zComandoI);
-                            let tooltip = (<Tooltip key={index} id={`tooltip` + index}>{zComandoI.etq + zComandoI.cmd}</Tooltip>);
+                            let tooltip = (<Tooltip key={index} id={`tooltip` + index}>{zComandoI.etq}</Tooltip>);
                             return (
                                 <OverlayTrigger key={index} placement="top" overlay={tooltip}>
                                     <Button
                                         key={index}
-                                        disabled={zComandoI.desh == 1}
+                                        disabled={this.props.estaProcesandoRequestServidor || zComandoI.desh == 1}
                                         onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
                                     >
                                         {(!iconName) &&
                                             zComandoI.etq
-                                        } 
-                                        {zComandoI.cmd}
+                                        }
                                         <span className={iconName} aria-hidden="true"></span>
                                     </Button>
                                 </OverlayTrigger>
@@ -68,7 +67,7 @@ export class ZBarraComandos extends React.PureComponent<OwnProperties & Connecte
             </Well>
         );
     }
-
+    
     despacharEventoCliente(cmd: ZCommon.Constants.ComandoEnum) {
         this.props.despacharEventoCliente(cmd);
     }

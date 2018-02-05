@@ -15,7 +15,7 @@ import {
 } from '../components/ZLineaEstado';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
-
+    estaProcesandoRequestServidor: appState.estaProcesandoRequestServidor
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({

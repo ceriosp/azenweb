@@ -15,7 +15,7 @@ import {
 } from '../components/ZBarraComandos';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
-
+    estaProcesandoRequestServidor:appState.estaProcesandoRequestServidor
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
