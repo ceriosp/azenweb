@@ -15,8 +15,6 @@ import {
     IZComandoForma
 } from "../../zcommon";
 
-import ZCampoButton from './ZCampoButton';
-
 import { Services } from "../services";
 
 export interface OwnProperties {
