@@ -21,8 +21,7 @@ import {
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     //estaProcesandoServidor: appState.estaProcesandoRequestServidor,    
-    pilaZPantexState: ZPantexSelectors.getZPilaPantexState(appState),    
-    pxAlTope: appState.zPantexModule.pxAlTope,
+    pilaZPantexState: ZPantexSelectors.getZPilaPantexState(appState)    
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({

@@ -189,7 +189,7 @@ export namespace Selectors {
                     id: numPx,
                     zFormaTablaListState: []
                 } as IZPantexState;
-
+                
                 //zft's
                 for (let izft = 0; izft < getZPantexStateMap.byId[numPx].zFormaTablaStateListIds.length; izft++) {
                     let idZft = getZPantexStateMap.byId[numPx].zFormaTablaStateListIds[izft];
@@ -204,7 +204,7 @@ export namespace Selectors {
 
                     //zcampos
                     if (getZFormaTablaStateMap.byId[idZft].zCampoStateListIds) {
-
+                        
                         if (zPantex.zFormaTablaListState[izft].venState.numLinsDatos > 0) {
                             zPantex.zFormaTablaListState[izft].filasCamposList = new Array<IZFilaCamposState>(zPantex.zFormaTablaListState[izft].venState.numLinsDatos);
                             zPantex.zFormaTablaListState[izft].cmpsState = undefined;

@@ -28,7 +28,6 @@ export interface OwnProps {
 
 export interface ConnectedState {
     pilaZPantexState: Array<ZPantexState>;
-    pxAlTope: number;
 }
 
 export interface ConnectedDispatch {

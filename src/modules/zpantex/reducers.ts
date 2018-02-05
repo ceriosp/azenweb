@@ -143,33 +143,17 @@ export namespace Reducers {
 
                 case ActionTypes.ZPantexStateModule.CM_PXCREAR:
                     return cmPxCrear(state, action);
+                    
+                case ActionTypes.ZPantexStateModule.CM_PXDESTRUIR:
+                    return cmPxDestruir(state, action);
+
+                case ActionTypes.ZPantexStateModule.CM_PXARRIVAR:
+                    return cmPxArrivar(state, action);
 
                 case ActionTypes.ZPantexStateModule.CM_PONERMODAL:
                     return u({
                         ponerModal: action.ponerModal
                     } as IZPantexStateModule, state);
-
-                case ActionTypes.ZPantexStateModule.CM_PXARRIVAR:
-                    let indicePxArrivar = state.pilaPx.indexOf(parseInt(action.pxArrivarParams.px.toString()));
-                    //Es diferente del último en la pila, se debe reacomodar
-                    if (indicePxArrivar != -1 &&
-                        state.pilaPx[indicePxArrivar] != state.pilaPx[state.pilaPx.length - 1]) {
-                        return u({
-                            pilaPx: ZUtilsServices.Inmutable.intercambiarElementosArray(state.pilaPx, state.pilaPx[indicePxArrivar], state.pilaPx[state.pilaPx.length - 1]),
-                            pxAlTope: action.pxArrivarParams.px
-                        } as IZPantexStateModule, state);
-                    }
-                    break;
-
-                case ActionTypes.ZPantexStateModule.CM_PXDESTRUIR:
-                    let indicePxDestruir = state.pilaPx.indexOf(parseInt(action.pxDestruirParams.px.toString()));
-                    if (indicePxDestruir != -1) {
-                        return u({
-                            pilaPx: state.pilaPx.slice(0, indicePxDestruir).concat(state.pilaPx.slice(indicePxDestruir + 1)),
-                            pxAlTope: state.pilaPx.length > 1 ? state.pilaPx[state.pilaPx.length - 2] : -1
-                        } as IZPantexStateModule, state);
-                    }
-                    break;
 
                 case ActionTypes.ZPantexStateModule.CM_SINCCAMPO:
                     return cmSincCampo(state, action);
@@ -268,6 +252,113 @@ export namespace Reducers {
             } as IZPantexStateModule;
         }
 
+        const cmPxDestruir = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
+
+            if (action.type != ActionTypes.ZPantexStateModule.CM_PXDESTRUIR) {
+                return state;
+            }
+
+            let indicePxDestruir = state.pilaPx.indexOf(parseInt(action.pxDestruirParams.px.toString()));
+            if (indicePxDestruir != -1) {
+
+                let zformaTablasADestruirIds = new Array<number>();
+                let zVentanaADestuirIds = new Array<number>();
+                let zcamposADestruirIds = new Array<number>();
+                let zcomandosLinEstADestruirIds = new Array<number>();
+                let zcomandosBtnsADestruirIds = new Array<number>();
+
+                if (state.pilaPantexState.byId[action.pxDestruirParams.px].zFormaTablaStateListIds) {
+                    for (let iZFormaTabla = 0; iZFormaTabla < state.pilaPantexState.byId[action.pxDestruirParams.px].zFormaTablaStateListIds.length; iZFormaTabla++) {
+
+                        const idZFormaTabla = state.pilaPantexState.byId[action.pxDestruirParams.px].zFormaTablaStateListIds[iZFormaTabla];
+                        zformaTablasADestruirIds = [...zformaTablasADestruirIds, idZFormaTabla];
+
+                        const zFormaTabla = state.zFormaTablaState.byId[idZFormaTabla];
+                        //zventana
+                        if (zFormaTabla) {
+                            zVentanaADestuirIds = [...zVentanaADestuirIds, zFormaTabla.idZVentana];
+                        }
+
+                        //zcampos
+                        zcamposADestruirIds = [...zcamposADestruirIds, ...zFormaTabla.zCampoStateListIds];
+
+                        //linest
+                        zcomandosLinEstADestruirIds = [...zcomandosLinEstADestruirIds, ...zFormaTabla.linEstListIds];
+
+                        //btns
+                        zcomandosBtnsADestruirIds = [...zcomandosBtnsADestruirIds, ...zFormaTabla.btnsListIds];
+                    }
+                }
+
+                const eliminarZPantexIdFn = (zPantexId: number) => {
+                    return zPantexId == action.pxDestruirParams.px;
+                }
+
+                const eliminarZFormaTablasIdsFn = (zFormaTablaId: number) => {
+                    return zformaTablasADestruirIds.indexOf(zFormaTablaId) != -1;
+                }
+
+                const eliminarZVentanasIdsFn = (zVentanaId: number) => {
+                    return zVentanaADestuirIds.indexOf(zVentanaId) != -1;
+                }
+
+                const eliminarZCamposIdsFn = (zCampoId: number) => {
+                    return zcamposADestruirIds.indexOf(zCampoId) != -1;
+                }
+
+                const eliminarZComandosIdsFn = (zComandoId: number) => {
+                    return zcomandosLinEstADestruirIds.indexOf(zComandoId) != -1
+                        || zcomandosBtnsADestruirIds.indexOf(zComandoId) != -1;
+                }
+
+                return u({
+                    pilaPx: u.reject(eliminarZPantexIdFn), //state.pilaPx.slice(0, indicePxDestruir).concat(state.pilaPx.slice(indicePxDestruir + 1)),
+                    pxAlTope: state.pilaPx.length > 1 ? state.pilaPx[state.pilaPx.length - 2] : -1,
+                    pilaPantexState: {
+                        byId: u.omit(action.pxDestruirParams.px),
+                        allIds: u.reject(eliminarZPantexIdFn)
+                    } as EntityNormalizedObj<IZPantexState>,
+                    zFormaTablaState: {
+                        byId: u.omit(zformaTablasADestruirIds),
+                        allIds: u.reject(eliminarZFormaTablasIdsFn)
+                    } as EntityNormalizedObj<IZFormaTablaState>,
+                    zVentanaState: {
+                        byId: u.omit(zVentanaADestuirIds),
+                        allIds: u.reject(eliminarZVentanasIdsFn)
+                    } as EntityNormalizedObj<IZVentanaState>,
+                    zCampoState: {
+                        byId: u.omit(zcamposADestruirIds),
+                        allIds: u.reject(eliminarZCamposIdsFn)
+                    } as EntityNormalizedObj<IZCampoState>,
+                    zComandoFormaState: {
+                        byId: u.omit([...zcomandosLinEstADestruirIds, ...zcomandosBtnsADestruirIds]),
+                        allIds: u.reject(eliminarZComandosIdsFn)
+                    } as EntityNormalizedObj<IZComandoFormaState>,
+                } as IZPantexStateModule, state);
+            }
+
+            return state;
+        }
+        
+        const cmPxArrivar = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
+
+            if (action.type != ActionTypes.ZPantexStateModule.CM_PXARRIVAR) {
+                return state;
+            }
+
+            let indicePxArrivar = state.pilaPx.indexOf(parseInt(action.pxArrivarParams.px.toString()));
+
+            //Es diferente del último en la pila, se debe reacomodar
+            if (indicePxArrivar != -1 &&
+                state.pilaPx[indicePxArrivar] != state.pilaPx[state.pilaPx.length - 1]) {
+                return u({
+                    pilaPx: ZUtilsServices.Inmutable.intercambiarElementosArray(state.pilaPx, state.pilaPx[indicePxArrivar], state.pilaPx[state.pilaPx.length - 1]),
+                    pxAlTope: action.pxArrivarParams.px
+                } as IZPantexStateModule, state);
+            }
+
+            return state;
+        }
         const cmSincCampo = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
 
             if (action.type != ActionTypes.ZPantexStateModule.CM_SINCCAMPO) {
@@ -277,6 +368,9 @@ export namespace Reducers {
             const esDeMultiRegistro = action.hashZCampos.values().next().value.fi;
 
             const actualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
+
+                console.log("actualizar campo called");
+
                 if (action.listaPxCampos.indexOf(zcampoState.px) != -1) {
 
                     let key = zcampoState.nomCmp;
@@ -340,12 +434,6 @@ export namespace Reducers {
                             modo: zCampoActualizado.modo,
                             readOnly: ContractsServices.esCampoControlLectura(zCampoActualizado.control)
                                 || ContractsServices.esCampoModoLectura(zCampoActualizado.modo),
-
-                            //controlCampo: zCampoActualizado.controlCampo,
-                            //modoCampo: zCampoActualizado.modoCampo,
-                            //readOnly: ZCommon.Services.esCampoModoLectura(zCampoActualizado.modoCampo)
-                            //    || ZCommon.Services.esCampoControlLectura(zCampoActualizado.controlCampo)
-
                         } as IZCampoState, zcampoState);
                     }
                 }
@@ -377,6 +465,8 @@ export namespace Reducers {
                     } as any,
                 } as IZPantexStateModule, state);
             }
+
+            return state;
         }
 
         const onCampoRadioChange = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {

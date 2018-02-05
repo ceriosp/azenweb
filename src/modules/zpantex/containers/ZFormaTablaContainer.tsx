@@ -16,7 +16,7 @@ import {
 } from '../components/ZFormaTabla';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
-    pxAlTope: appState.zPantexModule.pxAlTope
+    
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({

@@ -80,8 +80,7 @@ export namespace Reducers {
         tipoAJAXIndicador: tipoAJAXIndicador,
         ultimoComandoEnviado:ultimoComandoEnviado,
         estaProcesandoRequestServidor: estaProcesandoRequestServidor,
-        zMenuModule: ZMenu.Reducers.ZMenuModule.impl,
-        zPantexModule: ZPantex.Reducers.ZPantexModule.impl,
+        zMenuModule: ZMenu.Reducers.ZMenuModule.impl,        
         zPantexStateModule: ZPantex.Reducers.ZPantexStateModule.impl,
         zLoginModule: ZLogin.Reducers.ZLoginModule.impl,
     });
