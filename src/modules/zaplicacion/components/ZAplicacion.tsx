@@ -21,7 +21,6 @@ import {
 } from '../../zcommon/contracts';
 import { IZPantex, IZFormaTabla, IZPantexModule, ZPantexState, IZPantexState } from "../../zcommon";
 import { ZPantexContainer } from "../../zpantex/containers/ZPantexContainer";
-import { LanzarVisorReporteContainer } from "../../zrpt/containers/LanzarVisorReporteContainer";
 
 export interface OwnProps {
 
@@ -53,7 +52,6 @@ export class ZAplicacion extends React.PureComponent<OwnProps & ConnectedState &
                         />
                     );
                 })}
-                <LanzarVisorReporteContainer />
             </div>
         );
     }

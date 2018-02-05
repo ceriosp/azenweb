@@ -19,11 +19,6 @@ import {
 
 } from "../../zcommon";
 
-import {
-    //Components
-    ZVentanaRecurso
-} from "../../zpantex";
-
 export interface OwnProps {
 
 }

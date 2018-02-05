@@ -15,7 +15,6 @@ import {
     IZMenu
 } from '../../zcommon/contracts';
 import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma, IZFormaTablaState, IZCampoState, ZFilaCamposState, IZFilaCamposState } from "../../zcommon";
-import { ZVentana } from "./ZVentana";
 import ZCampo from "./ZCampo";
 
 import { Constants } from "../constants";

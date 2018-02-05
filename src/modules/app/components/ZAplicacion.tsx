@@ -24,10 +24,6 @@ import {
 
 } from "../../zcommon";
 
-import {
-    //Components
-    ZVentanaRecurso
-} from "../../zpantex";
 import { ZMenuRootContainer } from "../../zmenu/containers/ZMenuRootContainer";
 import { ZProcesandoContainer } from "../../zaplicacion/containers/ZProcesandoContainer";
 import { ZAplicacionContainer } from "../../zaplicacion/containers/ZAplicacionContainer";

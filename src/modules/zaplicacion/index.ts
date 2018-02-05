@@ -4,11 +4,3 @@ export * from './selectors';
 export * from './actionTypes';
 export * from './actions';
 export * from './services';
-
-import {ZAplicacionRoot} from './components/ZAplicacionRoot';
-
-export 
-{
-    //Components
-    ZAplicacionRoot
-}

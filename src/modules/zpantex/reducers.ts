@@ -45,7 +45,6 @@ import {
 import { ActionTypes } from './actionTypes';
 import { debug, debuglog } from 'util';
 import { start } from 'repl';
-import { ZVentana } from './components/ZVentana';
 
 export namespace Reducers {
 
