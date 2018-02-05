@@ -19,10 +19,10 @@ import { Constants as ZCommonConstants } from "../../zcommon/constants";
 
 import { IZPantex, IZFormaTabla, IZPantexState, IZFormaTablaState } from '../../zcommon';
 import { Services as ZCommonServices } from "../../zcommon/services";
-import { ZRegionContainer } from '../containers/ZRegionContainer';
 import { ZLineaEstadoContainer } from '../containers/ZLineaEstadoContainer';
 import { ZBarraComandosContainer } from '../containers/ZBarraComandosContainer';
 import { Constants } from "../constants";
+import { ZFormaTablaContainer } from '../containers/ZFormaTablaContainer';
 
 export interface OwnProps {
     zPantex: IZPantexState;
@@ -93,10 +93,8 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                                 zComandosList={zFormaTablaI.btnsState}
                                             />
                                         )}
-                                        <ZRegionContainer
+                                        <ZFormaTablaContainer
                                             zFormaTabla={zFormaTablaI}
-                                            zRegionIndex={index}
-                                            px={this.props.zPantex.id}
                                         />
                                         <ZBarraComandosContainer
                                             zComandosList={zFormaTablaI.btnsState}

@@ -21,8 +21,6 @@ import { Constants } from "../constants";
 
 export interface OwnProps {
     zFormaTabla: IZFormaTablaState;
-    zFormaIndex: number;
-    px: number;
 }
 
 export interface ConnectedDispatch {
