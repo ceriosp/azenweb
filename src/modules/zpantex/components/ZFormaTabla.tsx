@@ -134,8 +134,8 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
 
         if(indexFila == this.props.zFormaTabla.indexFilaMultiSeleccionada){
             return;
-        }
-        
+        }                
+
         this.props.onFilaMultiSeleccionada(this.props.zFormaTabla, indexFila);
     }
 }

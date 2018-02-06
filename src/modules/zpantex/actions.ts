@@ -138,7 +138,7 @@ export namespace Actions {
             if (zFormaTabla.ven.numLinsDatos > 0) {
                 for (let fila = 0; fila < zFormaTabla.ven.numLinsDatos; fila++) {
                     for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, fila + 1);
+                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, fila+1);
                         zCampoState.allIds.push(id);
                         zFormaTablaCmpsIds.push(id);
                         id++;

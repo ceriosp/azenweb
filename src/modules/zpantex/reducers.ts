@@ -453,7 +453,7 @@ export namespace Reducers {
                     if (action.hashZComandos.has(zcomandoFormaState.cmd)) {
                         const zComandoFormaEnHash = action.hashZComandos.get(zcomandoFormaState.cmd);
                         return u({
-                            desh: 0//zComandoFormaEnHash.desh
+                            desh: zComandoFormaEnHash.desh
                         } as IZComandoFormaState, zcomandoFormaState);
                     }
                 }
@@ -461,7 +461,7 @@ export namespace Reducers {
                 return zcomandoFormaState;
             }
 
-            if (action.hashZCampos.size > 0) {
+            if (action.hashZCampos.size > 0 || action.hashZComandos.size > 0) {
                 return u({
                     zCampoState: {
                         byId: u.map(actualizarZCampo)
@@ -471,7 +471,7 @@ export namespace Reducers {
                     } as any,
                 } as IZPantexStateModule, state);
             }
-
+            
             return state;
         }
 

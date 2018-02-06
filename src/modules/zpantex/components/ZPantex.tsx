@@ -62,7 +62,7 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
             <div>
                 <Modal
                     onHide={null}
-                    show={true}
+                    show={true}                    
                     backdrop="static"
                     aria-labelledby="contained-modal-title-sm"
                     container={this.props.container}
@@ -79,7 +79,7 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                 >
                                     <Panel
                                         header={titulo}
-                                        bsStyle="primary"
+                                        bsStyle="primary"                                        
                                         style={{
                                             marginBottom: "0px"
                                         }}
@@ -87,7 +87,7 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                         <ZLineaEstadoContainer
                                             linEst={zFormaTablaI.linEstState}
                                         />
-                                        {(zFormaTablaI.cmpsState && zFormaTablaI.cmpsState.length > 12) && (
+                                        {(zFormaTablaI.cmpsState && zFormaTablaI.cmpsState.length > 6) && (
                                             <ZBarraComandosContainer
                                                 zComandosList={zFormaTablaI.btnsState}
                                             />
