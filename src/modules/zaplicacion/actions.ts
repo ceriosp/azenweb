@@ -6,8 +6,8 @@ import { IZAplState, IZColaEventos, IZMenu } from "../zcommon/contracts";
 
 import * as App from '../app';
 import * as ZMenu from '../zmenu';
-import { Actions as ZMenuActions } from "../zmenu";
 import * as ZComunicaciones from '../zcomunicaciones';
+import * as ZLogin from "../zlogin";
 
 import { ActionTypes } from './actionTypes';
 import { Services } from "./services";
@@ -16,10 +16,11 @@ import { ZclienteResponder } from "./clientzmnjs/zclienteResponder";
 
 export namespace Actions {
 
-    export const lanzarAplicacion = (idApl: string, nomApl: string, lanzarMenu: string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
+    export const lanzarAplicacion = (idApl: string, nomApl: string, username: string = "", lanzarMenu: string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
 
         dispatch(App.Actions.setIdApl(idApl));
         dispatch(App.Actions.setNomApl(nomApl));
+        dispatch(ZLogin.Actions.ZLoginModule.setUsername(username));
 
         return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
             dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
@@ -35,7 +36,7 @@ export namespace Actions {
                     }
 
                     if (lanzarMenu == '1') {
-                        dispatch(ZMenuActions.lanzarMenu());
+                        dispatch(ZMenu.Actions.lanzarMenu());
                     }
                 },
                 () => { }

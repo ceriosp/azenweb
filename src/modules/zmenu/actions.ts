@@ -23,7 +23,7 @@ export namespace Actions {
     }
 
     export const lanzarMenu = () => (dispatch: (p: any) => any, getState: () => IZAplState) => {
-        dispatch(ZAplicacion.Actions.despacharEventoCliente(ZCommon.Constants.ComandoEnum.CM_DEFMENU, 'azen'));
+        dispatch(ZAplicacion.Actions.despacharEventoCliente(ZCommon.Constants.ComandoEnum.CM_DEFMENU, getState().zLoginModule.username));
     }
 
     export const cargarMenu = (appName: string): ActionTypes.Action => ({

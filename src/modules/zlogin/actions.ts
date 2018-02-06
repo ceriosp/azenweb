@@ -14,6 +14,7 @@ import * as ZAplicacion from '../zaplicacion';
 import * as ZComunicaciones from '../zcomunicaciones';
 
 import { Selectors } from './selectors';
+import { debug } from "util";
 
 export namespace Actions {
 
@@ -23,6 +24,8 @@ export namespace Actions {
 
             let zLoginModule = Selectors.getZLoginModule(getState());
             
+            window.sessionStorage.setItem(ZCommon.Constants.AZEN_USER_SESSION_KEY, `${zLoginModule.username}`);
+
             dispatch(ZAplicacion.Actions.despacharEventoCliente(
                 ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN, 
                 `<cm>LOGIN</cm><usr>${zLoginModule.username}</usr><vc>${zLoginModule.password}</vc>`

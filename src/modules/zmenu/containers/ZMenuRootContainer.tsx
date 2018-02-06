@@ -20,6 +20,7 @@ import * as ZAplicacion from '../../zaplicacion';
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     zMenu:appState.zMenuModule.zmenu,
     nomApl: appState.nomApl,
+    username: appState.zLoginModule.username,
     ponerModal: appState.zPantexStateModule.ponerModal,
 
     estaProcesandoRequestServidor:appState.estaProcesandoRequestServidor,

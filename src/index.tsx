@@ -52,6 +52,7 @@ let store = null
 
 let idApl = ZUtils.Services.getQueryStringParameter('idApl');
 let nomApl = ZUtils.Services.getQueryStringParameter('nomApl');
+let username = sessionStorage.getItem(Constants.AZEN_USER_SESSION_KEY);
 let lanzarMenu = ZUtils.Services.getQueryStringParameter('lanzarMenu');
 
 let appInitialState = {
@@ -86,7 +87,7 @@ if (idApl) {
         document.getElementById("app-container")
     );
 
-    store.dispatch(zAplicationActions.lanzarAplicacion(idApl, nomApl, lanzarMenu));
+    store.dispatch(zAplicationActions.lanzarAplicacion(idApl, nomApl, username, lanzarMenu));
 }
 else {
 

@@ -35,6 +35,7 @@ export interface OwnProps {
 export interface ConnectedState {
     zMenu: IZMenu;
     nomApl: string;
+    username: string;
     ponerModal: boolean;
     estaProcesandoRequestServidor:boolean;
     tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum
@@ -87,7 +88,7 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
                         })}
 
                         <NavItem eventKey={1} href="#">
-                            <Glyphicon glyph="user" /> Usuario: Carlos Ríos
+                            <Glyphicon glyph="user" /> Usuario: {this.props.username}
                                 </NavItem>
                     </Nav>
                 </Navbar.Collapse>
