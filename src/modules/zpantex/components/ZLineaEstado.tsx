@@ -5,19 +5,17 @@ import {
     ButtonGroup,
     ButtonToolbar,
     Well,
-    Tooltip,
-    OverlayTrigger
 } from 'react-bootstrap';
 
 import * as ZCommon from "../../zcommon";
 import {    
-    IZComandoForma
+    IZComandoFormaState
 } from "../../zcommon";
 
 import { Services } from "../services";
 
 export interface OwnProperties {
-    linEst: Array<IZComandoForma>
+    linEst: Array<IZComandoFormaState>
 }
 
 export interface ConnectedState {
@@ -45,25 +43,23 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
                 style={{
                     marginBottom: "10px"
                 }}
-            >            
+            >
                 <ButtonGroup bsSize="small">
-                    {linEst.map((zComandoI: IZComandoForma, index: number) => {
-                        let iconName = zPantexServies.getCMIcon(zComandoI);
-                        let tooltip = (<Tooltip key={index} id={`tooltip_` + index}>{zComandoI.etq}</Tooltip>);
+                    {linEst.map((zComandoI: IZComandoFormaState, index: number) => {
+                        const iconName = zPantexServies.getCMIcon(zComandoI);
                         return (
-                            <OverlayTrigger key={index} placement="top" overlay={tooltip}>
-                                <Button
-                                    key={index}
-                                    bsStyle="info"
-                                    disabled={this.props.estaProcesandoRequestServidor || zComandoI.desh == 1}
-                                    onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
-                                >
-                                    {(!iconName) &&
-                                        zComandoI.etq
-                                    }
-                                    <span className={iconName} aria-hidden="true"></span>
-                                </Button>
-                            </OverlayTrigger>
+                            <Button
+                                key={zComandoI.id}
+                                bsStyle="info"                                
+                                title={zComandoI.etq}
+                                disabled={this.props.estaProcesandoRequestServidor || zComandoI.desh == 1}
+                                onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
+                            >
+                                {(!iconName) &&
+                                    zComandoI.etq
+                                }
+                                <span className={iconName} aria-hidden="true"></span>
+                            </Button>
                         );
                     })}
                 </ButtonGroup>

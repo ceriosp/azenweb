@@ -18,8 +18,7 @@ import {
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     pxAlTope: appState.zPantexStateModule.pxAlTope,
-    ultimoComandoEnviado: appState.ultimoComandoEnviado,
-    ponerModal: appState.zPantexStateModule.ponerModal
+    ultimoComandoEnviado: appState.ultimoComandoEnviado
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({

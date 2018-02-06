@@ -27,12 +27,6 @@ import { ZCampoDetallableContainer } from '../containers/ZCampoDetallableContain
 interface OwnProperties {
     zFormaTabla: IZFormaTablaState;
     zCampo: IZCampoState;
-    /*
-    esCheckboxAislado?: boolean; //Si es checkbox group = true, sirve un sólo checkbox = false. Ej. ter.noActivo        
-    zcamposEnRegionList?: Array<ZCampoModel>;
-
-    onCampoZoomClick?: (zreferenciaViewModel: ZReferenciaViewModel) => void
-    */
 }
 
 export default class ZCampo extends React.PureComponent<OwnProperties, undefined>
@@ -41,12 +35,9 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
 
     constructor(props: OwnProperties) {
         super(props);
-        console.log("instancing 1 zcampo " + this.props.zCampo.px + " - " + this.props.zCampo.nomCmp + " - " + this.props.zFormaTabla.venState.descr);
     }
 
     render() {
-
-        console.log("rendering 1 zcampo " + this.props.zCampo.px + " - " + this.props.zCampo.nomCmp + " - " + this.props.zFormaTabla.venState.descr);
 
         const { zCampo } = this.props;
         const claseInd: number = zCampo.claseInd;

@@ -39,7 +39,7 @@ export class ZAplicacion extends React.PureComponent<OwnProps & ConnectedState &
     private zAplicacionDivElement: HTMLDivElement;
 
     render(): any {
-        console.log("render zaplicacion");
+        //console.log("render zaplicacion");
         return (
             <div ref={(div: HTMLDivElement) => { this.zAplicacionDivElement = div; }}>
                 {this.props.pilaZPantexState.map((zPantexI: IZPantexState, index: number) => {

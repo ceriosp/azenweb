@@ -782,15 +782,13 @@ interface IZPantexNormalized {
 export namespace ContractsServices {
 
     export const esCampoModoLectura = (modo: number): boolean => {
-        return modo
-            && (Binario.estaPrendidoBit(modo, Constants.ModoCampoEnum.ZCMP_MNOARRIVABLE)
-                ||
-                Binario.estaPrendidoBit(modo, Constants.ModoCampoEnum.ZCMP_MSOLOVISUAL)
-            )
+        return Binario.estaPrendidoBit(modo, Constants.ModoCampoEnum.ZCMP_MNOARRIVABLE)
+            || Binario.estaPrendidoBit(modo, Constants.ModoCampoEnum.ZCMP_MSOLOVISUAL);
+
     }
 
     export const esCampoControlLectura = (control: number) => {
-        return control && Binario.estaPrendidoBit(control, Constants.ControlCampoEnum.ZCMP_VISUAL);
+        return Binario.estaPrendidoBit(control, Constants.ControlCampoEnum.ZCMP_VISUAL);
     }
 
     export const getSincHashKey = (sincParams: CM.ISincBase) => {

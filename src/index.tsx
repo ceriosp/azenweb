@@ -1,3 +1,5 @@
+declare const process: any;
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as redux from 'redux';
@@ -8,7 +10,10 @@ import { Button } from 'react-bootstrap';
 import "es6-string-polyfills";
 require('es6-object-assign').polyfill();
 require('es6-map/implement');
+
+
 const { default: immutableStateInvariant } = require('redux-immutable-state-invariant');
+
 
 import { combinedReducers } from './rootReducer';
 
@@ -35,12 +40,9 @@ import {
 
 } from "./modules/zcommon";
 
-declare const __DEV__: boolean; // from webpack
-if (__DEV__) {
-    console.log("dev stage");
-}
+console.log("Stage: " + process.env.NODE_ENV);
 
-const middlewares = __DEV__ ?
+const middlewares = process.env.NODE_ENV != 'production' ?
     [immutableStateInvariant(), thunk] :
     [thunk];
 
@@ -58,7 +60,8 @@ let appInitialState = {
 
 const obtenerEstadoInicial = () => {
 
-    if (__DEV__) {
+    //Es dev
+    if (process.env.NODE_ENV != 'production') {
         return createStore(
             App.Reducers.zaplState,
             appInitialState,

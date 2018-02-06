@@ -272,6 +272,7 @@ export namespace Selectors {
                 pilaZPantexState.push(zPantex);
             }
 
+            //console.log(pilaZPantexState);
             return pilaZPantexState;
         }
     );

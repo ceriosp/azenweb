@@ -32,7 +32,6 @@ export interface OwnProps {
 export interface ConnectedState {
     pxAlTope: number;
     ultimoComandoEnviado: ZCommonConstants.ComandoEnum,
-    ponerModal: boolean;
 }
 
 export interface ConnectedDispatch {
@@ -57,7 +56,7 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
             </h3>
         );
 
-        console.log("rendering: " + this.props.zPantex.zFormaTablaListState[0].venState.descr);
+        //console.log("rendering: " + this.props.zPantex.zFormaTablaListState[0].venState.descr);
 
         return (
             <div>
@@ -88,7 +87,7 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                         <ZLineaEstadoContainer
                                             linEst={zFormaTablaI.linEstState}
                                         />
-                                        {!this.props.ponerModal && (
+                                        {(zFormaTablaI.cmpsState && zFormaTablaI.cmpsState.length > 12) && (
                                             <ZBarraComandosContainer
                                                 zComandosList={zFormaTablaI.btnsState}
                                             />

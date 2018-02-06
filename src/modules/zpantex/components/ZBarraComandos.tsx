@@ -4,20 +4,18 @@ import {
     ButtonToolbar,
     Button,
     Well,
-    Tooltip,
-    OverlayTrigger
 } from 'react-bootstrap';
 
 import * as ZCommon from "../../zcommon";
 import {
-    IZComandoForma
+    IZComandoFormaState
 } from "../../zcommon";
 
 import { Services } from "../services";
 import { ZProcesandoNoModalContainer } from "../../zaplicacion/containers/ZProcesandoNoModalContainer";
 
 export interface OwnProperties {
-    zComandosList: Array<IZComandoForma>,
+    zComandosList: Array<IZComandoFormaState>,
 }
 
 export interface ConnectedState {
@@ -43,22 +41,20 @@ export class ZBarraComandos extends React.PureComponent<OwnProperties & Connecte
             <Well bsSize="small">
                 <div className="zaplicacion-zprocesando-no-modal-loader">
                     <ButtonToolbar>
-                        {zComandosList.map((zComandoI: IZComandoForma, index: number) => {
+                        {zComandosList.map((zComandoI: IZComandoFormaState, index: number) => {
                             let iconName = zPantexServies.getCMIcon(zComandoI);
-                            let tooltip = (<Tooltip key={index} id={`tooltip` + index}>{zComandoI.etq}</Tooltip>);
                             return (
-                                <OverlayTrigger key={index} placement="top" overlay={tooltip}>
-                                    <Button
-                                        key={index}
-                                        disabled={this.props.estaProcesandoRequestServidor || zComandoI.desh == 1}
-                                        onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
-                                    >
-                                        {(!iconName) &&
-                                            zComandoI.etq
-                                        }
-                                        <span className={iconName} aria-hidden="true"></span>
-                                    </Button>
-                                </OverlayTrigger>
+                                <Button
+                                    key={zComandoI.id}
+                                    title={zComandoI.etq}
+                                    disabled={this.props.estaProcesandoRequestServidor || zComandoI.desh == 1}
+                                    onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
+                                >
+                                    {(!iconName) &&
+                                        zComandoI.etq
+                                    }
+                                    <span className={iconName} aria-hidden="true"></span>
+                                </Button>
                             );
                         })}
                     </ButtonToolbar>
@@ -67,7 +63,7 @@ export class ZBarraComandos extends React.PureComponent<OwnProperties & Connecte
             </Well>
         );
     }
-    
+
     despacharEventoCliente(cmd: ZCommon.Constants.ComandoEnum) {
         this.props.despacharEventoCliente(cmd);
     }

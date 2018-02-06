@@ -391,13 +391,14 @@ export namespace Reducers {
                                 ? zcampoState.value
                                 : zCampoEnHash.value,
 
-                            checked: zcampoState.checked,
+                            checked: zcampoState.checked,                            
 
                             control: zcampoState.control,
                             modo: zcampoState.modo
 
                         } as IZCampoState;
 
+                        //Verificar si es radio y viene prendido (arreglo: posBitOn)
                         if (zcampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO
                             || zcampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
                             if (zCampoEnHash.posBitsOn) {
@@ -424,6 +425,13 @@ export namespace Reducers {
                         if (zCampoEnHash.bitApagarModo) {
                             zCampoActualizado.modo = ContractsServices.Binario.apagarBit(zcampoState.modo, zCampoEnHash.bitApagarModo);
                         }
+
+                        if(zcampoState.nomCmp == "tipo_iva"){
+                            //debugger;
+                        }
+
+                        let readOnly = ContractsServices.esCampoControlLectura(zCampoActualizado.control)
+                        || ContractsServices.esCampoModoLectura(zCampoActualizado.modo);                        
 
                         return u({
                             value: zCampoActualizado.value,

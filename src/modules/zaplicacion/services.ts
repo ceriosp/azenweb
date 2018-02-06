@@ -43,7 +43,7 @@ const recursosZoomList: Array<string> =
     ];
 
 import * as ZCommon from '../zcommon';
-import {    
+import {
     IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList, IZCampo, CM, IZCampoState, IZComandoFormaState, ContractsServices
 } from '../zcommon';
 
@@ -129,6 +129,11 @@ export namespace Services {
                     case ZCommonConstants.ComandoEnum.CM_SINCBOTON:
                         cmSincBoton(zColaEventos.eventos[i]);
                         continue;
+
+                    case ZCommonConstants.ComandoEnum.CM_PXVISUALIZARRPT:
+                        const visualRtpParams = zColaEventos.eventos[i].dato.buffer.dato as CM.IPxVisualizarRpt;
+                        window.open(trimLasCharacter(getState().azenURL, "/") + "/azenweb" + visualRtpParams.vc, "", "location=0");
+                        continue;
                 }
 
                 for (let j = 0; j < responderArray.length; j++) {
@@ -136,16 +141,24 @@ export namespace Services {
                 }
             }
 
-            console.log("module/zaplicacion/services- listaPxCampos: " + JSON.stringify(listaPxCampos));
+            console.log("module/zaplicacion/services- campos px/hash: " + JSON.stringify(listaPxCampos));
             console.log(hashZCampoState);
 
-            console.log("module/zaplicacion/services- listaPxComandos: " + JSON.stringify(listaPxComandos));
+            console.log("module/zaplicacion/services- comandos px/hash:  " + JSON.stringify(listaPxComandos));
             console.log(hashZComandoState);
 
             //Hay campos para sincronizar      
             if (hashZCampoState.size > 0) {
                 dispatch(ZPantex.Actions.ZPantexStateModule.cmSincPx(listaPxCampos, hashZCampoState, listaPxComandos, hashZComandoState));
             }
+        }
+
+        const trimLasCharacter = (s: string, c: string) => {
+            if (c === "]") c = "\\]";
+            if (c === "\\") c = "\\\\";
+            return s.replace(new RegExp(
+                "^[" + c + "]+|[" + c + "]+$", "g"
+            ), "");
         }
 
         const cmSincCampo = (infoEvento: IZEvento) => {

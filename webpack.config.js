@@ -1,9 +1,10 @@
 const webpack = require('webpack');
+const prod = process.argv.indexOf('-p') !== -1;
 
 //const LiveReloadPlugin = require('webpack-livereload-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
-module.exports = {
+const config = {
     entry: ["./src/index.tsx"],
     output: {
         filename: "bundle.js",
@@ -55,24 +56,6 @@ module.exports = {
         ]
     },
 
-    plugins: [
-
-        new webpack.DefinePlugin({
-            __DEV__: true
-        }),
-
-        //new LiveReloadPlugin({ appendScriptTag: true })
-        /*
-                new CompressionPlugin({
-                    asset: "[path].gz[query]",
-                    algorithm: "gzip",
-                    test: /\.js$|\.css$|\.html$/,
-                    threshold: 10240,
-                    minRatio: 0.8
-                })        
-        */
-    ],
-
     // When importing a module whose path matches one of the following, just
     // assume a corresponding global variable exists and use that instead.
     // This is important because it allows us to avoid bundling all of our
@@ -82,3 +65,20 @@ module.exports = {
         "react-dom": "ReactDOM"
     },
 };
+
+config.plugins = config.plugins||[];
+if (prod) {
+  config.plugins.push(new webpack.DefinePlugin({
+      'process.env': {
+          'NODE_ENV': `"production"`
+      }
+  }));
+} else {
+  config.plugins.push(new webpack.DefinePlugin({
+      'process.env': {
+          'NODE_ENV': `""`
+      }
+  }));
+}
+
+module.exports = config;
