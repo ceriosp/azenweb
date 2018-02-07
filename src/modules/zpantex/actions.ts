@@ -24,7 +24,7 @@ import {
     IZComandoFormaState,
     IZVentanaState,
     ZFormaTablaState,
-    ZComandoFormaState,    
+    ZComandoFormaState,
     IZColaEventos,
 
 } from "../zcommon";
@@ -90,7 +90,7 @@ export namespace Actions {
                 zFormaTablaState.byId[id] = new ZFormaTablaStateModel(id, zPantex.zFormaTablaList[i].cmps.length);
 
                 zFormaTablaState.byId[id].idZVentana =
-                    agregarZVentanaState(getStateFn, zPantex.zFormaTablaList[i], zVentanaState);
+                    agregarZVentanaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zVentanaState);
 
                 zFormaTablaState.byId[id].zCampoStateListIds =
                     agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i + 1, zCampoState);
@@ -108,6 +108,7 @@ export namespace Actions {
         }
 
         const agregarZVentanaState = (getStateFn: () => IZAplState,
+            zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
             zVentanaState: EntityNormalizedObj<IZVentanaState>): number => {
 
@@ -117,7 +118,7 @@ export namespace Actions {
                 return zFormaTablaVenId;
             }
 
-            zFormaTablaVenId = Selectors.ZPantexStateModule.ZVentanaState.getNextZVentanaStateId(getStateFn());
+            zFormaTablaVenId = zPantex.numPx;
             zVentanaState.byId[zFormaTablaVenId] = new ZVentanaStateModel(zFormaTabla.ven, zFormaTablaVenId);
             zVentanaState.allIds.push(zFormaTablaVenId);
 
@@ -138,7 +139,7 @@ export namespace Actions {
             if (zFormaTabla.ven.numLinsDatos > 0) {
                 for (let fila = 0; fila < zFormaTabla.ven.numLinsDatos; fila++) {
                     for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, fila+1);
+                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, fila + 1);
                         zCampoState.allIds.push(id);
                         zFormaTablaCmpsIds.push(id);
                         id++;
@@ -243,12 +244,14 @@ export namespace Actions {
         export const cmSincPx = (listaPxCampos: Array<number>,
             hashZCampos: Map<string, IZCampoState>,
             listaPxComandos: Array<number>,
-            hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>): ActionTypes.ZPantexStateModule.Action => ({
+            hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>,
+            cambiarTituloVentana: CM.ICambiarTituloVentana): ActionTypes.ZPantexStateModule.Action => ({
                 type: ActionTypes.ZPantexStateModule.CM_SINCCAMPO,
                 listaPxCampos,
                 hashZCampos,
                 listaPxComandos,
-                hashZComandos
+                hashZComandos,
+                cambiarTituloVentana
             });
 
         export const onCampoChanged = (zcampoState: IZCampoState, valor: any): ActionTypes.ZPantexStateModule.Action => ({
@@ -277,7 +280,7 @@ export namespace Actions {
 
         export const onFilaMultiSeleccionada = (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number) => (dispatch: any, getStateFn: () => IZAplState) => {
             dispatch(setFilaMultiSeleccionada(zFormaTablaState, indexFilaMultiSeleccionada));
-            const buffer = `<fi>${indexFilaMultiSeleccionada}</fi>`;            
+            const buffer = `<fi>${indexFilaMultiSeleccionada}</fi>`;
             dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_IRALINEA, buffer)).then(
                 (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
                     dispatch(setComandoBuffer(Constants.ComandoEnum.CM_ACEPTAR, buffer));
@@ -296,7 +299,12 @@ export namespace Actions {
             cm,
             buffer,
         });
-        
+
+        export const setTituloVentana = (parametros: CM.IModificar | CM.IAdicionar | CM.IConsultar): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.SET_TITULOVENTANA,
+            parametros
+        });
+
         export const onCampoBlur = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
             if (zcampoState.haCambiado) {
                 const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${zcampoState.value}</vc>`;

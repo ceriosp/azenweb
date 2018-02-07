@@ -91,6 +91,9 @@ export namespace Services {
         let hashZComandoState = new Map<ZCommonConstants.ComandoEnum, IZComandoFormaState>();
         let cmSincBotonParametros: CM.ISincBoton;
 
+        //Sirve para adicionar, modificar, consultar...
+        let cmCambiarTituloVentana: CM.ICambiarTituloVentana = undefined;
+
         export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
             //valores de los campos de un px: <nombreCampo, valor> 
@@ -99,6 +102,8 @@ export namespace Services {
 
             hashZComandoState = new Map<ZCommonConstants.ComandoEnum, IZComandoFormaState>();
             listaPxComandos = [];
+
+            cmCambiarTituloVentana = undefined;
 
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
 
@@ -130,6 +135,12 @@ export namespace Services {
                         cmSincBoton(zColaEventos.eventos[i]);
                         continue;
 
+                    case ZCommonConstants.ComandoEnum.CM_MODIFICAR:
+                    case ZCommonConstants.ComandoEnum.CM_ACTUALIZAR:
+                    case ZCommonConstants.ComandoEnum.CM_CONSULTAR:
+                        cmCambiarTituloVentana = zColaEventos.eventos[i].dato.buffer.dato as CM.ICambiarTituloVentana;
+                        continue;
+
                     case ZCommonConstants.ComandoEnum.CM_PXVISUALIZARRPT:
                         const visualRtpParams = zColaEventos.eventos[i].dato.buffer.dato as CM.IPxVisualizarRpt;
                         window.open(trimLasCharacter(getState().azenURL, "/") + "/azenweb" + visualRtpParams.vc, "", "location=0");
@@ -148,8 +159,17 @@ export namespace Services {
             console.log(hashZComandoState);
 
             //Hay campos para sincronizar      
-            if (hashZCampoState.size > 0) {
-                dispatch(ZPantex.Actions.ZPantexStateModule.cmSincPx(listaPxCampos, hashZCampoState, listaPxComandos, hashZComandoState));
+            if (hashZCampoState.size > 0 || hashZComandoState.size > 1) {
+                dispatch(ZPantex.Actions.ZPantexStateModule.cmSincPx(
+                    listaPxCampos,
+                    hashZCampoState,
+                    listaPxComandos,
+                    hashZComandoState,
+                    cmCambiarTituloVentana));
+            } else {                
+                if (cmCambiarTituloVentana) {
+                    dispatch(ZPantex.Actions.ZPantexStateModule.setTituloVentana(cmCambiarTituloVentana));
+                }
             }
         }
 

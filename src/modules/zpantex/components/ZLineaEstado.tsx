@@ -51,7 +51,7 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
                             <Button
                                 key={zComandoI.id}
                                 bsStyle="info"                                
-                                title={zComandoI.etq}
+                                title={zComandoI.etq + "-" + zComandoI.cmd}
                                 disabled={this.props.estaProcesandoRequestServidor || zComandoI.desh == 1}
                                 onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
                             >

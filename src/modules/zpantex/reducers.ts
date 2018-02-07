@@ -143,7 +143,7 @@ export namespace Reducers {
 
                 case ActionTypes.ZPantexStateModule.CM_PXCREAR:
                     return cmPxCrear(state, action);
-                    
+
                 case ActionTypes.ZPantexStateModule.CM_PXDESTRUIR:
                     return cmPxDestruir(state, action);
 
@@ -213,6 +213,17 @@ export namespace Reducers {
                             byId: {
                                 [action.cm]: {
                                     buffer: action.buffer
+                                } as IZParametrosComando
+                            }
+                        } as any,
+                    } as IZPantexStateModule, state);
+
+                case ActionTypes.ZPantexStateModule.SET_TITULOVENTANA:
+                    return u({
+                        zVentanaState: {
+                            byId: {
+                                [action.parametros.px]: {
+                                    buffer: action.parametros.vc
                                 } as IZParametrosComando
                             }
                         } as any,
@@ -339,7 +350,7 @@ export namespace Reducers {
 
             return state;
         }
-        
+
         const cmPxArrivar = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
 
             if (action.type != ActionTypes.ZPantexStateModule.CM_PXARRIVAR) {
@@ -391,7 +402,7 @@ export namespace Reducers {
                                 ? zcampoState.value
                                 : zCampoEnHash.value,
 
-                            checked: zcampoState.checked,                            
+                            checked: zcampoState.checked,
 
                             control: zcampoState.control,
                             modo: zcampoState.modo
@@ -426,12 +437,12 @@ export namespace Reducers {
                             zCampoActualizado.modo = ContractsServices.Binario.apagarBit(zcampoState.modo, zCampoEnHash.bitApagarModo);
                         }
 
-                        if(zcampoState.nomCmp == "tipo_iva"){
+                        if (zcampoState.nomCmp == "tipo_iva") {
                             //debugger;
                         }
 
                         let readOnly = ContractsServices.esCampoControlLectura(zCampoActualizado.control)
-                        || ContractsServices.esCampoModoLectura(zCampoActualizado.modo);                        
+                            || ContractsServices.esCampoModoLectura(zCampoActualizado.modo);
 
                         return u({
                             value: zCampoActualizado.value,
@@ -461,6 +472,18 @@ export namespace Reducers {
                 return zcomandoFormaState;
             }
 
+            const actualizarVentana = (zVentanaState: IZVentanaState): IZVentanaState => {
+
+                if (action.cambiarTituloVentana
+                    && zVentanaState.id == action.cambiarTituloVentana.px) {
+                    return u({
+                        descr: action.cambiarTituloVentana.vc
+                    } as IZVentanaState, zVentanaState);
+                }
+
+                return zVentanaState;
+            }
+
             if (action.hashZCampos.size > 0 || action.hashZComandos.size > 0) {
                 return u({
                     zCampoState: {
@@ -469,9 +492,12 @@ export namespace Reducers {
                     zComandoFormaState: {
                         byId: u.map(actualizarBoton)
                     } as any,
+                    zVentanaState: {
+                        byId: u.map(actualizarVentana)
+                    }
                 } as IZPantexStateModule, state);
             }
-            
+
             return state;
         }
 

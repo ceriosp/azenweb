@@ -52,6 +52,7 @@ export namespace ActionTypes {
             export type SET_ZCAMPOSTATE_HACAMBIADO = "ZPantexStateModule/SET_ZCAMPOSTATE_HACAMBIADO";
             export type SET_FILAMULTISELECCIONADA = "ZPantexStateModule/SET_FILAMULTISELECCIONADA";
             export type SET_COMANDOBUFFER = "ZPantexStateModule/SET_COMANDOBUFFER";
+            export type SET_TITULOVENTANA = "ZPantexStateModule/SET_TITULOVENTANA";
         }
 
         export const CM_PXCREAR: Types.CM_PXCREAR = "ZPantexStateModule/CM_PXCREAR";
@@ -67,6 +68,7 @@ export namespace ActionTypes {
         export const SET_ZCAMPOSTATE_HACAMBIADO: Types.SET_ZCAMPOSTATE_HACAMBIADO = "ZPantexStateModule/SET_ZCAMPOSTATE_HACAMBIADO";
         export const SET_FILAMULTISELECCIONADA: Types.SET_FILAMULTISELECCIONADA = "ZPantexStateModule/SET_FILAMULTISELECCIONADA";
         export const SET_COMANDOBUFFER: Types.SET_COMANDOBUFFER = "ZPantexStateModule/SET_COMANDOBUFFER";
+        export const SET_TITULOVENTANA: Types.SET_TITULOVENTANA = "ZPantexStateModule/SET_TITULOVENTANA";
 
 
         export type Action =
@@ -98,7 +100,9 @@ export namespace ActionTypes {
                 hashZCampos: Map<string, IZCampoState>,
 
                 listaPxComandos: Array<number>,
-                hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>
+                hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>,
+                
+                cambiarTituloVentana: CM.ICambiarTituloVentana
             } |
             {
                 type: Types.ON_CAMPOCHANGE,
@@ -129,6 +133,10 @@ export namespace ActionTypes {
                 type: Types.SET_COMANDOBUFFER,
                 cm: Constants.ComandoEnum,
                 buffer: string
+            }|
+            {
+                type: Types.SET_TITULOVENTANA,
+                parametros: CM.ICambiarTituloVentana
             }
     }
 

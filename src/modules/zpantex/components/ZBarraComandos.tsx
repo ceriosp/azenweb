@@ -46,13 +46,13 @@ export class ZBarraComandos extends React.PureComponent<OwnProperties & Connecte
                             return (
                                 <Button
                                     key={zComandoI.id}
-                                    title={zComandoI.etq}
+                                    title={zComandoI.etq + "-" + zComandoI.cmd}
                                     disabled={this.props.estaProcesandoRequestServidor || zComandoI.desh == 1}
                                     onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
                                 >
                                     {(!iconName) &&
                                         zComandoI.etq
-                                    }
+                                    }                                    
                                     <span className={iconName} aria-hidden="true"></span>
                                 </Button>
                             );

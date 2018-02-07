@@ -362,7 +362,7 @@ export class ZComandoFormaState implements IZComandoFormaState {
 }
 
 export interface IZVentanaState extends IZVentanaBase {
-    id: number;
+    id: number; //px
 }
 
 export class ZVentanaState implements IZVentanaState {
@@ -542,12 +542,7 @@ export namespace CM {
         px: number;
     }
 
-    /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_ADICIONAR - 44
-     * Pone título a la ventana
-     * Estado: implementado
-     */
-    export interface IAdicionar {
+    export interface ICambiarTituloVentana {
         /**
          * Número de la ventana a cambiar título
          */
@@ -558,22 +553,22 @@ export namespace CM {
          */
         vc: string;
     }
+    /**
+     * Responde a zcommon.Constants.ComandoEnum.CM_ADICIONAR - 44
+     * Pone título a la ventana
+     * Estado: implementado
+     */
+    export interface IAdicionar extends ICambiarTituloVentana {
+
+    }
 
     /**
      * Responde a zcommon.Constants.ComandoEnum.CM_MODIFICAR - 45
      * Pone título a la ventana
      * Estado: implementado
      */
-    export interface IModificar {
-        /**
-         * Número de la ventana a cambiar título
-         */
-        px: number;
+    export interface IModificar  extends ICambiarTituloVentana {
 
-        /**
-         * Título a poner a la ventana
-         */
-        vc: string;
     }
 
     /**
@@ -592,16 +587,8 @@ export namespace CM {
      * Pone título a la ventana
      * Estado: implementado
      */
-    export interface IConsultar {
-        /**
-         * Número de la ventana a cambiar título
-         */
-        px: number;
+    export interface IConsultar  extends ICambiarTituloVentana {
 
-        /**
-         * Título a poner a la ventana
-         */
-        vc: string;
     }
 
     /**

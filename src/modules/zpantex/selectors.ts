@@ -141,18 +141,6 @@ export namespace Selectors {
 
                 return appState.zPantexStateModule.zVentanaState;
             };
-
-            export const getNextZVentanaStateId = createSelector(
-                [getZVentanaStateMap],
-                (getZVentanaStateMap: EntityNormalizedObj<IZVentanaState>): number => {
-
-                    if (getZVentanaStateMap.allIds.length == 0) {
-                        return 1;
-                    }
-
-                    return Math.max.apply(Math, getZVentanaStateMap.allIds) + 1;
-                }
-            );
         }
     }
 
