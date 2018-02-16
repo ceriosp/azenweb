@@ -50,11 +50,13 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
     }
 
     render(): any {
-        const titulo = (
+        const tituloHTML = (
             <h3>
                 {this.props.zPantex.zFormaTablaListState[0].venState.descr}
             </h3>
         );
+
+        let titulo: any = tituloHTML;
 
         //console.log("rendering: " + this.props.zPantex.zFormaTablaListState[0].venState.descr);
 
@@ -62,24 +64,32 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
             <div>
                 <Modal
                     onHide={null}
-                    show={true}                    
+                    show={true}
                     backdrop="static"
                     aria-labelledby="contained-modal-title-sm"
                     container={this.props.container}
                 >
-                    <Modal.Body                        
+                    <Modal.Body
                         style={{
                             padding: "0px",
                         }}
                     >
                         {this.props.zPantex.zFormaTablaListState.map((zFormaTablaI: IZFormaTablaState, index: number) => {
+
+                            if (this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV
+                                && zFormaTablaI.venState.numLinsDatos > 1) {
+                                titulo = undefined;
+                            } else { 
+                                titulo = tituloHTML;
+                            }
+
                             return (
                                 <div
                                     key={zFormaTablaI.id}
                                 >
                                     <Panel
                                         header={titulo}
-                                        bsStyle="primary"                                        
+                                        bsStyle="primary"
                                         style={{
                                             marginBottom: "0px"
                                         }}
@@ -93,7 +103,9 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                             />
                                         )}
                                         <ZFormaTablaContainer
+                                            zPantex={this.props.zPantex}
                                             zFormaTabla={zFormaTablaI}
+                                            zftIndex={index}
                                         />
                                         <ZBarraComandosContainer
                                             zComandosList={zFormaTablaI.btnsState}

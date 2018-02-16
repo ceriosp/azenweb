@@ -69,6 +69,7 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
             if (esDetallable) {
                 return <ZCampoDetallableContainer
                     zCampoModel={zCampo}
+                    zFormaTabla={zFormaTabla}
                 />;
             }
             return <ZCampoTextboxContainer

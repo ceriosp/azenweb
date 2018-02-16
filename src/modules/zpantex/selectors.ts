@@ -17,9 +17,12 @@ import {
     IEntityNormalizeObj,
     ZFilaCamposState,
     IZFilaCamposState,
-    IZParametrosComando
+    IZParametrosComando,
+
+    Constants as ZCommonConstants
 
 } from "../zcommon";
+import { Constants } from '../zutils/index';
 
 export namespace Selectors {
 
@@ -175,9 +178,10 @@ export namespace Selectors {
 
                 let zPantex = {
                     id: numPx,
+                    tipoCmdPantex: getZPantexStateMap.byId[numPx].tipoCmdPantex,
                     zFormaTablaListState: []
                 } as IZPantexState;
-                
+
                 //zft's
                 for (let izft = 0; izft < getZPantexStateMap.byId[numPx].zFormaTablaStateListIds.length; izft++) {
                     let idZft = getZPantexStateMap.byId[numPx].zFormaTablaStateListIds[izft];
@@ -192,12 +196,13 @@ export namespace Selectors {
 
                     //zcampos
                     if (getZFormaTablaStateMap.byId[idZft].zCampoStateListIds) {
-                        
+
+                        zPantex.zFormaTablaListState[izft].cmpsState = [];
+
+                        /*Es multi o zoom*/
                         if (zPantex.zFormaTablaListState[izft].venState.numLinsDatos > 0) {
-                            zPantex.zFormaTablaListState[izft].filasCamposList = new Array<IZFilaCamposState>(zPantex.zFormaTablaListState[izft].venState.numLinsDatos);
-                            zPantex.zFormaTablaListState[izft].cmpsState = undefined;
-                        } else {
-                            zPantex.zFormaTablaListState[izft].cmpsState = [];
+                            zPantex.zFormaTablaListState[izft].filasCamposList = new Array<IZFilaCamposState>(zPantex.zFormaTablaListState[izft].venState.numLinsDatos);                            
+                        } else {                            
                             zPantex.zFormaTablaListState[izft].filasCamposList = undefined;
                         }
 
@@ -205,8 +210,10 @@ export namespace Selectors {
                         for (let i = 0; i < getZFormaTablaStateMap.byId[idZft].zCampoStateListIds.length; i++) {
                             let idZCampo = getZFormaTablaStateMap.byId[idZft].zCampoStateListIds[i];
 
-                            //Es multi
-                            if (zPantex.zFormaTablaListState[izft].venState.numLinsDatos > 0) {
+                            //Es multi o zoom, (mov con index numLinsDatos > 0)
+                            if ((getZPantexStateMap.byId[numPx].tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARZOOM
+                                || getZPantexStateMap.byId[numPx].tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV)
+                                && zPantex.zFormaTablaListState[izft].venState.numLinsDatos > 0) {
                                 if (i % zPantex.zFormaTablaListState[izft].numCampos == 0) {
                                     numFilaMulti++;
                                     zPantex.zFormaTablaListState[izft].filasCamposList[numFilaMulti] = new ZFilaCamposState();
@@ -260,7 +267,8 @@ export namespace Selectors {
                 pilaZPantexState.push(zPantex);
             }
 
-            //console.log(pilaZPantexState);
+            console.log("---------------------------------------");
+            console.log(pilaZPantexState);
             return pilaZPantexState;
         }
     );

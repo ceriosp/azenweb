@@ -10,17 +10,26 @@ import {
     Table
 } from 'react-bootstrap';
 
-import {
-    IZMenuItem,
-    IZMenu
-} from '../../zcommon/contracts';
-import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma, IZFormaTablaState, IZCampoState, ZFilaCamposState, IZFilaCamposState } from "../../zcommon";
-import ZCampo from "./ZCampo";
-
 import { Constants } from "../constants";
 
+import {
+    Constants as ZCommonConstants
+} from '../../zcommon/constants';
+
+import {
+    IZMenuItem,
+    IZMenu,
+} from '../../zcommon/contracts';
+import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma, IZFormaTablaState, IZCampoState, ZFilaCamposState, IZFilaCamposState, IZPantexState } from "../../zcommon";
+import ZCampo from "./ZCampo";
+
+import { ZFormaTablaZoomContainer } from '../containers/ZFormaTablaZoomContainer';
+import { ZFormaTablaMovContainer } from '../containers/ZFormaTablaMovContainer';
+
 export interface OwnProps {
+    zPantex: IZPantexState;
     zFormaTabla: IZFormaTablaState;
+    zftIndex: number;
 }
 
 export interface ConnectedDispatch {
@@ -47,81 +56,47 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
             <div>
 
                 {/*NO Es multi*/}
-                {this.props.zFormaTabla.cmpsState && this.props.zFormaTabla.cmpsState.map((zcampoAPintar: IZCampoState, index: number) => {
-                    return (
-                        <Form
-                            horizontal
-                            key={zcampoAPintar.id}
-                        >
-                            <Col
-                                md={4}
+                {((this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREAR
+                    || this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMENSAJE)
+                    || (
+                        this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV
+                        && this.props.zFormaTabla.venState.numLinsDatos == 0
+                    )
+                )
+                    && this.props.zFormaTabla.cmpsState.map((zcampoAPintar: IZCampoState, index: number) => {
+                        return (
+                            <Form
+                                horizontal
+                                key={zcampoAPintar.id}
                             >
-                                <ZCampo
-                                    zFormaTabla={this.props.zFormaTabla}
-                                    zCampo={zcampoAPintar}
-                                />
-                            </Col>
-                        </Form>
-                    );
-                })}
+                                <Col
+                                    md={4}
+                                >
+                                    <ZCampo
+                                        zFormaTabla={this.props.zFormaTabla}
+                                        zCampo={zcampoAPintar}
+                                    />
+                                </Col>
+                            </Form>
+                        );
+                    })}
 
-                {/*Es multi*/}
-                {this.props.zFormaTabla.filasCamposList &&
-                    (<Table striped condensed hover responsive>
-                        <thead>
-                            <tr>
-                                {this.props.zFormaTabla.filasCamposList[0].cmpsState.map((zcampoI: IZCampoState, index: number) => {
-                                    return (
-                                        <th key={index}>
-                                            {zcampoI.etq}
-                                        </th>
-                                    );
-                                })}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.props.zFormaTabla.filasCamposList.map((zfilaCampoState: IZFilaCamposState, indexFila: number) => {
+                {/*Es multi ZOOM*/}
+                {(this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARZOOM
+                    && this.props.zFormaTabla.filasCamposList) &&
+                    (<ZFormaTablaZoomContainer
+                        zFormaTabla={this.props.zFormaTabla}
+                    />)
+                }
 
-                                let algunCampoConValor = false;
-
-                                for (let i = 0; i < zfilaCampoState.cmpsState.length; i++) {
-                                    if (zfilaCampoState.cmpsState[i].value) {
-                                        algunCampoConValor = true;
-                                        break;
-                                    }
-                                }
-
-                                if (algunCampoConValor) {
-                                    return (
-                                        <tr
-                                            key={indexFila}
-                                            style={{
-                                                backgroundColor: this.props.zFormaTabla.indexFilaMultiSeleccionada == indexFila ? "#D9EDF7" : ""
-                                            }}
-                                            onClick={() => this.onFilaClick(indexFila)}
-                                        >
-                                            {zfilaCampoState.cmpsState.map((zcampoI: IZCampoState, indexCampo: number) => {
-                                                return (
-                                                    <td key={indexCampo}>
-                                                        {this.props.zFormaTabla.filasCamposList[0].cmpsState[indexCampo].readOnly
-                                                            && zcampoI.value}
-                                                        {!this.props.zFormaTabla.filasCamposList[0].cmpsState[indexCampo].readOnly
-                                                            && (
-                                                                <ZCampo
-                                                                    zCampo={zcampoI}
-                                                                    zFormaTabla={this.props.zFormaTabla}
-                                                                />
-                                                            )
-                                                        }
-                                                    </td>
-                                                );
-                                            })}
-                                        </tr>
-                                    )
-                                }
-                            })}
-                        </tbody>
-                    </Table>)
+                {/*Es multi MOVIMIENTO*/}
+                {(this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV
+                    && this.props.zFormaTabla.filasCamposList
+                    && this.props.zFormaTabla.venState.numLinsDatos > 0
+                ) &&
+                    (<ZFormaTablaMovContainer
+                        zFormaTabla={this.props.zFormaTabla}
+                    />)
                 }
 
                 <div style={{ clear: 'both' }}> </div>
@@ -132,9 +107,9 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
 
     onFilaClick(indexFila: number) {
 
-        if(indexFila == this.props.zFormaTabla.indexFilaMultiSeleccionada){
+        if (indexFila == this.props.zFormaTabla.indexFilaMultiSeleccionada) {
             return;
-        }                
+        }
 
         this.props.onFilaMultiSeleccionada(this.props.zFormaTabla, indexFila);
     }

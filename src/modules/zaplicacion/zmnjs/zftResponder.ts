@@ -14,11 +14,12 @@ export namespace ZftResponder {
 
         switch (zEvento.dato.cmd) {
 
-            case ZCommon.Constants.ComandoEnum.CM_PXCREARMENSAJE:
             case ZCommon.Constants.ComandoEnum.CM_PXCREAR:
+            case ZCommon.Constants.ComandoEnum.CM_PXCREARMENSAJE:            
             case ZCommon.Constants.ComandoEnum.CM_PXCREARZOOM:
+            case ZCommon.Constants.ComandoEnum.CM_PXCREARMOV:
                 const zPantex = zEvento.dato.buffer.dato as IZPantex;
-                dispatch(ZPantex.Actions.ZPantexStateModule.pxCrear(zPantex));
+                dispatch(ZPantex.Actions.ZPantexStateModule.pxCrear(zPantex, zEvento.dato.cmd));
                 break;
 
             case ZCommon.Constants.ComandoEnum.CM_PXARRIVAR:
@@ -48,25 +49,7 @@ export namespace ZftResponder {
                     dispatch(ZPantex.Actions.ZPantexStateModule.ponerModal(false));
                 }
                 break;
-/*
-            case ZCommon.Constants.ComandoEnum.CM_CONSULTAR:
-                const consultar = zEvento.dato.buffer.dato as CM.IConsultar;
-                changeZPantexTitle(consultar.px, consultar.vc);
-                setZFormaTablaState(true, consultar.px, dispatch, getState);
-                break;
 
-            case ZCommon.Constants.ComandoEnum.CM_ADICIONAR:
-                const adicionar = zEvento.dato.buffer.dato as CM.IAdicionar;
-                changeZPantexTitle(adicionar.px, adicionar.vc);
-                setZFormaTablaState(false, adicionar.px, dispatch, getState);
-                break;
-
-            case ZCommon.Constants.ComandoEnum.CM_MODIFICAR:
-                const modificar = zEvento.dato.buffer.dato as CM.IModificar;
-                changeZPantexTitle(modificar.px, modificar.vc);
-                setZFormaTablaState(false, modificar.px, dispatch, getState);
-                break;
-*/
             case ZCommon.Constants.ComandoEnum.CM_PXDESTRUIR:
                 const pxDestruir = zEvento.dato.buffer.dato as CM.IPxDestruir;
                 dispatch(ZPantex.Actions.ZPantexStateModule.cmPxDestruir(pxDestruir));

@@ -38,7 +38,7 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
 
     render() {
         const { zCampoModel, zFormaTabla } = this.props;
-        if (zFormaTabla.cmpsState) {
+        if (zFormaTabla.venState.numLinsDatos == 0) {
             return (
                 <FormGroup bsSize="small">
                     <Col md={12}>
@@ -66,7 +66,7 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
                 </FormGroup>
             );
         } else {
-            if (zFormaTabla.filasCamposList) { //Es multi
+            if (zFormaTabla.venState.numLinsDatos > 0) { //Es multi
                 return (
                     <FormGroup bsSize="small">
                         <FormControl

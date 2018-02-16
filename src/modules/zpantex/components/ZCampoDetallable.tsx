@@ -12,11 +12,13 @@ import {
 
 import {
     Constants as ZCommonConstants,
-    IZCampoState
+    IZCampoState,
+    IZFormaTablaState
 } from "../../zcommon";
 
 export interface OwnProps {
     zCampoModel: IZCampoState;
+    zFormaTabla: IZFormaTablaState;
 }
 
 export interface ConnectedState {
@@ -24,12 +26,12 @@ export interface ConnectedState {
 }
 
 export interface ConnectedDispatch {
-    despacharEventoCliente:(cmd: ZCommonConstants.ComandoEnum, buffer: string) => void;
+    despacharEventoCliente: (cmd: ZCommonConstants.ComandoEnum, buffer: string) => void;
 }
 
 export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    disabled:boolean;
+    disabled: boolean;
 
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
@@ -38,16 +40,40 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
     }
 
     render() {
-        const zCampoModel = this.props.zCampoModel;
+        const { zCampoModel, zFormaTabla } = this.props;
         this.disabled = this.props.estaProcesandoRequestServidor || zCampoModel.readOnly;
-        
-        return (
-            <FormGroup bsSize="small">
-                <Col md={12}>
-                    <Col componentClass={ControlLabel}>
-                        {zCampoModel.etq}
+
+        if (zFormaTabla.venState.numLinsDatos == 0) {
+            return (
+                <FormGroup bsSize="small">
+                    <Col md={12}>
+                        <Col componentClass={ControlLabel}>
+                            {zCampoModel.etq}
+                        </Col>
+                        <Col>
+                            <InputGroup>
+                                <FormControl
+                                    type="text"
+                                    name={zCampoModel.nomCmp}
+                                    value={zCampoModel.value}
+                                    maxLength={zCampoModel.lon}
+                                    disabled={this.disabled}
+                                />
+                                <InputGroup.Addon
+                                    onClick={this.onCampoZoomClick}
+                                    style={{ cursor: this.disabled ? "not-allowed" : "pointer" }}>
+                                    <Glyphicon glyph="list" />
+                                </InputGroup.Addon>
+                            </InputGroup>
+                        </Col>
                     </Col>
-                    <Col>
+                </FormGroup>
+            );
+        }
+        else {
+            if (zFormaTabla.venState.numLinsDatos > 0) { //Es multi
+                return (
+                    <FormGroup bsSize="small">
                         <InputGroup>
                             <FormControl
                                 type="text"
@@ -62,10 +88,10 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
                                 <Glyphicon glyph="list" />
                             </InputGroup.Addon>
                         </InputGroup>
-                    </Col>
-                </Col>
-            </FormGroup>
-        );
+                    </FormGroup>
+                );
+            }
+        }
     }
 
     onCampoZoomClick() {
@@ -74,7 +100,7 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
             return;
         }
         */
-        this.props.despacharEventoCliente(ZCommonConstants.ComandoEnum.CM_DETALLAR, 
+        this.props.despacharEventoCliente(ZCommonConstants.ComandoEnum.CM_DETALLAR,
             `<nc>${this.props.zCampoModel.nomCmp}</nc>`);
     }
 }

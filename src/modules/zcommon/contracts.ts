@@ -161,18 +161,21 @@ export interface IZPantexState extends IdEntityBase {
 
     //Propiedades del state
     zFormaTablaListState: Array<IZFormaTablaState>;
+    tipoCmdPantex:Constants.ComandoEnum;
 }
 
 export class ZPantexState implements IZPantexState {
 
-    constructor(numPx: number) {
+    constructor(numPx: number, tipoCmdPantex:Constants.ComandoEnum) {
         this.id = numPx;
+        this.tipoCmdPantex = tipoCmdPantex;
         this.zFormaTablaStateListIds = new Array<number>();
     }
 
     id: number; //px
     zFormaTablaStateListIds: Array<number>;
     zFormaTablaListState: Array<IZFormaTablaState>;
+    tipoCmdPantex:Constants.ComandoEnum;
 }
 
 export interface IZFormaTablaState extends IdEntityBase { //zft

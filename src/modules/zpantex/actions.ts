@@ -51,7 +51,7 @@ export namespace Actions {
 
     export namespace ZPantexStateModule {
 
-        export const pxCrear = (zPantex: IZPantex) => (dispatch: any, getStateFn: () => IZAplState) => {
+        export const pxCrear = (zPantex: IZPantex, cmd:Constants.ComandoEnum) => (dispatch: any, getStateFn: () => IZAplState) => {
 
             let zFormaTablaState: EntityNormalizedObj<ZFormaTablaState> = new EntityNormalizedObj();
             let zVentanaState: EntityNormalizedObj<IZVentanaState> = new EntityNormalizedObj();
@@ -64,6 +64,7 @@ export namespace Actions {
                 byId: {
                     [zPantex.numPx]: {
                         id: zPantex.numPx,
+                        tipoCmdPantex:cmd,
                         zFormaTablaStateListIds: zFormaTablaState.allIds
                     } as IZPantexState,
                 } as EntityMap<IZPantexState>,
@@ -90,7 +91,7 @@ export namespace Actions {
                 zFormaTablaState.byId[id] = new ZFormaTablaStateModel(id, zPantex.zFormaTablaList[i].cmps.length);
 
                 zFormaTablaState.byId[id].idZVentana =
-                    agregarZVentanaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zVentanaState);
+                    agregarZVentanaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], id, zVentanaState);
 
                 zFormaTablaState.byId[id].zCampoStateListIds =
                     agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i + 1, zCampoState);
@@ -110,6 +111,7 @@ export namespace Actions {
         const agregarZVentanaState = (getStateFn: () => IZAplState,
             zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
+            zftId:number,
             zVentanaState: EntityNormalizedObj<IZVentanaState>): number => {
 
             let zFormaTablaVenId: number = undefined;
@@ -118,7 +120,7 @@ export namespace Actions {
                 return zFormaTablaVenId;
             }
 
-            zFormaTablaVenId = zPantex.numPx;
+            zFormaTablaVenId = zftId;
             zVentanaState.byId[zFormaTablaVenId] = new ZVentanaStateModel(zFormaTabla.ven, zFormaTablaVenId);
             zVentanaState.allIds.push(zFormaTablaVenId);
 

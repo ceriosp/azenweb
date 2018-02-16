@@ -310,7 +310,7 @@ export namespace Reducers {
                 }
 
                 const eliminarZVentanasIdsFn = (zVentanaId: number) => {
-                    return zVentanaADestuirIds.indexOf(zVentanaId) != -1;
+                    return zformaTablasADestruirIds.indexOf(zVentanaId) != -1;
                 }
 
                 const eliminarZCamposIdsFn = (zCampoId: number) => {

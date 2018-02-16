@@ -238,7 +238,9 @@ export namespace Constants {
         CM_CORREO,	//175	// Cerios feb 2009
         CM_URL,	//176   cerIOS ABR 2009
 
-        CM_NUMCODIGOS, // 177
+        //CM_NUMCODIGOS, // 177
+
+        CM_PXCREARMOV,
 
         CM_APLICACION = -1,
         CM_LOGIN = -2,
