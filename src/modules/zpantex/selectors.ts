@@ -267,8 +267,8 @@ export namespace Selectors {
                 pilaZPantexState.push(zPantex);
             }
 
-            console.log("---------------------------------------");
-            console.log(pilaZPantexState);
+            //console.log("---------------------------------------");
+            //console.log(pilaZPantexState);
             return pilaZPantexState;
         }
     );

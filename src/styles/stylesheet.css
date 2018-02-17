@@ -135,3 +135,13 @@
 .azen-multi .form-group{
     margin-bottom:0px !important;
 }
+
+.azen-tabla-mov{
+    width: 200% !important;
+    max-width: 200% !important;
+    overflow-x: auto !important;
+}
+
+.form-group{
+    margin-bottom: 5px !important;
+}

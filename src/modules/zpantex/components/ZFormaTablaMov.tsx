@@ -42,42 +42,59 @@ export class ZFormaTablaMov extends React.PureComponent<OwnProps & ConnectedDisp
     render(): any {
 
         return (
-            <Table condensed responsive>
-                <thead>
-                    <tr>
-                        {this.props.zFormaTabla.filasCamposList[0].cmpsState.map((zcampoI: IZCampoState, index: number) => {
-                            return (
-                                <th key={index}>
-                                    {zcampoI.etq}
-                                </th>
-                            );
+            <div style={{
+                overflowX: "auto"
+            }}>
+                <Table className="azen-tabla-mov">
+                    <thead>
+                        <tr>
+                            {this.props.zFormaTabla.filasCamposList[0].cmpsState.map((zcampoI: IZCampoState, index: number) => {
+                                return (
+                                    <th key={index}>
+                                        {zcampoI.etq}
+                                    </th>
+                                );
+                            })}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.props.zFormaTabla.filasCamposList.map((zfilaCampoState: IZFilaCamposState, indexFila: number) => {
+
+                            let algunCampoConValor = false;
+
+                            for (let i = 0; i < zfilaCampoState.cmpsState.length; i++) {
+                                if (zfilaCampoState.cmpsState[i].value) {
+                                    algunCampoConValor = true;
+                                    break;
+                                }
+                            }
+
+                            if (algunCampoConValor) {
+
+                                return (
+                                    <tr
+                                        key={indexFila}
+                                        style={{
+                                            backgroundColor: this.props.zFormaTabla.indexFilaMultiSeleccionada == indexFila ? "#D9EDF7" : ""
+                                        }}
+                                    >
+                                        {zfilaCampoState.cmpsState.map((zcampoI: IZCampoState, indexCampo: number) => {
+                                            return (
+                                                <td key={indexCampo}>
+                                                    <ZCampo
+                                                        zCampo={zcampoI}
+                                                        zFormaTabla={this.props.zFormaTabla}
+                                                    />
+                                                </td>
+                                            );
+                                        })}
+                                    </tr>
+                                )
+                            }
                         })}
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.props.zFormaTabla.filasCamposList.map((zfilaCampoState: IZFilaCamposState, indexFila: number) => {
-                        return (
-                            <tr
-                                key={indexFila}
-                                style={{
-                                    backgroundColor: this.props.zFormaTabla.indexFilaMultiSeleccionada == indexFila ? "#D9EDF7" : ""
-                                }}
-                            >
-                                {zfilaCampoState.cmpsState.map((zcampoI: IZCampoState, indexCampo: number) => {
-                                    return (
-                                        <td key={indexCampo}>
-                                            <ZCampo
-                                                zCampo={zcampoI}
-                                                zFormaTabla={this.props.zFormaTabla}
-                                            />
-                                        </td>
-                                    );
-                                })}
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </Table>
+                    </tbody>
+                </Table>
+            </div>
         );
     }
 }

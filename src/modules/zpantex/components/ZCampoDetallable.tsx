@@ -73,7 +73,11 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
         else {
             if (zFormaTabla.venState.numLinsDatos > 0) { //Es multi
                 return (
-                    <FormGroup bsSize="small">
+                    <FormGroup bsSize="small"
+                        style={{
+                            marginBottom: "1px"
+                        }}
+                    >
                         <InputGroup>
                             <FormControl
                                 type="text"

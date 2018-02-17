@@ -51,7 +51,7 @@ export namespace Actions {
 
     export namespace ZPantexStateModule {
 
-        export const pxCrear = (zPantex: IZPantex, cmd:Constants.ComandoEnum) => (dispatch: any, getStateFn: () => IZAplState) => {
+        export const pxCrear = (zPantex: IZPantex, cmd: Constants.ComandoEnum) => (dispatch: any, getStateFn: () => IZAplState) => {
 
             let zFormaTablaState: EntityNormalizedObj<ZFormaTablaState> = new EntityNormalizedObj();
             let zVentanaState: EntityNormalizedObj<IZVentanaState> = new EntityNormalizedObj();
@@ -64,7 +64,7 @@ export namespace Actions {
                 byId: {
                     [zPantex.numPx]: {
                         id: zPantex.numPx,
-                        tipoCmdPantex:cmd,
+                        tipoCmdPantex: cmd,
                         zFormaTablaStateListIds: zFormaTablaState.allIds
                     } as IZPantexState,
                 } as EntityMap<IZPantexState>,
@@ -94,7 +94,7 @@ export namespace Actions {
                     agregarZVentanaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], id, zVentanaState);
 
                 zFormaTablaState.byId[id].zCampoStateListIds =
-                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i + 1, zCampoState);
+                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i, zCampoState);
 
                 zFormaTablaState.byId[id].btnsListIds =
                     agregarZComandosBtnsFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zComandoFormaState);
@@ -111,7 +111,7 @@ export namespace Actions {
         const agregarZVentanaState = (getStateFn: () => IZAplState,
             zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
-            zftId:number,
+            zftId: number,
             zVentanaState: EntityNormalizedObj<IZVentanaState>): number => {
 
             let zFormaTablaVenId: number = undefined;
@@ -130,12 +130,24 @@ export namespace Actions {
         const agregarZCamposState = (getStateFn: () => IZAplState,
             zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
-            region: number,
+            indiceZft: number, //indice_zft + 1
             zCampoState: EntityNormalizedObj<IZCampoState>): Array<number> => {
 
             let zFormaTablaCmpsIds = [];
 
-            let id = Selectors.ZPantexStateModule.ZCampoState.getNextZCampoStateId(getStateFn());
+            let id = 0;
+
+            //Es el primer zft
+            if (indiceZft == 0) {
+                id = Selectors.ZPantexStateModule.ZCampoState.getNextZCampoStateId(getStateFn());
+            }
+            else {//Es un segundo zft, no se puede obtener el id con Selectors.ZPantexStateModule.ZCampoState.getNextZCampoStateId(getStateFn()); ya que el zft anterior aún no está registrado en el estado    
+                for (let i = 0; i < indiceZft; i++) {
+                    id = id + zPantex.zFormaTablaList[i].cmps.length + 1;
+                }
+            }
+            
+            const region = indiceZft + 1;
 
             //Es multi
             if (zFormaTabla.ven.numLinsDatos > 0) {
@@ -150,7 +162,7 @@ export namespace Actions {
             }
             else { //No es multi
                 for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                    zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, 1);
+                    zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, 0);
                     zCampoState.allIds.push(id);
                     zFormaTablaCmpsIds.push(id);
                     if (zFormaTabla.cmps[i].cmps) {
@@ -158,7 +170,7 @@ export namespace Actions {
                         zCampoState.byId[id].esCampoGrafico = true;
                         for (let j = 0; j < zFormaTabla.cmps[i].cmps.length; j++) {
                             id++;
-                            zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id, zPantex.numPx, region, 1);
+                            zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id, zPantex.numPx, region, 0);
                             zCampoState.byId[id].parentId = parentId;
                             zCampoState.allIds.push(id);
                             zFormaTablaCmpsIds.push(id);
@@ -167,6 +179,11 @@ export namespace Actions {
                     id++;
                 }
             }
+
+            console.log("zFormaTabla");
+            console.log(zFormaTabla);
+            console.log("zCampoState");
+            console.log(zCampoState);
 
             return zFormaTablaCmpsIds;
         }

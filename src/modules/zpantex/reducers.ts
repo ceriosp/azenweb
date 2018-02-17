@@ -374,16 +374,14 @@ export namespace Reducers {
 
             if (action.type != ActionTypes.ZPantexStateModule.CM_SINCCAMPO) {
                 return state;
-            }
-
-            const esDeMultiRegistro = action.hashZCampos.values().next().value.fi;
+            }            
 
             const actualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
 
                 if (action.listaPxCampos.indexOf(zcampoState.px) != -1) {
 
                     let key = zcampoState.nomCmp;
-                    if (esDeMultiRegistro) {
+                    if (zcampoState.fi > 0) {
                         key = ContractsServices.getSincHashCampo(zcampoState);
                     }
 

@@ -7,7 +7,7 @@ import {
     ControlLabel
 } from 'react-bootstrap';
 
-import {    
+import {
     Constants as ZCommonConstants,
     IZCampoState,
     IZFormaTablaState
@@ -68,7 +68,11 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
         } else {
             if (zFormaTabla.venState.numLinsDatos > 0) { //Es multi
                 return (
-                    <FormGroup bsSize="small">
+                    <FormGroup bsSize="small"
+                        style={{
+                            marginBottom: "1px"
+                        }}
+                    >
                         <FormControl
                             type="text"
                             name={zCampoModel.nomCmp}
