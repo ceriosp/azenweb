@@ -180,11 +180,12 @@ export namespace Actions {
                 }
             }
 
+/*            
             console.log("zFormaTabla");
             console.log(zFormaTabla);
             console.log("zCampoState");
             console.log(zCampoState);
-
+*/
             return zFormaTablaCmpsIds;
         }
 

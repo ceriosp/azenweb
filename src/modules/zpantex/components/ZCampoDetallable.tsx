@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import {
     FormGroup,
-    FormControl,
     Col,
     ControlLabel,
     InputGroup,
@@ -15,6 +14,7 @@ import {
     IZCampoState,
     IZFormaTablaState
 } from "../../zcommon";
+import { ZCampoTextoBasicoContainer } from '../containers/ZCampoTextoBasicoContainer';
 
 export interface OwnProps {
     zCampoModel: IZCampoState;
@@ -52,13 +52,7 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
                         </Col>
                         <Col>
                             <InputGroup>
-                                <FormControl
-                                    type="text"
-                                    name={zCampoModel.nomCmp}
-                                    value={zCampoModel.value}
-                                    maxLength={zCampoModel.lon}
-                                    disabled={this.disabled}
-                                />
+                                <ZCampoTextoBasicoContainer zCampoModel={zCampoModel} />
                                 <InputGroup.Addon
                                     onClick={this.onCampoZoomClick}
                                     style={{ cursor: this.disabled ? "not-allowed" : "pointer" }}>
@@ -79,13 +73,7 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
                         }}
                     >
                         <InputGroup>
-                            <FormControl
-                                type="text"
-                                name={zCampoModel.nomCmp}
-                                value={zCampoModel.value}
-                                maxLength={zCampoModel.lon}
-                                disabled={this.disabled}
-                            />
+                            <ZCampoTextoBasicoContainer zCampoModel={zCampoModel} />
                             <InputGroup.Addon
                                 onClick={this.onCampoZoomClick}
                                 style={{ cursor: this.disabled ? "not-allowed" : "pointer" }}>

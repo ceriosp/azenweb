@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import {
     FormGroup,
-    FormControl,
     Col,
     ControlLabel
 } from 'react-bootstrap';
@@ -12,6 +11,7 @@ import {
     IZCampoState,
     IZFormaTablaState
 } from "../../zcommon";
+import { ZCampoTextoBasicoContainer } from '../containers/ZCampoTextoBasicoContainer';
 
 export interface OwnProps {
     zCampoModel: IZCampoState;
@@ -46,21 +46,7 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
                             {zCampoModel.etq}
                         </Col>
                         <Col>
-                            <FormControl
-                                type="text"
-                                name={zCampoModel.nomCmp}
-                                value={zCampoModel.value}
-                                onChange={this.onChange}
-                                onBlur={this.onBlur}
-                                maxLength={zCampoModel.lon}
-                                disabled={
-                                    this.props.estaProcesandoRequestServidor
-                                    || zCampoModel.readOnly
-                                }
-                                style={{
-                                    borderColor: zCampoModel.haCambiado ? '#337AB7' : ''
-                                }}
-                            />
+                            <ZCampoTextoBasicoContainer zCampoModel={zCampoModel} />
                         </Col>
                     </Col>
                 </FormGroup>
@@ -68,26 +54,8 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
         } else {
             if (zFormaTabla.venState.numLinsDatos > 0) { //Es multi
                 return (
-                    <FormGroup bsSize="small"
-                        style={{
-                            marginBottom: "1px"
-                        }}
-                    >
-                        <FormControl
-                            type="text"
-                            name={zCampoModel.nomCmp}
-                            value={zCampoModel.value}
-                            onChange={this.onChange}
-                            onBlur={this.onBlur}
-                            maxLength={zCampoModel.lon}
-                            disabled={
-                                this.props.estaProcesandoRequestServidor
-                                || zCampoModel.readOnly
-                            }
-                            style={{
-                                borderColor: zCampoModel.haCambiado ? '#337AB7' : ''
-                            }}
-                        />
+                    <FormGroup bsSize="small">
+                        <ZCampoTextoBasicoContainer zCampoModel={zCampoModel} />
                     </FormGroup>
                 );
             }

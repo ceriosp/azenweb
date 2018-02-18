@@ -74,7 +74,7 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
             }
             return <ZCampoTextboxContainer
                 zCampoModel={zCampo}
-                zFormaTabla={zFormaTabla}
+                zFormaTabla={zFormaTabla}                
             />;
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_RADIO) {
