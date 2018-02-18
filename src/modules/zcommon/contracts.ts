@@ -135,11 +135,12 @@ export interface IZCampoBase {
     control: number;
     modo: number; //Constants.ModoCampo namespace
     posbit: number;
+
+    tipo: number; //Para campos fecha
 }
 
 export interface IZCampo extends IZCampoBase {
-    lonv: number;
-    tipo: number;
+    lonv: number;    
     noEnTabla: number;
     numDec: number;
     cmps?: Array<IZCampo>;
@@ -293,6 +294,7 @@ export class ZCampoState implements IZCampoState {
 
         this.value = "";
         this.checked = false;
+        this.tipo = zcampo.tipo;
 
         this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;
     }
@@ -308,6 +310,7 @@ export class ZCampoState implements IZCampoState {
     haCambiado: boolean;
     parentId?: number; //Para campos dentro de un campo gráfico
     cmpsState: Array<IZCampoState>;
+    tipo: number;
 
     //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
     posBitsOn: Array<number>;

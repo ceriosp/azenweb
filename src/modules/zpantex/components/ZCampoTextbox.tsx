@@ -19,21 +19,17 @@ export interface OwnProps {
 }
 
 export interface ConnectedState {
-    estaProcesandoRequestServidor: boolean;
+    
 }
 
 export interface ConnectedDispatch {
-    onCampoChanged: (zcampoState: IZCampoState, valor: string) => void;
-    onCampoBlur: (zcampoState: IZCampoState) => void;
+
 }
 
 export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
-
-        this.onChange = this.onChange.bind(this);
-        this.onBlur = this.onBlur.bind(this);
     }
 
     render() {
@@ -60,13 +56,5 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
                 );
             }
         }
-    }
-
-    onChange(e: any) {
-        this.props.onCampoChanged(this.props.zCampoModel, e.target.value);
-    }
-
-    onBlur(e: any) {
-        this.props.onCampoBlur(this.props.zCampoModel);
     }
 }

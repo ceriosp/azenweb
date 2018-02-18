@@ -10,18 +10,19 @@ import {
     OwnProps,
     ConnectedState,
     ConnectedDispatch,
-    ZCampoTextbox
-} from '../components/ZCampoTextbox';
+    ZCampoFecha
+} from '../components/ZCampoFecha';
 
 import { Actions } from "../actions";
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
-    
+    estaProcesandoRequestServidor:appState.estaProcesandoRequestServidor
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-
+    onCampoChangedEnviarCmd: (zcampoState: IZCampoState, valor: string) =>
+        dispatch(Actions.ZPantexStateModule.onCampoChangedEnviarCmd(zcampoState, valor)),
 });
 
-export const ZCampoTextboxContainer: React.ComponentClass<OwnProps> =
-    connect<ConnectedState, ConnectedDispatch, OwnProps>(mapStateToProps, mapDispatchToProps)(ZCampoTextbox);
+export const ZCampoFechaContainer: React.ComponentClass<OwnProps> =
+    connect<ConnectedState, ConnectedDispatch, OwnProps>(mapStateToProps, mapDispatchToProps)(ZCampoFecha);

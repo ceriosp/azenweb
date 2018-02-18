@@ -30,9 +30,7 @@ export interface ConnectedDispatch {
 }
 
 export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
-{
-    disabled: boolean;
-
+{    
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
@@ -41,7 +39,7 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
 
     render() {
         const { zCampoModel, zFormaTabla } = this.props;
-        this.disabled = this.props.estaProcesandoRequestServidor || zCampoModel.readOnly;
+        const disabled = this.props.estaProcesandoRequestServidor || zCampoModel.readOnly;
 
         if (zFormaTabla.venState.numLinsDatos == 0) {
             return (
@@ -55,7 +53,7 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
                                 <ZCampoTextoBasicoContainer zCampoModel={zCampoModel} />
                                 <InputGroup.Addon
                                     onClick={this.onCampoZoomClick}
-                                    style={{ cursor: this.disabled ? "not-allowed" : "pointer" }}>
+                                    style={{ cursor: disabled ? "not-allowed" : "pointer" }}>
                                     <Glyphicon glyph="list" />
                                 </InputGroup.Addon>
                             </InputGroup>
@@ -76,7 +74,7 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
                             <ZCampoTextoBasicoContainer zCampoModel={zCampoModel} />
                             <InputGroup.Addon
                                 onClick={this.onCampoZoomClick}
-                                style={{ cursor: this.disabled ? "not-allowed" : "pointer" }}>
+                                style={{ cursor: disabled ? "not-allowed" : "pointer" }}>
                                 <Glyphicon glyph="list" />
                             </InputGroup.Addon>
                         </InputGroup>
@@ -87,11 +85,6 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
     }
 
     onCampoZoomClick() {
-        /*
-        if(this.disabled){
-            return;
-        }
-        */
         this.props.despacharEventoCliente(ZCommonConstants.ComandoEnum.CM_DETALLAR,
             `<nc>${this.props.zCampoModel.nomCmp}</nc>`);
     }

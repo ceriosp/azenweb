@@ -23,6 +23,7 @@ import { ZCampoRadioContainer } from '../containers/ZCampoRadioContainer';
 import { ZCampoCheckboxContainer } from '../containers/ZCampoCheckboxContainer';
 import { ZCampoTextboxContainer } from '../containers/ZCampoTextboxContainer';
 import { ZCampoDetallableContainer } from '../containers/ZCampoDetallableContainer';
+import { ZCampoFechaContainer } from '../containers/ZCampoFechaContainer';
 
 interface OwnProperties {
     zFormaTabla: IZFormaTablaState;
@@ -72,9 +73,12 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
                     zFormaTabla={zFormaTabla}
                 />;
             }
+            else if (zCampo.tipo == 70) { //Es fecha
+                return <ZCampoFechaContainer zCampoModel={zCampo} />
+            }
             return <ZCampoTextboxContainer
                 zCampoModel={zCampo}
-                zFormaTabla={zFormaTabla}                
+                zFormaTabla={zFormaTabla}
             />;
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_RADIO) {

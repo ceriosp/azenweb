@@ -11,6 +11,8 @@ import {
 
 export interface OwnProps {
     zCampoModel: IZCampoState;
+    valor?: any; //Sobreescribe el valor de zCampoModel.value: caso fechas para pintar con formato
+    readOnly?: boolean; //Sobreescribe el valor de zCampoModel.readOnly: caso fechas
 }
 
 export interface ConnectedState {
@@ -32,16 +34,17 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     }
 
     render() {
-        const { zCampoModel } = this.props;
+        const { zCampoModel, valor } = this.props;
         return (
             <FormControl
                 type="text"
                 name={zCampoModel.nomCmp}
-                value={zCampoModel.value}
+                value={valor ? valor : zCampoModel.value}
                 onChange={this.onChange}
                 onBlur={this.onBlur}
                 maxLength={zCampoModel.lon}
-                disabled={
+                readOnly={this.props.readOnly}
+                disabled={                    
                     this.props.estaProcesandoRequestServidor
                     || zCampoModel.readOnly
                 }

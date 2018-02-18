@@ -325,6 +325,11 @@ export namespace Actions {
             parametros
         });
 
+        export const onCampoChangedEnviarCmd = (zcampoState: IZCampoState, valor:any) => (dispatch: any, getStateFn: () => IZAplState) => {
+            dispatch(onCampoChanged(zcampoState, valor));
+            dispatch(onCampoBlur(Selectors.ZPantexStateModule.ZCampoState.getZCampoStateMap(getStateFn()).byId[zcampoState.id]));
+        }        
+
         export const onCampoBlur = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
             if (zcampoState.haCambiado) {
                 const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${zcampoState.value}</vc>`;
