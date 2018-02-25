@@ -135,18 +135,15 @@ export namespace Actions {
 
             let zFormaTablaCmpsIds = [];
 
-            let id = 0;
+            let id = Selectors.ZPantexStateModule.ZCampoState.getNextZCampoStateId(getStateFn());
 
             //Es el primer zft
-            if (indiceZft == 0) {
-                id = Selectors.ZPantexStateModule.ZCampoState.getNextZCampoStateId(getStateFn());
-            }
-            else {//Es un segundo zft, no se puede obtener el id con Selectors.ZPantexStateModule.ZCampoState.getNextZCampoStateId(getStateFn()); ya que el zft anterior aún no está registrado en el estado    
+            if (indiceZft != 0) {
                 for (let i = 0; i < indiceZft; i++) {
                     id = id + zPantex.zFormaTablaList[i].cmps.length + 1;
                 }
             }
-            
+
             const region = indiceZft + 1;
 
             //Es multi
@@ -180,12 +177,12 @@ export namespace Actions {
                 }
             }
 
-/*            
-            console.log("zFormaTabla");
-            console.log(zFormaTabla);
-            console.log("zCampoState");
-            console.log(zCampoState);
-*/
+            /*            
+                        console.log("zFormaTabla");
+                        console.log(zFormaTabla);
+                        console.log("zCampoState");
+                        console.log(zCampoState);
+            */
             return zFormaTablaCmpsIds;
         }
 
@@ -325,10 +322,10 @@ export namespace Actions {
             parametros
         });
 
-        export const onCampoChangedEnviarCmd = (zcampoState: IZCampoState, valor:any) => (dispatch: any, getStateFn: () => IZAplState) => {
+        export const onCampoChangedEnviarCmd = (zcampoState: IZCampoState, valor: any) => (dispatch: any, getStateFn: () => IZAplState) => {
             dispatch(onCampoChanged(zcampoState, valor));
             dispatch(onCampoBlur(Selectors.ZPantexStateModule.ZCampoState.getZCampoStateMap(getStateFn()).byId[zcampoState.id]));
-        }        
+        }
 
         export const onCampoBlur = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
             if (zcampoState.haCambiado) {
