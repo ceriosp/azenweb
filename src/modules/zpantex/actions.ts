@@ -137,7 +137,7 @@ export namespace Actions {
 
             let id = Selectors.ZPantexStateModule.ZCampoState.getNextZCampoStateId(getStateFn());
 
-            //Es el primer zft
+            //No el primer zft
             if (indiceZft != 0) {
                 for (let i = 0; i < indiceZft; i++) {
                     id = id + zPantex.zFormaTablaList[i].cmps.length + 1;
@@ -262,13 +262,18 @@ export namespace Actions {
             hashZCampos: Map<string, IZCampoState>,
             listaPxComandos: Array<number>,
             hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>,
-            cambiarTituloVentana: CM.ICambiarTituloVentana): ActionTypes.ZPantexStateModule.Action => ({
-                type: ActionTypes.ZPantexStateModule.CM_SINCCAMPO,
+            cambiarTituloVentana: CM.ICambiarTituloVentana,
+            listaFilasAPintar:Array<number>,
+            ultimoComandoEnviado:Constants.ComandoEnum
+        ): ActionTypes.ZPantexStateModule.Action => ({
+                type: ActionTypes.ZPantexStateModule.CM_SINCPX,
                 listaPxCampos,
                 hashZCampos,
                 listaPxComandos,
                 hashZComandos,
-                cambiarTituloVentana
+                cambiarTituloVentana,
+                listaFilasAPintar,
+                ultimoComandoEnviado                
             });
 
         export const onCampoChanged = (zcampoState: IZCampoState, valor: any): ActionTypes.ZPantexStateModule.Action => ({

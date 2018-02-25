@@ -43,7 +43,7 @@ export namespace ActionTypes {
             export type CM_PONERMODAL = "ZPantexStateModule/CM_PONERMODAL";
             export type CM_PXARRIVAR = "ZPantexStateModule/CM_PXARRIVAR";
             export type CM_PXDESTRUIR = "ZPantexStateModule/CM_PXDESTRUIR";
-            export type CM_SINCCAMPO = "ZPantexStateModule/CM_SINCCAMPO";
+            export type CM_SINCPX = "ZPantexStateModule/CM_SINCPX";
 
             export type ON_CAMPOCHANGE = "ZPantexStateModule/ON_CAMPOCHANGE";
             export type ON_CAMPORADIOCHANGE = "ZPantexStateModule/ON_CAMPORADIOCHANGE";
@@ -59,7 +59,7 @@ export namespace ActionTypes {
         export const CM_PONERMODAL: Types.CM_PONERMODAL = "ZPantexStateModule/CM_PONERMODAL";
         export const CM_PXARRIVAR: Types.CM_PXARRIVAR = "ZPantexStateModule/CM_PXARRIVAR";
         export const CM_PXDESTRUIR: Types.CM_PXDESTRUIR = "ZPantexStateModule/CM_PXDESTRUIR";
-        export const CM_SINCCAMPO: Types.CM_SINCCAMPO = "ZPantexStateModule/CM_SINCCAMPO";
+        export const CM_SINCPX: Types.CM_SINCPX = "ZPantexStateModule/CM_SINCPX";
 
         export const ON_CAMPOCHANGE: Types.ON_CAMPOCHANGE = "ZPantexStateModule/ON_CAMPOCHANGE";
         export const ON_CAMPORADIOCHANGE: Types.ON_CAMPORADIOCHANGE = "ZPantexStateModule/ON_CAMPORADIOCHANGE";
@@ -94,7 +94,7 @@ export namespace ActionTypes {
                 pxDestruirParams: CM.IPxDestruir
             } |
             {
-                type: Types.CM_SINCCAMPO,
+                type: Types.CM_SINCPX,
 
                 listaPxCampos: Array<number>,
                 hashZCampos: Map<string, IZCampoState>,
@@ -102,7 +102,10 @@ export namespace ActionTypes {
                 listaPxComandos: Array<number>,
                 hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>,
                 
-                cambiarTituloVentana: CM.ICambiarTituloVentana
+                cambiarTituloVentana: CM.ICambiarTituloVentana,
+                
+                listaFilasAPintar:Array<number>,
+                ultimoComandoEnviado:Constants.ComandoEnum
             } |
             {
                 type: Types.ON_CAMPOCHANGE,

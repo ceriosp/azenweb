@@ -91,6 +91,8 @@ export namespace Services {
         let hashZComandoState = new Map<ZCommonConstants.ComandoEnum, IZComandoFormaState>();
         let cmSincBotonParametros: CM.ISincBoton;
 
+        let listaFilasAPintar: Array<number>;
+
         //Sirve para adicionar, modificar, consultar...
         let cmCambiarTituloVentana: CM.ICambiarTituloVentana = undefined;
 
@@ -104,6 +106,7 @@ export namespace Services {
             listaPxComandos = [];
 
             cmCambiarTituloVentana = undefined;
+            listaFilasAPintar = [];
 
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
 
@@ -152,9 +155,10 @@ export namespace Services {
                 }
             }
 
-            console.log("module/zaplicacion/services- campos px/hash: " + JSON.stringify(listaPxCampos));
+            console.log("module/zaplicacion/services- lista px a refrescar: " + JSON.stringify(listaPxCampos));
+            console.log("module/zaplicacion/services- lista filas a pintar: " + JSON.stringify(listaFilasAPintar));
             console.log(hashZCampoState);
-
+            
             console.log("module/zaplicacion/services- comandos px/hash:  " + JSON.stringify(listaPxComandos));
             console.log(hashZComandoState);
 
@@ -165,8 +169,10 @@ export namespace Services {
                     hashZCampoState,
                     listaPxComandos,
                     hashZComandoState,
-                    cmCambiarTituloVentana));
-            } else {                
+                    cmCambiarTituloVentana,
+                    listaFilasAPintar,
+                    getState().ultimoComandoEnviado));
+            } else {
                 if (cmCambiarTituloVentana) {
                     dispatch(ZPantex.Actions.ZPantexStateModule.setTituloVentana(cmCambiarTituloVentana));
                 }
@@ -189,6 +195,14 @@ export namespace Services {
             if (listaPxCampos.indexOf(cmSincCampoParametros.px) == -1) {
                 listaPxCampos.push(cmSincCampoParametros.px);
             }
+
+            cmSincCampoParametros.fi = cmSincCampoParametros.fi
+                                        ? parseInt(cmSincCampoParametros.fi.toString())
+                                        : cmSincCampoParametros.fi;                                        
+            if(cmSincCampoParametros.fi && listaFilasAPintar.indexOf(cmSincCampoParametros.fi) == -1){
+                listaFilasAPintar.push(cmSincCampoParametros.fi);
+            }
+            
             if (!hashZCampoState.has(hashKey)) {
                 let zCampoEnHash = {
                     px: cmSincCampoParametros.px,
@@ -295,27 +309,6 @@ export namespace Services {
                 zComandFormaEnHash.desh = parseInt(cmSincBotonParametros.vc.toString())
             }
         }
-
-        export const obtenerDefinicionesCampo = (zftCampos: Array<IZCampo>, dato: CM.ISincCampo): IZCampo | Array<IZCampo> => {
-
-            for (let i = 0; i < zftCampos.length; i++) {
-
-                if (zftCampos[i].nomCmp && zftCampos[i].nomCmp == dato.nc) {
-                    return zftCampos[i] as IZCampo;
-                }
-
-                if (zftCampos[i].cmps && zftCampos[i].cmps.length > 0) {
-
-                    for (var j = 0; j < zftCampos[i].cmps.length; j++) {
-
-                        if (zftCampos[i].cmps[j].nomCmp == dato.nc) {
-                            return zftCampos[i].cmps as Array<IZCampo>;
-                        }
-                    }
-                }
-            }
-        }
-
         //#endregion
 
         //#region Private methods

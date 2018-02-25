@@ -155,7 +155,7 @@ export namespace Reducers {
                         ponerModal: action.ponerModal
                     } as IZPantexStateModule, state);
 
-                case ActionTypes.ZPantexStateModule.CM_SINCCAMPO:
+                case ActionTypes.ZPantexStateModule.CM_SINCPX:
                     return cmSincCampo(state, action);
 
                 case ActionTypes.ZPantexStateModule.ON_CAMPOCHANGE:
@@ -372,9 +372,9 @@ export namespace Reducers {
         }
         const cmSincCampo = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
 
-            if (action.type != ActionTypes.ZPantexStateModule.CM_SINCCAMPO) {
+            if (action.type != ActionTypes.ZPantexStateModule.CM_SINCPX) {
                 return state;
-            }            
+            }
 
             const actualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
 
@@ -450,6 +450,19 @@ export namespace Reducers {
                             readOnly: ContractsServices.esCampoControlLectura(zCampoActualizado.control)
                                 || ContractsServices.esCampoModoLectura(zCampoActualizado.modo),
                         } as IZCampoState, zcampoState);
+                    }
+                    else //No está en el hash a actualizar
+                    {
+                        switch (action.ultimoComandoEnviado) {
+                            case ZCommonConstants.ComandoEnum.CM_SGTEREG:
+                            case ZCommonConstants.ComandoEnum.CM_ANTREG:
+                            case ZCommonConstants.ComandoEnum.CM_PRIMREG:
+                            case ZCommonConstants.ComandoEnum.CM_ULTREG:
+                            case ZCommonConstants.ComandoEnum.CM_ACEPTAR:
+                                return u({
+                                    value: "",
+                                } as IZCampoState, zcampoState);
+                        }
                     }
                 }
 

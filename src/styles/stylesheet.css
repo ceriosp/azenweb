@@ -143,5 +143,10 @@
 }
 
 .form-group{
-    margin-bottom: 5px !important;
+    margin-bottom: 3px !important;
 }
+
+.azen-tabla-mov .form-group{
+    margin-bottom: 0px !important;
+}
+
