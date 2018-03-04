@@ -403,7 +403,9 @@ export namespace Reducers {
                             checked: zcampoState.checked,
 
                             control: zcampoState.control,
-                            modo: zcampoState.modo
+                            modo: zcampoState.modo,
+
+                            autoFocus: zCampoEnHash.autoFocus ? zCampoEnHash.autoFocus : false
 
                         } as IZCampoState;
 
@@ -435,10 +437,6 @@ export namespace Reducers {
                             zCampoActualizado.modo = ContractsServices.Binario.apagarBit(zcampoState.modo, zCampoEnHash.bitApagarModo);
                         }
 
-                        if (zcampoState.nomCmp == "tipo_iva") {
-                            //debugger;
-                        }
-
                         let readOnly = ContractsServices.esCampoControlLectura(zCampoActualizado.control)
                             || ContractsServices.esCampoModoLectura(zCampoActualizado.modo);
 
@@ -449,20 +447,26 @@ export namespace Reducers {
                             modo: zCampoActualizado.modo,
                             readOnly: ContractsServices.esCampoControlLectura(zCampoActualizado.control)
                                 || ContractsServices.esCampoModoLectura(zCampoActualizado.modo),
+                            autoFocus: zCampoActualizado.autoFocus,
                         } as IZCampoState, zcampoState);
                     }
                     else //No está en el hash a actualizar
                     {
+                        let value = zcampoState.value;
+
                         switch (action.ultimoComandoEnviado) {
                             case ZCommonConstants.ComandoEnum.CM_SGTEREG:
                             case ZCommonConstants.ComandoEnum.CM_ANTREG:
                             case ZCommonConstants.ComandoEnum.CM_PRIMREG:
                             case ZCommonConstants.ComandoEnum.CM_ULTREG:
                             case ZCommonConstants.ComandoEnum.CM_ACEPTAR:
-                                return u({
-                                    value: "",
-                                } as IZCampoState, zcampoState);
+                                value = "";
                         }
+
+                        return u({
+                            value: value,
+                            autoFocus: false
+                        } as IZCampoState, zcampoState);
                     }
                 }
 

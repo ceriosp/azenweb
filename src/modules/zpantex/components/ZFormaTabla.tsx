@@ -7,7 +7,8 @@ import {
 import {
     Col,
     Form,
-    Table
+    Table,
+    Panel
 } from 'react-bootstrap';
 
 import { Constants } from "../constants";
@@ -99,6 +100,28 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
                     />)
                 }
 
+                {(this.props.zFormaTabla.camposFijosList && this.props.zFormaTabla.camposFijosList.length > 0)
+                    && (
+                        <Panel bsStyle="info">
+                            <Form
+                                horizontal
+                            >
+                                {this.props.zFormaTabla.camposFijosList.map((zcampoAPintar: IZCampoState, index: number) => {
+                                    return (
+                                        <Col
+                                            key={index}
+                                            md={4}
+                                        >
+                                            <ZCampo
+                                                zFormaTabla={this.props.zFormaTabla}
+                                                zCampo={zcampoAPintar}
+                                            />
+                                        </Col>
+                                    );
+                                })}
+                            </Form>
+                        </Panel>
+                    )}
                 <div style={{ clear: 'both' }}> </div>
             </div>
         );

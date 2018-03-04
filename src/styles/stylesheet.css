@@ -137,8 +137,8 @@
 }
 
 .azen-tabla-mov{
-    width: 200% !important;
-    max-width: 200% !important;
+    width: 100% !important;
+    max-width: 100% !important;
     overflow-x: auto !important;
 }
 

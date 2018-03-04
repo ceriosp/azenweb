@@ -38,13 +38,14 @@ export namespace ZclienteResponder {
 
             switch (zComando) {
 
-                case ZCommon.Constants.ComandoEnum.CM_ACEPTAR:                
+                case ZCommon.Constants.ComandoEnum.CM_ACEPTAR:
                     if (ZPantexSelectors.ZPantexStateModule.getZParametrosComando(getState()).byId[ZCommon.Constants.ComandoEnum.CM_ACEPTAR]) {
                         buffer = ZPantexSelectors.ZPantexStateModule.getZParametrosComando(getState()).byId[ZCommon.Constants.ComandoEnum.CM_ACEPTAR].buffer;
                     }
                     tipoAJAXIndicador = zCommon.Constants.TipoAJAXIndicadorEnum.MODAL;
                     break;
 
+                case ZCommon.Constants.ComandoEnum.CM_IRACMP:
                 case ZCommon.Constants.ComandoEnum.CM_CAMBIOCMP:
                 case ZCommon.Constants.ComandoEnum.CM_IRALINEA:
                 case ZCommon.Constants.ComandoEnum.CM_SI:

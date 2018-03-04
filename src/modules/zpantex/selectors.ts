@@ -207,14 +207,14 @@ export namespace Selectors {
                         }
 
                         let numFilaMulti = -1;
-                        for (let i = 0; i < getZFormaTablaStateMap.byId[idZft].zCampoStateListIds.length; i++) {
+                        for (let i = 0; i < (getZFormaTablaStateMap.byId[idZft].zCampoStateListIds.length - zPantex.zFormaTablaListState[izft].camposFijosList.length); i++) {
                             let idZCampo = getZFormaTablaStateMap.byId[idZft].zCampoStateListIds[i];
 
                             //Es multi o zoom, (mov con index numLinsDatos > 0)
                             if ((getZPantexStateMap.byId[numPx].tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARZOOM
                                 || getZPantexStateMap.byId[numPx].tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV)
                                 && zPantex.zFormaTablaListState[izft].venState.numLinsDatos > 0) {
-                                if (i % zPantex.zFormaTablaListState[izft].numCampos == 0) {
+                                if (i % (zPantex.zFormaTablaListState[izft].numCampos - zPantex.zFormaTablaListState[izft].camposFijosList.length) == 0) {
                                     numFilaMulti++;
                                     zPantex.zFormaTablaListState[izft].filasCamposList[numFilaMulti] = new ZFilaCamposState();
                                     zPantex.zFormaTablaListState[izft].filasCamposList[numFilaMulti].cmpsState.push(getZCampoStateMap.byId[idZCampo]);
@@ -267,8 +267,6 @@ export namespace Selectors {
                 pilaZPantexState.push(zPantex);
             }
 
-            //console.log("---------------------------------------");
-            //console.log(pilaZPantexState);
             return pilaZPantexState;
         }
     );

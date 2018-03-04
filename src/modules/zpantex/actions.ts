@@ -93,8 +93,10 @@ export namespace Actions {
                 zFormaTablaState.byId[id].idZVentana =
                     agregarZVentanaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], id, zVentanaState);
 
+                let camposFijosList: Array<ZCampoStateModel> = [];
                 zFormaTablaState.byId[id].zCampoStateListIds =
-                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i, zCampoState);
+                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], camposFijosList, i, zCampoState);
+                zFormaTablaState.byId[id].camposFijosList = camposFijosList;
 
                 zFormaTablaState.byId[id].btnsListIds =
                     agregarZComandosBtnsFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zComandoFormaState);
@@ -130,6 +132,7 @@ export namespace Actions {
         const agregarZCamposState = (getStateFn: () => IZAplState,
             zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
+            camposFijosList: Array<ZCampoStateModel>,
             indiceZft: number, //indice_zft + 1
             zCampoState: EntityNormalizedObj<IZCampoState>): Array<number> => {
 
@@ -148,9 +151,26 @@ export namespace Actions {
 
             //Es multi
             if (zFormaTabla.ven.numLinsDatos > 0) {
-                for (let fila = 0; fila < zFormaTabla.ven.numLinsDatos; fila++) {
+                for (let fila = 0; fila <= zFormaTabla.ven.numLinsDatos; fila++) {
                     for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                        zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, fila + 1);
+                        const zcampoModel = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, fila + 1);
+
+                        //Campos fijos, ingresarlos sólo una vez en una nueva fila al final
+                        if (fila == zFormaTabla.ven.numLinsDatos && zcampoModel.esFijo) {
+                            zcampoModel.fi = 0;
+                            zCampoState.byId[id] = zcampoModel;
+                            zCampoState.allIds.push(id);
+                            zFormaTablaCmpsIds.push(id);
+                            id++;
+                            camposFijosList.push(zcampoModel);
+                            continue;
+                        }
+
+                        if (zcampoModel.esFijo) {
+                            continue;
+                        }
+
+                        zCampoState.byId[id] = zcampoModel;
                         zCampoState.allIds.push(id);
                         zFormaTablaCmpsIds.push(id);
                         id++;
@@ -177,12 +197,6 @@ export namespace Actions {
                 }
             }
 
-            /*            
-                        console.log("zFormaTabla");
-                        console.log(zFormaTabla);
-                        console.log("zCampoState");
-                        console.log(zCampoState);
-            */
             return zFormaTablaCmpsIds;
         }
 
@@ -263,18 +277,16 @@ export namespace Actions {
             listaPxComandos: Array<number>,
             hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>,
             cambiarTituloVentana: CM.ICambiarTituloVentana,
-            listaFilasAPintar:Array<number>,
-            ultimoComandoEnviado:Constants.ComandoEnum
+            ultimoComandoEnviado: Constants.ComandoEnum
         ): ActionTypes.ZPantexStateModule.Action => ({
-                type: ActionTypes.ZPantexStateModule.CM_SINCPX,
-                listaPxCampos,
-                hashZCampos,
-                listaPxComandos,
-                hashZComandos,
-                cambiarTituloVentana,
-                listaFilasAPintar,
-                ultimoComandoEnviado                
-            });
+            type: ActionTypes.ZPantexStateModule.CM_SINCPX,
+            listaPxCampos,
+            hashZCampos,
+            listaPxComandos,
+            hashZComandos,
+            cambiarTituloVentana,
+            ultimoComandoEnviado
+        });
 
         export const onCampoChanged = (zcampoState: IZCampoState, valor: any): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.ON_CAMPOCHANGE,
@@ -326,6 +338,15 @@ export namespace Actions {
             type: ActionTypes.ZPantexStateModule.SET_TITULOVENTANA,
             parametros
         });
+
+        export const onCampoFocusIrACmp = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+            const buffer = `<nc>${zcampoState.nomCmp}</nc>`;
+            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_IRACMP, buffer)).then(
+                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
+                    dispatch(setZCampoHaCambiado(zcampoState.id, false));
+                }
+            );
+        }
 
         export const onCampoChangedEnviarCmd = (zcampoState: IZCampoState, valor: any) => (dispatch: any, getStateFn: () => IZAplState) => {
             dispatch(onCampoChanged(zcampoState, valor));

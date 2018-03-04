@@ -103,8 +103,7 @@ export namespace ActionTypes {
                 hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>,
                 
                 cambiarTituloVentana: CM.ICambiarTituloVentana,
-                
-                listaFilasAPintar:Array<number>,
+                                
                 ultimoComandoEnviado:Constants.ComandoEnum
             } |
             {

@@ -241,6 +241,7 @@ export namespace Constants {
         //CM_NUMCODIGOS, // 177
 
         CM_PXCREARMOV,
+        CM_IRACMP = 179,
 
         CM_APLICACION = -1,
         CM_LOGIN = -2,

@@ -65,6 +65,7 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
         const fechaConFormato = zCampoModel.value && zCampoModel.value != "00000000"
             ? zCampoModel.value.substring(0, 2) + "/" + zCampoModel.value.substring(2, 4) + "/" + zCampoModel.value.substring(4, 8)
             : "";
+            
         const disabled = this.props.estaProcesandoRequestServidor || zCampoModel.readOnly;
 
         return (

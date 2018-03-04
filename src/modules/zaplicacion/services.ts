@@ -80,9 +80,11 @@ export namespace Services {
 
         //#region Public methods
 
-        //valores de los campos de un px: <nombreCampo, valor> 
-        let listaPxCampos: Array<number>; //Lista px para actualizar campos
+        //valores de los campos de un px: <nombreCampo, valor>         
         let hashZCampoState = new Map<string, IZCampoState>();
+        let listaPxCampos: Array<number>; //Lista px para actualizar campos
+        let iIrACmpParametros: CM.IAdicionar;
+
         let cmSincCampoParametros: CM.ISincCampo;
         let cmPrenderControlParametros: CM.IPrenderControl;
         let cmPrenderModoParametros: CM.IPrenderModo;
@@ -90,8 +92,6 @@ export namespace Services {
         let listaPxComandos: Array<number>; //Lista px para actualizar comandos
         let hashZComandoState = new Map<ZCommonConstants.ComandoEnum, IZComandoFormaState>();
         let cmSincBotonParametros: CM.ISincBoton;
-
-        let listaFilasAPintar: Array<number>;
 
         //Sirve para adicionar, modificar, consultar...
         let cmCambiarTituloVentana: CM.ICambiarTituloVentana = undefined;
@@ -101,12 +101,12 @@ export namespace Services {
             //valores de los campos de un px: <nombreCampo, valor> 
             hashZCampoState = new Map<string, IZCampoState>();
             listaPxCampos = [];
+            iIrACmpParametros = undefined;
 
             hashZComandoState = new Map<ZCommonConstants.ComandoEnum, IZComandoFormaState>();
             listaPxComandos = [];
 
             cmCambiarTituloVentana = undefined;
-            listaFilasAPintar = [];
 
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
 
@@ -114,8 +114,13 @@ export namespace Services {
 
                 const cmd = zColaEventos.eventos[i].dato.cmd;
                 switch (cmd) {
+
                     case ZCommonConstants.ComandoEnum.CM_SINCCAMPO:
                         cmSincCampo(zColaEventos.eventos[i]);
+                        continue;
+
+                    case ZCommonConstants.ComandoEnum.CM_IRACMP:
+                        cmIrACmp(zColaEventos.eventos[i]);
                         continue;
 
                     case ZCommonConstants.ComandoEnum.CM_PRENDERCONTROL:
@@ -156,9 +161,8 @@ export namespace Services {
             }
 
             console.log("module/zaplicacion/services- lista px a refrescar: " + JSON.stringify(listaPxCampos));
-            console.log("module/zaplicacion/services- lista filas a pintar: " + JSON.stringify(listaFilasAPintar));
             console.log(hashZCampoState);
-            
+
             console.log("module/zaplicacion/services- comandos px/hash:  " + JSON.stringify(listaPxComandos));
             console.log(hashZComandoState);
 
@@ -170,7 +174,6 @@ export namespace Services {
                     listaPxComandos,
                     hashZComandoState,
                     cmCambiarTituloVentana,
-                    listaFilasAPintar,
                     getState().ultimoComandoEnviado));
             } else {
                 if (cmCambiarTituloVentana) {
@@ -197,12 +200,9 @@ export namespace Services {
             }
 
             cmSincCampoParametros.fi = cmSincCampoParametros.fi
-                                        ? parseInt(cmSincCampoParametros.fi.toString())
-                                        : cmSincCampoParametros.fi;                                        
-            if(cmSincCampoParametros.fi && listaFilasAPintar.indexOf(cmSincCampoParametros.fi) == -1){
-                listaFilasAPintar.push(cmSincCampoParametros.fi);
-            }
-            
+                ? parseInt(cmSincCampoParametros.fi.toString())
+                : cmSincCampoParametros.fi;
+
             if (!hashZCampoState.has(hashKey)) {
                 let zCampoEnHash = {
                     px: cmSincCampoParametros.px,
@@ -239,6 +239,23 @@ export namespace Services {
                         zCampoEnHash.posBitsOn.push(parseInt(cmSincCampoParametros.pb.toString()));
                     }
                 }
+            }
+        }
+
+        const cmIrACmp = (infoEvento: IZEvento) => {
+            iIrACmpParametros = infoEvento.dato.buffer.dato as CM.ISincCampo;
+            let hashKey = ContractsServices.getSincHashKey(cmSincCampoParametros);
+
+            if (!hashZCampoState.has(hashKey)) {
+                let zCampoEnHash = {
+                    autoFocus:true
+                } as IZCampoState;
+
+                hashZCampoState.set(hashKey, zCampoEnHash);
+
+            } else {
+                const zCampoEnHash = hashZCampoState.get(hashKey);
+                zCampoEnHash.autoFocus = true;
             }
         }
 

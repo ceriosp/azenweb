@@ -195,6 +195,8 @@ export interface IZFormaTablaState extends IdEntityBase { //zft
     filasCamposList: Array<IZFilaCamposState>;
     numCampos: number;
     indexFilaMultiSeleccionada: number;
+
+    camposFijosList : Array<IZCampoState>; //Lista de campos fijos
 }
 
 export class ZFormaTablaState implements IZFormaTablaState { //zft
@@ -205,7 +207,7 @@ export class ZFormaTablaState implements IZFormaTablaState { //zft
         this.linEstListIds = new Array<number>();
         this.btnsListIds = new Array<number>();
 
-        this.numCampos = numCampos;
+        this.numCampos = numCampos;        
     }
 
     id: number;
@@ -226,6 +228,8 @@ export class ZFormaTablaState implements IZFormaTablaState { //zft
     filasCamposList: Array<IZFilaCamposState>;
     numCampos: number;
     indexFilaMultiSeleccionada: number;
+
+    camposFijosList : Array<IZCampoState>;
 }
 
 export interface IZFilaCamposState {
@@ -267,6 +271,10 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
     bitApagarControl: number;
     bitPrenderModo: number;
     bitApagarModo: number;
+
+    autoFocus:boolean; //El campo tiene el foco
+
+    esFijo: boolean; //El campo es fijo (Descripción)
 }
 
 export class ZCampoState implements IZCampoState {
@@ -297,6 +305,10 @@ export class ZCampoState implements IZCampoState {
         this.tipo = zcampo.tipo;
 
         this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;
+
+        this.autoFocus = false;
+        
+        this.esFijo = ContractsServices.Binario.estaPrendidoBit(zcampo.modo, Constants.ModoCampoEnum.ZCMP_MFIJO);
     }
 
     //Propiedades para manejo de estado
@@ -333,6 +345,9 @@ export class ZCampoState implements IZCampoState {
     bitApagarControl: number;
     bitPrenderModo: number;
     bitApagarModo: number;
+
+    autoFocus:boolean;
+    esFijo: boolean; //El campo es fijo (Descripción)
 }
 
 export interface IZComandoFormaState extends IZComandoForma {
@@ -688,6 +703,17 @@ export namespace CM {
          */
         px: number
     }
+
+    /**
+     *  Responde a zcommon.Constants.ComandoEnum.CM_IRACMP - 170
+     */
+    export interface iIrACmp {
+        /**
+         * 
+         */
+        nc: string
+    }
+    
 }
 
 export interface IZParametrosComando extends IdEntityBase {

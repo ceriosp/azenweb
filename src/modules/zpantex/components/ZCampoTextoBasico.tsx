@@ -8,6 +8,7 @@ import {
     Constants as ZCommonConstants,
     IZCampoState,
 } from "../../zcommon";
+import * as ReactDOM from 'react-dom';
 
 export interface OwnProps {
     zCampoModel: IZCampoState;
@@ -20,31 +21,38 @@ export interface ConnectedState {
 }
 
 export interface ConnectedDispatch {
-    onCampoChanged: (zcampoState: IZCampoState, valor: string) => void;
+    onCampoFocusIrACmp: (zcampoState: IZCampoState) => void;
     onCampoBlur: (zcampoState: IZCampoState) => void;
+    onCampoChanged: (zcampoState: IZCampoState, valor: string) => void;
 }
 
 export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
+    input: any;
+
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
+        this.onFocus = this.onFocus.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onBlur = this.onBlur.bind(this);
     }
 
     render() {
         const { zCampoModel, valor } = this.props;
+
         return (
             <FormControl
                 type="text"
+                ref="inputNode"
                 name={zCampoModel.nomCmp}
                 value={valor ? valor : zCampoModel.value}
                 onChange={this.onChange}
-                onBlur={this.onBlur}
+                onFocus={this.onFocus}
+                onBlur={this.onBlur}                
                 maxLength={zCampoModel.lon}
                 readOnly={this.props.readOnly}
-                disabled={                    
+                disabled={
                     this.props.estaProcesandoRequestServidor
                     || zCampoModel.readOnly
                 }
@@ -55,11 +63,28 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
         );
     }
 
+    onFocus(e: any) {
+        if(this.props.zCampoModel.autoFocus){
+            return;
+        }        
+        this.props.onCampoFocusIrACmp(this.props.zCampoModel);
+    }
+
     onChange(e: any) {
         this.props.onCampoChanged(this.props.zCampoModel, e.target.value);
     }
 
     onBlur(e: any) {
         this.props.onCampoBlur(this.props.zCampoModel);
+    }
+
+    componentDidUpdate() {
+        let node:any = ReactDOM.findDOMNode(this.refs.inputNode);
+        if (this.props.zCampoModel.autoFocus) {            
+            node.focus();
+            let value = node.value;
+            node.value = "";
+            node.value = value;
+        }
     }
 }
