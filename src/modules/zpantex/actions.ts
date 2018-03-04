@@ -157,7 +157,7 @@ export namespace Actions {
 
                         //Campos fijos, ingresarlos sólo una vez en una nueva fila al final
                         if (fila == zFormaTabla.ven.numLinsDatos && zcampoModel.esFijo) {
-                            zcampoModel.fi = 0;
+                            zcampoModel.fi = -1;
                             zCampoState.byId[id] = zcampoModel;
                             zCampoState.allIds.push(id);
                             zFormaTablaCmpsIds.push(id);
