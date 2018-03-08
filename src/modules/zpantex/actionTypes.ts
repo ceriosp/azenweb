@@ -53,6 +53,8 @@ export namespace ActionTypes {
             export type SET_FILAMULTISELECCIONADA = "ZPantexStateModule/SET_FILAMULTISELECCIONADA";
             export type SET_COMANDOBUFFER = "ZPantexStateModule/SET_COMANDOBUFFER";
             export type SET_TITULOVENTANA = "ZPantexStateModule/SET_TITULOVENTANA";
+
+            export type SET_ZFORMATABLA_COMOREGIONACTIVA = "ZPantexStateModule/SET_ZFORMATABLA_COMOREGIONACTIVA";            
         }
 
         export const CM_PXCREAR: Types.CM_PXCREAR = "ZPantexStateModule/CM_PXCREAR";
@@ -69,6 +71,8 @@ export namespace ActionTypes {
         export const SET_FILAMULTISELECCIONADA: Types.SET_FILAMULTISELECCIONADA = "ZPantexStateModule/SET_FILAMULTISELECCIONADA";
         export const SET_COMANDOBUFFER: Types.SET_COMANDOBUFFER = "ZPantexStateModule/SET_COMANDOBUFFER";
         export const SET_TITULOVENTANA: Types.SET_TITULOVENTANA = "ZPantexStateModule/SET_TITULOVENTANA";
+
+        export const SET_ZFORMATABLA_COMOREGIONACTIVA: Types.SET_ZFORMATABLA_COMOREGIONACTIVA = "ZPantexStateModule/SET_ZFORMATABLA_COMOREGIONACTIVA";
 
 
         export type Action =
@@ -139,6 +143,11 @@ export namespace ActionTypes {
             {
                 type: Types.SET_TITULOVENTANA,
                 parametros: CM.ICambiarTituloVentana
+            }|
+            {
+                type: Types.SET_ZFORMATABLA_COMOREGIONACTIVA,
+                zftId: number,
+                numPx:number
             }
     }
 

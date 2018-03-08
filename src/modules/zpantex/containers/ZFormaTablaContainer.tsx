@@ -16,12 +16,12 @@ import {
 } from '../components/ZFormaTabla';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
-    
+
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-    onFilaMultiSeleccionada: (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number) =>
-        dispatch(Actions.ZPantexStateModule.onFilaMultiSeleccionada(zFormaTablaState, indexFilaMultiSeleccionada))
+    onSaltarMov: (zFormaTablaState: IZFormaTablaState, regionDestino: number) =>
+        dispatch(Actions.ZPantexStateModule.onSaltarMov(zFormaTablaState, regionDestino))
 });
 
 export const ZFormaTablaContainer: React.ComponentClass<OwnProps> =

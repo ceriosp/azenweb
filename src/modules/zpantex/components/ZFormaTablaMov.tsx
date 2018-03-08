@@ -37,6 +37,8 @@ export class ZFormaTablaMov extends React.PureComponent<OwnProps & ConnectedDisp
 
     constructor(props: OwnProps & ConnectedDispatch) {
         super(props);
+
+        this.onFilaClick = this.onFilaClick.bind(this);
     }
 
     render(): any {
@@ -77,6 +79,7 @@ export class ZFormaTablaMov extends React.PureComponent<OwnProps & ConnectedDisp
                                         style={{
                                             backgroundColor: this.props.zFormaTabla.indexFilaMultiSeleccionada == indexFila ? "#D9EDF7" : ""
                                         }}
+                                        onClickCapture={() => this.onFilaClick(indexFila)}
                                     >
                                         {zfilaCampoState.cmpsState.map((zcampoI: IZCampoState, indexCampo: number) => {
                                             return (
@@ -96,5 +99,14 @@ export class ZFormaTablaMov extends React.PureComponent<OwnProps & ConnectedDisp
                 </Table>
             </div>
         );
+    }
+
+    onFilaClick(indexFila: number) {
+
+        if (indexFila == this.props.zFormaTabla.indexFilaMultiSeleccionada) {
+            return;
+        }                
+
+        this.props.onFilaMultiSeleccionada(this.props.zFormaTabla, indexFila);
     }
 }

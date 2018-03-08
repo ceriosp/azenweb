@@ -34,7 +34,9 @@ export namespace Actions {
                 */
                 credentials: 'include',
                 method: 'GET',
-            })
+                synchronous:true,
+                
+            } as any)
                 .then((response) => {
                     dispatch(setProcesosServidor(false, parametros.tipoAJAXIndicador))                    
                     return response.text();

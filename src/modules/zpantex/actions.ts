@@ -88,7 +88,7 @@ export namespace Actions {
 
             let id = Selectors.ZPantexStateModule.ZFormaTablaState.getNextZFormaTablaStateId(getStateFn());
             for (let i = 0; i < zPantex.zFormaTablaList.length; i++) {
-                zFormaTablaState.byId[id] = new ZFormaTablaStateModel(id, zPantex.zFormaTablaList[i].cmps.length);
+                zFormaTablaState.byId[id] = new ZFormaTablaStateModel(id, zPantex.numPx, zPantex.zFormaTablaList[i].cmps.length);
 
                 zFormaTablaState.byId[id].idZVentana =
                     agregarZVentanaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], id, zVentanaState);
@@ -384,6 +384,22 @@ export namespace Actions {
                 }
             );
         }
+
+        export const onSaltarMov = (zFormaTablaState: IZFormaTablaState, regionDestino:number) => (dispatch: any, getStateFn: () => IZAplState) => {
+            const buffer = `<rg>${regionDestino}</rg>`;
+            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_SALTAR, buffer)).then(
+                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
+                    dispatch(setZFormaTablaComoRegionActiva(zFormaTablaState.id, zFormaTablaState.numPx));
+                }
+            );
+        }
+        
+        export const setZFormaTablaComoRegionActiva = (zftId: number, numPx:number): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.SET_ZFORMATABLA_COMOREGIONACTIVA,
+            zftId,
+            numPx
+        });
+        
 
 
         /********************* */

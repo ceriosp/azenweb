@@ -228,6 +228,9 @@ export namespace Reducers {
                             }
                         } as any,
                     } as IZPantexStateModule, state);
+
+                case ActionTypes.ZPantexStateModule.SET_ZFORMATABLA_COMOREGIONACTIVA:
+                    return setZFormaTablaComoRegionActiva(state, action);
             }
 
             return state;
@@ -370,6 +373,7 @@ export namespace Reducers {
 
             return state;
         }
+
         const cmSincCampo = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
 
             if (action.type != ActionTypes.ZPantexStateModule.CM_SINCPX) {
@@ -549,6 +553,36 @@ export namespace Reducers {
             return u({
                 zCampoState: {
                     byId: u.map(actualizarCamposRadios)
+                } as any,
+            } as IZPantexStateModule, state);
+        }
+
+        const setZFormaTablaComoRegionActiva = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
+
+            if (action.type != ActionTypes.ZPantexStateModule.SET_ZFORMATABLA_COMOREGIONACTIVA) {
+                return state;
+            }
+
+            const actualizarZFormaTabla = (zFormaTablaState: IZFormaTablaState): IZFormaTablaState => {
+
+                if (zFormaTablaState.numPx != action.numPx) {
+                    return zFormaTablaState;
+                }
+
+                if (zFormaTablaState.id == action.zftId) {
+                    return u({
+                        esRegionActiva: true
+                    } as IZFormaTablaState, zFormaTablaState);
+                }
+
+                return u({
+                    esRegionActiva: false
+                } as IZFormaTablaState, zFormaTablaState);
+            }
+
+            return u({
+                zFormaTablaState: {
+                    byId: u.map(actualizarZFormaTabla)
                 } as any,
             } as IZPantexStateModule, state);
         }

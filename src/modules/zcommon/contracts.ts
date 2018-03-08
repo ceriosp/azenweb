@@ -197,12 +197,16 @@ export interface IZFormaTablaState extends IdEntityBase { //zft
     indexFilaMultiSeleccionada: number;
 
     camposFijosList : Array<IZCampoState>; //Lista de campos fijos
+
+    numPx:number;
+    esRegionActiva:boolean;//si el CM_SALTAR se ubica en el zft actual = true, sino = false
 }
 
 export class ZFormaTablaState implements IZFormaTablaState { //zft
 
-    constructor(id: number, numCampos: number) {
+    constructor(id: number, numPx:number, numCampos: number) {
         this.id = id;
+        this.numPx = numPx;
         this.zCampoStateListIds = new Array<number>();
         this.linEstListIds = new Array<number>();
         this.btnsListIds = new Array<number>();
@@ -230,6 +234,9 @@ export class ZFormaTablaState implements IZFormaTablaState { //zft
     indexFilaMultiSeleccionada: number;
 
     camposFijosList : Array<IZCampoState>;
+
+    numPx:number;
+    esRegionActiva:boolean;//si el CM_SALTAR se ubica en el zft actual = true, sino = false
 }
 
 export interface IZFilaCamposState {

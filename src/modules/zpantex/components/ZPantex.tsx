@@ -105,15 +105,19 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                                 zComandosList={zFormaTablaI.btnsState}
                                             />
                                         )}
+
                                         <ZFormaTablaContainer
                                             zPantex={this.props.zPantex}
                                             zFormaTabla={zFormaTablaI}
                                             zftIndex={zftIndex}
                                         />
+
                                         {((this.props.zPantex.zFormaTablaListState.length == 1 || zftIndex != 0)) && (
-                                            <ZBarraComandosContainer
-                                                zComandosList={zFormaTablaI.btnsState}
-                                            />
+                                            <div style={{marginTop:"5px"}}>
+                                                <ZBarraComandosContainer
+                                                    zComandosList={zFormaTablaI.btnsState}
+                                                />
+                                            </div>
                                         )}
                                     </Panel>
                                 </div>
