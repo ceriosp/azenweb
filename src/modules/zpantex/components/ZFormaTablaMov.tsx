@@ -42,7 +42,7 @@ export class ZFormaTablaMov extends React.PureComponent<OwnProps & ConnectedDisp
     }
 
     render(): any {
-
+        
         return (
             <div style={{
                 overflowX: "auto"
@@ -62,16 +62,7 @@ export class ZFormaTablaMov extends React.PureComponent<OwnProps & ConnectedDisp
                     <tbody>
                         {this.props.zFormaTabla.filasCamposList.map((zfilaCampoState: IZFilaCamposState, indexFila: number) => {
 
-                            let algunCampoConValor = false;
-
-                            for (let i = 0; i < zfilaCampoState.cmpsState.length; i++) {
-                                if (zfilaCampoState.cmpsState[i].value) {
-                                    algunCampoConValor = true;
-                                    break;
-                                }
-                            }
-
-                            if (algunCampoConValor) {
+                            if (indexFila <= this.props.zFormaTabla.numFilasVisiblesMulti) {
 
                                 return (
                                     <tr

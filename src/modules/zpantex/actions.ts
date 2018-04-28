@@ -277,6 +277,8 @@ export namespace Actions {
             listaPxComandos: Array<number>,
             hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>,
             cambiarTituloVentana: CM.ICambiarTituloVentana,
+            numFilasVisiblesMulti:number,
+            numFilasVisiblesMultiZft:number,
             ultimoComandoEnviado: Constants.ComandoEnum
         ): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.CM_SINCPX,
@@ -285,6 +287,8 @@ export namespace Actions {
             listaPxComandos,
             hashZComandos,
             cambiarTituloVentana,
+            numFilasVisiblesMulti,
+            numFilasVisiblesMultiZft,
             ultimoComandoEnviado
         });
 

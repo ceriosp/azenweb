@@ -156,7 +156,7 @@ export namespace Reducers {
                     } as IZPantexStateModule, state);
 
                 case ActionTypes.ZPantexStateModule.CM_SINCPX:
-                    return cmSincCampo(state, action);
+                    return cmSincPx(state, action);
 
                 case ActionTypes.ZPantexStateModule.ON_CAMPOCHANGE:
                     return u({
@@ -374,7 +374,7 @@ export namespace Reducers {
             return state;
         }
 
-        const cmSincCampo = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
+        const cmSincPx = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
 
             if (action.type != ActionTypes.ZPantexStateModule.CM_SINCPX) {
                 return state;
@@ -463,7 +463,7 @@ export namespace Reducers {
                             case ZCommonConstants.ComandoEnum.CM_ANTREG:
                             case ZCommonConstants.ComandoEnum.CM_PRIMREG:
                             case ZCommonConstants.ComandoEnum.CM_ULTREG:
-                            case ZCommonConstants.ComandoEnum.CM_ACEPTAR:
+                            //case ZCommonConstants.ComandoEnum.CM_ACEPTAR:
                                 value = "";
                         }
 
@@ -496,12 +496,23 @@ export namespace Reducers {
                 if (action.cambiarTituloVentana
                     && zVentanaState.id == action.cambiarTituloVentana.px) {
                     return u({
-                        descr: action.cambiarTituloVentana.vc
+                        descr: action.cambiarTituloVentana.vc,
                     } as IZVentanaState, zVentanaState);
                 }
 
                 return zVentanaState;
             }
+
+            const actualizarZFormaTabla = (zFormaTabla: IZFormaTablaState): IZFormaTablaState => {
+
+                if (action.numFilasVisiblesMultiZft == zFormaTabla.id) {
+                    return u({
+                        numFilasVisiblesMulti:action.numFilasVisiblesMulti
+                    } as IZFormaTablaState, zFormaTabla);
+                }
+
+                return zFormaTabla;
+            }            
 
             if (action.hashZCampos.size > 0 || action.hashZComandos.size > 0) {
                 return u({
@@ -513,6 +524,9 @@ export namespace Reducers {
                     } as any,
                     zVentanaState: {
                         byId: u.map(actualizarVentana)
+                    },
+                    zFormaTablaState:{
+                        byId: u.map(actualizarZFormaTabla)
                     }
                 } as IZPantexStateModule, state);
             }

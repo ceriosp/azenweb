@@ -47,7 +47,7 @@ export class ZBarraComandos extends React.PureComponent<OwnProperties & Connecte
                                 <Button
                                     key={zComandoI.id}
                                     title={zComandoI.etq + "-" + zComandoI.cmd}
-                                    disabled={this.props.estaProcesandoRequestServidor || zComandoI.desh == 1}
+                                    disabled={zComandoI.desh == 1}
                                     onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
                                 >
                                     {(!iconName) &&

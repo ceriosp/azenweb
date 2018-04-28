@@ -24,9 +24,8 @@ export namespace Actions {
             console.time(`${ZCommon.Constants.ComandoEnum[cmd]}`);
             console.log("request: " + requestUrl);
 
-            dispatch(setProcesosServidor(true, parametros.tipoAJAXIndicador))
+            dispatch(setProcesosServidor(true, parametros.tipoAJAXIndicador));
             fetch(requestUrl, {
-                //fetch(azenURL + `/azenweb/server/despacharRecurso.php`, {
                 /*
                 headers: {
                     'Content-Type': 'application/json'

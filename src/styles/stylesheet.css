@@ -124,7 +124,7 @@
 
 .modal-dialog{
     width: 95% !important;
-    top:35px !important;
+    top:45px !important;
 }
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
@@ -146,7 +146,10 @@
     margin-bottom: 3px !important;
 }
 
+.form-group-sm .form-control{
+    padding: 5px 5px !important;
+}
+
 .azen-tabla-mov .form-group{
     margin-bottom: 0px !important;
 }
-

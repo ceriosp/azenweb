@@ -34,7 +34,7 @@ export class EntityMap<TEntity>{
 //#region =============================================== DOMAIN ===============================================
 export interface IZBuffer {
     fto: string;
-    dato: string | IZMenu | IZPantex | IZAplList | CM.ISincCampo | CM.IPrenderControl | CM.ISincBoton;
+    dato: string | IZMenu | IZPantex | IZAplList | CM.ISincCampo | CM.IPrenderControl | CM.ISincBoton | CM.ILimpiarMulti;
 }
 
 export interface IZDatoEvento {
@@ -195,6 +195,7 @@ export interface IZFormaTablaState extends IdEntityBase { //zft
     filasCamposList: Array<IZFilaCamposState>;
     numCampos: number;
     indexFilaMultiSeleccionada: number;
+    numFilasVisiblesMulti: number;
 
     camposFijosList : Array<IZCampoState>; //Lista de campos fijos
 
@@ -221,6 +222,7 @@ export class ZFormaTablaState implements IZFormaTablaState { //zft
     zCampoStateListIds: Array<number>;
     linEstListIds: Array<number>;
     btnsListIds: Array<number>;
+    numFilasVisiblesMulti: number;
 
     //GUI calculated properties
     venState: IZVentanaState;
@@ -494,7 +496,16 @@ export namespace CM {
 
         [Constants.ComandoEnum.CM_BORRAR, {
             icono: "glyphicon glyphicon-trash"
-        } as IZComandoDefinicion]
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_ANTPAG, {
+            icono: "glyphicon glyphicon-step-backward"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_SGTEPAG, {
+            icono: "glyphicon glyphicon-step-forward"
+        } as IZComandoDefinicion],
+        
     ]);
 
     /**
@@ -721,6 +732,20 @@ export namespace CM {
         nc: string
     }
     
+    export interface ILimpiarMulti extends ISincBase {
+
+        /**
+         * Valor del campo.
+         * Para los campos radio:
+         *  <vc> </vc>:apagado
+         *  <vc>*</vc>:prendido
+         * Para los campos check:
+         *  <vc> </vc>:apagado
+         *  <vc>X</vc>:prendido
+         * 
+         */
+        vc: string;
+    }    
 }
 
 export interface IZParametrosComando extends IdEntityBase {

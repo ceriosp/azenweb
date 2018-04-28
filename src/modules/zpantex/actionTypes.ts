@@ -107,6 +107,9 @@ export namespace ActionTypes {
                 hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>,
                 
                 cambiarTituloVentana: CM.ICambiarTituloVentana,
+
+                numFilasVisiblesMulti:number,
+                numFilasVisiblesMultiZft:number,
                                 
                 ultimoComandoEnviado:Constants.ComandoEnum
             } |
