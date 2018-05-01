@@ -54,10 +54,9 @@ export namespace Services {
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
 
                 parseEventoDataToJSON(zColaEventos.eventos[i]);
-
-                const cmd = zColaEventos.eventos[i].dato.cmd;
+                
                 const evento = zColaEventos.eventos[i];
-                switch (cmd) {
+                switch (evento.dato.cmd) {
 
                     //Comandos sincronizar px
                     case ZCommonConstants.ComandoEnum.CM_SINCCAMPO:
@@ -69,19 +68,19 @@ export namespace Services {
                         break;
 
                     case ZCommonConstants.ComandoEnum.CM_PRENDERCONTROL:
-                        cmPrenderControl(evento, cmd);
+                        cmPrenderControl(evento, evento.dato.cmd);
                         break;
 
                     case ZCommonConstants.ComandoEnum.CM_APAGARCONTROL:
-                        cmApagarControl(evento, cmd);
+                        cmApagarControl(evento, evento.dato.cmd);
                         break;
 
                     case ZCommonConstants.ComandoEnum.CM_PRENDERMODO:
-                        cmPrenderModo(evento, cmd);
+                        cmPrenderModo(evento, evento.dato.cmd);
                         break;
 
                     case ZCommonConstants.ComandoEnum.CM_APAGARMODO:
-                        cmApagarModo(evento, cmd);
+                        cmApagarModo(evento, evento.dato.cmd);
                         break;
 
                     case ZCommonConstants.ComandoEnum.CM_SINCBOTON:
