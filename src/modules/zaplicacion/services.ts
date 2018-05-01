@@ -54,7 +54,7 @@ export namespace Services {
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
 
                 parseEventoDataToJSON(zColaEventos.eventos[i]);
-                
+
                 const evento = zColaEventos.eventos[i];
                 switch (evento.dato.cmd) {
 
@@ -155,6 +155,10 @@ export namespace Services {
                     case ZCommon.Constants.ComandoEnum.CM_APLICACION:
                         const zAplList = evento.dato.buffer.dato as IZAplList;
                         dispatch(ZLogin.Actions.ZLoginModule.setZAplList(zAplList));
+                        break;
+
+                    case ZCommon.Constants.ComandoEnum.CM_SALIR:
+                        window.close()
                         break;
                 }
             }

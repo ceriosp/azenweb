@@ -48,8 +48,6 @@ export namespace ZclienteResponder {
                 case ZCommon.Constants.ComandoEnum.CM_IRACMP:
                 case ZCommon.Constants.ComandoEnum.CM_CAMBIOCMP:
                 case ZCommon.Constants.ComandoEnum.CM_IRALINEA:
-                case ZCommon.Constants.ComandoEnum.CM_SI:
-                case ZCommon.Constants.ComandoEnum.CM_NO:
                 case zCommon.Constants.ComandoEnum.CM_PRIMERO:
                 case zCommon.Constants.ComandoEnum.CM_ANTREG:
                 case zCommon.Constants.ComandoEnum.CM_SGTEREG:
@@ -60,6 +58,8 @@ export namespace ZclienteResponder {
                     tipoAJAXIndicador = zCommon.Constants.TipoAJAXIndicadorEnum.NO_MODAL;
                     break;
 
+                case ZCommon.Constants.ComandoEnum.CM_SI:
+                case ZCommon.Constants.ComandoEnum.CM_NO:
                 case ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN:
                 case ZCommon.Constants.ComandoEnum.CM_EJECOPCION:
                 case ZCommon.Constants.ComandoEnum.CM_DEFMENU:
@@ -85,7 +85,7 @@ export namespace ZclienteResponder {
                         Services.Responder.procesarZColaEventos(resultadoClienteCm.retorno, dispatch, getState);
                         resolve(resultadoClienteCm);
                     },
-                    () => { }
+                        () => { }
                     );
             });
         }
