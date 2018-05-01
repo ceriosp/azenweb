@@ -61,18 +61,15 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
 
         return (
             <Navbar
-                collapseOnSelect
+                collapseOnSelect                
                 staticTop
                 style={this.props.ponerModal || 
                     (this.props.tipoAJAXIndicador == ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL && this.props.estaProcesandoRequestServidor)
                     ? null 
                     : { zIndex: 1000000 }}>
                 <Navbar.Header>
-                    <Navbar.Brand>
-                        <a href="#">Azen {nomApl}</a>
-                    </Navbar.Brand>
-                    <Navbar.Toggle>
-                    </Navbar.Toggle>
+                    <Navbar.Brand> <a href="javascript:void(0);">Azen {nomApl}</a> </Navbar.Brand>
+                    <Navbar.Toggle></Navbar.Toggle>
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
@@ -89,7 +86,7 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
 
                         <NavItem eventKey={1} href="#">
                             <Glyphicon glyph="user" /> Usuario: {this.props.username}
-                                </NavItem>
+                        </NavItem>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

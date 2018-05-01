@@ -74,7 +74,7 @@ export class ZMenuItem extends React.Component<OwnProps & ConnectedState & Conne
         let opcionMenu = <MenuItem
             href="#"
             style={menuStyle}            
-            onClick={this.despacharOpcionMenu}>
+            onSelect={this.despacharOpcionMenu}>
             {zmenuItem.nom}
         </MenuItem>;
 
@@ -86,7 +86,7 @@ export class ZMenuItem extends React.Component<OwnProps & ConnectedState & Conne
                         onClick={this.createSubMenu}
                         style={menuStyle}
                         eventKey={2}
-                        title={zmenuItem.nom}
+                        title={zmenuItem.nom}                        
                         id={"z_menuitem_" + zmenuItem.ctx}>
                         {this.opcionesHijasDePrimerNivel}
                     </NavDropdown>
@@ -136,18 +136,7 @@ export class ZMenuItem extends React.Component<OwnProps & ConnectedState & Conne
     }
 
     despacharOpcionMenu() {
-
         document.body.click();// .getElementById("azen-evt-container").click();
-
-        if (this.isMobileDevice()) {
-            console.log("is mobile");
-            (document.querySelector("button.navbar-toggle") as HTMLElement).click();
-        }
-
         this.props.lanzarOpcion(this.props.zmenuItem.ctx);
-    }
-
-    isMobileDevice() {
-        return window.innerWidth <= 500;
     }
 }

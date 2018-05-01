@@ -14,6 +14,8 @@ import { Services } from "./services";
 
 import { ZclienteResponder } from "./clientzmnjs/zclienteResponder";
 
+declare let $: any;
+
 export namespace Actions {
 
     export const lanzarAplicacion = (idApl: string, nomApl: string, username: string = "", lanzarMenu: string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
@@ -45,7 +47,14 @@ export namespace Actions {
     }
 
     export const lanzarOpcion = (ctx: string) => (dispatch: (p: any) => any, getState: () => IZAplState) => {
-        dispatch(ZclienteResponder.responderEventoCliente(ZCommon.Constants.ComandoEnum.CM_EJECOPCION, ctx));
+        dispatch(ZclienteResponder.responderEventoCliente(ZCommon.Constants.ComandoEnum.CM_EJECOPCION, ctx))
+        .then(()=>{
+            //Es un móvil, se debe ocultar el menú programáticamente
+            if(window.innerWidth <= 500){
+                let navBarBtn = (document.querySelector("button.navbar-toggle") as HTMLElement);                
+                navBarBtn.click();
+            }            
+        });
     }
 
     export const despacharEventoCliente = (cmd: ZCommon.Constants.ComandoEnum, buffer: string = "") => (dispatch: (p: any) => any, getState: () => IZAplState) : Promise<ResultadoActionConDato<IZColaEventos>> => {
