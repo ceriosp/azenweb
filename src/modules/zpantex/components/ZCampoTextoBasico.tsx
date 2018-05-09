@@ -33,6 +33,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
+        this.onKeyUp = this.onKeyUp.bind(this);
         this.onFocus = this.onFocus.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onBlur = this.onBlur.bind(this);
@@ -47,9 +48,10 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
                 ref="inputNode"
                 name={zCampoModel.nomCmp}
                 value={valor ? valor : zCampoModel.value}
+                onKeyUp={zCampoModel.tipo == 36 ? this.onKeyUp : null} //*tipo=36:campo tipo moneda
                 onChange={this.onChange}
                 onFocus={this.onFocus}
-                onBlur={this.onBlur}                
+                onBlur={this.onBlur}
                 maxLength={zCampoModel.lon}
                 readOnly={this.props.readOnly}
                 disabled={
@@ -64,9 +66,9 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     }
 
     onFocus(e: any) {
-        if(this.props.zCampoModel.autoFocus){
+        if (this.props.zCampoModel.autoFocus) {
             return;
-        }        
+        }
         this.props.onCampoFocusIrACmp(this.props.zCampoModel);
     }
 
@@ -74,13 +76,34 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
         this.props.onCampoChanged(this.props.zCampoModel, e.target.value);
     }
 
+    onKeyUp(e: any) {
+
+        let valor:string = e.target.value;
+
+        if(valor.length == 0){
+            return;    
+        }
+        if (!isNaN(e.target.value)) {            
+            e.target.value = new Intl.NumberFormat().format(parseFloat(valor));            
+        } else {
+            if(valor.indexOf(".") != -1){
+                if(valor.lastIndexOf(".") == (valor.length - 1)){                    
+                    return;
+                }                
+            }
+            valor = valor.replace(/,/g, "");
+
+            e.target.value = new Intl.NumberFormat().format(parseFloat(valor));
+        }
+    }
+
     onBlur(e: any) {
         this.props.onCampoBlur(this.props.zCampoModel);
     }
 
     componentDidUpdate() {
-        let node:any = ReactDOM.findDOMNode(this.refs.inputNode);
-        if (this.props.zCampoModel.autoFocus) {            
+        let node: any = ReactDOM.findDOMNode(this.refs.inputNode);
+        if (this.props.zCampoModel.autoFocus) {
             node.focus();
             let value = node.value;
             node.value = "";

@@ -359,7 +359,15 @@ export namespace Actions {
 
         export const onCampoBlur = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
             if (zcampoState.haCambiado) {
-                const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${zcampoState.value}</vc>`;
+
+                let valor = zcampoState.value;
+
+                if(zcampoState.tipo == 36) //Campo moneda, quitar formato
+                {
+                    valor = valor.replace(/,/g, "");
+                }
+
+                const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${valor}</vc>`;
                 dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
                     (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
                         dispatch(setZCampoHaCambiado(zcampoState.id, false));
