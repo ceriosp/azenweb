@@ -276,8 +276,9 @@ export namespace Actions {
             hashZCampos: Map<string, IZCampoState>,
             listaPxComandos: Array<number>,
             hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>,
-            cambiarTituloVentana: CM.ICambiarTituloVentana,
+            cambiarTituloVentana: CM.ICambiarTituloVentana,            
             numFilasVisiblesMulti:number,
+            numFilasVisiblesMultiPx: number,
             numFilasVisiblesMultiZft:number,
             ultimoComandoEnviado: Constants.ComandoEnum
         ): ActionTypes.ZPantexStateModule.Action => ({
@@ -288,6 +289,7 @@ export namespace Actions {
             hashZComandos,
             cambiarTituloVentana,
             numFilasVisiblesMulti,
+            numFilasVisiblesMultiPx,
             numFilasVisiblesMultiZft,
             ultimoComandoEnviado
         });

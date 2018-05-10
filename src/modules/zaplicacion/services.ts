@@ -34,7 +34,9 @@ export namespace Services {
         let cmCambiarTituloVentana: CM.ICambiarTituloVentana = undefined;
 
         let numFilasVisiblesMulti: number;
+        let numFilasVisiblesMultiPx: number; //Nro. del px para cambiar num filas visibles multi
         let numFilasVisiblesMultiZft: number; //Nro. del zft para cambiar num filas visibles multi
+
 
         export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
@@ -49,6 +51,7 @@ export namespace Services {
             cmCambiarTituloVentana = undefined;
 
             numFilasVisiblesMulti = 0;
+            numFilasVisiblesMultiPx = -1;
             numFilasVisiblesMultiZft = -1;
 
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
@@ -99,8 +102,10 @@ export namespace Services {
                         break;
 
                     case ZCommonConstants.ComandoEnum.CM_LIMPIARMULTI:
-                        numFilasVisiblesMulti = parseInt(((evento.dato.buffer.dato) as CM.ILimpiarMulti).vc);
-                        numFilasVisiblesMultiZft = ((evento.dato.buffer.dato) as CM.ILimpiarMulti).rg;
+                        let limpiarMultiParams = (evento.dato.buffer.dato) as CM.ILimpiarMulti;
+                        numFilasVisiblesMulti = parseInt(limpiarMultiParams.vc);
+                        numFilasVisiblesMultiPx = parseInt(limpiarMultiParams.px.toString());
+                        numFilasVisiblesMultiZft = parseInt(limpiarMultiParams.rg.toString());
                         break;
 
                     //Comandos zft
@@ -178,6 +183,7 @@ export namespace Services {
                     hashZComandoState,
                     cmCambiarTituloVentana,
                     numFilasVisiblesMulti,
+                    numFilasVisiblesMultiPx,
                     numFilasVisiblesMultiZft,
                     getState().ultimoComandoEnviado));
             } else {

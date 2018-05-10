@@ -109,6 +109,7 @@ export namespace ActionTypes {
                 cambiarTituloVentana: CM.ICambiarTituloVentana,
 
                 numFilasVisiblesMulti:number,
+                numFilasVisiblesMultiPx:number,
                 numFilasVisiblesMultiZft:number,
                                 
                 ultimoComandoEnviado:Constants.ComandoEnum

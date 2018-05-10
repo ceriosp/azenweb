@@ -42,9 +42,6 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
     }
 
     render(): any {
-
-        console.log("in ZFormaTablaZoom " + this.props.zFormaTabla.numFilasVisiblesMulti);
-
         return (
             <Table striped condensed hover responsive>
                 <thead>
@@ -60,17 +57,7 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
                 </thead>
                 <tbody>
                     {this.props.zFormaTabla.filasCamposList.map((zfilaCampoState: IZFilaCamposState, indexFila: number) => {
-
-                        let algunCampoConValor = false;
-
-                        for (let i = 0; i < zfilaCampoState.cmpsState.length; i++) {
-                            if (zfilaCampoState.cmpsState[i].value) {
-                                algunCampoConValor = true;
-                                break;
-                            }
-                        }
-
-                        if (algunCampoConValor) {
+                        if (indexFila <= this.props.zFormaTabla.numFilasVisiblesMulti) {
                             return (
                                 <tr
                                     key={indexFila}

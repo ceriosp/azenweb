@@ -60,7 +60,7 @@ export namespace Reducers {
 
                     indxZPantex = state.pilaPantex.findIndex(
                         (zPantexi: IZPantex) => {
-                            return zPantexi.numPx == action.zPantex.numPx
+                            return zPantexi.numPx == action.zPantex.numPx;
                         }
                     );
 
@@ -454,24 +454,6 @@ export namespace Reducers {
                             autoFocus: zCampoActualizado.autoFocus,
                         } as IZCampoState, zcampoState);
                     }
-                    else //No está en el hash a actualizar
-                    {
-                        let value = zcampoState.value;
-
-                        switch (action.ultimoComandoEnviado) {
-                            case ZCommonConstants.ComandoEnum.CM_SGTEREG:
-                            case ZCommonConstants.ComandoEnum.CM_ANTREG:
-                            case ZCommonConstants.ComandoEnum.CM_PRIMREG:
-                            case ZCommonConstants.ComandoEnum.CM_ULTREG:
-                            //case ZCommonConstants.ComandoEnum.CM_ACEPTAR:
-                                value = "";
-                        }
-
-                        return u({
-                            value: value,
-                            autoFocus: false
-                        } as IZCampoState, zcampoState);
-                    }
                 }
 
                 return zcampoState;
@@ -505,7 +487,7 @@ export namespace Reducers {
 
             const actualizarZFormaTabla = (zFormaTabla: IZFormaTablaState): IZFormaTablaState => {
 
-                if (action.numFilasVisiblesMultiZft == zFormaTabla.id) {
+                if (action.numFilasVisiblesMultiPx == zFormaTabla.numPx) {
                     return u({
                         numFilasVisiblesMulti:action.numFilasVisiblesMulti
                     } as IZFormaTablaState, zFormaTabla);
