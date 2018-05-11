@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+require('moment/locale/es');
+
 import {
     FormGroup,
     Col,
@@ -38,7 +40,7 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
         super(props);
 
         this.limpiarCampo = this.limpiarCampo.bind(this);
-        this.renderInput = this.renderInput.bind(this);
+        this.renderFecha = this.renderFecha.bind(this);
         this.onChange = this.onChange.bind(this);
     }
 
@@ -54,12 +56,12 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
                 inputProps={{ title: 'formato ' + formato, disabled: disabled, readOnly: true }}
                 closeOnSelect={true}
                 onChange={this.onChange}
-                renderInput={this.renderInput}
+                renderInput={this.renderFecha}
             />
         );
     }
 
-    renderInput(props: any, openCalendar: any, closeCalendar: any) {
+    renderFecha(props: any, openCalendar: any, closeCalendar: any) {
 
         const { zCampoModel } = this.props;
         const fechaConFormato = zCampoModel.value && zCampoModel.value != "00000000"

@@ -128,7 +128,7 @@
 }
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
-    padding: 2px !important;
+    padding: 1px !important;
     border: none !important;
 }
 
@@ -143,11 +143,11 @@
 }
 
 .form-group{
-    margin-bottom: 3px !important;
+    margin-bottom: 1px !important;
 }
 
 .form-group-sm .form-control{
-    padding: 5px 5px !important;
+    padding: 0px 2px !important;
 }
 
 .azen-tabla-mov .form-group{
@@ -157,4 +157,3 @@
 .input-group-addon {
     padding: 4px 6px !important;
 }
-
