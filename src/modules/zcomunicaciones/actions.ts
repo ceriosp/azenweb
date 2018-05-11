@@ -21,7 +21,7 @@ export namespace Actions {
             let requestUrl = azenURL + `/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}&dominio=${dominio}`;
 
             console.log("----------------------------------------------------------------");
-            console.time(`${ZCommon.Constants.ComandoEnum[cmd]}`);
+            console.time(`${ZCommon.Constants.ComandoEnum[cmd]} = ${cmd}`);
             console.log("request: " + requestUrl);
 
             dispatch(setProcesosServidor(true, parametros.tipoAJAXIndicador));

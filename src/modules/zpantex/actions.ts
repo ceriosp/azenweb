@@ -369,10 +369,11 @@ export namespace Actions {
                     valor = valor.replace(/,/g, "");
                 }
 
+                dispatch(setZCampoHaCambiado(zcampoState.id, false));
                 const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${valor}</vc>`;
                 dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
                     (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
-                        dispatch(setZCampoHaCambiado(zcampoState.id, false));
+                        
                     }
                 );
             }

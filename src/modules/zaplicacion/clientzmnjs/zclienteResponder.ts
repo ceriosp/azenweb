@@ -46,18 +46,19 @@ export namespace ZclienteResponder {
                     break;
 
                 case ZCommon.Constants.ComandoEnum.CM_IRACMP:
-                case ZCommon.Constants.ComandoEnum.CM_CAMBIOCMP:
-                case ZCommon.Constants.ComandoEnum.CM_IRALINEA:
-                case zCommon.Constants.ComandoEnum.CM_PRIMERO:
-                case zCommon.Constants.ComandoEnum.CM_ANTREG:
-                case zCommon.Constants.ComandoEnum.CM_SGTEREG:
-                case zCommon.Constants.ComandoEnum.CM_ULTIMO:
+                case ZCommon.Constants.ComandoEnum.CM_CAMBIOCMP:                
                 case ZCommon.Constants.ComandoEnum.CM_CERRAR:
                 case ZCommon.Constants.ComandoEnum.CM_RETOCAR:
                 case ZCommon.Constants.ComandoEnum.CM_CAMBIOCMPIND:
                     tipoAJAXIndicador = zCommon.Constants.TipoAJAXIndicadorEnum.NO_MODAL;
                     break;
 
+
+                case ZCommon.Constants.ComandoEnum.CM_IRALINEA:
+                case zCommon.Constants.ComandoEnum.CM_PRIMERO:
+                case zCommon.Constants.ComandoEnum.CM_ANTREG:
+                case zCommon.Constants.ComandoEnum.CM_SGTEREG:
+                case zCommon.Constants.ComandoEnum.CM_ULTIMO:                
                 case ZCommon.Constants.ComandoEnum.CM_SI:
                 case ZCommon.Constants.ComandoEnum.CM_NO:
                 case ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN:
