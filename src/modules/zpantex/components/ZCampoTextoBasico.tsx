@@ -27,13 +27,11 @@ export interface ConnectedDispatch {
 }
 
 export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
-{
-    input: any;
-
+{    
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
-        this.onKeyUp = this.onKeyUp.bind(this);
+        this.darFormatoValorCampoSegunTipo = this.darFormatoValorCampoSegunTipo.bind(this);
         this.onFocus = this.onFocus.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onBlur = this.onBlur.bind(this);
@@ -48,7 +46,6 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
                 ref="inputNode"
                 name={zCampoModel.nomCmp}
                 value={valor ? valor : zCampoModel.value}
-                onKeyUp={zCampoModel.tipo == 36 ? this.onKeyUp : null} //*tipo=36:campo tipo moneda
                 onChange={this.onChange}
                 onFocus={this.onFocus}
                 onBlur={this.onBlur}
@@ -65,7 +62,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
         );
     }
 
-    onFocus(e: any) {
+    onFocus(e: any) {        
         if (this.props.zCampoModel.autoFocus) {
             return;
         }
@@ -73,27 +70,49 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     }
 
     onChange(e: any) {
+        this.darFormatoValorCampoSegunTipo(e);
         this.props.onCampoChanged(this.props.zCampoModel, e.target.value);
     }
 
-    onKeyUp(e: any) {
+    darFormatoValorCampoSegunTipo(e: any) {
 
-        let valor:string = e.target.value;
+        let valor = e.target.value;
 
-        if(valor.length == 0){
-            return;    
+        if (valor.length == 0) {
+            return;
         }
-        if (!isNaN(e.target.value)) {            
-            e.target.value = new Intl.NumberFormat().format(parseFloat(valor));            
-        } else {
-            if(valor.indexOf(".") != -1){
-                if(valor.lastIndexOf(".") == (valor.length - 1)){                    
-                    return;
-                }                
-            }
-            valor = valor.replace(/,/g, "");
 
-            e.target.value = new Intl.NumberFormat().format(parseFloat(valor));
+        if (this.props.zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_REAL
+            || this.props.zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DOBLE) {
+            if (isNaN(valor)) {
+                e.target.value = "";
+            }
+            return;
+        }
+
+        if (this.props.zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_ENTERO
+            || this.props.zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_LARGO) {
+            if (isNaN(parseInt(valor))) {
+                e.target.value = "";
+            }else{
+                e.target.value = parseInt(valor);
+            }
+            return;
+        }
+
+        if (this.props.zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO) {
+            if (!isNaN(e.target.value)) {
+                e.target.value = new Intl.NumberFormat().format(parseFloat(valor));
+            } else {
+                if (valor.indexOf(".") != -1) {
+                    if (valor.lastIndexOf(".") == (valor.length - 1)) {
+                        return;
+                    }
+                }
+                valor = valor.replace(/,/g, "");
+
+                e.target.value = new Intl.NumberFormat().format(parseFloat(valor));
+            }
         }
     }
 

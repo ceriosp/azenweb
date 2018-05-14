@@ -286,4 +286,16 @@ export namespace Constants {
         ZCMP_VISUAL = 5, /* Solo visual */
         ZCMP_INTRACMP = 6, /* */
     }    
+
+    export enum TipoCampoEnum {
+        TIPO_ALFABETICO = 65,
+        TIPO_BYTE = 66,
+        TIPO_ENTERO = 69,
+        TIPO_LARGO = 76,
+        TIPO_FECHA = 70,
+        TIPO_DINERO = 36,
+        TIPO_REAL = 82,
+        TIPO_HORA = 72,
+        TIPO_DOBLE = 68,
+    }
 }

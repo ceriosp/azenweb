@@ -364,7 +364,7 @@ export namespace Actions {
 
                 let valor = zcampoState.value;
 
-                if(zcampoState.tipo == 36) //Campo moneda, quitar formato
+                if(zcampoState.tipo == Constants.TipoCampoEnum.TIPO_DINERO)
                 {
                     valor = valor.replace(/,/g, "");
                 }

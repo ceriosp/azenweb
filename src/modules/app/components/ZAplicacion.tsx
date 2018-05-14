@@ -60,7 +60,7 @@ export class ZAplicacion extends React.Component<OwnProps & ConnectedState & Con
                 <div>
                     <ZProcesandoContainer />
                 </div>
-
+                
             </div>
         );
     }
