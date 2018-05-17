@@ -27,7 +27,7 @@ export namespace Reducers {
 
         switch (action.type) {
             case ActionTypes.SET_NOMAPL:
-                return action.nomApl
+                return action.nomApl;
         }
 
         return state;
@@ -37,12 +37,22 @@ export namespace Reducers {
 
         switch (action.type) {
             case ActionTypes.SET_AZENURL:
-                return action.azenURL
+                return action.azenURL;
         }
 
         return state;
     }
 
+    export const parametrosActivacion = (state: string = null, action: ActionTypes.Action): string => {
+
+        switch (action.type) {
+            case ActionTypes.SET_PARAMETROSACTIVACION:
+                return action.parametrosActivacion;
+        }
+
+        return state;
+    }
+    
     export const ultimoComandoEnviado = (state: ZCommon.Constants.ComandoEnum = null, action: ActionTypes.Action): ZCommon.Constants.ComandoEnum => {
 
         switch (action.type) {
@@ -74,9 +84,13 @@ export namespace Reducers {
     }
 
     export const zaplState: Reducer<IZAplState> = combineReducers<IZAplState>({
+        
         idApl: idApl,
         nomApl: nomApl,
         azenURL: azenURL,
+
+        parametrosActivacion: parametrosActivacion,
+
         tipoAJAXIndicador: tipoAJAXIndicador,
         ultimoComandoEnviado:ultimoComandoEnviado,
         estaProcesandoRequestServidor: estaProcesandoRequestServidor,

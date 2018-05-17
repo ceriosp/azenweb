@@ -87,6 +87,8 @@ if (idApl) {
         document.getElementById("app-container")
     );
 
+    document.title = idApl;
+
     store.dispatch(zAplicationActions.lanzarAplicacion(idApl, nomApl, username, lanzarMenu));
 }
 else {

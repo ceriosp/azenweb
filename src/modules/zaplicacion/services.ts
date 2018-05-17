@@ -9,6 +9,8 @@ import * as ZLogin from '../zlogin';
 import { Constants as ZCommonConstants } from "../zcommon";
 import { Constants as ZPantexConstants } from "../zpantex";
 
+import { Actions as ZApppActions } from "../app/actions";
+
 let xml2js = require('xml2js');
 
 export namespace Services {
@@ -153,6 +155,12 @@ export namespace Services {
                     //Comandos menu
                     case ZCommon.Constants.ComandoEnum.CM_DEFMENU:
                         const zmenu = evento.dato.buffer.dato as IZMenu;
+                        dispatch(ZMenu.Actions.ZMenuModule.setZMenu(zmenu));
+                        break;
+
+                    case ZCommon.Constants.ComandoEnum.CM_SINCPAR:
+                        const datosParametros = evento.dato.buffer.dato as CM.ISincBaseValor;
+                        dispatch(ZApppActions.setParametrosActivacion(datosParametros.vc));
                         dispatch(ZMenu.Actions.ZMenuModule.setZMenu(zmenu));
                         break;
 

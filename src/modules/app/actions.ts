@@ -21,6 +21,11 @@ export namespace Actions {
         azenURL
     });
 
+    export const setParametrosActivacion = (parametrosActivacion: string = null): ActionTypes.Action => ({
+        type: ActionTypes.SET_PARAMETROSACTIVACION,
+        parametrosActivacion
+    });
+    
     export const setUltimoComandoEnviado = (cmd: ZCommonConstants.ComandoEnum): ActionTypes.Action => ({
         type: ActionTypes.SET_ULTIMOCOMANDOENVIADO,
         cmd

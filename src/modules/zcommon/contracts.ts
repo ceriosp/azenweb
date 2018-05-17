@@ -538,6 +538,31 @@ export namespace CM {
          */
         rg: number;
     }
+
+    export interface ISincBaseValor extends ISincBase {
+
+        /**
+         * Valor del campo.
+         * Para los campos radio:
+         *  <vc> </vc>:apagado
+         *  <vc>*</vc>:prendido
+         * Para los campos check:
+         *  <vc> </vc>:apagado
+         *  <vc>X</vc>:prendido
+         * 
+         */
+        vc: string;
+
+        /**
+         * Posición del bit, cuando es radio o chequeo.
+         * Para los campos radio: el número (pb) indica el campo radio, pues todos los campos radio 
+         *      tienen el mismo nomCmp. 
+         * Para los campos check, el número (pb) indica el bit que identifica el check, que se prende o apaga.
+         *  
+         */
+        pb: number;
+    }
+    
     /**
      * Responde a zcommon.Constants.ComandoEnum.CM_SINCCAMPO - 119
      * Sincroniza el dato del campo entre lógica y presentación
@@ -760,10 +785,19 @@ export interface IZAplState {
     idApl: string;
     nomApl: string;
     azenURL: string;
+
+    //Datos parametros: [mes:año:bd:usuario:uid]
+    parametrosActivacion:string;
+
+    //UI
     estaProcesandoRequestServidor: boolean;
     ultimoComandoEnviado: Constants.ComandoEnum;
     tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
+
+    //Menu
     zMenuModule: IZMenuModule;
+
+    //PX
     zPantexModule: IZPantexModule;
     zPantexStateModule: IZPantexStateModule;
     zLoginModule: IZLoginModule;

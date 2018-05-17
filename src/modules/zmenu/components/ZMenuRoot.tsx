@@ -36,8 +36,11 @@ export interface ConnectedState {
     zMenu: IZMenu;
     nomApl: string;
     username: string;
+
+    parametrosActivacion: string;
+
     ponerModal: boolean;
-    estaProcesandoRequestServidor:boolean;
+    estaProcesandoRequestServidor: boolean;
     tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum
 }
 
@@ -49,8 +52,12 @@ import { ZMenuItemContainer } from '../containers/ZMenuItemContainer';
 
 export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
+    parametrosActivacionComp: Array<string>;
+
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
+
+        this.parametrosActivacionComp = [];
 
         this.despacharOpcionMenu = this.despacharOpcionMenu.bind(this);
     }
@@ -59,16 +66,17 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
 
         let { zMenu, index, nomApl } = this.props;
 
+        console.log("guepaa");
+
         return (
             <Navbar
-                collapseOnSelect                
+                collapseOnSelect
                 staticTop
-                style={this.props.ponerModal || 
+                style={this.props.ponerModal ||
                     (this.props.tipoAJAXIndicador == ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL && this.props.estaProcesandoRequestServidor)
-                    ? null 
+                    ? null
                     : { zIndex: 1000000 }}>
                 <Navbar.Header>
-                    <Navbar.Brand> <a href="javascript:void(0);">Azen {nomApl}</a> </Navbar.Brand>
                     <Navbar.Toggle></Navbar.Toggle>
                 </Navbar.Header>
                 <Navbar.Collapse>
@@ -83,11 +91,20 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
                                     parentLevel={0} />
                             );
                         })}
-
-                        <NavItem eventKey={1} href="#">
-                            <Glyphicon glyph="user" /> Usuario: {this.props.username}
-                        </NavItem>
                     </Nav>
+                    {this.parametrosActivacionComp.length > 1 && (
+                        <Nav>
+                            <NavItem eventKey={1} href="#">
+                                <Glyphicon glyph="user" /> {this.parametrosActivacionComp[3]}, {this.parametrosActivacionComp[4]}
+                            </NavItem>
+                            <NavItem eventKey={1} href="#">
+                                <Glyphicon glyph="calendar" /> {this.parametrosActivacionComp[0]}, {this.parametrosActivacionComp[1]}
+                            </NavItem>
+                            <NavItem eventKey={1} href="#">
+                                <Glyphicon glyph="tasks" /> {this.parametrosActivacionComp[2]}
+                            </NavItem>
+                        </Nav>
+                    )}
                 </Navbar.Collapse>
             </Navbar>
         );
@@ -95,5 +112,11 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
 
     despacharOpcionMenu(zmenuItemModel: ZMenuItemModel) {
         this.props.despacharOpcionMenu(zmenuItemModel);
+    }
+
+    componentWillReceiveProps(nextProps: ConnectedState) {
+        if (nextProps.parametrosActivacion) {
+            this.parametrosActivacionComp = nextProps.parametrosActivacion.split(":");
+        }
     }
 }
