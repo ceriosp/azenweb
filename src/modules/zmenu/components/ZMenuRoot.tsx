@@ -66,8 +66,6 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
 
         let { zMenu, index, nomApl } = this.props;
 
-        console.log("guepaa");
-
         return (
             <Navbar
                 collapseOnSelect
