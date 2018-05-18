@@ -60,9 +60,10 @@ let appInitialState = {
 } as IZAplState;
 
 const obtenerEstadoInicial = () => {
-
+    
     //Es dev
     if (process.env.NODE_ENV != 'production') {
+        appInitialState.nivelLog = 1;
         return createStore(
             App.Reducers.zaplState,
             appInitialState,

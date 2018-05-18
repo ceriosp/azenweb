@@ -789,6 +789,8 @@ export interface IZAplState {
     //Datos parametros: [mes:año:bd:usuario:uid]
     parametrosActivacion:string;
 
+    nivelLog:number; //0:no log, 1:log de todo, 2:sólo errores.
+
     //UI
     estaProcesandoRequestServidor: boolean;
     ultimoComandoEnviado: Constants.ComandoEnum;

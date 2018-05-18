@@ -25,6 +25,11 @@ export namespace Actions {
         type: ActionTypes.SET_PARAMETROSACTIVACION,
         parametrosActivacion
     });
+
+    export const setNivelLog = (nivelLog: number = 0): ActionTypes.Action => ({
+        type: ActionTypes.SET_NIVELLOG,
+        nivelLog
+    });
     
     export const setUltimoComandoEnviado = (cmd: ZCommonConstants.ComandoEnum): ActionTypes.Action => ({
         type: ActionTypes.SET_ULTIMOCOMANDOENVIADO,

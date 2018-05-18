@@ -16,6 +16,9 @@ import {
 } from '../components/ZMenuRoot';
 
 import * as ZAplicacion from '../../zaplicacion';
+import { Actions } from '../../zlogin';
+
+import {Actions as AppActions} from '../../app/actions';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     zMenu:appState.zMenuModule.zmenu,
@@ -31,7 +34,8 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-    despacharOpcionMenu: (zmenuItemModel: any) => null
+    despacharOpcionMenu: (zmenuItemModel: any) => null,
+    activarLogConsola: (nivelLog:number) => dispatch(AppActions.setNivelLog(nivelLog)),
 });
 
 export const ZMenuRootContainer: React.ComponentClass<OwnProps> =

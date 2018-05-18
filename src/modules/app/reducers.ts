@@ -52,6 +52,16 @@ export namespace Reducers {
 
         return state;
     }
+
+    export const nivelLog = (state: number = null, action: ActionTypes.Action): number => {
+
+        switch (action.type) {
+            case ActionTypes.SET_NIVELLOG:
+                return action.nivelLog;
+        }
+
+        return state;
+    }
     
     export const ultimoComandoEnviado = (state: ZCommon.Constants.ComandoEnum = null, action: ActionTypes.Action): ZCommon.Constants.ComandoEnum => {
 
@@ -90,6 +100,8 @@ export namespace Reducers {
         azenURL: azenURL,
 
         parametrosActivacion: parametrosActivacion,
+
+        nivelLog: nivelLog,
 
         tipoAJAXIndicador: tipoAJAXIndicador,
         ultimoComandoEnviado:ultimoComandoEnviado,

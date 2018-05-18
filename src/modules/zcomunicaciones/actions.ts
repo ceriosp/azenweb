@@ -20,9 +20,11 @@ export namespace Actions {
             let dominio = dominioComponentes[0] + "//" + dominioComponentes[2];
             let requestUrl = azenURL + `/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}&dominio=${dominio}`;
 
-            console.log("----------------------------------------------------------------");
-            console.time(`${ZCommon.Constants.ComandoEnum[cmd]} = ${cmd}`);
-            console.log("request: " + requestUrl);
+            if (getState().nivelLog == 1) {
+                console.log("----------------------------------------------------------------");
+                console.time(`${ZCommon.Constants.ComandoEnum[cmd]} = ${cmd}`);
+                console.log("request: " + requestUrl);
+            }
 
             dispatch(setProcesosServidor(true, parametros.tipoAJAXIndicador));
             fetch(requestUrl, {
@@ -33,16 +35,18 @@ export namespace Actions {
                 */
                 credentials: 'include',
                 method: 'GET',
-                synchronous:true,
-                
+                synchronous: true,
+
             } as any)
                 .then((response) => {
-                    dispatch(setProcesosServidor(false, parametros.tipoAJAXIndicador))                    
+                    dispatch(setProcesosServidor(false, parametros.tipoAJAXIndicador))
                     return response.text();
                 })
                 .then((retornoStr: string) => {
-                    console.timeEnd(`${ZCommon.Constants.ComandoEnum[cmd]} = ${cmd}`);
-                    console.log(retornoStr);
+                    if (getState().nivelLog == 1) {
+                        console.timeEnd(`${ZCommon.Constants.ComandoEnum[cmd]} = ${cmd}`);
+                        console.log(retornoStr);
+                    }
                     if (retornoStr[retornoStr.length - 1] != '}') {
                         retornoStr = retornoStr.substring(0, retornoStr.length - 1);
                     }

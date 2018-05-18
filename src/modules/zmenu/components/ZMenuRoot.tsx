@@ -46,6 +46,8 @@ export interface ConnectedState {
 
 export interface ConnectedDispatch {
     despacharOpcionMenu: (zmenuItemModel: ZMenuItemModel) => void;
+
+    activarLogConsola: (nivelLog:number) => void;
 }
 
 import { ZMenuItemContainer } from '../containers/ZMenuItemContainer';
@@ -60,6 +62,7 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
         this.parametrosActivacionComp = [];
 
         this.despacharOpcionMenu = this.despacharOpcionMenu.bind(this);
+        this.activarLogConsola = this.activarLogConsola.bind(this);
     }
 
     render() {
@@ -98,7 +101,7 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
                             <NavItem eventKey={1} href="#">
                                 <Glyphicon glyph="calendar" /> {this.parametrosActivacionComp[0]}, {this.parametrosActivacionComp[1]}
                             </NavItem>
-                            <NavItem eventKey={1} href="#">
+                            <NavItem eventKey={1} href="#" onClick={this.activarLogConsola}>
                                 <Glyphicon glyph="tasks" /> {this.parametrosActivacionComp[2]}
                             </NavItem>
                         </Nav>
@@ -115,6 +118,12 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
     componentWillReceiveProps(nextProps: ConnectedState) {
         if (nextProps.parametrosActivacion) {
             this.parametrosActivacionComp = nextProps.parametrosActivacion.split(":");
+        }
+    }
+
+    activarLogConsola(e:any){
+        if(e.details == 3){
+            this.props.activarLogConsola(1);
         }
     }
 }
