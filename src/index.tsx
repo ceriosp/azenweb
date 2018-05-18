@@ -71,6 +71,7 @@ const obtenerEstadoInicial = () => {
         );
     }
 
+    appInitialState.nivelLog = 0;
     return createStore(
         App.Reducers.zaplState,
         appInitialState,
