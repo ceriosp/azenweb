@@ -176,11 +176,13 @@ export namespace Services {
                 }
             }
 
-            console.log("module/zaplicacion/services- lista px a refrescar: " + JSON.stringify(listaPxCampos));
-            console.log(hashZCampoState);
+            if (getState().nivelLog == 1) {
+                console.log("campos px/hash: " + JSON.stringify(listaPxCampos));
+                console.log(hashZCampoState);
 
-            console.log("module/zaplicacion/services- comandos px/hash:  " + JSON.stringify(listaPxComandos));
-            console.log(hashZComandoState);
+                console.log("comandos px/hash:  " + JSON.stringify(listaPxComandos));
+                console.log(hashZComandoState);
+            }
 
             //Hay campos para sincronizar      
             if (hashZCampoState.size > 0 || hashZComandoState.size > 1 || numFilasVisiblesMulti > 0) {

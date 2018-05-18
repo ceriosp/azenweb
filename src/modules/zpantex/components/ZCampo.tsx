@@ -24,6 +24,7 @@ import { ZCampoCheckboxContainer } from '../containers/ZCampoCheckboxContainer';
 import { ZCampoTextboxContainer } from '../containers/ZCampoTextboxContainer';
 import { ZCampoDetallableContainer } from '../containers/ZCampoDetallableContainer';
 import { ZCampoFechaContainer } from '../containers/ZCampoFechaContainer';
+import { Constants } from '../../zutils';
 
 interface OwnProperties {
     zFormaTabla: IZFormaTablaState;
@@ -73,7 +74,7 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
                     zFormaTabla={zFormaTabla}
                 />;
             }
-            else if (zCampo.tipo == 70) { //Es fecha
+            else if (zCampo.tipo == ZCommon.Constants.TipoCampoEnum.TIPO_FECHA) {
                 return <ZCampoFechaContainer zCampoModel={zCampo} />
             }
             return <ZCampoTextboxContainer

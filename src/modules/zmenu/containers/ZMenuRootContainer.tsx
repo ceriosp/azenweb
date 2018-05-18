@@ -22,7 +22,7 @@ import {Actions as AppActions} from '../../app/actions';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     zMenu:appState.zMenuModule.zmenu,
-    nomApl: appState.nomApl,
+    idApl: appState.idApl,
     username: appState.zLoginModule.username,
 
     parametrosActivacion: appState.parametrosActivacion,

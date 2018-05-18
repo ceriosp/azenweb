@@ -22,6 +22,8 @@ import {
 import { IZPantex, IZFormaTabla, IZPantexModule, ZPantexState, IZPantexState } from "../../zcommon";
 import { ZPantexContainer } from "../../zpantex/containers/ZPantexContainer";
 
+declare const process: any;
+
 export interface OwnProps {
 
 }
@@ -39,7 +41,9 @@ export class ZAplicacion extends React.PureComponent<OwnProps & ConnectedState &
     private zAplicacionDivElement: HTMLDivElement;
 
     render(): any {
-        console.log("render zaplicacion");
+        if (process.env.NODE_ENV != 'production') {
+            console.log("render zaplicacion");
+        }
         return (
             <div ref={(div: HTMLDivElement) => { this.zAplicacionDivElement = div; }}>
                 {this.props.pilaZPantexState.map((zPantexI: IZPantexState, index: number) => {

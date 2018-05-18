@@ -34,7 +34,7 @@ export interface OwnProps {
 
 export interface ConnectedState {
     zMenu: IZMenu;
-    nomApl: string;
+    idApl: string;
     username: string;
 
     parametrosActivacion: string;
@@ -67,7 +67,7 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
 
     render() {
 
-        let { zMenu, index, nomApl } = this.props;
+        let { zMenu, index, idApl } = this.props;
 
         return (
             <Navbar
@@ -78,6 +78,7 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
                     ? null
                     : { zIndex: 1000000 }}>
                 <Navbar.Header>
+                    <Navbar.Brand> <a href="javascript:void(0);">{idApl}</a> </Navbar.Brand>
                     <Navbar.Toggle></Navbar.Toggle>
                 </Navbar.Header>
                 <Navbar.Collapse>
@@ -101,7 +102,7 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
                             <NavItem eventKey={1} href="#">
                                 <Glyphicon glyph="calendar" /> {this.parametrosActivacionComp[0]}, {this.parametrosActivacionComp[1]}
                             </NavItem>
-                            <NavItem eventKey={1} href="#" onClick={this.activarLogConsola}>
+                            <NavItem eventKey={1} href="#" onDoubleClick={this.activarLogConsola}>
                                 <Glyphicon glyph="tasks" /> {this.parametrosActivacionComp[2]}
                             </NavItem>
                         </Nav>
@@ -122,8 +123,6 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
     }
 
     activarLogConsola(e:any){
-        if(e.details == 3){
-            this.props.activarLogConsola(1);
-        }
+        this.props.activarLogConsola(1);
     }
 }

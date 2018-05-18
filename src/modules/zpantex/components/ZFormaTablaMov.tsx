@@ -72,7 +72,7 @@ export class ZFormaTablaMov extends React.PureComponent<OwnProps & ConnectedDisp
                                     >
                                         {zfilaCampoState.cmpsState.map((zcampoI: IZCampoState, indexCampo: number) => {
                                             return (
-                                                <td key={indexCampo} style={{width:"5%"}}>
+                                                <td key={indexCampo}>
                                                     <ZCampo
                                                         zCampo={zcampoI}
                                                         zFormaTabla={this.props.zFormaTabla}
