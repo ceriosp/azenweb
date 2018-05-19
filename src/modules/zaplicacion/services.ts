@@ -212,6 +212,7 @@ export namespace Services {
         }
 
         const cmSincCampo = (infoEvento: IZEvento) => {
+            
             cmSincCampoParametros = infoEvento.dato.buffer.dato as CM.ISincCampo;
             let hashKey = ContractsServices.getSincHashKey(cmSincCampoParametros);
 
@@ -230,13 +231,22 @@ export namespace Services {
                     value: cmSincCampoParametros.vc,
                     rg: cmSincCampoParametros.rg,
                     fi: cmSincCampoParametros.fi
-                } as IZCampoState;
-
+                } as IZCampoState;                                
+            
                 //Es radio o checkbox
-                if (cmSincCampoParametros.pb) {
+                if (cmSincCampoParametros.pb || cmSincCampoParametros.pb == 0) {
+
                     zCampoEnHash.posBitsOn = [];
-                    if (cmSincCampoParametros.vc == "X" || cmSincCampoParametros.vc == "*") {
-                        zCampoEnHash.value = undefined;
+                    zCampoEnHash.value = undefined;
+                    if (cmSincCampoParametros.vc == "*") { //Radio                        
+                        if(zCampoEnHash.posBitsOn.length == 1){
+                            zCampoEnHash.posBitsOn[0] = parseInt(cmSincCampoParametros.pb.toString());
+                        }
+                        else{
+                            zCampoEnHash.posBitsOn.push(parseInt(cmSincCampoParametros.pb.toString()));
+                        }                        
+                    }                    
+                    else if (cmSincCampoParametros.vc == "X") { //Checkbox
                         zCampoEnHash.posBitsOn.push(parseInt(cmSincCampoParametros.pb.toString()));
                     }
                 }
@@ -252,7 +262,7 @@ export namespace Services {
 
                 //Es radio o checkbox
                 if (cmSincCampoParametros.pb) {
-                    if (!zCampoEnHash.posBitsOn) {
+                    if (!zCampoEnHash.posBitsOn || cmSincCampoParametros.vc == "*") {
                         zCampoEnHash.posBitsOn = [];
                     }
                     if (cmSincCampoParametros.vc == "X" || cmSincCampoParametros.vc == "*") {
