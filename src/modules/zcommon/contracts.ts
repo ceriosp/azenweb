@@ -270,6 +270,7 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
 
     //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
     posBitsOn: Array<number>;
+    posBitsOff: Array<number>;
 
     //Para campos dentro de un campo gráfico
     parentId?: number;
@@ -335,6 +336,7 @@ export class ZCampoState implements IZCampoState {
 
     //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
     posBitsOn: Array<number>;
+    posBitsOff: Array<number>;
 
     checked: boolean;
     esDetallable: boolean;

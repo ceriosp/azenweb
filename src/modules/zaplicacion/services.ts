@@ -212,7 +212,7 @@ export namespace Services {
         }
 
         const cmSincCampo = (infoEvento: IZEvento) => {
-            
+
             cmSincCampoParametros = infoEvento.dato.buffer.dato as CM.ISincCampo;
             let hashKey = ContractsServices.getSincHashKey(cmSincCampoParametros);
 
@@ -231,23 +231,18 @@ export namespace Services {
                     value: cmSincCampoParametros.vc,
                     rg: cmSincCampoParametros.rg,
                     fi: cmSincCampoParametros.fi
-                } as IZCampoState;                                
-            
+                } as IZCampoState;
+
                 //Es radio o checkbox
                 if (cmSincCampoParametros.pb || cmSincCampoParametros.pb == 0) {
 
                     zCampoEnHash.posBitsOn = [];
-                    zCampoEnHash.value = undefined;
-                    if (cmSincCampoParametros.vc == "*") { //Radio                        
-                        if(zCampoEnHash.posBitsOn.length == 1){
-                            zCampoEnHash.posBitsOn[0] = parseInt(cmSincCampoParametros.pb.toString());
-                        }
-                        else{
-                            zCampoEnHash.posBitsOn.push(parseInt(cmSincCampoParametros.pb.toString()));
-                        }                        
-                    }                    
-                    else if (cmSincCampoParametros.vc == "X") { //Checkbox
-                        zCampoEnHash.posBitsOn.push(parseInt(cmSincCampoParametros.pb.toString()));
+                    zCampoEnHash.posBitsOff = [];
+                    if (cmSincCampoParametros.vc == "*" || cmSincCampoParametros.vc == "X") { //Radio                        
+                        zCampoEnHash.posBitsOn[0] = parseInt(cmSincCampoParametros.pb.toString());
+                    }
+                    else {
+                        zCampoEnHash.posBitsOff[0] = parseInt(cmSincCampoParametros.pb.toString());
                     }
                 }
 
@@ -262,12 +257,33 @@ export namespace Services {
 
                 //Es radio o checkbox
                 if (cmSincCampoParametros.pb) {
-                    if (!zCampoEnHash.posBitsOn || cmSincCampoParametros.vc == "*") {
+                    if (!zCampoEnHash.posBitsOn) {
                         zCampoEnHash.posBitsOn = [];
                     }
-                    if (cmSincCampoParametros.vc == "X" || cmSincCampoParametros.vc == "*") {
-                        zCampoEnHash.value = undefined;
-                        zCampoEnHash.posBitsOn.push(parseInt(cmSincCampoParametros.pb.toString()));
+                    if (!zCampoEnHash.posBitsOff) {
+                        zCampoEnHash.posBitsOff = [];
+                    }
+
+                    let indxOn = zCampoEnHash.posBitsOn.indexOf(parseInt(cmSincCampoParametros.pb.toString()));
+                    let indxOff = zCampoEnHash.posBitsOff.indexOf(parseInt(cmSincCampoParametros.pb.toString()));
+
+                    if (cmSincCampoParametros.vc == "*") { //Radio                        
+                        zCampoEnHash.posBitsOn[0] = parseInt(cmSincCampoParametros.pb.toString());
+                    }
+                    else if (cmSincCampoParametros.vc == "X") { //Checkbox
+                        if (indxOn == -1) {
+                            zCampoEnHash.posBitsOn.push(parseInt(cmSincCampoParametros.pb.toString()));
+                            if(indxOff != -1){
+                                zCampoEnHash.posBitsOff.splice(indxOff, 1);
+                            }
+                        }
+                    } else {
+                        if (zCampoEnHash.posBitsOff.indexOf(parseInt(cmSincCampoParametros.pb.toString())) == -1) {
+                            zCampoEnHash.posBitsOff.push(parseInt(cmSincCampoParametros.pb.toString()));
+                            if(indxOn != -1){
+                                zCampoEnHash.posBitsOn.splice(indxOn, 1);
+                            }                            
+                        }
                     }
                 }
             }

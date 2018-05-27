@@ -414,8 +414,7 @@ export namespace Reducers {
                         } as IZCampoState;
 
                         //Verificar si es radio y viene prendido (arreglo: posBitOn)
-                        if (zcampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO
-                            || zcampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
+                        if (zcampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_RADIO) {
                             if (zCampoEnHash.posBitsOn) {
                                 if (zCampoEnHash.posBitsOn.indexOf(zcampoState.lon) != -1) {
                                     zCampoActualizado.checked = true;
@@ -424,7 +423,19 @@ export namespace Reducers {
                                 }
                             }
                         }
-
+                        else if (zcampoState.claseInd == ZCommonConstants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
+                            if (zCampoEnHash.posBitsOn) {
+                                if (zCampoEnHash.posBitsOn.indexOf(zcampoState.lon) != -1) {
+                                    zCampoActualizado.checked = true;
+                                }
+                            }
+                            if (zCampoEnHash.posBitsOff) {
+                                if (zCampoEnHash.posBitsOff.indexOf(zcampoState.lon) != -1) {
+                                    zCampoActualizado.checked = false;
+                                }
+                            }                            
+                        }
+                        
                         if (zCampoEnHash.bitPrenderControl) {
                             zCampoActualizado.control = ContractsServices.Binario.prenderBit(zcampoState.control, zCampoEnHash.bitPrenderControl);
                         }
