@@ -278,7 +278,7 @@ export namespace Services {
                             }
                         }
                     } else {
-                        if (zCampoEnHash.posBitsOff.indexOf(parseInt(cmSincCampoParametros.pb.toString())) == -1) {
+                        if (indxOff == -1) {
                             zCampoEnHash.posBitsOff.push(parseInt(cmSincCampoParametros.pb.toString()));
                             if(indxOn != -1){
                                 zCampoEnHash.posBitsOn.splice(indxOn, 1);
