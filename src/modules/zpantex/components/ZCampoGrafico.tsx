@@ -33,6 +33,33 @@ export default class ZCampoGrafico extends React.PureComponent<OwnProperties, un
         const { zFormaTabla, zCampoGrafico } = this.props;
 
         if (zCampoGrafico.etq == "@Rjuntura") {
+            if(zCampoGrafico.cmpsState.length == 2){
+                return (
+                    <Panel bsStyle="info">
+                        {zCampoGrafico.cmpsState && zCampoGrafico.cmpsState.map((zCampoI: IZCampoState, index: number) => {
+                            if(index == 0){
+                                return (
+                                    <Col key={zCampoI.id} xs={12} sm={4} md={4}>
+                                        <ZCampo
+                                            zCampo={zCampoI}
+                                            zFormaTabla={zFormaTabla}
+                                        />
+                                    </Col>
+                                );                                    
+                            }
+                            return (
+                                <Col key={zCampoI.id} xs={12} sm={4} md={8}>
+                                    <ZCampo
+                                        zCampo={zCampoI}
+                                        zFormaTabla={zFormaTabla}
+                                    />
+                                </Col>
+                            );
+                        })}
+                    </Panel>
+                );                    
+            }
+
             return (
                 <Panel bsStyle="info">
                     {zCampoGrafico.cmpsState && zCampoGrafico.cmpsState.map((zCampoI: IZCampoState, index: number) => {
