@@ -159,10 +159,14 @@
     padding: 4px 6px !important;
 }
 
-.panel-info {
+.panel-info{
     margin-top:10px !important;
 }
 
 .panel-body {
     padding: 5px !important;
+}
+
+.panel-body .panel-heading {
+    padding: 5px 7px !important;
 }
