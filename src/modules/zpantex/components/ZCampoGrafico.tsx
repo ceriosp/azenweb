@@ -19,7 +19,7 @@ import ZCampo from './ZCampo';
 
 interface OwnProperties {
     zFormaTabla: IZFormaTablaState;
-    zCampoGrafico: IZCampoState;    
+    zCampoGrafico: IZCampoState;
 }
 
 export default class ZCampoGrafico extends React.PureComponent<OwnProperties, undefined>
@@ -30,15 +30,32 @@ export default class ZCampoGrafico extends React.PureComponent<OwnProperties, un
 
     render() {
 
-        const { zFormaTabla, zCampoGrafico } = this.props;        
+        const { zFormaTabla, zCampoGrafico } = this.props;
+
+        if (zCampoGrafico.etq == "@Rjuntura") {
+            return (
+                <Panel bsStyle="info">
+                    {zCampoGrafico.cmpsState && zCampoGrafico.cmpsState.map((zCampoI: IZCampoState, index: number) => {
+                        return (
+                            <Col key={zCampoI.id} xs={12} sm={4} md={12/zCampoGrafico.cmpsState.length}>
+                                <ZCampo
+                                    zCampo={zCampoI}
+                                    zFormaTabla={zFormaTabla}
+                                />
+                            </Col>
+                        );
+                    })}
+                </Panel>
+            );
+        }
 
         return (
             <Panel header={zCampoGrafico.etq.replace("@R", "")} bsStyle="info">
                 {zCampoGrafico.cmpsState && zCampoGrafico.cmpsState.map((zCampoI: IZCampoState, index: number) => {
                     return (
-                        <Col key={zCampoI.id} xs={12} sm={4} md={12/zCampoGrafico.cmpsState.length}>
-                            <ZCampo                                
-                                zCampo={zCampoI}                                
+                        <Col key={zCampoI.id} xs={12} sm={4} md={12 / zCampoGrafico.cmpsState.length}>
+                            <ZCampo
+                                zCampo={zCampoI}
                                 zFormaTabla={zFormaTabla}
                             />
                         </Col>

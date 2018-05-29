@@ -147,6 +147,7 @@
 }
 
 .form-group-sm .form-control{
+    height: 26px !important;
     padding: 0px 2px !important;
 }
 
@@ -158,6 +159,10 @@
     padding: 4px 6px !important;
 }
 
-.panel-info{
+.panel-info {
     margin-top:10px !important;
+}
+
+.panel-body {
+    padding: 5px !important;
 }

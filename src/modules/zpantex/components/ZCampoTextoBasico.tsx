@@ -27,11 +27,11 @@ export interface ConnectedDispatch {
 }
 
 export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
-{    
+{
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
-        this.darFormatoValorCampoSegunTipo = this.darFormatoValorCampoSegunTipo.bind(this);
+        this.darFormatoValorCampoSegunTipo = this.darFormatoValorCampoSegunTipo.bind(this);        
         this.onFocus = this.onFocus.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onBlur = this.onBlur.bind(this);
@@ -42,19 +42,16 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
 
         return (
             <FormControl
-                type="text"
-                ref="inputNode"
+                type="text"                
                 name={zCampoModel.nomCmp}
-                value={valor ? valor : zCampoModel.value}
-                onChange={this.onChange}
+                value={valor ? valor : zCampoModel.value}                
                 onFocus={this.onFocus}
+                onChange={this.onChange}
                 onBlur={this.onBlur}
+                autoFocus={this.props.zCampoModel.autoFocus}
                 maxLength={zCampoModel.lon}
-                readOnly={this.props.readOnly}
-                disabled={
-                    this.props.estaProcesandoRequestServidor
-                    || zCampoModel.readOnly
-                }
+                readOnly={this.props.readOnly || this.props.estaProcesandoRequestServidor}
+                disabled={zCampoModel.readOnly}
                 style={{
                     borderColor: zCampoModel.haCambiado ? '#337AB7' : ''
                 }}
@@ -62,7 +59,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
         );
     }
 
-    onFocus(e: any) {        
+    onFocus(e: any) {
         if (this.props.zCampoModel.autoFocus) {
             return;
         }
@@ -94,7 +91,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
             || this.props.zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_LARGO) {
             if (isNaN(parseInt(valor))) {
                 e.target.value = "";
-            }else{
+            } else {
                 e.target.value = parseInt(valor);
             }
             return;
@@ -118,15 +115,5 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
 
     onBlur(e: any) {
         this.props.onCampoBlur(this.props.zCampoModel);
-    }
-
-    componentDidUpdate() {
-        let node: any = ReactDOM.findDOMNode(this.refs.inputNode);
-        if (this.props.zCampoModel.autoFocus) {
-            node.focus();
-            let value = node.value;
-            node.value = "";
-            node.value = value;
-        }
     }
 }
