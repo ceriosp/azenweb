@@ -8,6 +8,8 @@ var Modal = require('react-bootstrap-modal');
 
 import {
     Panel,
+    Row,
+    Col
 } from 'react-bootstrap';
 
 import {
@@ -94,10 +96,21 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                             marginBottom: "0px"
                                         }}
                                     >
-                                        {((zftIndex == 0)) && (
+
+                                        {((zftIndex == 0)) && ( //linea estado encabezado
                                             <ZLineaEstadoContainer
                                                 linEst={zFormaTablaI.linEstState}
                                             />
+                                        )}
+                                    
+                                        {((zftIndex == 1)) && ( //linea estado detalle
+                                            <Row>
+                                                <Col xs={12} sm={6} md={3} smOffset={6} mdOffset={9}>
+                                                    <ZLineaEstadoContainer
+                                                        linEst={zFormaTablaI.linEstState}
+                                                    />
+                                                </Col>
+                                            </Row>
                                         )}
 
                                         {(zFormaTablaI.cmpsState && zFormaTablaI.cmpsState.length > 6) && (
@@ -113,7 +126,7 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                         />
 
                                         {((this.props.zPantex.zFormaTablaListState.length == 1 || zftIndex != 0)) && (
-                                            <div style={{marginTop:"5px"}}>
+                                            <div style={{ marginTop: "5px" }}>
                                                 <ZBarraComandosContainer
                                                     zComandosList={zFormaTablaI.btnsState}
                                                 />

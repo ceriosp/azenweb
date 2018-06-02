@@ -57,7 +57,7 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
                 </thead>
                 <tbody>
                     {this.props.zFormaTabla.filasCamposList.map((zfilaCampoState: IZFilaCamposState, indexFila: number) => {
-                        if (indexFila <= this.props.zFormaTabla.numFilasVisiblesMulti) {
+                        if (indexFila < this.props.zFormaTabla.numFilasVisiblesMulti) {
                             return (
                                 <tr
                                     key={indexFila}
