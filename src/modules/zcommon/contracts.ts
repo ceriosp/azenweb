@@ -507,6 +507,18 @@ export namespace CM {
         [Constants.ComandoEnum.CM_SGTEPAG, {
             icono: "glyphicon glyphicon-step-forward"
         } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_ADICIONARLINEA, {
+            icono: "glyphicon glyphicon-plus"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_INSERTARLINEA, {
+            icono: "glyphicon glyphicon-indent-left"
+        } as IZComandoDefinicion],
+
+        [Constants.ComandoEnum.CM_ELIMINARLINEA, {
+            icono: "glyphicon glyphicon-minus-sign"
+        } as IZComandoDefinicion],
         
     ]);
 
