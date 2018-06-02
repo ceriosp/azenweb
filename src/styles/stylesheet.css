@@ -159,8 +159,12 @@
     padding: 4px 6px !important;
 }
 
+.panel {
+    margin-bottom: 10px;
+}
+
 .panel-info{
-    margin-top:10px !important;
+    margin-top:3px !important;
 }
 
 .panel-body {
@@ -168,5 +172,18 @@
 }
 
 .panel-body .panel-heading {
-    padding: 5px 7px !important;
+    padding: 3px 5px !important;
+}
+
+.well{
+    margin-bottom: 5px !important;
+}
+
+.well-sm {
+    padding: 3px;
+    padding-bottom: 0px;
+}
+
+.panel-body .table {
+    margin-bottom: 5px !important;
 }
