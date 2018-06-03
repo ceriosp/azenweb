@@ -23,7 +23,7 @@ export interface ConnectedState {
 }
 
 export interface ConnectedDispatch {
-    despacharEventoCliente: (cmd: ZCommon.Constants.ComandoEnum) => void;
+    despacharComandoLineaEstado : (zcomandoFormaState: IZComandoFormaState)=> void;
 }
 
 export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedState & ConnectedDispatch, undefined>
@@ -32,7 +32,7 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
     constructor(props: OwnProperties & ConnectedState & ConnectedDispatch) {
         super(props);
 
-        this.despacharEventoCliente = this.despacharEventoCliente.bind(this);
+        this.despacharComandoLineaEstado = this.despacharComandoLineaEstado.bind(this);
     }
 
     public render(): any {
@@ -53,7 +53,7 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
                                 bsStyle="info"                                
                                 title={zComandoI.etq + "-" + zComandoI.cmd}
                                 disabled={zComandoI.desh == 1}
-                                onClick={() => this.despacharEventoCliente(zComandoI.cmd)}
+                                onClick={() => this.despacharComandoLineaEstado(zComandoI)}
                             >
                                 {(!iconName) &&
                                     zComandoI.etq
@@ -67,7 +67,7 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
         );
     }
 
-    despacharEventoCliente(cmd: ZCommon.Constants.ComandoEnum) {
-        this.props.despacharEventoCliente(cmd);
+    despacharComandoLineaEstado(zComando: IZComandoFormaState) {
+        this.props.despacharComandoLineaEstado(zComando);
     }
 }

@@ -3,7 +3,7 @@ import * as redux from 'redux';
 import { connect } from 'react-redux';
 
 import * as ZCommon from "../../zcommon";
-import { IZAplState } from "../../zcommon/contracts";
+import { IZAplState, IZComandoFormaState } from "../../zcommon/contracts";
 
 import * as ZAplicacion from "../../zaplicacion";
 
@@ -19,8 +19,8 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-    despacharEventoCliente: (cmd: ZCommon.Constants.ComandoEnum) =>
-        dispatch(ZAplicacion.Actions.despacharEventoCliente(cmd))
+    despacharComandoLineaEstado: (zcomandoFormaState: IZComandoFormaState) =>
+        dispatch(ZAplicacion.Actions.despacharComandoLineaEstado(zcomandoFormaState))
 });
 
 export const ZBarraComandosContainer: React.ComponentClass<OwnProperties> =

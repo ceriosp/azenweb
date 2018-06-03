@@ -259,6 +259,7 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
     id: number;
     px: number;
     rg: number; //región
+    idZft:number; //id zft en el estado
     fi: number; //fila
     value: any;
     readOnly: boolean;
@@ -289,11 +290,13 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
 
 export class ZCampoState implements IZCampoState {
 
-    constructor(zcampo: IZCampo, id: number, px: number, rg: number, fila: number) {
+    constructor(zcampo: IZCampo, id: number, px: number, rg: number, idZft:number, fila: number) {
 
         this.id = id;
         this.px = px;
         this.rg = rg;
+        this.idZft = idZft;
+
         this.fi = fila;
         this.haCambiado = false;
 
@@ -325,6 +328,7 @@ export class ZCampoState implements IZCampoState {
     id: number;
     px: number;
     rg: number;
+    idZft:number; //id zft en el estado
     fi: number;
     value: string;
     readOnly: boolean;
@@ -364,14 +368,19 @@ export class ZCampoState implements IZCampoState {
 export interface IZComandoFormaState extends IZComandoForma {
     id: number;
     px: number;
+    rg: number;
+
+    idZft:number;
 }
 
 export class ZComandoFormaState implements IZComandoFormaState {
 
-    constructor(zComandoForma: IZComandoForma, id: number, px: number) {
+    constructor(zComandoForma: IZComandoForma, id: number, px: number, rg: number, idZft:number) {
 
         this.id = id;
         this.px = px;
+        this.rg = rg;
+        this.idZft = idZft;
 
         if (!zComandoForma) {
             return;
@@ -385,6 +394,8 @@ export class ZComandoFormaState implements IZComandoFormaState {
 
     id: number;
     px: number;
+    rg: number;
+    idZft:number;
 
     //Propiedades de IZComandoFormaState
     etq: string;

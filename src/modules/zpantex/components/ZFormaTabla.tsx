@@ -116,7 +116,7 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
                 return;
             }
                         
-            this.props.onSaltarMov(this.props.zFormaTabla, (this.props.zftIndex + 1));
+            //this.props.onSaltarMov(this.props.zFormaTabla, (this.props.zftIndex + 1));
         }
     }
 }

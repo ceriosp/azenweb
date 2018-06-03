@@ -95,14 +95,14 @@ export namespace Actions {
 
                 let camposFijosList: Array<ZCampoStateModel> = [];
                 zFormaTablaState.byId[id].zCampoStateListIds =
-                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], camposFijosList, i, zCampoState);
+                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], camposFijosList, i, id, zCampoState);
                 zFormaTablaState.byId[id].camposFijosList = camposFijosList;
 
                 zFormaTablaState.byId[id].btnsListIds =
-                    agregarZComandosBtnsFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zComandoFormaState);
+                    agregarZComandosBtnsFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i, id, zComandoFormaState,);
 
                 zFormaTablaState.byId[id].linEstListIds =
-                    agregarZComandosLinEstFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], zComandoFormaState);
+                    agregarZComandosLinEstFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i, id, zComandoFormaState);
 
                 zFormaTablaState.allIds.push(id);
 
@@ -134,6 +134,7 @@ export namespace Actions {
             zFormaTabla: IZFormaTabla,
             camposFijosList: Array<ZCampoStateModel>,
             indiceZft: number, //indice_zft + 1
+            idZft:number,
             zCampoState: EntityNormalizedObj<IZCampoState>): Array<number> => {
 
             let zFormaTablaCmpsIds = [];
@@ -153,7 +154,7 @@ export namespace Actions {
             if (zFormaTabla.ven.numLinsDatos > 0) {
                 for (let fila = 0; fila <= zFormaTabla.ven.numLinsDatos; fila++) {
                     for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                        const zcampoModel = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, fila + 1);
+                        const zcampoModel = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, idZft, fila + 1);
 
                         //Campos fijos, ingresarlos sólo una vez en una nueva fila al final
                         if (fila == zFormaTabla.ven.numLinsDatos && zcampoModel.esFijo) {
@@ -179,7 +180,7 @@ export namespace Actions {
             }
             else { //No es multi
                 for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                    zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, 0);
+                    zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, idZft, 0);
                     zCampoState.allIds.push(id);
                     zFormaTablaCmpsIds.push(id);
                     if (zFormaTabla.cmps[i].cmps) {
@@ -187,7 +188,7 @@ export namespace Actions {
                         zCampoState.byId[id].esCampoGrafico = true;
                         for (let j = 0; j < zFormaTabla.cmps[i].cmps.length; j++) {
                             id++;
-                            zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id, zPantex.numPx, region, 0);
+                            zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id, zPantex.numPx, region, idZft, 0);
                             zCampoState.byId[id].parentId = parentId;
                             zCampoState.allIds.push(id);
                             zFormaTablaCmpsIds.push(id);
@@ -203,6 +204,8 @@ export namespace Actions {
         const agregarZComandosBtnsFormaState = (getStateFn: () => IZAplState,
             zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
+            indiceZft: number,
+            idZft:number,
             zComandosFormaState: EntityNormalizedObj<IZComandoFormaState>): Array<number> => {
 
             let zFormaTablaBtnsIds: Array<number> = [];
@@ -213,7 +216,7 @@ export namespace Actions {
 
             let id = Selectors.ZPantexStateModule.ZComandoFormaState.getNextZComandoFormaStateId(getStateFn());
             for (let i = 0; i < zFormaTabla.btns.length; i++) {
-                zComandosFormaState.byId[id] = new ZComandoFormaState(zFormaTabla.btns[i], id, zPantex.numPx);
+                zComandosFormaState.byId[id] = new ZComandoFormaState(zFormaTabla.btns[i], id, zPantex.numPx, (indiceZft + 1), idZft);
                 zComandosFormaState.allIds.push(id);
                 zFormaTablaBtnsIds.push(id);
                 id++;
@@ -225,6 +228,8 @@ export namespace Actions {
         const agregarZComandosLinEstFormaState = (getStateFn: () => IZAplState,
             zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
+            indiceZft: number,
+            idZft:number,
             zComandosFormaState: EntityNormalizedObj<IZComandoFormaState>): Array<number> => {
 
             let zFormaTablaLinEstIds: Array<number> = [];
@@ -237,7 +242,7 @@ export namespace Actions {
             id = id + zComandosFormaState.allIds.length + 1;
 
             for (let i = 0; i < zFormaTabla.linEst.length; i++) {
-                zComandosFormaState.byId[id] = new ZComandoFormaState(zFormaTabla.linEst[i], id, zPantex.numPx);
+                zComandosFormaState.byId[id] = new ZComandoFormaState(zFormaTabla.linEst[i], id, zPantex.numPx, (indiceZft + 1), idZft);
                 zComandosFormaState.allIds.push(id);
                 zFormaTablaLinEstIds.push(id);
                 id++;
@@ -276,10 +281,10 @@ export namespace Actions {
             hashZCampos: Map<string, IZCampoState>,
             listaPxComandos: Array<number>,
             hashZComandos: Map<Constants.ComandoEnum, IZComandoFormaState>,
-            cambiarTituloVentana: CM.ICambiarTituloVentana,            
-            numFilasVisiblesMulti:number,
+            cambiarTituloVentana: CM.ICambiarTituloVentana,
+            numFilasVisiblesMulti: number,
             numFilasVisiblesMultiPx: number,
-            numFilasVisiblesMultiZft:number,
+            numFilasVisiblesMultiZft: number,
             ultimoComandoEnviado: Constants.ComandoEnum
         ): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.CM_SINCPX,
@@ -364,8 +369,7 @@ export namespace Actions {
 
                 let valor = zcampoState.value;
 
-                if(zcampoState.tipo == Constants.TipoCampoEnum.TIPO_DINERO)
-                {
+                if (zcampoState.tipo == Constants.TipoCampoEnum.TIPO_DINERO) {
                     valor = valor.replace(/,/g, "");
                 }
 
@@ -373,7 +377,7 @@ export namespace Actions {
                 const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${valor}</vc>`;
                 dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
                     (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
-                        
+
                     }
                 );
             }
@@ -400,21 +404,21 @@ export namespace Actions {
             );
         }
 
-        export const onSaltarMov = (zFormaTablaState: IZFormaTablaState, regionDestino:number) => (dispatch: any, getStateFn: () => IZAplState) => {
+        export const onSaltarMov = (zFormaTablaState: IZFormaTablaState, regionDestino: number) => (dispatch: any, getStateFn: () => IZAplState):Promise<ResultadoActionConDato<IZColaEventos>> => {
             const buffer = `<rg>${regionDestino}</rg>`;
-            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_SALTAR, buffer)).then(
+            return dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_SALTAR, buffer)).then(
                 (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
-                    dispatch(setZFormaTablaComoRegionActiva(zFormaTablaState.id, zFormaTablaState.numPx));
+                    return dispatch(setZFormaTablaComoRegionActiva(zFormaTablaState.id, zFormaTablaState.numPx));
                 }
             );
         }
-        
-        export const setZFormaTablaComoRegionActiva = (zftId: number, numPx:number): ActionTypes.ZPantexStateModule.Action => ({
+
+        export const setZFormaTablaComoRegionActiva = (zftId: number, numPx: number): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.SET_ZFORMATABLA_COMOREGIONACTIVA,
             zftId,
             numPx
         });
-        
+
 
 
         /********************* */
