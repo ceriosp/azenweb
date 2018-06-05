@@ -66,7 +66,7 @@ export class ZFormaTablaMov extends React.PureComponent<OwnProps & ConnectedDisp
                                     <tr
                                         key={indexFila}
                                         style={{
-                                            backgroundColor: this.props.zFormaTabla.indexFilaMultiSeleccionada == indexFila ? "#D9EDF7" : ""
+                                            borderColor: this.props.zFormaTabla.indexFilaMultiSeleccionada == indexFila ? "#888" : ""
                                         }}
                                         onClickCapture={() => this.onFilaClick(indexFila)}
                                     >

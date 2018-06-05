@@ -88,7 +88,7 @@ export namespace Actions {
 
             let id = Selectors.ZPantexStateModule.ZFormaTablaState.getNextZFormaTablaStateId(getStateFn());
             for (let i = 0; i < zPantex.zFormaTablaList.length; i++) {
-                zFormaTablaState.byId[id] = new ZFormaTablaStateModel(id, zPantex.numPx, zPantex.zFormaTablaList[i].cmps.length);
+                zFormaTablaState.byId[id] = new ZFormaTablaStateModel(id, zPantex.numPx, (i+1), zPantex.zFormaTablaList[i].cmps.length);
 
                 zFormaTablaState.byId[id].idZVentana =
                     agregarZVentanaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], id, zVentanaState);
@@ -99,7 +99,7 @@ export namespace Actions {
                 zFormaTablaState.byId[id].camposFijosList = camposFijosList;
 
                 zFormaTablaState.byId[id].btnsListIds =
-                    agregarZComandosBtnsFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i, id, zComandoFormaState,);
+                    agregarZComandosBtnsFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i, id, zComandoFormaState, );
 
                 zFormaTablaState.byId[id].linEstListIds =
                     agregarZComandosLinEstFormaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], i, id, zComandoFormaState);
@@ -134,17 +134,17 @@ export namespace Actions {
             zFormaTabla: IZFormaTabla,
             camposFijosList: Array<ZCampoStateModel>,
             indiceZft: number, //indice_zft + 1
-            idZft:number,
+            idZft: number,
             zCampoState: EntityNormalizedObj<IZCampoState>): Array<number> => {
 
-            let zFormaTablaCmpsIds = [];
+            let zFormaTablaCmpsIds = new Array<number>();
 
             let id = Selectors.ZPantexStateModule.ZCampoState.getNextZCampoStateId(getStateFn());
 
             //No el primer zft
             if (indiceZft != 0) {
                 for (let i = 0; i < indiceZft; i++) {
-                    id = id + zPantex.zFormaTablaList[i].cmps.length + 1;
+                    id = id + zCampoState.allIds.length;
                 }
             }
 
@@ -178,7 +178,7 @@ export namespace Actions {
                     }
                 }
             }
-            else { //No es multi
+            else { //No es multi                
                 for (let i = 0; i < zFormaTabla.cmps.length; i++) {
                     zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, idZft, 0);
                     zCampoState.allIds.push(id);
@@ -205,7 +205,7 @@ export namespace Actions {
             zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
             indiceZft: number,
-            idZft:number,
+            idZft: number,
             zComandosFormaState: EntityNormalizedObj<IZComandoFormaState>): Array<number> => {
 
             let zFormaTablaBtnsIds: Array<number> = [];
@@ -215,6 +215,7 @@ export namespace Actions {
             }
 
             let id = Selectors.ZPantexStateModule.ZComandoFormaState.getNextZComandoFormaStateId(getStateFn());
+            id = id + zComandosFormaState.allIds.length + 1;
             for (let i = 0; i < zFormaTabla.btns.length; i++) {
                 zComandosFormaState.byId[id] = new ZComandoFormaState(zFormaTabla.btns[i], id, zPantex.numPx, (indiceZft + 1), idZft);
                 zComandosFormaState.allIds.push(id);
@@ -229,7 +230,7 @@ export namespace Actions {
             zPantex: IZPantex,
             zFormaTabla: IZFormaTabla,
             indiceZft: number,
-            idZft:number,
+            idZft: number,
             zComandosFormaState: EntityNormalizedObj<IZComandoFormaState>): Array<number> => {
 
             let zFormaTablaLinEstIds: Array<number> = [];
@@ -240,7 +241,6 @@ export namespace Actions {
 
             let id = Selectors.ZPantexStateModule.ZComandoFormaState.getNextZComandoFormaStateId(getStateFn());
             id = id + zComandosFormaState.allIds.length + 1;
-
             for (let i = 0; i < zFormaTabla.linEst.length; i++) {
                 zComandosFormaState.byId[id] = new ZComandoFormaState(zFormaTabla.linEst[i], id, zPantex.numPx, (indiceZft + 1), idZft);
                 zComandosFormaState.allIds.push(id);
@@ -323,7 +323,173 @@ export namespace Actions {
             haCambiado,
         });
 
+        export const setComandoBuffer = (cm: Constants.ComandoEnum, buffer: string): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.SET_COMANDOBUFFER,
+            cm,
+            buffer,
+        });
+
+        export const setTituloVentana = (parametros: CM.IModificar | CM.IAdicionar | CM.IConsultar): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.SET_TITULOVENTANA,
+            parametros
+        });
+
+        export const onCampoFocusIrACmp = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+
+            const buffer = `<nc>${zcampoState.nomCmp}</nc>`;
+
+            let zformaTabla: IZFormaTablaState = getStateFn().zPantexStateModule.zFormaTablaState.byId[zcampoState.idZft];
+            let zPantexState: IZPantexState = getStateFn().zPantexStateModule.pilaPantexState.byId[zcampoState.px];
+            if (zPantexState.zFormaTablaStateListIds.length == 1 || zformaTabla.esRegionActiva) { //No ocurrió un saltar
+                dispatch(onCampoFocusIrACmpInternal(zcampoState));
+                return;
+            }
+
+            dispatch(onSaltarMov(zformaTabla, zcampoState.rg)).then(
+                () => {
+                    dispatch(onCampoFocusIrACmpInternal(zcampoState));
+                }
+            );
+        }
+
+        const onCampoFocusIrACmpInternal = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+
+            const buffer = `<nc>${zcampoState.nomCmp}</nc>`;
+            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_IRACMP, buffer)).then(
+                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
+                    dispatch(setZCampoHaCambiado(zcampoState.id, false));
+                }
+            );
+        }
+
+        export const onCampoChangedEnviarCmd = (zcampoState: IZCampoState, valor: any) => (dispatch: any, getStateFn: () => IZAplState) => {
+
+            let zformaTabla: IZFormaTablaState = getStateFn().zPantexStateModule.zFormaTablaState.byId[zcampoState.idZft];
+            let zPantexState: IZPantexState = getStateFn().zPantexStateModule.pilaPantexState.byId[zcampoState.px];
+            if (zPantexState.zFormaTablaStateListIds.length == 1 || zformaTabla.esRegionActiva) { //No ocurrió un saltar
+                dispatch(onCampoChangedEnviarCmdInternal(zcampoState, valor));
+                return;
+            }
+
+            dispatch(onSaltarMov(zformaTabla, zcampoState.rg)).then(
+                () => {
+                    dispatch(onCampoChangedEnviarCmdInternal(zcampoState, valor));
+                }
+            );
+        }
+
+        const onCampoChangedEnviarCmdInternal = (zcampoState: IZCampoState, valor: any) => (dispatch: any, getStateFn: () => IZAplState) => {
+            dispatch(onCampoChanged(zcampoState, valor));
+            dispatch(onCampoBlur(Selectors.ZPantexStateModule.ZCampoState.getZCampoStateMap(getStateFn()).byId[zcampoState.id]));
+        }
+
+        export const onCampoBlur = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+
+            let zformaTabla: IZFormaTablaState = getStateFn().zPantexStateModule.zFormaTablaState.byId[zcampoState.idZft];
+            let zPantexState: IZPantexState = getStateFn().zPantexStateModule.pilaPantexState.byId[zcampoState.px];
+            if (zPantexState.zFormaTablaStateListIds.length == 1 || zformaTabla.esRegionActiva) { //No ocurrió un saltar
+                dispatch(onCampoBlurInternal(zcampoState));
+                return;
+            }
+
+            dispatch(onSaltarMov(zformaTabla, zcampoState.rg)).then(
+                () => {
+                    dispatch(onCampoBlurInternal(zcampoState));
+                }
+            );
+        }
+
+        const onCampoBlurInternal = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+
+            if (!zcampoState.haCambiado) {
+                return;
+            }
+
+            let valor = zcampoState.value;
+
+            if (zcampoState.tipo == Constants.TipoCampoEnum.TIPO_DINERO) {
+                valor = valor.replace(/,/g, "");
+            }
+
+            dispatch(setZCampoHaCambiado(zcampoState.id, false));
+            const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${valor}</vc>`;
+            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
+                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
+
+                }
+            );
+        }
+
+        export const prenderValorBitRadio = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+
+            let zformaTabla: IZFormaTablaState = getStateFn().zPantexStateModule.zFormaTablaState.byId[zcampoState.idZft];
+            let zPantexState: IZPantexState = getStateFn().zPantexStateModule.pilaPantexState.byId[zcampoState.px];
+            if (zPantexState.zFormaTablaStateListIds.length == 1 || zformaTabla.esRegionActiva) { //No ocurrió un saltar
+                dispatch(prenderValorBitRadioInternal(zcampoState));
+                return;
+            }
+
+            dispatch(onSaltarMov(zformaTabla, zcampoState.rg)).then(
+                () => {
+                    dispatch(prenderValorBitRadioInternal(zcampoState));
+                }
+            );
+        }
+
+        export const prenderValorBitRadioInternal = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+            dispatch(onCampoRadioChanged(zcampoState, zcampoState.lon));
+            const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>*</vc><pb>${zcampoState.lon}</pb>`;
+            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
+                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
+
+                }
+            );
+        }
+
+        export const notificarCambioCheckbox = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+
+            let zformaTabla: IZFormaTablaState = getStateFn().zPantexStateModule.zFormaTablaState.byId[zcampoState.idZft];
+            let zPantexState: IZPantexState = getStateFn().zPantexStateModule.pilaPantexState.byId[zcampoState.px];
+            if (zPantexState.zFormaTablaStateListIds.length == 1 || zformaTabla.esRegionActiva) { //No ocurrió un saltar
+                dispatch(notificarCambioCheckboxInternal(zcampoState));
+                return;
+            }
+
+            dispatch(onSaltarMov(zformaTabla, zcampoState.rg)).then(
+                () => {
+                    dispatch(notificarCambioCheckboxInternal(zcampoState));
+                }
+            );
+        }
+
+        export const notificarCambioCheckboxInternal = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+            const value: boolean = !zcampoState.checked;
+            dispatch(onCampoCheckboxChanged(zcampoState, value));
+            let buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${value ? "X" : " "}</vc><pb>${zcampoState.lon}</pb>`;
+            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
+                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
+
+                }
+            );
+        }
+
         export const onFilaMultiSeleccionada = (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number) => (dispatch: any, getStateFn: () => IZAplState) => {
+
+            let zformaTabla: IZFormaTablaState = getStateFn().zPantexStateModule.zFormaTablaState.byId[zFormaTablaState.id];
+            let zPantexState: IZPantexState = getStateFn().zPantexStateModule.pilaPantexState.byId[zFormaTablaState.numPx];
+            if (zPantexState.zFormaTablaStateListIds.length == 1 || zformaTabla.esRegionActiva) { //No ocurrió un saltar
+                dispatch(onFilaMultiSeleccionadaInternal(zFormaTablaState, indexFilaMultiSeleccionada));
+                return;
+            }
+
+            dispatch(onSaltarMov(zformaTabla, zformaTabla.rg)).then(
+                () => {
+                    dispatch(onFilaMultiSeleccionadaInternal(zFormaTablaState, indexFilaMultiSeleccionada));
+                }
+            );
+        }
+        
+        export const onFilaMultiSeleccionadaInternal = (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number) => (dispatch: any, getStateFn: () => IZAplState) => {
             dispatch(setFilaMultiSeleccionada(zFormaTablaState, indexFilaMultiSeleccionada));
             const buffer = `<fi>${indexFilaMultiSeleccionada}</fi>`;
             dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_IRALINEA, buffer)).then(
@@ -338,73 +504,8 @@ export namespace Actions {
             zFormaTablaState,
             indexFilaMultiSeleccionada,
         });
-
-        export const setComandoBuffer = (cm: Constants.ComandoEnum, buffer: string): ActionTypes.ZPantexStateModule.Action => ({
-            type: ActionTypes.ZPantexStateModule.SET_COMANDOBUFFER,
-            cm,
-            buffer,
-        });
-
-        export const setTituloVentana = (parametros: CM.IModificar | CM.IAdicionar | CM.IConsultar): ActionTypes.ZPantexStateModule.Action => ({
-            type: ActionTypes.ZPantexStateModule.SET_TITULOVENTANA,
-            parametros
-        });
-
-        export const onCampoFocusIrACmp = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
-            const buffer = `<nc>${zcampoState.nomCmp}</nc>`;
-            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_IRACMP, buffer)).then(
-                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
-                    dispatch(setZCampoHaCambiado(zcampoState.id, false));
-                }
-            );
-        }
-
-        export const onCampoChangedEnviarCmd = (zcampoState: IZCampoState, valor: any) => (dispatch: any, getStateFn: () => IZAplState) => {
-            dispatch(onCampoChanged(zcampoState, valor));
-            dispatch(onCampoBlur(Selectors.ZPantexStateModule.ZCampoState.getZCampoStateMap(getStateFn()).byId[zcampoState.id]));
-        }
-
-        export const onCampoBlur = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
-            if (zcampoState.haCambiado) {
-
-                let valor = zcampoState.value;
-
-                if (zcampoState.tipo == Constants.TipoCampoEnum.TIPO_DINERO) {
-                    valor = valor.replace(/,/g, "");
-                }
-
-                dispatch(setZCampoHaCambiado(zcampoState.id, false));
-                const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${valor}</vc>`;
-                dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
-                    (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
-
-                    }
-                );
-            }
-        }
-
-        export const prenderValorBitRadio = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
-            dispatch(onCampoRadioChanged(zcampoState, zcampoState.lon));
-            const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>*</vc><pb>${zcampoState.lon}</pb>`;
-            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
-                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
-
-                }
-            );
-        }
-
-        export const notificarCambioCheckbox = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
-            const value: boolean = !zcampoState.checked;
-            dispatch(onCampoCheckboxChanged(zcampoState, value));
-            let buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${value ? "X" : " "}</vc><pb>${zcampoState.lon}</pb>`;
-            dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
-                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
-
-                }
-            );
-        }
-
-        export const onSaltarMov = (zFormaTablaState: IZFormaTablaState, regionDestino: number) => (dispatch: any, getStateFn: () => IZAplState):Promise<ResultadoActionConDato<IZColaEventos>> => {
+        
+        export const onSaltarMov = (zFormaTablaState: IZFormaTablaState, regionDestino: number) => (dispatch: any, getStateFn: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
             const buffer = `<rg>${regionDestino}</rg>`;
             return dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_SALTAR, buffer)).then(
                 (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {

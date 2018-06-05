@@ -47,19 +47,13 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
 {
 
     constructor(props: OwnProps & ConnectedDispatch) {
-        super(props);
-
-        this.onZftClick = this.onZftClick.bind(this);
-
-
+        super(props);        
     }
 
     render(): any {
 
         return (
-            <div                
-                onClickCapture={this.onZftClick}
-            >
+            <div>
 
                 {/*NO Es multi, es formulario*/}
                 {((this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREAR
@@ -107,16 +101,5 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
             </div>
         );
     }
-
-
-    onZftClick(e: any) {
-        if (this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV) {
-            
-            if(this.props.zFormaTabla.esRegionActiva){
-                return;
-            }
-                        
-            //this.props.onSaltarMov(this.props.zFormaTabla, (this.props.zftIndex + 1));
-        }
-    }
+    
 }

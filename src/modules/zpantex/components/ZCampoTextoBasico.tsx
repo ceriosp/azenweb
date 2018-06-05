@@ -53,7 +53,8 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
                 readOnly={this.props.readOnly || this.props.estaProcesandoRequestServidor}
                 disabled={zCampoModel.readOnly}
                 style={{
-                    borderColor: zCampoModel.haCambiado ? '#337AB7' : ''
+                    borderColor: zCampoModel.haCambiado ? '#337AB7' : '',
+                    textAlign: zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO ? 'right' : 'left'
                 }}
             />
         );

@@ -41,7 +41,7 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
         return (
             <div
                 style={{
-                    marginBottom: "10px"
+                    marginBottom: "5px"
                 }}
             >
                 <ButtonGroup bsSize="small">

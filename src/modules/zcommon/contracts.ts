@@ -191,6 +191,8 @@ export interface IZFormaTablaState extends IdEntityBase { //zft
     linEstState: Array<IZComandoFormaState>;
     btnsState: Array<IZComandoFormaState>;
 
+    rg: number; //región
+
     //Para zfts que son multi:
     filasCamposList: Array<IZFilaCamposState>;
     numCampos: number;
@@ -205,9 +207,10 @@ export interface IZFormaTablaState extends IdEntityBase { //zft
 
 export class ZFormaTablaState implements IZFormaTablaState { //zft
 
-    constructor(id: number, numPx:number, numCampos: number) {
+    constructor(id: number, numPx:number, rg: number, numCampos: number) {
         this.id = id;
         this.numPx = numPx;
+        this.rg = rg;
         this.zCampoStateListIds = new Array<number>();
         this.linEstListIds = new Array<number>();
         this.btnsListIds = new Array<number>();
@@ -229,6 +232,8 @@ export class ZFormaTablaState implements IZFormaTablaState { //zft
     cmpsState: Array<IZCampoState>;
     linEstState: Array<IZComandoFormaState>;
     btnsState: Array<IZComandoFormaState>;
+
+    rg: number; //región
 
     //Para zfts que son multi:
     filasCamposList: Array<IZFilaCamposState>;
