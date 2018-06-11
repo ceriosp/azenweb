@@ -14,13 +14,14 @@ import {
     IZMenuItem,
     IZMenu
 } from '../../zcommon/contracts';
-import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma, IZFormaTablaState, IZCampoState, ZFilaCamposState, IZFilaCamposState } from "../../zcommon";
+import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma, IZFormaTablaState, IZCampoState, ZFilaCamposState, IZFilaCamposState, Constants as ZCommonConstants } from "../../zcommon";
 import ZCampo from "./ZCampo";
 
 import { Constants } from "../constants";
 
 export interface OwnProps {
     zFormaTabla: IZFormaTablaState;
+    tipoCmdPantex:ZCommonConstants.ComandoEnum;
 }
 
 export interface ConnectedDispatch {
@@ -76,6 +77,7 @@ export class ZFormaTablaMov extends React.PureComponent<OwnProps & ConnectedDisp
                                                     <ZCampo
                                                         zCampo={zcampoI}
                                                         zFormaTabla={this.props.zFormaTabla}
+                                                        tipoCmdPantex={this.props.tipoCmdPantex}
                                                     />
                                                 </td>
                                             );

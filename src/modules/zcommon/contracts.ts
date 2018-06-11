@@ -817,7 +817,7 @@ export interface IZAplState {
     azenURL: string;
 
     //Datos parametros: [mes:año:bd:usuario:uid]
-    parametrosActivacion:string;
+    parametrosActivacionObj: IParametrosActivacionObj;
 
     nivelLog:number; //0:no log, 1:log de todo, 2:sólo errores.
 
@@ -834,6 +834,15 @@ export interface IZAplState {
     zPantexStateModule: IZPantexStateModule;
     zLoginModule: IZLoginModule;
     zrptModule: IZrptModule;
+}
+
+export interface IParametrosActivacionObj {
+    usuario:string;
+    uid:string;
+    anio:number;
+    mes:string;
+    numeroMes:number;
+    bd:string;
 }
 
 export interface IZMenuModule {

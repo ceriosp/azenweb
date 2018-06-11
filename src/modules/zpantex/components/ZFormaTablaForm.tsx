@@ -59,6 +59,7 @@ export class ZFormaTablaForm extends React.PureComponent<OwnProps & ConnectedDis
                         >
                             <ZCampo
                                 zFormaTabla={this.props.zFormaTabla}
+                                tipoCmdPantex={this.props.zPantex.tipoCmdPantex}
                                 zCampo={zcampoAPintar}
                             />
                         </Col>

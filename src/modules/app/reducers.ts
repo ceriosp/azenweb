@@ -1,5 +1,5 @@
 import { Reducer, combineReducers } from 'redux';
-import { IZAplState } from "../zcommon/contracts";
+import { IZAplState, IParametrosActivacionObj } from "../zcommon/contracts";
 
 import * as ZComunicaciones from '../zcomunicaciones';
 import * as ZLogin from '../zlogin';
@@ -43,16 +43,16 @@ export namespace Reducers {
         return state;
     }
 
-    export const parametrosActivacion = (state: string = null, action: ActionTypes.Action): string => {
+    export const parametrosActivacionObj = (state: IParametrosActivacionObj = {} as IParametrosActivacionObj, action: ActionTypes.Action): IParametrosActivacionObj => {
 
         switch (action.type) {
-            case ActionTypes.SET_PARAMETROSACTIVACION:
-                return action.parametrosActivacion;
+            case ActionTypes.SET_PARAMETROSACTIVACIONOBJ:
+                return action.parametrosActivacionObj;
         }
 
         return state;
     }
-
+    
     export const nivelLog = (state: number = null, action: ActionTypes.Action): number => {
 
         switch (action.type) {
@@ -99,7 +99,7 @@ export namespace Reducers {
         nomApl: nomApl,
         azenURL: azenURL,
 
-        parametrosActivacion: parametrosActivacion,
+        parametrosActivacionObj: parametrosActivacionObj,
 
         nivelLog: nivelLog,
 

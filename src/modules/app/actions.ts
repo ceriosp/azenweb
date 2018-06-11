@@ -3,6 +3,7 @@ import {
 } from "../zcommon/Constants";
 
 import { ActionTypes } from "./actionTypes";
+import { IParametrosActivacionObj } from "../zcommon";
 
 export namespace Actions {
 
@@ -21,9 +22,9 @@ export namespace Actions {
         azenURL
     });
 
-    export const setParametrosActivacion = (parametrosActivacion: string = null): ActionTypes.Action => ({
-        type: ActionTypes.SET_PARAMETROSACTIVACION,
-        parametrosActivacion
+    export const setParametrosActivacionObj = (parametrosActivacionObj: IParametrosActivacionObj): ActionTypes.Action => ({
+        type: ActionTypes.SET_PARAMETROSACTIVACIONOBJ,
+        parametrosActivacionObj
     });
 
     export const setNivelLog = (nivelLog: number = 0): ActionTypes.Action => ({

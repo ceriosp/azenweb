@@ -25,7 +25,8 @@ import {
     State,
     ZMenuState,
     IZMenu,
-    IZMenuItem
+    IZMenuItem,
+    IParametrosActivacionObj
 } from '../../zcommon';
 
 export interface OwnProps {
@@ -37,7 +38,7 @@ export interface ConnectedState {
     idApl: string;
     username: string;
 
-    parametrosActivacion: string;
+    parametrosActivacionObj: IParametrosActivacionObj;
 
     ponerModal: boolean;
     estaProcesandoRequestServidor: boolean;
@@ -47,19 +48,15 @@ export interface ConnectedState {
 export interface ConnectedDispatch {
     despacharOpcionMenu: (zmenuItemModel: ZMenuItemModel) => void;
 
-    activarLogConsola: (nivelLog:number) => void;
+    activarLogConsola: (nivelLog: number) => void;
 }
 
 import { ZMenuItemContainer } from '../containers/ZMenuItemContainer';
 
 export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    parametrosActivacionComp: Array<string>;
-
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
-
-        this.parametrosActivacionComp = [];
 
         this.despacharOpcionMenu = this.despacharOpcionMenu.bind(this);
         this.activarLogConsola = this.activarLogConsola.bind(this);
@@ -78,7 +75,9 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
                     ? null
                     : { zIndex: 1000000 }}>
                 <Navbar.Header>
-                    <Navbar.Brand> <a href="javascript:void(0);">{idApl}</a> </Navbar.Brand>
+                    <Navbar.Brand>
+                        <a href="javascript:void(0);">{idApl}</a>
+                    </Navbar.Brand>
                     <Navbar.Toggle></Navbar.Toggle>
                 </Navbar.Header>
                 <Navbar.Collapse>
@@ -94,16 +93,16 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
                             );
                         })}
                     </Nav>
-                    {this.parametrosActivacionComp.length > 1 && (
+                    {this.props.parametrosActivacionObj.bd && (
                         <Nav>
                             <NavItem eventKey={1} href="#">
-                                <Glyphicon glyph="user" /> {this.parametrosActivacionComp[3]}, {this.parametrosActivacionComp[4]}
+                                <Glyphicon glyph="user" /> {this.props.parametrosActivacionObj.usuario}, {this.props.parametrosActivacionObj.uid}
                             </NavItem>
                             <NavItem eventKey={1} href="#">
-                                <Glyphicon glyph="calendar" /> {this.parametrosActivacionComp[0]}, {this.parametrosActivacionComp[1]}
+                                <Glyphicon glyph="calendar" /> {this.props.parametrosActivacionObj.mes}, {this.props.parametrosActivacionObj.anio}
                             </NavItem>
                             <NavItem eventKey={1} href="#" onDoubleClick={this.activarLogConsola}>
-                                <Glyphicon glyph="tasks" /> {this.parametrosActivacionComp[2]}
+                                <Glyphicon glyph="tasks" /> {this.props.parametrosActivacionObj.bd}
                             </NavItem>
                         </Nav>
                     )}
@@ -116,13 +115,7 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
         this.props.despacharOpcionMenu(zmenuItemModel);
     }
 
-    componentWillReceiveProps(nextProps: ConnectedState) {
-        if (nextProps.parametrosActivacion) {
-            this.parametrosActivacionComp = nextProps.parametrosActivacion.split(":");
-        }
-    }
-
-    activarLogConsola(e:any){
+    activarLogConsola(e: any) {
         this.props.activarLogConsola(1);
     }
 }

@@ -28,6 +28,7 @@ import { Constants } from '../../zutils';
 
 interface OwnProperties {
     zFormaTabla: IZFormaTablaState;
+    tipoCmdPantex:ZCommon.Constants.ComandoEnum;
     zCampo: IZCampoState;
 }
 
@@ -65,6 +66,7 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
             return <ZCampoGrafico
                 zCampoGrafico={zCampo}
                 zFormaTabla={zFormaTabla}
+                tipoCmdPantex={this.props.tipoCmdPantex}
             />
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_NOINDICADOR) {
@@ -75,7 +77,7 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
                 />;
             }
             else if (zCampo.tipo == ZCommon.Constants.TipoCampoEnum.TIPO_FECHA) {
-                return <ZCampoFechaContainer zCampoModel={zCampo} />
+                return <ZCampoFechaContainer zCampoModel={zCampo} zFormaTabla={this.props.zFormaTabla} tipoCmdPantex={this.props.tipoCmdPantex} />
             }
             return <ZCampoTextboxContainer
                 zCampoModel={zCampo}

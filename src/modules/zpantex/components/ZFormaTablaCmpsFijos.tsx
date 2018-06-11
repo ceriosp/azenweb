@@ -27,6 +27,7 @@ import ZCampo from "./ZCampo";
 
 export interface OwnProps {
     zFormaTabla: IZFormaTablaState;
+    tipoCmdPantex:ZCommonConstants.ComandoEnum;
 }
 
 export interface ConnectedDispatch {
@@ -58,6 +59,7 @@ export class ZFormaTablaCmpsFijos extends React.PureComponent<OwnProps & Connect
                             >
                                 <ZCampo
                                     zFormaTabla={this.props.zFormaTabla}
+                                    tipoCmdPantex={this.props.tipoCmdPantex}
                                     zCampo={zcampoAPintar}
                                 />
                             </Col>

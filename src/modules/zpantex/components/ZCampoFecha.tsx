@@ -19,15 +19,20 @@ var DateTime = require('react-datetime');
 import {
     Constants as ZCommonConstants,
     IZCampoState,
+    IParametrosActivacionObj,
+    IZFormaTablaState,
 } from "../../zcommon";
 import { ZCampoTextoBasicoContainer } from '../containers/ZCampoTextoBasicoContainer';
 
 export interface OwnProps {
     zCampoModel: IZCampoState;
+    zFormaTabla: IZFormaTablaState;
+    tipoCmdPantex: ZCommonConstants.ComandoEnum;
 }
 
 export interface ConnectedState {
     estaProcesandoRequestServidor: boolean;
+    parametrosActivacionObj: IParametrosActivacionObj;
 }
 
 export interface ConnectedDispatch {
@@ -36,25 +41,31 @@ export interface ConnectedDispatch {
 
 export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
+
+    fecha: Date;
+    formato: string = "DD/MM/YYYY";
+
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
+
+        this.fecha = this.props.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV && this.props.zFormaTabla.rg == 1 
+        ? new Date(this.props.parametrosActivacionObj.anio, this.props.parametrosActivacionObj.numeroMes-2)
+        : new Date();
 
         this.limpiarCampo = this.limpiarCampo.bind(this);
         this.renderFecha = this.renderFecha.bind(this);
         this.onChange = this.onChange.bind(this);
     }
 
-    render() {
-        const { zCampoModel } = this.props;
-        const disabled = this.props.estaProcesandoRequestServidor || zCampoModel.readOnly;
-        const formato = "DD/MM/YYYY";
-
+    render() {        
+        const disabled = this.props.estaProcesandoRequestServidor || this.props.zCampoModel.readOnly;
         return (
             <DateTime
-                dateFormat={formato}
+                dateFormat={this.formato}
                 timeFormat={false}
-                inputProps={{ title: 'formato ' + formato, disabled: disabled, readOnly: true }}
+                inputProps={{ title: 'formato ' + this.formato, disabled: disabled, readOnly: true }}
                 closeOnSelect={true}
+                viewDate={this.fecha}
                 onChange={this.onChange}
                 renderInput={this.renderFecha}
             />
@@ -67,7 +78,7 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
         const fechaConFormato = zCampoModel.value && zCampoModel.value != "00000000"
             ? zCampoModel.value.substring(0, 2) + "/" + zCampoModel.value.substring(2, 4) + "/" + zCampoModel.value.substring(4, 8)
             : "";
-            
+
         const disabled = this.props.estaProcesandoRequestServidor || zCampoModel.readOnly;
 
         return (

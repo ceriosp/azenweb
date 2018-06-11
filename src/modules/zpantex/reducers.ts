@@ -383,9 +383,9 @@ export namespace Reducers {
             const actualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
 
                 if (action.listaPxCampos.indexOf(zcampoState.px) != -1) {
-
+                    
                     let key = zcampoState.nomCmp;
-                    if (zcampoState.fi != 0) {
+                    if (zcampoState.fi != undefined) {
                         key = ContractsServices.getSincHashCampo(zcampoState);
                     }
 

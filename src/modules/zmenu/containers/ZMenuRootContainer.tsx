@@ -25,7 +25,7 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     idApl: appState.idApl,
     username: appState.zLoginModule.username,
 
-    parametrosActivacion: appState.parametrosActivacion,
+    parametrosActivacionObj: appState.parametrosActivacionObj,
 
     ponerModal: appState.zPantexStateModule.ponerModal,
 

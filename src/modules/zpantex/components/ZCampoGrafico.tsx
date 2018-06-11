@@ -12,13 +12,15 @@ import {
     IZCampo,
     IZFormaTabla,
     IZCampoState,
-    IZFormaTablaState
+    IZFormaTablaState,
+    Constants as ZCommonConstants
 } from "../../zcommon";
 
 import ZCampo from './ZCampo';
 
 interface OwnProperties {
     zFormaTabla: IZFormaTablaState;
+    tipoCmdPantex:ZCommonConstants.ComandoEnum;
     zCampoGrafico: IZCampoState;
 }
 
@@ -43,6 +45,7 @@ export default class ZCampoGrafico extends React.PureComponent<OwnProperties, un
                                         <ZCampo
                                             zCampo={zCampoI}
                                             zFormaTabla={zFormaTabla}
+                                            tipoCmdPantex={this.props.tipoCmdPantex}
                                         />
                                     </Col>
                                 );                                    
@@ -52,6 +55,7 @@ export default class ZCampoGrafico extends React.PureComponent<OwnProperties, un
                                     <ZCampo
                                         zCampo={zCampoI}
                                         zFormaTabla={zFormaTabla}
+                                        tipoCmdPantex={this.props.tipoCmdPantex}
                                     />
                                 </Col>
                             );
@@ -68,6 +72,7 @@ export default class ZCampoGrafico extends React.PureComponent<OwnProperties, un
                                 <ZCampo
                                     zCampo={zCampoI}
                                     zFormaTabla={zFormaTabla}
+                                    tipoCmdPantex={this.props.tipoCmdPantex}
                                 />
                             </Col>
                         );
@@ -84,6 +89,7 @@ export default class ZCampoGrafico extends React.PureComponent<OwnProperties, un
                             <ZCampo
                                 zCampo={zCampoI}
                                 zFormaTabla={zFormaTabla}
+                                tipoCmdPantex={this.props.tipoCmdPantex}
                             />
                         </Col>
                     );

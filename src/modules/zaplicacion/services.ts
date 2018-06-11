@@ -1,6 +1,6 @@
 import * as ZCommon from '../zcommon';
 import {
-    IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList, IZCampo, CM, IZCampoState, IZComandoFormaState, ContractsServices
+    IZColaEventos, IZAplState, IZEvento, IZMenu, IZPantex, IZLoginModule, IZAplList, IZCampo, CM, IZCampoState, IZComandoFormaState, ContractsServices, IParametrosActivacionObj
 } from '../zcommon';
 
 import * as ZMenu from '../zmenu';
@@ -10,6 +10,7 @@ import { Constants as ZCommonConstants } from "../zcommon";
 import { Constants as ZPantexConstants } from "../zpantex";
 
 import { Actions as ZApppActions } from "../app/actions";
+import { Constants } from '.';
 
 let xml2js = require('xml2js');
 
@@ -159,8 +160,22 @@ export namespace Services {
                         break;
 
                     case ZCommon.Constants.ComandoEnum.CM_SINCPAR:
-                        const datosParametros = evento.dato.buffer.dato as CM.ISincBaseValor;
-                        dispatch(ZApppActions.setParametrosActivacion(datosParametros.vc));
+                        let parametrosActivacionComp: Array<string> = (evento.dato.buffer.dato as CM.ISincBaseValor).vc.split(":");
+
+                        let parametrosActivacionObj = {} as IParametrosActivacionObj;
+
+                        if (parametrosActivacionComp.length > 0) {
+                            parametrosActivacionObj = {
+                                mes:parametrosActivacionComp[0],
+                                anio: parseInt(parametrosActivacionComp[1]),
+                                bd:parametrosActivacionComp[2],
+                                usuario:parametrosActivacionComp[3],
+                                uid:parametrosActivacionComp[4],                                                                
+                                numeroMes:ZCommonConstants.mesNroMes.get(parametrosActivacionComp[0].toLowerCase()),
+                            } as IParametrosActivacionObj;
+                        }
+
+                        dispatch(ZApppActions.setParametrosActivacionObj(parametrosActivacionObj));
                         dispatch(ZMenu.Actions.ZMenuModule.setZMenu(zmenu));
                         break;
 
@@ -273,16 +288,16 @@ export namespace Services {
                     else if (cmSincCampoParametros.vc == "X") { //Checkbox
                         if (indxOn == -1) {
                             zCampoEnHash.posBitsOn.push(parseInt(cmSincCampoParametros.pb.toString()));
-                            if(indxOff != -1){
+                            if (indxOff != -1) {
                                 zCampoEnHash.posBitsOff.splice(indxOff, 1);
                             }
                         }
                     } else {
                         if (indxOff == -1) {
                             zCampoEnHash.posBitsOff.push(parseInt(cmSincCampoParametros.pb.toString()));
-                            if(indxOn != -1){
+                            if (indxOn != -1) {
                                 zCampoEnHash.posBitsOn.splice(indxOn, 1);
-                            }                            
+                            }
                         }
                     }
                 }

@@ -86,6 +86,7 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
                 ) &&
                     (<ZFormaTablaMovContainer
                         zFormaTabla={this.props.zFormaTabla}
+                        tipoCmdPantex={this.props.zPantex.tipoCmdPantex}
                     />)
                 }
 
@@ -94,6 +95,7 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
                     && (
                         <ZFormaTablaCmpsFijos
                             zFormaTabla={this.props.zFormaTabla}
+                            tipoCmdPantex={this.props.zPantex.tipoCmdPantex}
                         />
                     )
                 }

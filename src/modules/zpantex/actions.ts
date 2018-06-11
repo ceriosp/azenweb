@@ -154,7 +154,7 @@ export namespace Actions {
             if (zFormaTabla.ven.numLinsDatos > 0) {
                 for (let fila = 0; fila <= zFormaTabla.ven.numLinsDatos; fila++) {
                     for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                        const zcampoModel = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, idZft, fila + 1);
+                        const zcampoModel = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, idZft, fila);
 
                         //Campos fijos, ingresarlos sólo una vez en una nueva fila al final
                         if (fila == zFormaTabla.ven.numLinsDatos && zcampoModel.esFijo) {
@@ -180,7 +180,7 @@ export namespace Actions {
             }
             else { //No es multi                
                 for (let i = 0; i < zFormaTabla.cmps.length; i++) {
-                    zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, idZft, 0);
+                    zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, idZft, undefined);
                     zCampoState.allIds.push(id);
                     zFormaTablaCmpsIds.push(id);
                     if (zFormaTabla.cmps[i].cmps) {
@@ -188,7 +188,7 @@ export namespace Actions {
                         zCampoState.byId[id].esCampoGrafico = true;
                         for (let j = 0; j < zFormaTabla.cmps[i].cmps.length; j++) {
                             id++;
-                            zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id, zPantex.numPx, region, idZft, 0);
+                            zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i].cmps[j], id, zPantex.numPx, region, idZft, undefined);
                             zCampoState.byId[id].parentId = parentId;
                             zCampoState.allIds.push(id);
                             zFormaTablaCmpsIds.push(id);
