@@ -38,13 +38,16 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     }
 
     render() {
-        const { zCampoModel, valor } = this.props;
+
+        let { zCampoModel, valor } = this.props;        
+        valor = valor ? valor : zCampoModel.value;
 
         return (
             <FormControl
                 type="text"                
                 name={zCampoModel.nomCmp}
-                value={valor ? valor : zCampoModel.value}                
+                value={valor}
+                title={valor}
                 onFocus={this.onFocus}
                 onChange={this.onChange}
                 onBlur={this.onBlur}
