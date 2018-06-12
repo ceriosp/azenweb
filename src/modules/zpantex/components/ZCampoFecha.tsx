@@ -15,6 +15,7 @@ import {
     Ref: https://github.com/YouCanBookMe/react-datetime
 */}
 var DateTime = require('react-datetime');
+var moment = require('moment');
 
 import {
     Constants as ZCommonConstants,
@@ -41,23 +42,37 @@ export interface ConnectedDispatch {
 
 export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-
-    fecha: Date;
     formato: string = "DD/MM/YYYY";
+    fechaConFormato: string = "";
+    fechaMoment: any;
 
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
-
-        this.fecha = this.props.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV && this.props.zFormaTabla.rg == 1 
-        ? new Date(this.props.parametrosActivacionObj.anio, this.props.parametrosActivacionObj.numeroMes-2)
-        : new Date();
 
         this.limpiarCampo = this.limpiarCampo.bind(this);
         this.renderFecha = this.renderFecha.bind(this);
         this.onChange = this.onChange.bind(this);
     }
 
-    render() {        
+    render() {
+
+        const { zCampoModel } = this.props;
+
+        this.fechaConFormato = "";
+
+        if (zCampoModel.value && zCampoModel.value != "00000000") {
+            this.fechaConFormato =
+                zCampoModel.value.substring(0, 2) + "/"
+                + zCampoModel.value.substring(2, 4) + "/"
+                + zCampoModel.value.substring(4, 8);
+
+            this.fechaMoment = moment(this.fechaConFormato, this.formato, true).format('L');
+        } else {
+            this.fechaMoment = this.props.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV && this.props.zFormaTabla.rg == 1
+                ? moment(new Date(this.props.parametrosActivacionObj.anio, this.props.parametrosActivacionObj.numeroMes, 15), this.formato)
+                : moment(); //Si no es encabezado de movimiento es fecha actual.
+        }
+
         const disabled = this.props.estaProcesandoRequestServidor || this.props.zCampoModel.readOnly;
         return (
             <DateTime
@@ -65,7 +80,7 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
                 timeFormat={false}
                 inputProps={{ title: 'formato ' + this.formato, disabled: disabled, readOnly: true }}
                 closeOnSelect={true}
-                viewDate={this.fecha}
+                value={this.fechaMoment}
                 onChange={this.onChange}
                 renderInput={this.renderFecha}
             />
@@ -75,9 +90,6 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
     renderFecha(props: any, openCalendar: any, closeCalendar: any) {
 
         const { zCampoModel } = this.props;
-        const fechaConFormato = zCampoModel.value && zCampoModel.value != "00000000"
-            ? zCampoModel.value.substring(0, 2) + "/" + zCampoModel.value.substring(2, 4) + "/" + zCampoModel.value.substring(4, 8)
-            : "";
 
         const disabled = this.props.estaProcesandoRequestServidor || zCampoModel.readOnly;
 
@@ -91,7 +103,7 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
                         <InputGroup>
                             <ZCampoTextoBasicoContainer
                                 zCampoModel={zCampoModel}
-                                valor={fechaConFormato}
+                                valor={this.fechaConFormato}
                                 readOnly={true}
                             />
                             {/*
@@ -114,21 +126,21 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
         );
     }
 
-    onChange(moment: any) {
+    onChange(momentChanged: any) {
 
         if (this.props.zCampoModel.readOnly) {
             return;
         }
 
-        const dia = moment._d.getDate() < 10
-            ? "0" + moment._d.getDate().toString()
-            : moment._d.getDate();
+        const dia = momentChanged._d.getDate() < 10
+            ? "0" + momentChanged._d.getDate().toString()
+            : momentChanged._d.getDate();
 
-        const mes = (moment._d.getMonth() + 1) < 10
-            ? "0" + (moment._d.getMonth() + 1).toString()
-            : (moment._d.getMonth() + 1);
+        const mes = (momentChanged._d.getMonth() + 1) < 10
+            ? "0" + (momentChanged._d.getMonth() + 1).toString()
+            : (momentChanged._d.getMonth() + 1);
 
-        const valorFecha = dia.toString() + mes.toString() + moment._d.getFullYear().toString();
+        const valorFecha = dia.toString() + mes.toString() + momentChanged._d.getFullYear().toString();
 
         this.props.onCampoChangedEnviarCmd(this.props.zCampoModel, valorFecha);
     }
