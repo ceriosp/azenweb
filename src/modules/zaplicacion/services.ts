@@ -174,9 +174,7 @@ export namespace Services {
                                 numeroMes:ZCommonConstants.mesNroMes.get(parametrosActivacionComp[0].toLowerCase()),
                             } as IParametrosActivacionObj;
                         }
-
-                        dispatch(ZApppActions.setParametrosActivacionObj(parametrosActivacionObj));
-                        dispatch(ZMenu.Actions.ZMenuModule.setZMenu(zmenu));
+                        dispatch(ZApppActions.setParametrosActivacionObj(parametrosActivacionObj));                        
                         break;
 
                     //Comandos aplicación

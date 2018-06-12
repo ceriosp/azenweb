@@ -141,10 +141,4 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
             </div>
         );
     }
-
-    shouldComponentUpdate(nextProps: ConnectedState, nextState: any) {
-        return this.props.ultimoComandoEnviado == ZCommonConstants.ComandoEnum.CM_CERRAR ||
-            this.props.zPantex.id == this.props.pxAlTope;
-    }
-
 }
