@@ -108,6 +108,8 @@ export interface IZVentanaBase {
     nomTbl: string;
     nomRcrZoom: string;
     numLinsDatos: number; //Si es multi > 1
+
+    factorDivision: number;
 }
 
 export interface IZVentana extends IZVentanaBase {
@@ -424,6 +426,8 @@ export class ZVentanaState implements IZVentanaState {
         this.nomTbl = zVentana.nomTbl;
         this.nomRcrZoom = zVentana.nomRcrZoom;
         this.numLinsDatos = zVentana.numLinsDatos;
+
+        this.factorDivision = zVentana.factorDivision;
     }
 
     id: number;
@@ -434,6 +438,8 @@ export class ZVentanaState implements IZVentanaState {
     nomTbl: string;
     nomRcrZoom: string;
     numLinsDatos: number; //Si es multi > 1    
+
+    factorDivision: number;
 }
 
 

@@ -100,6 +100,8 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                         {((zftIndex == 0)) && ( //linea estado encabezado
                                             <ZLineaEstadoContainer
                                                 linEst={zFormaTablaI.linEstState}
+                                                zFormaTablaState={zFormaTablaI}
+                                                tipoCmdPantex={this.props.zPantex.tipoCmdPantex}
                                             />
                                         )}
                                     
@@ -108,6 +110,8 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                                 <Col xs={12} sm={6} md={3} smOffset={6} mdOffset={9}>
                                                     <ZLineaEstadoContainer
                                                         linEst={zFormaTablaI.linEstState}
+                                                        zFormaTablaState={zFormaTablaI}
+                                                        tipoCmdPantex={this.props.zPantex.tipoCmdPantex}
                                                     />
                                                 </Col>
                                             </Row>

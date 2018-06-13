@@ -5,25 +5,28 @@ import {
     ButtonGroup,
     ButtonToolbar,
     Well,
+    Glyphicon
 } from 'react-bootstrap';
 
 import * as ZCommon from "../../zcommon";
-import {    
-    IZComandoFormaState
+import {
+    IZComandoFormaState, IZFormaTablaState
 } from "../../zcommon";
 
 import { Services } from "../services";
 
 export interface OwnProperties {
-    linEst: Array<IZComandoFormaState>
+    linEst: Array<IZComandoFormaState>;
+    zFormaTablaState: IZFormaTablaState;
+    tipoCmdPantex: ZCommon.Constants.ComandoEnum;
 }
 
 export interface ConnectedState {
-    estaProcesandoRequestServidor: boolean;
+    estaProcesandoRequestServidor: boolean;    
 }
 
 export interface ConnectedDispatch {
-    despacharComandoLineaEstado : (zcomandoFormaState: IZComandoFormaState)=> void;
+    despacharComandoLineaEstado: (zcomandoFormaState: IZComandoFormaState) => void;
 }
 
 export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedState & ConnectedDispatch, undefined>
@@ -50,7 +53,7 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
                         return (
                             <Button
                                 key={zComandoI.id}
-                                bsStyle="info"                                
+                                bsStyle={this.props.tipoCmdPantex != ZCommon.Constants.ComandoEnum.CM_PXCREARMOV || this.props.zFormaTablaState.esRegionActiva ? "info" : "default"}
                                 title={zComandoI.etq + "-" + zComandoI.cmd}
                                 disabled={zComandoI.desh == 1}
                                 onClick={() => this.despacharComandoLineaEstado(zComandoI)}
@@ -63,6 +66,9 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
                         );
                     })}
                 </ButtonGroup>
+                {this.props.zFormaTablaState.esRegionActiva && (
+                    <Glyphicon style={{ marginLeft:"10px", color: "#629261" }} glyph="ok-circle" />
+                )}                
             </div>
         );
     }
