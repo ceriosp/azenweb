@@ -90,6 +90,8 @@ export namespace Actions {
             for (let i = 0; i < zPantex.zFormaTablaList.length; i++) {
                 zFormaTablaState.byId[id] = new ZFormaTablaStateModel(id, zPantex.numPx, (i+1), zPantex.zFormaTablaList[i].cmps.length);
 
+                zFormaTablaState.byId[id].esRegionActiva = i == 0;
+
                 zFormaTablaState.byId[id].idZVentana =
                     agregarZVentanaState(getStateFn, zPantex, zPantex.zFormaTablaList[i], id, zVentanaState);
 

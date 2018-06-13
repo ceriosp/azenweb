@@ -22,7 +22,7 @@ export interface OwnProperties {
 }
 
 export interface ConnectedState {
-    estaProcesandoRequestServidor: boolean;    
+    estaProcesandoRequestServidor: boolean;
 }
 
 export interface ConnectedDispatch {
@@ -53,7 +53,7 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
                         return (
                             <Button
                                 key={zComandoI.id}
-                                bsStyle={this.props.tipoCmdPantex != ZCommon.Constants.ComandoEnum.CM_PXCREARMOV || this.props.zFormaTablaState.esRegionActiva ? "info" : "default"}
+                                bsStyle={this.props.zFormaTablaState.esRegionActiva ? "info" : "default"}
                                 title={zComandoI.etq + "-" + zComandoI.cmd}
                                 disabled={zComandoI.desh == 1}
                                 onClick={() => this.despacharComandoLineaEstado(zComandoI)}
@@ -66,9 +66,11 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
                         );
                     })}
                 </ButtonGroup>
-                {this.props.zFormaTablaState.esRegionActiva && (
-                    <Glyphicon style={{ marginLeft:"10px", color: "#629261" }} glyph="ok-circle" />
-                )}                
+                {this.props.tipoCmdPantex == ZCommon.Constants.ComandoEnum.CM_PXCREARMOV 
+                && this.props.zFormaTablaState.esRegionActiva
+                    && (
+                        <Glyphicon style={{ marginLeft: "10px", color: "#629261" }} glyph="ok-circle" />
+                    )}
             </div>
         );
     }
