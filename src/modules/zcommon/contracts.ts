@@ -849,6 +849,7 @@ export interface IParametrosActivacionObj {
     mes:string;
     numeroMes:number;
     bd:string;
+    
 }
 
 export interface IZMenuModule {

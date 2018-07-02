@@ -101,7 +101,13 @@ export namespace Services {
 
                     case ZCommonConstants.ComandoEnum.CM_PXVISUALIZARRPT:
                         const visualRtpParams = evento.dato.buffer.dato as CM.IPxVisualizarRpt;
-                        window.open(trimLasCharacter(getState().azenURL, "/") + "/azenweb" + visualRtpParams.vc, "", "location=0");
+                        let rptWindow = window.open(trimLasCharacter(getState().azenURL, "/") + "/azenweb" + visualRtpParams.vc, "", "location=0");                        
+                        debugger
+                        if(visualRtpParams.vc.endsWith(".txt")){   
+                            rptWindow.addEventListener('load', function(){
+                                rptWindow.document.body.getElementsByTagName('pre')[0].removeAttribute("style");
+                            }, true);                            
+                        }                        
                         break;
 
                     case ZCommonConstants.ComandoEnum.CM_LIMPIARMULTI:
@@ -160,7 +166,7 @@ export namespace Services {
                         break;
 
                     case ZCommon.Constants.ComandoEnum.CM_SINCPAR:
-                        let parametrosActivacionComp: Array<string> = (evento.dato.buffer.dato as CM.ISincBaseValor).vc.split(":");
+                        let parametrosActivacionComp: Array<string> = (evento.dato.buffer.dato as CM.ISincBaseValor).vc.split("|");
 
                         let parametrosActivacionObj = {} as IParametrosActivacionObj;
 
