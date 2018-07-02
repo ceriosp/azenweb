@@ -102,10 +102,14 @@ export namespace Services {
                     case ZCommonConstants.ComandoEnum.CM_PXVISUALIZARRPT:
                         const visualRtpParams = evento.dato.buffer.dato as CM.IPxVisualizarRpt;
                         let rptWindow = window.open(trimLasCharacter(getState().azenURL, "/") + "/azenweb" + visualRtpParams.vc, "", "location=0");                        
-                        debugger
+                        
                         if(visualRtpParams.vc.endsWith(".txt")){   
-                            rptWindow.addEventListener('load', function(){
-                                rptWindow.document.body.getElementsByTagName('pre')[0].removeAttribute("style");
+                            rptWindow.addEventListener('load', function(){                                
+                                let preElementsArray:any;
+                                preElementsArray = rptWindow.document.body.getElementsByTagName('pre');
+                                if(preElementsArray && preElementsArray.length > 0){
+                                    preElementsArray[0].removeAttribute("style");
+                                }                                
                             }, true);                            
                         }                        
                         break;
