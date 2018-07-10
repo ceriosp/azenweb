@@ -269,7 +269,10 @@ export namespace Constants {
         ZCMP_ESLLAVEPRIMARIA = 8, //parseInt("0x100", 16),	/* es un campo que pertenece a la llave primaria  */
 
         // CERios Ago 2006. Identificacion de lista estatica
-        ZCMP_LISTAESTATICA = 9, //parseInt("0x200", 16),	
+        ZCMP_LISTAESTATICA = 9, //parseInt("0x200", 16) = Math.pow(2, 9) = 512
+
+        ZCMP_MCARGARARCHIVO = 10, //parseInt("0x400", 16) = Math.pow(2, 10) = 1024
+
         /* es lista estatica. No se indica en tipos de indicador porque  
         con ellos se hace uso del campo lonv, y se  requiere 
         en el caso de listas estaticas */

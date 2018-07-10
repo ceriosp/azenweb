@@ -414,6 +414,10 @@ export namespace Actions {
             }
 
             dispatch(setZCampoHaCambiado(zcampoState.id, false));
+            dispatch(enviarCmdCambioCmp(zcampoState, zcampoState.value));
+        }
+
+        export const enviarCmdCambioCmp = (zcampoState: IZCampoState, valor:string) => (dispatch: any, getStateFn: () => IZAplState) => {
             const buffer = `<nc>${zcampoState.nomCmp}</nc><vc>${valor}</vc>`;
             dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_CAMBIOCMP, buffer)).then(
                 (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
@@ -421,6 +425,7 @@ export namespace Actions {
                 }
             );
         }
+        
 
         export const prenderValorBitRadio = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
 

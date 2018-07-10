@@ -180,8 +180,9 @@ export namespace Services {
                                 anio: parseInt(parametrosActivacionComp[1]),
                                 bd:parametrosActivacionComp[2],
                                 usuario:parametrosActivacionComp[3],
-                                uid:parametrosActivacionComp[4],                                                                
-                                numeroMes:ZCommonConstants.mesNroMes.get(parametrosActivacionComp[0].toLowerCase()),
+                                uid:parametrosActivacionComp[4],
+                                numeroMes:ZCommonConstants.mesNroMes.get(parametrosActivacionComp[0].toLowerCase()),                                
+                                urlIframeCargarArchivo:parametrosActivacionComp[5],
                             } as IParametrosActivacionObj;
                         }
                         dispatch(ZApppActions.setParametrosActivacionObj(parametrosActivacionObj));                        

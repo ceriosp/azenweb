@@ -34,7 +34,7 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
 
     render() {
         const { zCampoModel, zFormaTabla } = this.props;
-        if (zCampoModel.esFijo || zFormaTabla.venState.numLinsDatos == 0) {
+        if (zCampoModel.esFijo || zFormaTabla.venState.numLinsDatos == 0) { //Es fijo o NO es de un multi
             return (
                 <FormGroup bsSize="small">
                     <Col md={12}>

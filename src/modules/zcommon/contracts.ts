@@ -142,7 +142,7 @@ export interface IZCampoBase {
 }
 
 export interface IZCampo extends IZCampoBase {
-    lonv: number;    
+    lonv: number;
     noEnTabla: number;
     numDec: number;
     cmps?: Array<IZCampo>;
@@ -164,12 +164,12 @@ export interface IZPantexState extends IdEntityBase {
 
     //Propiedades del state
     zFormaTablaListState: Array<IZFormaTablaState>;
-    tipoCmdPantex:Constants.ComandoEnum;
+    tipoCmdPantex: Constants.ComandoEnum;
 }
 
 export class ZPantexState implements IZPantexState {
 
-    constructor(numPx: number, tipoCmdPantex:Constants.ComandoEnum) {
+    constructor(numPx: number, tipoCmdPantex: Constants.ComandoEnum) {
         this.id = numPx;
         this.tipoCmdPantex = tipoCmdPantex;
         this.zFormaTablaStateListIds = new Array<number>();
@@ -178,7 +178,7 @@ export class ZPantexState implements IZPantexState {
     id: number; //px
     zFormaTablaStateListIds: Array<number>;
     zFormaTablaListState: Array<IZFormaTablaState>;
-    tipoCmdPantex:Constants.ComandoEnum;
+    tipoCmdPantex: Constants.ComandoEnum;
 }
 
 export interface IZFormaTablaState extends IdEntityBase { //zft
@@ -201,15 +201,15 @@ export interface IZFormaTablaState extends IdEntityBase { //zft
     indexFilaMultiSeleccionada: number;
     numFilasVisiblesMulti: number;
 
-    camposFijosList : Array<IZCampoState>; //Lista de campos fijos
+    camposFijosList: Array<IZCampoState>; //Lista de campos fijos
 
-    numPx:number;
-    esRegionActiva:boolean;//si el CM_SALTAR se ubica en el zft actual = true, sino = false
+    numPx: number;
+    esRegionActiva: boolean;//si el CM_SALTAR se ubica en el zft actual = true, sino = false
 }
 
 export class ZFormaTablaState implements IZFormaTablaState { //zft
 
-    constructor(id: number, numPx:number, rg: number, numCampos: number) {
+    constructor(id: number, numPx: number, rg: number, numCampos: number) {
         this.id = id;
         this.numPx = numPx;
         this.rg = rg;
@@ -217,7 +217,7 @@ export class ZFormaTablaState implements IZFormaTablaState { //zft
         this.linEstListIds = new Array<number>();
         this.btnsListIds = new Array<number>();
 
-        this.numCampos = numCampos;        
+        this.numCampos = numCampos;
     }
 
     id: number;
@@ -242,10 +242,10 @@ export class ZFormaTablaState implements IZFormaTablaState { //zft
     numCampos: number;
     indexFilaMultiSeleccionada: number;
 
-    camposFijosList : Array<IZCampoState>;
+    camposFijosList: Array<IZCampoState>;
 
-    numPx:number;
-    esRegionActiva:boolean;//si el CM_SALTAR se ubica en el zft actual = true, sino = false
+    numPx: number;
+    esRegionActiva: boolean;//si el CM_SALTAR se ubica en el zft actual = true, sino = false
 }
 
 export interface IZFilaCamposState {
@@ -266,7 +266,7 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
     id: number;
     px: number;
     rg: number; //región
-    idZft:number; //id zft en el estado
+    idZft: number; //id zft en el estado
     fi: number; //fila
     value: any;
     readOnly: boolean;
@@ -290,14 +290,16 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
     bitPrenderModo: number;
     bitApagarModo: number;
 
-    autoFocus:boolean; //El campo tiene el foco
+    autoFocus: boolean; //El campo tiene el foco
 
     esFijo: boolean; //El campo es fijo (Descripción)
+
+    esArchivo: boolean;
 }
 
 export class ZCampoState implements IZCampoState {
 
-    constructor(zcampo: IZCampo, id: number, px: number, rg: number, idZft:number, fila: number) {
+    constructor(zcampo: IZCampo, id: number, px: number, rg: number, idZft: number, fila: number) {
 
         this.id = id;
         this.px = px;
@@ -327,15 +329,21 @@ export class ZCampoState implements IZCampoState {
         this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;
 
         this.autoFocus = false;
-        
+
         this.esFijo = ContractsServices.Binario.estaPrendidoBit(zcampo.modo, Constants.ModoCampoEnum.ZCMP_MFIJO);
+
+        if (rg == 1) {
+            this.esArchivo = ContractsServices.Binario.estaPrendidoBit(zcampo.modo, Constants.ModoCampoEnum.ZCMP_MCARGARARCHIVO);
+        } else {
+            this.esArchivo = false;
+        }
     }
 
     //Propiedades para manejo de estado
     id: number;
     px: number;
     rg: number;
-    idZft:number; //id zft en el estado
+    idZft: number; //id zft en el estado
     fi: number;
     value: string;
     readOnly: boolean;
@@ -368,8 +376,10 @@ export class ZCampoState implements IZCampoState {
     bitPrenderModo: number;
     bitApagarModo: number;
 
-    autoFocus:boolean;
+    autoFocus: boolean;
     esFijo: boolean; //El campo es fijo (Descripción)
+
+    esArchivo: boolean;
 }
 
 export interface IZComandoFormaState extends IZComandoForma {
@@ -377,12 +387,12 @@ export interface IZComandoFormaState extends IZComandoForma {
     px: number;
     rg: number;
 
-    idZft:number;
+    idZft: number;
 }
 
 export class ZComandoFormaState implements IZComandoFormaState {
 
-    constructor(zComandoForma: IZComandoForma, id: number, px: number, rg: number, idZft:number) {
+    constructor(zComandoForma: IZComandoForma, id: number, px: number, rg: number, idZft: number) {
 
         this.id = id;
         this.px = px;
@@ -402,7 +412,7 @@ export class ZComandoFormaState implements IZComandoFormaState {
     id: number;
     px: number;
     rg: number;
-    idZft:number;
+    idZft: number;
 
     //Propiedades de IZComandoFormaState
     etq: string;
@@ -541,7 +551,7 @@ export namespace CM {
         [Constants.ComandoEnum.CM_ELIMINARLINEA, {
             icono: "glyphicon glyphicon-minus-sign"
         } as IZComandoDefinicion],
-        
+
     ]);
 
     /**
@@ -598,7 +608,7 @@ export namespace CM {
          */
         pb: number;
     }
-    
+
     /**
      * Responde a zcommon.Constants.ComandoEnum.CM_SINCCAMPO - 119
      * Sincroniza el dato del campo entre lógica y presentación
@@ -667,7 +677,7 @@ export namespace CM {
      * Pone título a la ventana
      * Estado: implementado
      */
-    export interface IModificar  extends ICambiarTituloVentana {
+    export interface IModificar extends ICambiarTituloVentana {
 
     }
 
@@ -687,7 +697,7 @@ export namespace CM {
      * Pone título a la ventana
      * Estado: implementado
      */
-    export interface IConsultar  extends ICambiarTituloVentana {
+    export interface IConsultar extends ICambiarTituloVentana {
 
     }
 
@@ -792,7 +802,7 @@ export namespace CM {
          */
         nc: string
     }
-    
+
     export interface ILimpiarMulti extends ISincBase {
 
         /**
@@ -806,7 +816,7 @@ export namespace CM {
          * 
          */
         vc: string;
-    }    
+    }
 }
 
 export interface IZParametrosComando extends IdEntityBase {
@@ -825,7 +835,7 @@ export interface IZAplState {
     //Datos parametros: [mes:año:bd:usuario:uid]
     parametrosActivacionObj: IParametrosActivacionObj;
 
-    nivelLog:number; //0:no log, 1:log de todo, 2:sólo errores.
+    nivelLog: number; //0:no log, 1:log de todo, 2:sólo errores.
 
     //UI
     estaProcesandoRequestServidor: boolean;
@@ -843,13 +853,14 @@ export interface IZAplState {
 }
 
 export interface IParametrosActivacionObj {
-    usuario:string;
-    uid:string;
-    anio:number;
-    mes:string;
-    numeroMes:number;
-    bd:string;
-    
+    usuario: string;
+    uid: string;
+    anio: number;
+    mes: string;
+    numeroMes: number;
+    bd: string;
+
+    urlIframeCargarArchivo:string;
 }
 
 export interface IZMenuModule {

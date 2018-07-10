@@ -24,11 +24,12 @@ import { ZCampoCheckboxContainer } from '../containers/ZCampoCheckboxContainer';
 import { ZCampoTextboxContainer } from '../containers/ZCampoTextboxContainer';
 import { ZCampoDetallableContainer } from '../containers/ZCampoDetallableContainer';
 import { ZCampoFechaContainer } from '../containers/ZCampoFechaContainer';
+import { ZCampoArchivoContainer } from '../containers/ZCampoArchivoContainer';
 import { Constants } from '../../zutils';
 
 interface OwnProperties {
     zFormaTabla: IZFormaTablaState;
-    tipoCmdPantex:ZCommon.Constants.ComandoEnum;
+    tipoCmdPantex: ZCommon.Constants.ComandoEnum;
     zCampo: IZCampoState;
 }
 
@@ -72,26 +73,34 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_NOINDICADOR) {
             if (esDetallable) {
                 return <ZCampoDetallableContainer
-                    zCampoModel={zCampo}
-                    zFormaTabla={zFormaTabla}
+                            zCampoModel={zCampo}
+                            zFormaTabla={zFormaTabla}
                 />;
             }
             else if (zCampo.tipo == ZCommon.Constants.TipoCampoEnum.TIPO_FECHA) {
-                return <ZCampoFechaContainer zCampoModel={zCampo} zFormaTabla={this.props.zFormaTabla} tipoCmdPantex={this.props.tipoCmdPantex} />
+                return <ZCampoFechaContainer 
+                            zCampoModel={zCampo} 
+                            zFormaTabla={this.props.zFormaTabla} 
+                            tipoCmdPantex={this.props.tipoCmdPantex} />
+            }
+            else if (zCampo.esArchivo) {
+                return <ZCampoArchivoContainer 
+                            zCampoModel={zCampo} 
+                            zFormaTabla={this.props.zFormaTabla} />
             }
             return <ZCampoTextboxContainer
-                zCampoModel={zCampo}
-                zFormaTabla={zFormaTabla}
+                        zCampoModel={zCampo}
+                        zFormaTabla={zFormaTabla}
             />;
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_RADIO) {
             return <ZCampoRadioContainer
-                zCampoModel={zCampo}
+                        zCampoModel={zCampo}
             />;
         }
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_CHEQUEO) {
             return <ZCampoCheckboxContainer
-                zCampoModel={zCampo}
+                        zCampoModel={zCampo}
             />;
         } else {
             return <span>{zCampo.etq}</span>;
