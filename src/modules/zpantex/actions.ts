@@ -419,7 +419,7 @@ export namespace Actions {
             }
 
             dispatch(setZCampoHaCambiado(zcampoState.id, false));
-            dispatch(enviarCmdCambioCmp(zcampoState, zcampoState.value));
+            dispatch(enviarCmdCambioCmp(zcampoState, valor));
         }
 
         export const enviarCmdCambioCmp = (zcampoState: IZCampoState, valor:string) => (dispatch: any, getStateFn: () => IZAplState) => {
