@@ -1,6 +1,5 @@
 export namespace Constants {
-
-    export const AZEN_URL: string = "http://52.42.49.101:8080";
+        
     export const AZEN_USER_SESSION_KEY = "azenSessionUsername";
 
     export enum FormatoDatoEventoEnum {

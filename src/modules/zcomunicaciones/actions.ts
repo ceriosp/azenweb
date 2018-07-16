@@ -6,6 +6,7 @@ import {
 
 import { IZAplState, IZColaEventos, IZEnviarComandoParams } from "../zcommon/contracts";
 import { ActionTypes } from "./actionTypes";
+import { debug } from 'util';
 
 export namespace Actions {
 
@@ -73,6 +74,29 @@ export namespace Actions {
         });
     }
 
+    export const cargarCfg = <CfgObj>() : Promise<CfgObj> => {
+        return new Promise<CfgObj>((resolve, reject) => {
+
+            fetch('../cfg.json', {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                method: 'GET'                
+
+            } as any)
+                .then((response) => {                    
+                    return response.json();
+                })
+                .then((cfgObj: any) => {                    
+                    resolve(cfgObj);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    }
+    
     export const setProcesosServidor = (estaProcesandoRequestServidor: boolean, tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum) => (dispatch: (p: any) => any, getState: () => IZAplState) => {
         dispatch(setEstaProcesandoRequestServidor(estaProcesandoRequestServidor));
         dispatch(setTipoAJAXIndicador(tipoAJAXIndicador));

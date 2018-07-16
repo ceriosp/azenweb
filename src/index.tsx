@@ -22,7 +22,8 @@ import * as ZUtils from './modules/zutils';
 
 import {
     ZMenuModel,
-    ZMenuItemModel
+    ZMenuItemModel,
+    CfgObj
 } from './modules/zcommon';
 
 import * as ZAplicacion from "./modules/zaplicacion";
@@ -40,6 +41,9 @@ import {
 
 } from "./modules/zcommon";
 
+import { Actions as ZcomunicacionesActions } from "./modules/zcomunicaciones";
+import { ResultadoActionConDato } from './modules/zutils';
+
 console.log("Stage: " + process.env.NODE_ENV);
 
 const middlewares = process.env.NODE_ENV != 'production' ?
@@ -48,20 +52,19 @@ const middlewares = process.env.NODE_ENV != 'production' ?
 
 declare let window: any;
 
-let store = null
-
+let store = null;
 let idApl = ZUtils.Services.getQueryStringParameter('idApl');
 let nomApl = ZUtils.Services.getQueryStringParameter('nomApl');
 let username = sessionStorage.getItem(Constants.AZEN_USER_SESSION_KEY);
 let lanzarMenu = ZUtils.Services.getQueryStringParameter('lanzarMenu');
 
-let appInitialState = {
-    azenURL: Constants.AZEN_URL
-} as IZAplState;
+let appInitialState = {} as IZAplState;
 
-const obtenerEstadoInicial = () => {
-    
-    //Es dev
+const obtenerEstadoInicial = (cfgObj:CfgObj) => {
+
+    appInitialState.azenURL = cfgObj.azenBackEndURL;
+
+    //Es dev    
     if (process.env.NODE_ENV != 'production') {
         appInitialState.nivelLog = 1;
         return createStore(
@@ -79,32 +82,36 @@ const obtenerEstadoInicial = () => {
     );
 }
 
-if (idApl) {
-    store = obtenerEstadoInicial();
+ZcomunicacionesActions.cargarCfg().then(
+    (cfgObj: CfgObj) => {
+        cargarAplicacion(cfgObj);
+    },
+    (resultado: CfgObj) => {
+        alert("Ha ocurrido un error, por favor verifique el archivo 'cfg.json'");
+    }
+);
 
-    ReactDOM.render(
-        <Provider store={store}>
-            <ZAplicacionContainer />
-        </Provider>,
-        document.getElementById("app-container")
-    );
+let cargarAplicacion: (cfgObj:CfgObj) => void = (cfgObj:CfgObj) => {    
 
-    document.title = idApl;
+    let store = obtenerEstadoInicial(cfgObj);
 
-    store.dispatch(zAplicationActions.lanzarAplicacion(idApl, nomApl, username, lanzarMenu));
-}
-else {
+    if (idApl) {                
+        ReactDOM.render(
+            <Provider store={store}>
+                <ZAplicacionContainer />
+            </Provider>,
+            document.getElementById("app-container")
+        );
 
-    store = createStore(
-        App.Reducers.zaplState,
-        appInitialState,
-        redux.compose(redux.applyMiddleware(...middlewares), window.devToolsExtension ? window.devToolsExtension() : (f: any) => f)
-    );
-
-    ReactDOM.render(
-        <Provider store={store}>
-            <ZListadoAplicacionesContainer />
-        </Provider>,
-        document.getElementById("app-container")
-    );
+        document.title = idApl;
+        store.dispatch(zAplicationActions.lanzarAplicacion(idApl, nomApl, username, lanzarMenu));
+    }
+    else {
+        ReactDOM.render(
+            <Provider store={store}>
+                <ZListadoAplicacionesContainer />
+            </Provider>,
+            document.getElementById("app-container")
+        );
+    }
 }
