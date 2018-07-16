@@ -41,6 +41,7 @@ export namespace ActionTypes {
         export namespace Types {
             export type CM_PXCREAR = "ZPantexStateModule/CM_PXCREAR";
             export type CM_PONERMODAL = "ZPantexStateModule/CM_PONERMODAL";
+            export type CM_QUITARMODAL = "ZPantexStateModule/CM_QUITARMODAL";
             export type CM_PXARRIVAR = "ZPantexStateModule/CM_PXARRIVAR";
             export type CM_PXDESTRUIR = "ZPantexStateModule/CM_PXDESTRUIR";
             export type CM_SINCPX = "ZPantexStateModule/CM_SINCPX";
@@ -59,6 +60,7 @@ export namespace ActionTypes {
 
         export const CM_PXCREAR: Types.CM_PXCREAR = "ZPantexStateModule/CM_PXCREAR";
         export const CM_PONERMODAL: Types.CM_PONERMODAL = "ZPantexStateModule/CM_PONERMODAL";
+        export const CM_QUITARMODAL: Types.CM_QUITARMODAL = "ZPantexStateModule/CM_QUITARMODAL";
         export const CM_PXARRIVAR: Types.CM_PXARRIVAR = "ZPantexStateModule/CM_PXARRIVAR";
         export const CM_PXDESTRUIR: Types.CM_PXDESTRUIR = "ZPantexStateModule/CM_PXDESTRUIR";
         export const CM_SINCPX: Types.CM_SINCPX = "ZPantexStateModule/CM_SINCPX";
@@ -87,7 +89,11 @@ export namespace ActionTypes {
             } |
             {
                 type: Types.CM_PONERMODAL,
-                ponerModal: boolean
+                px: number
+            } |
+            {
+                type: Types.CM_QUITARMODAL,
+                px: number
             } |
             {
                 type: Types.CM_PXARRIVAR,

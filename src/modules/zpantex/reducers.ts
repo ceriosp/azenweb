@@ -152,7 +152,24 @@ export namespace Reducers {
 
                 case ActionTypes.ZPantexStateModule.CM_PONERMODAL:
                     return u({
-                        ponerModal: action.ponerModal
+                        pilaPantexState: {
+                            byId: {
+                                [action.px]: {
+                                    esModal: true,
+                                } as IZPantexState
+                            }
+                        } as EntityNormalizedObj<IZPantexState>,
+                    } as IZPantexStateModule, state);
+
+                case ActionTypes.ZPantexStateModule.CM_QUITARMODAL:
+                    return u({
+                        pilaPantexState: {
+                            byId: {
+                                [action.px]: {
+                                    esModal: false,
+                                } as IZPantexState
+                            }
+                        } as EntityNormalizedObj<IZPantexState>,
                     } as IZPantexStateModule, state);
 
                 case ActionTypes.ZPantexStateModule.CM_SINCPX:
@@ -383,7 +400,7 @@ export namespace Reducers {
             const actualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
 
                 if (action.listaPxCampos.indexOf(zcampoState.px) != -1) {
-                    
+
                     let key = zcampoState.nomCmp;
                     if (zcampoState.fi != undefined) {
                         key = ContractsServices.getSincHashCampo(zcampoState);
@@ -433,9 +450,9 @@ export namespace Reducers {
                                 if (zCampoEnHash.posBitsOff.indexOf(zcampoState.lon) != -1) {
                                     zCampoActualizado.checked = false;
                                 }
-                            }                            
+                            }
                         }
-                        
+
                         if (zCampoEnHash.bitPrenderControl) {
                             zCampoActualizado.control = ContractsServices.Binario.prenderBit(zcampoState.control, zCampoEnHash.bitPrenderControl);
                         }
@@ -500,12 +517,12 @@ export namespace Reducers {
 
                 if (action.numFilasVisiblesMultiPx == zFormaTabla.numPx) {
                     return u({
-                        numFilasVisiblesMulti:action.numFilasVisiblesMulti
+                        numFilasVisiblesMulti: action.numFilasVisiblesMulti
                     } as IZFormaTablaState, zFormaTabla);
                 }
 
                 return zFormaTabla;
-            }            
+            }
 
             if (action.hashZCampos.size > 0 || action.hashZComandos.size > 0) {
                 return u({
@@ -518,7 +535,7 @@ export namespace Reducers {
                     zVentanaState: {
                         byId: u.map(actualizarVentana)
                     },
-                    zFormaTablaState:{
+                    zFormaTablaState: {
                         byId: u.map(actualizarZFormaTabla)
                     }
                 } as IZPantexStateModule, state);

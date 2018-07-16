@@ -269,11 +269,16 @@ export namespace Actions {
             zComandoFormaState
         });
 
-        export const ponerModal = (ponerModal: boolean): ActionTypes.ZPantexStateModule.Action => ({
+        export const ponerModal = (px: number): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.CM_PONERMODAL,
-            ponerModal
+            px
         });
 
+        export const quitarModal = (px: number): ActionTypes.ZPantexStateModule.Action => ({
+            type: ActionTypes.ZPantexStateModule.CM_QUITARMODAL,
+            px
+        });
+        
         export const cmPxArrivar = (pxArrivarParams: CM.IPxArrivar): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.CM_PXARRIVAR,
             pxArrivarParams,

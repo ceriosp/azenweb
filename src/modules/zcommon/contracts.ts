@@ -170,6 +170,8 @@ export interface IZPantexState extends IdEntityBase {
     //Propiedades del state
     zFormaTablaListState: Array<IZFormaTablaState>;
     tipoCmdPantex: Constants.ComandoEnum;
+
+    esModal:boolean;
 }
 
 export class ZPantexState implements IZPantexState {
@@ -184,6 +186,7 @@ export class ZPantexState implements IZPantexState {
     zFormaTablaStateListIds: Array<number>;
     zFormaTablaListState: Array<IZFormaTablaState>;
     tipoCmdPantex: Constants.ComandoEnum;
+    esModal:boolean;
 }
 
 export interface IZFormaTablaState extends IdEntityBase { //zft
@@ -886,8 +889,7 @@ export interface IZPantexModule {
 export interface IZPantexStateModule {
 
     pilaPx: Array<number>;
-    pxAlTope: number;
-    ponerModal: boolean;
+    pxAlTope: number;    
 
     pilaPantexState: EntityNormalizedObj<IZPantexState>;
     zFormaTablaState: EntityNormalizedObj<IZFormaTablaState>;

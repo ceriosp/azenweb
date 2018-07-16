@@ -101,17 +101,17 @@ export namespace Services {
 
                     case ZCommonConstants.ComandoEnum.CM_PXVISUALIZARRPT:
                         const visualRtpParams = evento.dato.buffer.dato as CM.IPxVisualizarRpt;
-                        let rptWindow = window.open(trimLasCharacter(getState().azenURL, "/") + "/azenweb" + visualRtpParams.vc, "", "location=0");                        
-                        
-                        if(visualRtpParams.vc.endsWith(".txt")){   
-                            rptWindow.addEventListener('load', function(){                                
-                                let preElementsArray:any;
+                        let rptWindow = window.open(trimLasCharacter(getState().azenURL, "/") + "/azenweb" + visualRtpParams.vc, "", "location=0");
+
+                        if (visualRtpParams.vc.endsWith(".txt")) {
+                            rptWindow.addEventListener('load', function () {
+                                let preElementsArray: any;
                                 preElementsArray = rptWindow.document.body.getElementsByTagName('pre');
-                                if(preElementsArray && preElementsArray.length > 0){
+                                if (preElementsArray && preElementsArray.length > 0) {
                                     preElementsArray[0].removeAttribute("style");
-                                }                                
-                            }, true);                            
-                        }                        
+                                }
+                            }, true);
+                        }
                         break;
 
                     case ZCommonConstants.ComandoEnum.CM_LIMPIARMULTI:
@@ -144,18 +144,12 @@ export namespace Services {
 
                     case ZCommon.Constants.ComandoEnum.CM_PONERMODAL:
                         const ponerModal = evento.dato.buffer.dato as CM.IPonerModal;
-
-                        if (ponerModal.px == getState().zPantexStateModule.pxAlTope) {
-                            dispatch(ZPantex.Actions.ZPantexStateModule.ponerModal(true));
-                        }
+                        dispatch(ZPantex.Actions.ZPantexStateModule.ponerModal(ponerModal.px));
                         break;
 
                     case ZCommon.Constants.ComandoEnum.CM_QUITARMODAL:
                         const quitarModal = evento.dato.buffer.dato as CM.IQuitarModal;
-
-                        if (quitarModal.px == getState().zPantexStateModule.pxAlTope) {
-                            dispatch(ZPantex.Actions.ZPantexStateModule.ponerModal(false));
-                        }
+                        dispatch(ZPantex.Actions.ZPantexStateModule.quitarModal(quitarModal.px));
                         break;
 
                     case ZCommon.Constants.ComandoEnum.CM_PXDESTRUIR:
@@ -176,16 +170,16 @@ export namespace Services {
 
                         if (parametrosActivacionComp.length > 0) {
                             parametrosActivacionObj = {
-                                mes:parametrosActivacionComp[0],
+                                mes: parametrosActivacionComp[0],
                                 anio: parseInt(parametrosActivacionComp[1]),
-                                bd:parametrosActivacionComp[2],
-                                usuario:parametrosActivacionComp[3],
-                                uid:parametrosActivacionComp[4],
-                                numeroMes:ZCommonConstants.mesNroMes.get(parametrosActivacionComp[0].toLowerCase()),                                
-                                urlIframeCargarArchivo:parametrosActivacionComp[5],
+                                bd: parametrosActivacionComp[2],
+                                usuario: parametrosActivacionComp[3],
+                                uid: parametrosActivacionComp[4],
+                                numeroMes: ZCommonConstants.mesNroMes.get(parametrosActivacionComp[0].toLowerCase()),
+                                urlIframeCargarArchivo: parametrosActivacionComp[5],
                             } as IParametrosActivacionObj;
                         }
-                        dispatch(ZApppActions.setParametrosActivacionObj(parametrosActivacionObj));                        
+                        dispatch(ZApppActions.setParametrosActivacionObj(parametrosActivacionObj));
                         break;
 
                     //Comandos aplicación
