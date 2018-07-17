@@ -104,7 +104,7 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                                 tipoCmdPantex={this.props.zPantex.tipoCmdPantex}
                                             />
                                         )}
-                                    
+
                                         {((zftIndex == 1)) && ( //linea estado detalle
                                             <Row>
                                                 <Col xs={12} sm={6} md={3} smOffset={6} mdOffset={9}>
@@ -117,10 +117,12 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                             </Row>
                                         )}
 
-                                        {(zFormaTablaI.cmpsState && zFormaTablaI.cmpsState.length > 6) && (
-                                            <ZBarraComandosContainer
-                                                zComandosList={zFormaTablaI.btnsState}
-                                            />
+                                        {(zFormaTablaI.cmpsState && zFormaTablaI.cmpsState.length > 6) && ( //Parte superior
+                                            <div>
+                                                <ZBarraComandosContainer
+                                                    zComandosList={zFormaTablaI.btnsState}
+                                                />
+                                            </div>
                                         )}
 
                                         <ZFormaTablaContainer
@@ -129,13 +131,15 @@ export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & Con
                                             zftIndex={zftIndex}
                                         />
 
-                                        {((this.props.zPantex.zFormaTablaListState.length == 1 || zftIndex != 0)) && (
-                                            <div style={{ marginTop: "5px" }}>
-                                                <ZBarraComandosContainer
-                                                    zComandosList={zFormaTablaI.btnsState}
-                                                />
-                                            </div>
-                                        )}
+                                        {((this.props.zPantex.zFormaTablaListState.length == 1 || zftIndex != 0)) && //Parte inferior
+                                            (
+                                                <div style={{ marginTop: "5px" }}>
+                                                    <ZBarraComandosContainer
+                                                        zComandosList={this.props.zPantex.zFormaTablaListState.length == 1 ? zFormaTablaI.btnsState : this.props.zPantex.zFormaTablaListState[0].btnsState}
+                                                    />
+                                                </div>
+                                            )}
+
                                     </Panel>
                                 </div>
                             );

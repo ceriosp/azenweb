@@ -179,6 +179,7 @@ export namespace Selectors {
                 let zPantex = {
                     id: numPx,
                     tipoCmdPantex: getZPantexStateMap.byId[numPx].tipoCmdPantex,
+                    esModal:getZPantexStateMap.byId[numPx].esModal,
                     zFormaTablaListState: []
                 } as IZPantexState;
 
@@ -275,7 +276,7 @@ export namespace Selectors {
             }
 
             /*
-            console.log("---------------------------------------");
+            console.log("--------------PILA PANTEX STATE - SELECTOR-------------------------");
             console.log(pilaZPantexState);
             */
             

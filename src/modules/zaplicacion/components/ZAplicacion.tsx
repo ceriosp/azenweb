@@ -51,11 +51,19 @@ export class ZAplicacion extends React.PureComponent<OwnProps & ConnectedState &
                         <ZPantexContainer
                             key={index}
                             zPantex={zPantexI}
-                            container={this.zAplicacionDivElement}
+                            container={this.zAplicacionDivElement}                            
                         />
                     );
                 })}
             </div>
         );
+    }
+
+    componentDidUpdate(){        
+        if(this.props.pilaZPantexState.length > 0 
+            && this.props.pilaZPantexState[this.props.pilaZPantexState.length - 1].esModal){        
+            let ventanas:HTMLCollectionOf<any> = document.getElementsByClassName("modal-dialog");
+            ventanas[this.props.pilaZPantexState.length - 1].style.top = "0px";
+        }
     }
 }
