@@ -23,7 +23,8 @@ import * as ZUtils from './modules/zutils';
 import {
     ZMenuModel,
     ZMenuItemModel,
-    CfgObj
+    CfgObj,
+    IParametrosActivacionObj
 } from './modules/zcommon';
 
 import * as ZAplicacion from "./modules/zaplicacion";
@@ -63,6 +64,9 @@ let appInitialState = {} as IZAplState;
 const obtenerEstadoInicial = (cfgObj:CfgObj) => {
 
     appInitialState.azenURL = cfgObj.azenBackEndURL;
+    appInitialState.parametrosActivacionObj = {
+        urlIframeCargarArchivo : cfgObj.urlCargarArchivo
+    } as IParametrosActivacionObj;
 
     //Es dev    
     if (process.env.NODE_ENV != 'production') {

@@ -1,3 +1,5 @@
+const u = require('updeep');
+
 import { Reducer, combineReducers } from 'redux';
 import { IZAplState, IParametrosActivacionObj } from "../zcommon/contracts";
 
@@ -47,12 +49,19 @@ export namespace Reducers {
 
         switch (action.type) {
             case ActionTypes.SET_PARAMETROSACTIVACIONOBJ:
-                return action.parametrosActivacionObj;
+                return u({
+                    anio: action.parametrosActivacionObj.anio,
+                    bd: action.parametrosActivacionObj.bd,
+                    mes: action.parametrosActivacionObj.mes,
+                    numeroMes: action.parametrosActivacionObj.numeroMes,
+                    uid: action.parametrosActivacionObj.uid,
+                    usuario: action.parametrosActivacionObj.usuario
+                } as IParametrosActivacionObj, state);
         }
 
         return state;
     }
-    
+
     export const nivelLog = (state: number = null, action: ActionTypes.Action): number => {
 
         switch (action.type) {
@@ -62,7 +71,7 @@ export namespace Reducers {
 
         return state;
     }
-    
+
     export const ultimoComandoEnviado = (state: ZCommon.Constants.ComandoEnum = null, action: ActionTypes.Action): ZCommon.Constants.ComandoEnum => {
 
         switch (action.type) {
@@ -84,7 +93,7 @@ export namespace Reducers {
     }
 
     export const estaProcesandoRequestServidor = (state: boolean = false, action: ZComunicaciones.ActionTypes.Action): boolean => {
-        
+
         switch (action.type) {
             case ZComunicaciones.ActionTypes.SET_ESTAPROCESANDOREQUESTSERVIDOR:
                 return action.valor;
@@ -94,7 +103,7 @@ export namespace Reducers {
     }
 
     export const zaplState: Reducer<IZAplState> = combineReducers<IZAplState>({
-        
+
         idApl: idApl,
         nomApl: nomApl,
         azenURL: azenURL,
@@ -104,9 +113,9 @@ export namespace Reducers {
         nivelLog: nivelLog,
 
         tipoAJAXIndicador: tipoAJAXIndicador,
-        ultimoComandoEnviado:ultimoComandoEnviado,
+        ultimoComandoEnviado: ultimoComandoEnviado,
         estaProcesandoRequestServidor: estaProcesandoRequestServidor,
-        zMenuModule: ZMenu.Reducers.ZMenuModule.impl,        
+        zMenuModule: ZMenu.Reducers.ZMenuModule.impl,
         zPantexStateModule: ZPantex.Reducers.ZPantexStateModule.impl,
         zLoginModule: ZLogin.Reducers.ZLoginModule.impl,
     });

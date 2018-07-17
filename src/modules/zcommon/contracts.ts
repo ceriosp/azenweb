@@ -5,6 +5,7 @@ import { ZIconoBoton } from "./index";
 //#region =============================================== UTILS ===============================================
 export interface CfgObj {
     azenBackEndURL:string;
+    urlCargarArchivo:string;
 }
 //#endregion
 

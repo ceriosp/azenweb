@@ -175,8 +175,7 @@ export namespace Services {
                                 bd: parametrosActivacionComp[2],
                                 usuario: parametrosActivacionComp[3],
                                 uid: parametrosActivacionComp[4],
-                                numeroMes: ZCommonConstants.mesNroMes.get(parametrosActivacionComp[0].toLowerCase()),
-                                urlIframeCargarArchivo: parametrosActivacionComp[5],
+                                numeroMes: ZCommonConstants.mesNroMes.get(parametrosActivacionComp[0].toLowerCase()),                                
                             } as IParametrosActivacionObj;
                         }
                         dispatch(ZApppActions.setParametrosActivacionObj(parametrosActivacionObj));
