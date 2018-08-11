@@ -397,7 +397,7 @@ export namespace Reducers {
                 return state;
             }
 
-            const actualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
+            const fnActualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
 
                 if (action.listaPxCampos.indexOf(zcampoState.px) != -1) {
 
@@ -487,7 +487,7 @@ export namespace Reducers {
                 return zcampoState;
             }
 
-            const actualizarBoton = (zcomandoFormaState: IZComandoFormaState): IZComandoFormaState => {
+            const fnActualizarBoton = (zcomandoFormaState: IZComandoFormaState): IZComandoFormaState => {
 
                 if (action.listaPxComandos.indexOf(zcomandoFormaState.px) != -1) {
                     if (action.hashZComandos.has(zcomandoFormaState.cmd)) {
@@ -501,7 +501,7 @@ export namespace Reducers {
                 return zcomandoFormaState;
             }
 
-            const actualizarVentana = (zVentanaState: IZVentanaState): IZVentanaState => {
+            const fnActualizarVentana = (zVentanaState: IZVentanaState): IZVentanaState => {
 
                 if (action.cambiarTituloVentana
                     && zVentanaState.id == action.cambiarTituloVentana.px) {
@@ -513,7 +513,7 @@ export namespace Reducers {
                 return zVentanaState;
             }
 
-            const actualizarZFormaTabla = (zFormaTabla: IZFormaTablaState): IZFormaTablaState => {
+            const fnActualizarZFormaTabla = (zFormaTabla: IZFormaTablaState): IZFormaTablaState => {
 
                 if (action.numFilasVisiblesMultiPx == zFormaTabla.numPx) {
                     return u({
@@ -527,16 +527,16 @@ export namespace Reducers {
             if (action.hashZCampos.size > 0 || action.hashZComandos.size > 0) {
                 return u({
                     zCampoState: {
-                        byId: u.map(actualizarZCampo)
+                        byId: u.map(fnActualizarZCampo)
                     } as any,
                     zComandoFormaState: {
-                        byId: u.map(actualizarBoton)
+                        byId: u.map(fnActualizarBoton)
                     } as any,
                     zVentanaState: {
-                        byId: u.map(actualizarVentana)
+                        byId: u.map(fnActualizarVentana)
                     },
                     zFormaTablaState: {
-                        byId: u.map(actualizarZFormaTabla)
+                        byId: u.map(fnActualizarZFormaTabla)
                     }
                 } as IZPantexStateModule, state);
             }

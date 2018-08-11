@@ -194,10 +194,10 @@ export namespace Services {
             }
 
             if (getState().nivelLog == 1) {
-                console.log("campos px/hash: " + JSON.stringify(listaPxCampos));
+                console.log("campos px|region|fila");
                 console.log(hashZCampoState);
 
-                console.log("comandos px/hash:  " + JSON.stringify(listaPxComandos));
+                console.log("comandos px|region|fila");
                 console.log(hashZComandoState);
             }
 
