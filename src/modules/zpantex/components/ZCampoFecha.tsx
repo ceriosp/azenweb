@@ -97,6 +97,11 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
             <FormGroup bsSize="small">
                 <Col md={12}>
                     <Col componentClass={ControlLabel}>
+                        {(zCampoModel.autoFocus && zCampoModel.etq.length > 0) &&
+                            <span>
+                                <Glyphicon style={{ color: "rgb(51, 122, 183)" }} glyph="search" /> &nbsp;
+                            </span>
+                        }
                         {zCampoModel.etq}
                     </Col>
                     <Col>

@@ -30,7 +30,7 @@ export interface ConnectedDispatch {
 }
 
 export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
-{    
+{
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
@@ -46,6 +46,9 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
                 <FormGroup bsSize="small">
                     <Col md={12}>
                         <Col componentClass={ControlLabel}>
+                            {(zCampoModel.autoFocus && zCampoModel.etq.length > 0) &&
+                                <Glyphicon style={{ color: "rgb(51, 122, 183)" }} glyph="search" />
+                            }
                             {zCampoModel.etq}
                         </Col>
                         <Col>

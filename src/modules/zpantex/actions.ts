@@ -183,6 +183,9 @@ export namespace Actions {
             else { //No es multi                
                 for (let i = 0; i < zFormaTabla.cmps.length; i++) {
                     zCampoState.byId[id] = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, idZft, undefined);
+                    if(i == 0){
+                        zCampoState.byId[id].autoFocus = true;
+                    }                    
                     zCampoState.allIds.push(id);
                     zFormaTablaCmpsIds.push(id);
                     if (zFormaTabla.cmps[i].cmps) {
