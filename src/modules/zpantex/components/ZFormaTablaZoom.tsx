@@ -108,13 +108,16 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
                                     style={{
                                         backgroundColor: this.props.zFormaTabla.indexFilaMultiSeleccionada == indexFila ? "#D9EDF7" : "",
                                         cursor: "pointer"
-                                    }}
-                                    title="Doble click para seleccionar"
+                                    }}                                    
                                 >
                                     <td>
-                                        <input type="checkbox" onClick={(e:any)=>{
-                                            this.onSeleccionarFila(indexFila);
-                                        }}/>
+                                        <input 
+                                            type="checkbox" 
+                                            title="Clic para seleccionar"
+                                            onClick={(e:any)=>{
+                                                this.onSeleccionarFila(indexFila);
+                                            }}
+                                        />
                                     </td>
                                     {zfilaCampoState.cmpsState.map((zcampoI: IZCampoState, indexCampo: number) => {
                                         return (
@@ -153,9 +156,7 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
     }
 
 
-    onCampoClick(indexFila: number, zcampoI: IZCampoState) {
-
-        console.log("On campo click");
+    onCampoClick(indexFila: number, zcampoI: IZCampoState) {        
 
         this.props.onCampoFocusIrACmp(zcampoI);
 
