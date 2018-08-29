@@ -58,7 +58,7 @@ export namespace Actions {
             let zCampoState: EntityNormalizedObj<IZCampoState> = new EntityNormalizedObj();
             let zComandoFormaState: EntityNormalizedObj<IZComandoFormaState> = new EntityNormalizedObj();
 
-            agregarZFormaTablasState(getStateFn, zPantex, zFormaTablaState, zVentanaState, zCampoState, zComandoFormaState);
+            agregarZFormaTablasState(getStateFn, zPantex, zFormaTablaState, zVentanaState, zCampoState, zComandoFormaState, cmd);
 
             let pilaPantexState = {
                 byId: {
@@ -84,7 +84,8 @@ export namespace Actions {
             zFormaTablaState: EntityNormalizedObj<IZFormaTablaState>,
             zVentanaState: EntityNormalizedObj<IZVentanaState>,
             zCampoState: EntityNormalizedObj<IZCampoState>,
-            zComandoFormaState: EntityNormalizedObj<IZComandoFormaState>) => {
+            zComandoFormaState: EntityNormalizedObj<IZComandoFormaState>,
+            cmd: Constants.ComandoEnum) => {
 
             let id = Selectors.ZPantexStateModule.ZFormaTablaState.getNextZFormaTablaStateId(getStateFn());
             for (let i = 0; i < zPantex.zFormaTablaList.length; i++) {
@@ -97,7 +98,7 @@ export namespace Actions {
 
                 let camposFijosList: Array<ZCampoStateModel> = [];
                 zFormaTablaState.byId[id].zCampoStateListIds =
-                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], camposFijosList, i, id, zCampoState);
+                    agregarZCamposState(getStateFn, zPantex, zPantex.zFormaTablaList[i], camposFijosList, i, id, zCampoState, cmd);
                 zFormaTablaState.byId[id].camposFijosList = camposFijosList;
 
                 zFormaTablaState.byId[id].btnsListIds =
@@ -137,7 +138,8 @@ export namespace Actions {
             camposFijosList: Array<ZCampoStateModel>,
             indiceZft: number, //indice_zft + 1
             idZft: number,
-            zCampoState: EntityNormalizedObj<IZCampoState>): Array<number> => {
+            zCampoState: EntityNormalizedObj<IZCampoState>,
+            cmd: Constants.ComandoEnum): Array<number> => {
 
             let zFormaTablaCmpsIds = new Array<number>();
 
@@ -157,7 +159,11 @@ export namespace Actions {
                 for (let fila = 0; fila <= zFormaTabla.ven.numLinsDatos; fila++) {
                     for (let i = 0; i < zFormaTabla.cmps.length; i++) {
                         const zcampoModel = new ZCampoStateModel(zFormaTabla.cmps[i], id, zPantex.numPx, region, idZft, fila);
-
+                        
+                        if(cmd == ZCommon.Constants.ComandoEnum.CM_PXCREARZOOM && fila == 0 && i == 0){
+                            zcampoModel.autoFocus = true;
+                        }                         
+    
                         //Campos fijos, ingresarlos sólo una vez en una nueva fila al final
                         if (fila == zFormaTabla.ven.numLinsDatos && zcampoModel.esFijo) {
                             zcampoModel.fi = -1;
@@ -341,6 +347,17 @@ export namespace Actions {
             buffer,
         });
 
+        export const seleccionarFila = (indexFila: number) => (dispatch: any, getStateFn: () => IZAplState) => {
+                
+            const buffer = `<fi>${indexFila}</fi>`;
+            dispatch(setComandoBuffer(ZCommon.Constants.ComandoEnum.CM_ACEPTAR, buffer));    
+            dispatch(ZAplicacionActions.despacharEventoCliente(ZCommon.Constants.ComandoEnum.CM_IRALINEA, buffer)).then(
+                (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {                
+                    dispatch(ZAplicacionActions.despacharEventoCliente(ZCommon.Constants.ComandoEnum.CM_ACEPTAR));
+                }
+            );        
+        }            
+        
         export const setTituloVentana = (parametros: CM.IModificar | CM.IAdicionar | CM.IConsultar): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.SET_TITULOVENTANA,
             parametros
@@ -363,7 +380,7 @@ export namespace Actions {
                 }
             );
         }
-
+        
         const onCampoFocusIrACmpInternal = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
 
             const buffer = `<nc>${zcampoState.nomCmp}</nc>`;

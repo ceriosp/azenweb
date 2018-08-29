@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as ZCommon from "../../zcommon";
 import { IZAplState, IZComandoFormaState } from "../../zcommon/contracts";
 
-import * as ZAplicacion from "../../zaplicacion";
+import { Actions as ZAplicacionActions } from "../../zaplicacion/actions";
 
 import {
     OwnProperties,
@@ -20,7 +20,7 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
     despacharComandoLineaEstado: (zcomandoFormaState: IZComandoFormaState) =>
-        dispatch(ZAplicacion.Actions.despacharComandoLineaEstado(zcomandoFormaState))
+        dispatch(ZAplicacionActions.despacharComandoLineaEstado(zcomandoFormaState))
 });
 
 export const ZLineaEstadoContainer: React.ComponentClass<OwnProperties> =

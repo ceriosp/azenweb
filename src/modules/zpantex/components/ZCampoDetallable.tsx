@@ -14,6 +14,8 @@ import {
     IZCampoState,
     IZFormaTablaState
 } from "../../zcommon";
+
+import { ZLabelCampoContainer } from '../containers/ZLabelCampoContainer';
 import { ZCampoTextoBasicoContainer } from '../containers/ZCampoTextoBasicoContainer';
 
 export interface OwnProps {
@@ -45,12 +47,7 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
             return (
                 <FormGroup bsSize="small">
                     <Col md={12}>
-                        <Col componentClass={ControlLabel}>
-                            {(zCampoModel.autoFocus && zCampoModel.etq.length > 0) &&
-                                <Glyphicon style={{ color: "rgb(51, 122, 183)" }} glyph="search" />
-                            }
-                            {zCampoModel.etq}
-                        </Col>
+                        <ZLabelCampoContainer zCampoModel={zCampoModel} />
                         <Col>
                             <InputGroup>
                                 <ZCampoTextoBasicoContainer zCampoModel={zCampoModel} />

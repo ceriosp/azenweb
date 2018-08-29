@@ -23,6 +23,8 @@ import {
     IParametrosActivacionObj,
     IZFormaTablaState,
 } from "../../zcommon";
+
+import { ZLabelCampoContainer } from '../containers/ZLabelCampoContainer';
 import { ZCampoTextoBasicoContainer } from '../containers/ZCampoTextoBasicoContainer';
 
 export interface OwnProps {
@@ -96,14 +98,7 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
         return (
             <FormGroup bsSize="small">
                 <Col md={12}>
-                    <Col componentClass={ControlLabel}>
-                        {(zCampoModel.autoFocus && zCampoModel.etq.length > 0) &&
-                            <span>
-                                <Glyphicon style={{ color: "rgb(51, 122, 183)" }} glyph="search" /> &nbsp;
-                            </span>
-                        }
-                        {zCampoModel.etq}
-                    </Col>
+                    <ZLabelCampoContainer zCampoModel={zCampoModel} />
                     <Col>
                         <InputGroup>
                             <ZCampoTextoBasicoContainer
