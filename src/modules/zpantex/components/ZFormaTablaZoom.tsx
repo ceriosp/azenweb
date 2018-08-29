@@ -7,7 +7,8 @@ import {
 import {
     Col,
     Form,
-    Table
+    Table,
+    Glyphicon
 } from 'react-bootstrap';
 
 import {
@@ -18,6 +19,7 @@ import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma, IZFormaTablaState, IZC
 import ZCampo from "./ZCampo";
 
 import { Constants } from "../constants";
+import ReactDOM = require('react-dom');
 
 export interface OwnProps {
     zFormaTabla: IZFormaTablaState;
@@ -26,6 +28,7 @@ export interface OwnProps {
 export interface ConnectedDispatch {
     onFilaMultiSeleccionada:
     (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number) => void;
+    onCampoFocusIrACmp: (zcampoState: IZCampoState) => void;
 }
 
 export interface ConnectedState {
@@ -35,10 +38,13 @@ export interface ConnectedState {
 export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDispatch, ConnectedState>
 {
 
+    private primeraFilaSeleccionada:boolean = false;
+
     constructor(props: OwnProps & ConnectedDispatch) {
         super(props);
 
         this.onFilaClick = this.onFilaClick.bind(this);
+        this.onCampoTituloClick = this.onCampoTituloClick.bind(this);
     }
 
     render(): any {
@@ -48,7 +54,18 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
                     <tr>
                         {this.props.zFormaTabla.filasCamposList[0].cmpsState.map((zcampoI: IZCampoState, index: number) => {
                             return (
-                                <th key={index}>
+                                <th
+                                    key={index}
+                                    style={{
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={() => this.onCampoTituloClick(zcampoI)}
+                                >
+                                    {(zcampoI.autoFocus) &&
+                                        <span>
+                                            <Glyphicon style={{ color: "rgb(51, 122, 183)" }} glyph="search" /> &nbsp;
+                                        </span>
+                                    }
                                     {zcampoI.etq}
                                 </th>
                             );
@@ -64,11 +81,23 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
                                     style={{
                                         backgroundColor: this.props.zFormaTabla.indexFilaMultiSeleccionada == indexFila ? "#D9EDF7" : ""
                                     }}
-                                    onClick={() => this.onFilaClick(indexFila)}
                                 >
                                     {zfilaCampoState.cmpsState.map((zcampoI: IZCampoState, indexCampo: number) => {
                                         return (
-                                            <td key={indexCampo}>
+                                            <td
+                                                key={indexCampo}
+                                                onClick={() => this.onFilaClick(indexFila, this.props.zFormaTabla.filasCamposList[0].cmpsState[indexCampo])}
+
+                                                ref={(ref)=>{                                        
+                                                    if(ref && indexFila == 0 && indexCampo == 0){                                                        
+                                                        if(!this.primeraFilaSeleccionada){
+                                                            this.primeraFilaSeleccionada = true;
+                                                            ref.click();
+                                                        }                                                        
+                                                    }
+                                                }}                                  
+                                                            
+                                            >
                                                 {zcampoI.value}
                                             </td>
                                         );
@@ -82,8 +111,14 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
         );
     }
 
+    onCampoTituloClick(zcampoI: IZCampoState) {
+        this.props.onCampoFocusIrACmp(zcampoI);
+    }
 
-    onFilaClick(indexFila: number) {
+
+    onFilaClick(indexFila: number, zcampoI: IZCampoState) {
+
+        this.props.onCampoFocusIrACmp(zcampoI);
 
         if (indexFila == this.props.zFormaTabla.indexFilaMultiSeleccionada) {
             return;

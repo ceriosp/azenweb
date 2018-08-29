@@ -137,8 +137,10 @@ export namespace ActionTypes {
             } |
             {
                 type: Types.SET_ZCAMPOSTATE_HACAMBIADO,
+                px:number,
                 idZCampoState: number,
-                haCambiado: boolean
+                haCambiado: boolean,
+                ponerFoco:boolean
             }|
             {
                 type: Types.SET_FILAMULTISELECCIONADA,

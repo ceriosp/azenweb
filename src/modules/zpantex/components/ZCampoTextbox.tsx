@@ -3,7 +3,8 @@ import * as React from 'react';
 import {
     FormGroup,
     Col,
-    ControlLabel
+    ControlLabel,
+    Glyphicon
 } from 'react-bootstrap';
 
 import {
@@ -19,7 +20,7 @@ export interface OwnProps {
 }
 
 export interface ConnectedState {
-    
+
 }
 
 export interface ConnectedDispatch {
@@ -39,6 +40,11 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
                 <FormGroup bsSize="small">
                     <Col md={12}>
                         <Col componentClass={ControlLabel}>
+                            {(zCampoModel.autoFocus && zCampoModel.etq.length > 0 && zCampoModel.etq.trim() != "Que") && 
+                                <span>
+                                    <Glyphicon style={{color:"rgb(51, 122, 183)"}} glyph="search" /> &nbsp;
+                                </span>
+                            }
                             {zCampoModel.etq}
                         </Col>
                         <Col>

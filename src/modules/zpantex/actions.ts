@@ -324,10 +324,12 @@ export namespace Actions {
             valor,
         });
 
-        export const setZCampoHaCambiado = (idZCampoState: number, haCambiado: boolean): ActionTypes.ZPantexStateModule.Action => ({
+        export const setZCampoHaCambiado = (px:number, idZCampoState: number, haCambiado: boolean, ponerFoco:boolean): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.SET_ZCAMPOSTATE_HACAMBIADO,
+            px,
             idZCampoState,
             haCambiado,
+            ponerFoco
         });
 
         export const setComandoBuffer = (cm: Constants.ComandoEnum, buffer: string): ActionTypes.ZPantexStateModule.Action => ({
@@ -364,7 +366,7 @@ export namespace Actions {
             const buffer = `<nc>${zcampoState.nomCmp}</nc>`;
             dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_IRACMP, buffer)).then(
                 (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {
-                    dispatch(setZCampoHaCambiado(zcampoState.id, false));
+                    dispatch(setZCampoHaCambiado(zcampoState.px, zcampoState.id, false, true));
                 }
             );
         }
@@ -418,7 +420,7 @@ export namespace Actions {
                 valor = valor.replace(/,/g, "");
             }
 
-            dispatch(setZCampoHaCambiado(zcampoState.id, false));
+            dispatch(setZCampoHaCambiado(zcampoState.px, zcampoState.id, false, false));
             dispatch(enviarCmdCambioCmp(zcampoState, valor));
         }
 

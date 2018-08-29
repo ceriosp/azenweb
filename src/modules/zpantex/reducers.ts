@@ -203,15 +203,7 @@ export namespace Reducers {
                     } as IZPantexStateModule, state);
 
                 case ActionTypes.ZPantexStateModule.SET_ZCAMPOSTATE_HACAMBIADO:
-                    return u({
-                        zCampoState: {
-                            byId: {
-                                [action.idZCampoState]: {
-                                    haCambiado: action.haCambiado,
-                                } as IZCampoState
-                            }
-                        } as any,
-                    } as IZPantexStateModule, state);
+                    return setZCampoStateHaCambiado(state, action);
 
                 case ActionTypes.ZPantexStateModule.SET_FILAMULTISELECCIONADA:
                     return u({
@@ -251,6 +243,41 @@ export namespace Reducers {
             }
 
             return state;
+        }
+
+        const setZCampoStateHaCambiado = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
+
+            if (action.type != ActionTypes.ZPantexStateModule.SET_ZCAMPOSTATE_HACAMBIADO) {
+                return state;
+            }
+
+            const fnActualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
+
+                if(zcampoState.px != action.px){
+                    return zcampoState;
+                }
+
+                if(zcampoState.id == action.idZCampoState && zcampoState.etq.trim() == "Que"){
+                    return zcampoState;
+                }
+
+                if(zcampoState.id == action.idZCampoState){
+                    return u({
+                        autoFocus: zcampoState.id == action.idZCampoState,
+                        haCambiado: action.haCambiado,
+                    } as IZCampoState, zcampoState);    
+                }
+                
+                return u({
+                    autoFocus: false,
+                } as IZCampoState, zcampoState);
+            }
+
+            return u({
+                zCampoState: {
+                    byId: u.map(fnActualizarZCampo)
+                } as any,
+            } as IZPantexStateModule, state);
         }
 
         const cmPxCrear = (state: IZPantexStateModule, action: ActionTypes.ZPantexStateModule.Action): IZPantexStateModule => {
@@ -426,7 +453,7 @@ export namespace Reducers {
                             control: zcampoState.control,
                             modo: zcampoState.modo,
 
-                            autoFocus: zCampoEnHash.autoFocus ? zCampoEnHash.autoFocus : false
+                            autoFocus: zcampoState.autoFocus,
 
                         } as IZCampoState;
 
