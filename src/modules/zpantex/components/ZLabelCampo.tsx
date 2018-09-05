@@ -20,16 +20,16 @@ export interface OwnProps {
 }
 
 export interface ConnectedState {
-    
+
 }
 
 export interface ConnectedDispatch {
-    despacharComando : (zcomandoFormaState: IZComandoFormaState)=> void;
+    despacharComando: (zcomandoFormaState: IZComandoFormaState) => void;
 }
 
 export class ZLabelCampo extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    private etiquetasAIgnorar:Array<string>;
+    private etiquetasAIgnorar: Array<string>;
 
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
@@ -39,31 +39,40 @@ export class ZLabelCampo extends React.PureComponent<OwnProps & ConnectedState &
     render() {
         const { zCampoModel } = this.props;
 
+        const activarBuscar = 
+            zCampoModel.autoFocus
+            && !zCampoModel.noArrivable
+            && zCampoModel.etq.length > 0
+            && this.etiquetasAIgnorar.indexOf(zCampoModel.etq.trim()) == -1;
+
         return (
             <Col componentClass={ControlLabel}>
-                {(zCampoModel.autoFocus && 
-                    zCampoModel.etq.length > 0 
-                    && this.etiquetasAIgnorar.indexOf(zCampoModel.etq.trim()) == -1) &&
-                    <span>
-                        <Glyphicon 
-                            style={{ 
-                                color: "rgb(51, 122, 183)", 
-                                marginRight:"3px",
-                                cursor: "pointer"
-                            }} 
-                            glyph="search" 
-                            onClick={()=>{
-                                this.props.despacharComando({
-                                    cmd:ZCommonConstants.ComandoEnum.CM_BUSCAR,
-                                    px:zCampoModel.px,
-                                    idZft:zCampoModel.idZft
-                                } as IZComandoFormaState);
+                {(activarBuscar) &&
+                    <span
+                        style={{
+                            cursor: "pointer"
+                        }}
+                        title={"Buscar por " + zCampoModel.etq}
+                        onClick={() => {
+                            this.props.despacharComando({
+                                cmd: ZCommonConstants.ComandoEnum.CM_BUSCAR,
+                                px: zCampoModel.px,
+                                idZft: zCampoModel.idZft
+                            } as IZComandoFormaState);
+                        }}
+                    >
+                        <Glyphicon
+                            style={{
+                                color: "rgb(51, 122, 183)",
+                                marginRight: "3px",
                             }}
-                            title={"Buscar por " + zCampoModel.etq}
-                        />
-                    </span>                    
+                            glyph="search"
+                        /> {zCampoModel.etq}
+                    </span>
                 }
-                {zCampoModel.etq}
+                {(!activarBuscar) && (
+                    <span>{zCampoModel.etq}</span>
+                )}
             </Col>
         );
     }

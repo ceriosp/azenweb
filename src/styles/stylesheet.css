@@ -187,3 +187,7 @@
 .panel-body .table {
     margin-bottom: 5px !important;
 }
+
+.azn-seleccionar:hover{
+    background-color: #DFF0D8 !important;
+}

@@ -10,7 +10,7 @@ import {
     Table,
     Glyphicon,
     FormGroup,
-    Checkbox
+    Button
 } from 'react-bootstrap';
 
 
@@ -108,26 +108,30 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
                                     style={{
                                         backgroundColor: this.props.zFormaTabla.indexFilaMultiSeleccionada == indexFila ? "#D9EDF7" : "",
                                         cursor: "pointer"
-                                    }}                                    
+                                    }}
+                                    className="azn-seleccionar"
                                 >
                                     <td>
-                                        <input 
-                                            type="checkbox" 
-                                            title="Clic para seleccionar"
-                                            onClick={(e:any)=>{
+                                        <Button
+                                            bsSize="xsmall"
+                                            title="Seleccionar"
+                                            onClick={(e: any) => {
                                                 this.onSeleccionarFila(indexFila);
                                             }}
-                                        />
+                                        >
+                                            <Glyphicon glyph="ok" />
+                                        </Button>
                                     </td>
                                     {zfilaCampoState.cmpsState.map((zcampoI: IZCampoState, indexCampo: number) => {
                                         return (
                                             <td
                                                 key={indexCampo}
-                                                onClick={(e:any) => {                                                    
-                                                    if(e.target.tagName.toUpperCase() == 'INPUT'){
+                                                onClick={(e: any) => {
+                                                    if (e.target.tagName.toUpperCase() == 'INPUT') {
                                                         return;
                                                     }
-                                                    this.onCampoClick(indexFila, this.props.zFormaTabla.filasCamposList[0].cmpsState[indexCampo])}
+                                                    this.onCampoClick(indexFila, this.props.zFormaTabla.filasCamposList[0].cmpsState[indexCampo])
+                                                }
                                                 }
                                                 ref={(ref) => {
                                                     if (ref && indexFila == 0 && indexCampo == 0) {
@@ -156,7 +160,7 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
     }
 
 
-    onCampoClick(indexFila: number, zcampoI: IZCampoState) {        
+    onCampoClick(indexFila: number, zcampoI: IZCampoState) {
 
         this.props.onCampoFocusIrACmp(zcampoI);
 
