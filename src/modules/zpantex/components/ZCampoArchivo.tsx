@@ -50,9 +50,7 @@ export class ZCampoArchivo extends React.PureComponent<OwnProps & ConnectedState
         );
     }
 
-    escucharMensajeArchivoCargado() {      
-        
-        console.log("registra evento");
+    escucharMensajeArchivoCargado() {              
 
         let eventMethod = window.addEventListener
             ? "addEventListener"
@@ -64,7 +62,6 @@ export class ZCampoArchivo extends React.PureComponent<OwnProps & ConnectedState
         eventer(messageEvent, (e:any) => {
             try {
                 if (e.origin !== this.props.parametrosActivacionObj.urlIframeCargarArchivo) {
-                    console.log("llega evento cliente");
                     this.props.enviarCmdCambioCmp(this.props.zCampoModel, e.data.nombreArchivo);
                 }
             }

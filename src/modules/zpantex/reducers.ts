@@ -506,6 +506,7 @@ export namespace Reducers {
                             modo: zCampoActualizado.modo,
                             readOnly: ContractsServices.esCampoControlLectura(zCampoActualizado.control)
                                 || ContractsServices.esCampoModoLectura(zCampoActualizado.modo),
+                            noArrivable:ContractsServices.Binario.estaPrendidoBit(zCampoActualizado.modo, ZCommonConstants.ModoCampoEnum.ZCMP_MNOARRIVABLE),
                             autoFocus: zCampoActualizado.autoFocus,
                         } as IZCampoState, zcampoState);
                     }

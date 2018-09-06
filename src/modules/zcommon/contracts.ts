@@ -304,6 +304,8 @@ export interface IZCampoState extends IdEntityBase, IZCampoBase {
     esFijo: boolean; //El campo es fijo (Descripción)
 
     esArchivo: boolean;
+
+    noArrivable: boolean;
 }
 
 export class ZCampoState implements IZCampoState {
@@ -345,7 +347,9 @@ export class ZCampoState implements IZCampoState {
             this.esArchivo = ContractsServices.Binario.estaPrendidoBit(zcampo.modo, Constants.ModoCampoEnum.ZCMP_MCARGARARCHIVO);
         } else {
             this.esArchivo = false;
-        }
+        }        
+
+        this.noArrivable = ContractsServices.Binario.estaPrendidoBit(zcampo.modo, Constants.ModoCampoEnum.ZCMP_MNOARRIVABLE);
     }
 
     //Propiedades para manejo de estado
@@ -389,6 +393,8 @@ export class ZCampoState implements IZCampoState {
     esFijo: boolean; //El campo es fijo (Descripción)
 
     esArchivo: boolean;
+
+    noArrivable: boolean;
 }
 
 export interface IZComandoFormaState extends IZComandoForma {
@@ -934,8 +940,7 @@ interface IZPantexNormalized {
 export namespace ContractsServices {
 
     export const esCampoModoLectura = (modo: number): boolean => {
-        return Binario.estaPrendidoBit(modo, Constants.ModoCampoEnum.ZCMP_MNOARRIVABLE)
-            || Binario.estaPrendidoBit(modo, Constants.ModoCampoEnum.ZCMP_MSOLOVISUAL);
+        return Binario.estaPrendidoBit(modo, Constants.ModoCampoEnum.ZCMP_MSOLOVISUAL);
 
     }
 
