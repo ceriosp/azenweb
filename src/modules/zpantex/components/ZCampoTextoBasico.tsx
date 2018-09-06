@@ -53,8 +53,8 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
                 onBlur={this.onBlur}
                 autoFocus={this.props.zCampoModel.autoFocus}
                 maxLength={zCampoModel.lon}
-                readOnly={zCampoModel.readOnly}
-                disabled={zCampoModel.noArrivable || this.props.estaProcesandoRequestServidor}
+                readOnly={zCampoModel.readOnly || this.props.estaProcesandoRequestServidor}
+                disabled={zCampoModel.noArrivable}
                 style={{
                     borderColor: zCampoModel.haCambiado ? '#337AB7' : '',
                     textAlign: zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO ? 'right' : 'left'
