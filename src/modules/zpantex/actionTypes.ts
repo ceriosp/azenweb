@@ -117,7 +117,11 @@ export namespace ActionTypes {
                 numFilasVisiblesMulti:number,
                 numFilasVisiblesMultiPx:number,
                 numFilasVisiblesMultiZft:number,
-                                
+
+                pxIrALinea:number,
+                rgIrALinea:number,
+                irALinea:number,
+                            
                 ultimoComandoEnviado:Constants.ComandoEnum
             } |
             {

@@ -40,6 +40,9 @@ export namespace Services {
         let numFilasVisiblesMultiPx: number; //Nro. del px para cambiar num filas visibles multi
         let numFilasVisiblesMultiZft: number; //Nro. del zft para cambiar num filas visibles multi
 
+        let irALinea: number;
+        let pxIrALinea: number;
+        let rgIrALinea: number;
 
         export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
@@ -56,6 +59,10 @@ export namespace Services {
             numFilasVisiblesMulti = 0;
             numFilasVisiblesMultiPx = -1;
             numFilasVisiblesMultiZft = -1;
+
+            irALinea = -1;
+            pxIrALinea = -1;
+            rgIrALinea = -1;
 
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
 
@@ -91,6 +98,12 @@ export namespace Services {
 
                     case ZCommonConstants.ComandoEnum.CM_SINCBOTON:
                         cmSincBoton(evento);
+                        break;
+
+                    case ZCommonConstants.ComandoEnum.CM_IRALINEA:                        
+                        pxIrALinea = parseInt(((evento.dato.buffer.dato) as any).px);
+                        rgIrALinea = parseInt(((evento.dato.buffer.dato) as any).rg);
+                        irALinea = parseInt(((evento.dato.buffer.dato) as any).fi); //índice linea
                         break;
 
                     case ZCommonConstants.ComandoEnum.CM_MODIFICAR:
@@ -153,7 +166,7 @@ export namespace Services {
                         dispatch(ZPantex.Actions.ZPantexStateModule.quitarModal(quitarModal.px));
                         break;
 
-                    case ZCommon.Constants.ComandoEnum.CM_PXDESTRUIR:                    
+                    case ZCommon.Constants.ComandoEnum.CM_PXDESTRUIR:
                         const pxDestruir = evento.dato.buffer.dato as CM.IPxDestruir;
                         dispatch(ZPantex.Actions.ZPantexStateModule.cmPxDestruir(pxDestruir));
                         break;
@@ -176,7 +189,7 @@ export namespace Services {
                                 bd: parametrosActivacionComp[2],
                                 usuario: parametrosActivacionComp[3],
                                 uid: parametrosActivacionComp[4],
-                                numeroMes: ZCommonConstants.mesNroMes.get(parametrosActivacionComp[0].toLowerCase()),                                
+                                numeroMes: ZCommonConstants.mesNroMes.get(parametrosActivacionComp[0].toLowerCase()),
                             } as IParametrosActivacionObj;
                         }
                         dispatch(ZApppActions.setParametrosActivacionObj(parametrosActivacionObj));
@@ -213,6 +226,9 @@ export namespace Services {
                     numFilasVisiblesMulti,
                     numFilasVisiblesMultiPx,
                     numFilasVisiblesMultiZft,
+                    pxIrALinea,
+                    rgIrALinea,
+                    irALinea,
                     getState().ultimoComandoEnviado));
             } else {
                 if (cmCambiarTituloVentana) {

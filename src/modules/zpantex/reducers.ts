@@ -253,21 +253,21 @@ export namespace Reducers {
 
             const fnActualizarZCampo = (zcampoState: IZCampoState): IZCampoState => {
 
-                if(zcampoState.px != action.px){
+                if (zcampoState.px != action.px) {
                     return zcampoState;
                 }
 
-                if(zcampoState.id == action.idZCampoState && zcampoState.etq.trim() == "Que"){
+                if (zcampoState.id == action.idZCampoState && zcampoState.etq.trim() == "Que") {
                     return zcampoState;
                 }
 
-                if(zcampoState.id == action.idZCampoState){
+                if (zcampoState.id == action.idZCampoState) {
                     return u({
                         autoFocus: zcampoState.id == action.idZCampoState,
                         haCambiado: action.haCambiado,
-                    } as IZCampoState, zcampoState);    
+                    } as IZCampoState, zcampoState);
                 }
-                
+
                 return u({
                     autoFocus: false,
                 } as IZCampoState, zcampoState);
@@ -506,7 +506,7 @@ export namespace Reducers {
                             modo: zCampoActualizado.modo,
                             readOnly: ContractsServices.esCampoControlLectura(zCampoActualizado.control)
                                 || ContractsServices.esCampoModoLectura(zCampoActualizado.modo),
-                            noArrivable:ContractsServices.Binario.estaPrendidoBit(zCampoActualizado.modo, ZCommonConstants.ModoCampoEnum.ZCMP_MNOARRIVABLE),
+                            noArrivable: ContractsServices.Binario.estaPrendidoBit(zCampoActualizado.modo, ZCommonConstants.ModoCampoEnum.ZCMP_MNOARRIVABLE),
                             autoFocus: zCampoActualizado.autoFocus,
                         } as IZCampoState, zcampoState);
                     }
@@ -545,7 +545,15 @@ export namespace Reducers {
 
                 if (action.numFilasVisiblesMultiPx == zFormaTabla.numPx) {
                     return u({
-                        numFilasVisiblesMulti: action.numFilasVisiblesMulti
+                        numFilasVisiblesMulti: action.numFilasVisiblesMulti,
+                        indexFilaMultiSeleccionada: action.irALinea != -1 ? action.irALinea : zFormaTabla.indexFilaMultiSeleccionada
+                    } as IZFormaTablaState, zFormaTabla);
+                }
+
+                if (action.irALinea != -1 
+                    && (zFormaTabla.numPx == action.pxIrALinea && zFormaTabla.rg == action.rgIrALinea)) {
+                    return u({
+                        indexFilaMultiSeleccionada: action.irALinea
                     } as IZFormaTablaState, zFormaTabla);
                 }
 

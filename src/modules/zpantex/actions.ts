@@ -301,7 +301,10 @@ export namespace Actions {
             numFilasVisiblesMulti: number,
             numFilasVisiblesMultiPx: number,
             numFilasVisiblesMultiZft: number,
-            ultimoComandoEnviado: Constants.ComandoEnum
+            pxIrALinea:number,
+            rgIrALinea:number,
+            irALinea:number,
+            ultimoComandoEnviado: Constants.ComandoEnum,
         ): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.CM_SINCPX,
             listaPxCampos,
@@ -312,6 +315,11 @@ export namespace Actions {
             numFilasVisiblesMulti,
             numFilasVisiblesMultiPx,
             numFilasVisiblesMultiZft,
+
+            pxIrALinea,
+            rgIrALinea,
+            irALinea,
+            
             ultimoComandoEnviado
         });
 
@@ -523,8 +531,7 @@ export namespace Actions {
             );
         }
         
-        export const onFilaMultiSeleccionadaInternal = (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number) => (dispatch: any, getStateFn: () => IZAplState) => {
-            dispatch(setFilaMultiSeleccionada(zFormaTablaState, indexFilaMultiSeleccionada));
+        export const onFilaMultiSeleccionadaInternal = (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number) => (dispatch: any, getStateFn: () => IZAplState) => {            
             const buffer = `<fi>${indexFilaMultiSeleccionada}</fi>`;
             dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_IRALINEA, buffer)).then(
                 (resultadoDesparcharEvento: ResultadoActionConDato<IZColaEventos>) => {

@@ -83,13 +83,13 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
                                                     marginRight: "3px"
                                                 }}
                                                 glyph="search"
-                                                onClick={(e:any) => {
+                                                onClick={(e: any) => {
                                                     e.stopPropagation();
-                                                    this.props.despacharComando({                                                        
+                                                    this.props.despacharComando({
                                                         cmd: ZCommonConstants.ComandoEnum.CM_BUSCAR,
                                                         px: zcampoI.px,
                                                         idZft: zcampoI.idZft
-                                                    } as IZComandoFormaState);                                                    
+                                                    } as IZComandoFormaState);
                                                 }}
                                             />
                                         </span>
@@ -135,12 +135,16 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
                                                 }
                                                 }
                                                 ref={(ref) => {
+                                                    //jcarvajal: Antes se enviaba seleccionar fila desde el cliente
+                                                    //Ahora lo resuelve Azen enviando el CMD IR_ALINEA
+                                                    /*
                                                     if (ref && indexFila == 0 && indexCampo == 0) {
                                                         if (!this.primeraFilaSeleccionada) {
                                                             this.primeraFilaSeleccionada = true;
                                                             ref.click();
                                                         }
                                                     }
+                                                    */
                                                 }}
                                             >
                                                 {zcampoI.value}
