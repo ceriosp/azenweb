@@ -17,7 +17,7 @@ import { ZLabelCampoContainer } from '../containers/ZLabelCampoContainer';
 import { ZCampoTextoBasicoContainer } from '../containers/ZCampoTextoBasicoContainer';
 
 export interface OwnProps {
-    zCampoModel: IZCampoState;
+    zCampoState: IZCampoState;
     zFormaTabla: IZFormaTablaState;
 }
 
@@ -36,14 +36,20 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
     }
 
     render() {
-        const { zCampoModel, zFormaTabla } = this.props;
-        if (zCampoModel.esFijo || zFormaTabla.venState.numLinsDatos == 0) { //Es fijo o NO es de un multi
+        const { zCampoState, zFormaTabla } = this.props;
+        if (zCampoState.esFijo || zFormaTabla.venState.numLinsDatos == 0) { //Es fijo o NO es de un multi
             return (
-                <FormGroup bsSize="small">
+                <FormGroup 
+                    bsSize="small" 
+                >
+
                     <Col md={12}>
-                        <ZLabelCampoContainer zCampoModel={zCampoModel} />
+                        <ZLabelCampoContainer zCampoModel={zCampoState} />
                         <Col>
-                            <ZCampoTextoBasicoContainer zCampoModel={zCampoModel} />
+                            <ZCampoTextoBasicoContainer
+                                zCampoState={zCampoState}
+                                zFormaTabla={zFormaTabla}
+                            />
                         </Col>
                     </Col>
                 </FormGroup>
@@ -51,8 +57,16 @@ export class ZCampoTextbox extends React.PureComponent<OwnProps & ConnectedState
         } else {
             if (zFormaTabla.venState.numLinsDatos > 0) { //Es multi
                 return (
-                    <FormGroup bsSize="small">
-                        <ZCampoTextoBasicoContainer zCampoModel={zCampoModel} />
+                    <FormGroup 
+                        bsSize="small"
+                        style={{
+                            border: zCampoState.fi == zFormaTabla.indexFilaMultiSeleccionada ? "1px solid" : "none"
+                        }}                            
+                    >
+                        <ZCampoTextoBasicoContainer
+                            zCampoState={zCampoState}
+                            zFormaTabla={zFormaTabla}
+                        />
                     </FormGroup>
                 );
             }

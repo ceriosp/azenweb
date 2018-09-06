@@ -26,6 +26,7 @@ import {
 
 import { ZLabelCampoContainer } from '../containers/ZLabelCampoContainer';
 import { ZCampoTextoBasicoContainer } from '../containers/ZCampoTextoBasicoContainer';
+import { ZFormaTabla } from './ZFormaTabla';
 
 export interface OwnProps {
     zCampoModel: IZCampoState;
@@ -102,7 +103,8 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
                     <Col>
                         <InputGroup>
                             <ZCampoTextoBasicoContainer
-                                zCampoModel={zCampoModel}
+                                zCampoState={zCampoModel}
+                                zFormaTabla={this.props.zFormaTabla}
                                 valor={this.fechaConFormato}
                                 readOnly={true}
                             />

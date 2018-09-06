@@ -7,11 +7,13 @@ import {
 import {
     Constants as ZCommonConstants,
     IZCampoState,
+    IZFormaTablaState,
 } from "../../zcommon";
 import * as ReactDOM from 'react-dom';
 
 export interface OwnProps {
-    zCampoModel: IZCampoState;
+    zCampoState: IZCampoState;
+    zFormaTabla: IZFormaTablaState;
     valor?: any; //Sobreescribe el valor de zCampoModel.value: caso fechas para pintar con formato
     readOnly?: boolean; //Sobreescribe el valor de zCampoModel.readOnly: caso fechas
 }
@@ -39,40 +41,40 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
 
     render() {
 
-        let { zCampoModel, valor } = this.props;        
-        valor = valor ? valor : zCampoModel.value;
+        let { zCampoState, zFormaTabla, valor } = this.props;        
+        valor = valor ? valor : zCampoState.value;
 
         return (
             <FormControl
                 type="text"                
-                name={zCampoModel.nomCmp}
+                name={zCampoState.nomCmp}
                 value={valor}
                 title={valor}
                 onFocus={this.onFocus}
                 onChange={this.onChange}
                 onBlur={this.onBlur}
-                autoFocus={this.props.zCampoModel.autoFocus}
-                maxLength={zCampoModel.lon}
-                readOnly={zCampoModel.readOnly || this.props.estaProcesandoRequestServidor}
-                disabled={zCampoModel.noArrivable}
+                autoFocus={this.props.zCampoState.autoFocus}
+                maxLength={zCampoState.lon}
+                readOnly={zCampoState.readOnly || this.props.estaProcesandoRequestServidor}
+                disabled={zCampoState.noArrivable || (zCampoState.fi && zFormaTabla.indexFilaMultiSeleccionada != zCampoState.fi)}
                 style={{
-                    borderColor: zCampoModel.haCambiado ? '#337AB7' : '',
-                    textAlign: zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO ? 'right' : 'left'
+                    borderColor: zCampoState.haCambiado ? '#337AB7' : '',
+                    textAlign: zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO ? 'right' : 'left',                    
                 }}
             />
         );
     }
 
     onFocus(e: any) {
-        if (this.props.zCampoModel.autoFocus) {
+        if (this.props.zCampoState.autoFocus) {
             return;
         }
-        this.props.onCampoFocusIrACmp(this.props.zCampoModel);
+        this.props.onCampoFocusIrACmp(this.props.zCampoState);
     }
 
     onChange(e: any) {
         this.darFormatoValorCampoSegunTipo(e);
-        this.props.onCampoChanged(this.props.zCampoModel, e.target.value);
+        this.props.onCampoChanged(this.props.zCampoState, e.target.value);
     }
 
     darFormatoValorCampoSegunTipo(e: any) {
@@ -83,16 +85,16 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
             return;
         }
 
-        if (this.props.zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_REAL
-            || this.props.zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DOBLE) {
+        if (this.props.zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_REAL
+            || this.props.zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DOBLE) {
             if (isNaN(valor)) {
                 e.target.value = "";
             }
             return;
         }
 
-        if (this.props.zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_ENTERO
-            || this.props.zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_LARGO) {
+        if (this.props.zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_ENTERO
+            || this.props.zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_LARGO) {
             if (isNaN(parseInt(valor))) {
                 e.target.value = "";
             } else {
@@ -101,7 +103,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
             return;
         }
 
-        if (this.props.zCampoModel.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO) {
+        if (this.props.zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO) {
             if (!isNaN(e.target.value)) {
                 e.target.value = new Intl.NumberFormat().format(parseFloat(valor));
             } else {
@@ -118,6 +120,6 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     }
 
     onBlur(e: any) {
-        this.props.onCampoBlur(this.props.zCampoModel);
+        this.props.onCampoBlur(this.props.zCampoState);
     }
 }

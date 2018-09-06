@@ -73,7 +73,7 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
         else if (claseInd == ZCommon.Constants.ClaseIndicadorEnum.ZCMP_NOINDICADOR) {
             if (esDetallable) {
                 return <ZCampoDetallableContainer
-                            zCampoModel={zCampo}
+                            zCampoState={zCampo}
                             zFormaTabla={zFormaTabla}
                 />;
             }
@@ -89,7 +89,7 @@ export default class ZCampo extends React.PureComponent<OwnProperties, undefined
                             zFormaTabla={this.props.zFormaTabla} />
             }
             return <ZCampoTextboxContainer
-                        zCampoModel={zCampo}
+                        zCampoState={zCampo}
                         zFormaTabla={zFormaTabla}
             />;
         }

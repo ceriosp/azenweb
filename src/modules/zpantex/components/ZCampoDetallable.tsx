@@ -19,7 +19,7 @@ import { ZLabelCampoContainer } from '../containers/ZLabelCampoContainer';
 import { ZCampoTextoBasicoContainer } from '../containers/ZCampoTextoBasicoContainer';
 
 export interface OwnProps {
-    zCampoModel: IZCampoState;
+    zCampoState: IZCampoState;
     zFormaTabla: IZFormaTablaState;
 }
 
@@ -40,17 +40,20 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
     }
 
     render() {
-        const { zCampoModel, zFormaTabla } = this.props;
-        const disabled = this.props.estaProcesandoRequestServidor || zCampoModel.readOnly;
+        const { zCampoState, zFormaTabla } = this.props;
+        const disabled = this.props.estaProcesandoRequestServidor || zCampoState.readOnly;
 
         if (zFormaTabla.venState.numLinsDatos == 0) {
             return (
                 <FormGroup bsSize="small">
                     <Col md={12}>
-                        <ZLabelCampoContainer zCampoModel={zCampoModel} />
+                        <ZLabelCampoContainer zCampoModel={zCampoState} />
                         <Col>
                             <InputGroup>
-                                <ZCampoTextoBasicoContainer zCampoModel={zCampoModel} />
+                                <ZCampoTextoBasicoContainer
+                                    zCampoState={zCampoState}
+                                    zFormaTabla={zFormaTabla}
+                                />
                                 <InputGroup.Addon
                                     onClick={this.onCampoZoomClick}
                                     style={{ cursor: disabled ? "not-allowed" : "pointer" }}>
@@ -67,11 +70,15 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
                 return (
                     <FormGroup bsSize="small"
                         style={{
-                            marginBottom: "1px"
+                            marginBottom: "1px",
+                            border: zCampoState.fi == zFormaTabla.indexFilaMultiSeleccionada ? "1px solid" : "none"                            
                         }}
                     >
                         <InputGroup>
-                            <ZCampoTextoBasicoContainer zCampoModel={zCampoModel} />
+                            <ZCampoTextoBasicoContainer
+                                zCampoState={zCampoState}
+                                zFormaTabla={zFormaTabla}
+                            />
                             <InputGroup.Addon
                                 onClick={this.onCampoZoomClick}
                                 style={{ cursor: disabled ? "not-allowed" : "pointer" }}>
@@ -86,6 +93,6 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
 
     onCampoZoomClick() {
         this.props.despacharEventoCliente(ZCommonConstants.ComandoEnum.CM_DETALLAR,
-            `<nc>${this.props.zCampoModel.nomCmp}</nc>`);
+            `<nc>${this.props.zCampoState.nomCmp}</nc>`);
     }
 }
