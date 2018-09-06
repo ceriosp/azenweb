@@ -33,7 +33,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
-        this.darFormatoValorCampoSegunTipo = this.darFormatoValorCampoSegunTipo.bind(this);        
+        this.darFormatoValorCampoSegunTipo = this.darFormatoValorCampoSegunTipo.bind(this);
         this.onFocus = this.onFocus.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onBlur = this.onBlur.bind(this);
@@ -41,12 +41,12 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
 
     render() {
 
-        let { zCampoState, zFormaTabla, valor } = this.props;        
+        let { zCampoState, zFormaTabla, valor } = this.props;
         valor = valor ? valor : zCampoState.value;
 
         return (
             <FormControl
-                type="text"                
+                type="text"
                 name={zCampoState.nomCmp}
                 value={valor}
                 title={valor}
@@ -59,7 +59,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
                 disabled={zCampoState.noArrivable || (zCampoState.fi && zFormaTabla.indexFilaMultiSeleccionada != zCampoState.fi)}
                 style={{
                     borderColor: zCampoState.haCambiado ? '#337AB7' : '',
-                    textAlign: zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO ? 'right' : 'left',                    
+                    textAlign: zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO ? 'right' : 'left',
                 }}
             />
         );
@@ -78,6 +78,75 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     }
 
     darFormatoValorCampoSegunTipo(e: any) {
+
+        let valor = e.target.value;
+
+        if (valor.length == 0) {
+            return;
+        }
+
+        if (this.props.zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_REAL
+            || this.props.zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DOBLE) {
+            if (isNaN(valor)) {
+                e.target.value = "";
+            }
+            return;
+        }
+
+        if (this.props.zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_ENTERO
+            || this.props.zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_LARGO) {
+            if (isNaN(parseInt(valor))) {
+                e.target.value = "";
+            } else {
+                e.target.value = parseInt(valor);
+            }
+            return;
+        }
+
+        if (this.props.zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO) {
+
+            let valor = e.target.value;
+
+            if (valor.length == 0) {
+                return;
+            }
+
+            if (!isNaN(valor)) {
+                e.target.value = this.convertirAMoneda(valor, 0);
+            } else {
+
+                let cuantosDecimales = 0;
+
+                if (valor.indexOf(".") != -1) {
+                    let lastIndexOfPunto = valor.lastIndexOf(".");
+                    if (lastIndexOfPunto == (valor.length - 1)) {
+                        return;
+                    }
+
+                    cuantosDecimales = valor.length - lastIndexOfPunto - 1;
+                    if (cuantosDecimales > 2) {
+                        e.target.value = e.target.value.substr(0, lastIndexOfPunto + 3);
+                        return;
+                    }
+                }
+
+                e.target.value = this.convertirAMoneda(valor.replace(/,/g, ""), cuantosDecimales);
+            }
+        }
+    }
+
+    convertirAMoneda(n: any, c: any) {
+        c = isNaN(c = Math.abs(c)) ? 2 : c;
+        let d = ".";
+		let t = ",";
+        let s = n < 0 ? "-" : "";
+        let i:any = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c)));
+        let j;
+        j = (j = i.length) > 3 ? j % 3 : 0;
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
+
+    darFormatoValorCampoSegunTipoOld(e: any) {
 
         let valor = e.target.value;
 
