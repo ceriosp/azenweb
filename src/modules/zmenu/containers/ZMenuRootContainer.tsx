@@ -38,6 +38,7 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     tipoAJAXIndicador:appState.tipoAJAXIndicador,
 });
 
+
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
     despacharOpcionMenu: (zmenuItemModel: any) => null,
     activarLogConsola: (nivelLog:number) => dispatch(AppActions.setNivelLog(nivelLog)),
