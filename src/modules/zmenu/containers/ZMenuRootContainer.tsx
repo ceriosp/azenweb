@@ -27,7 +27,12 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
 
     parametrosActivacionObj: appState.parametrosActivacionObj,
 
-    ponerModal: appState.zPantexStateModule.pilaPantexState.allIds.length > 0 ? appState.zPantexStateModule.pilaPantexState.byId[appState.zPantexStateModule.pxAlTope].esModal : false,
+    ponerModal: appState.zPantexStateModule.pilaPantexState.allIds.length > 0 
+                ?  
+                    appState.zPantexStateModule.pilaPantexState.byId[appState.zPantexStateModule.pxAlTope] ? 
+                    appState.zPantexStateModule.pilaPantexState.byId[appState.zPantexStateModule.pxAlTope].esModal 
+                    : false
+                : false,
 
     estaProcesandoRequestServidor:appState.estaProcesandoRequestServidor,
     tipoAJAXIndicador:appState.tipoAJAXIndicador,

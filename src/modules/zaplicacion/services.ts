@@ -126,6 +126,7 @@ export namespace Services {
                     case ZCommon.Constants.ComandoEnum.CM_PXCREARMENSAJE:
                     case ZCommon.Constants.ComandoEnum.CM_PXCREARZOOM:
                     case ZCommon.Constants.ComandoEnum.CM_PXCREARMOV:
+                    case ZCommon.Constants.ComandoEnum.CM_PXCREAROCULTO:
                         const zPantex = evento.dato.buffer.dato as IZPantex;
                         dispatch(ZPantex.Actions.ZPantexStateModule.pxCrear(zPantex, evento.dato.cmd));
                         break;
@@ -152,7 +153,7 @@ export namespace Services {
                         dispatch(ZPantex.Actions.ZPantexStateModule.quitarModal(quitarModal.px));
                         break;
 
-                    case ZCommon.Constants.ComandoEnum.CM_PXDESTRUIR:
+                    case ZCommon.Constants.ComandoEnum.CM_PXDESTRUIR:                    
                         const pxDestruir = evento.dato.buffer.dato as CM.IPxDestruir;
                         dispatch(ZPantex.Actions.ZPantexStateModule.cmPxDestruir(pxDestruir));
                         break;
