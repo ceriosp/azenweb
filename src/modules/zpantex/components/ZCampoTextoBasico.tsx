@@ -42,7 +42,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     render() {
 
         let { zCampoState, zFormaTabla, valor } = this.props;
-        valor = valor ? valor : zCampoState.value;
+        valor = valor ? valor : zCampoState.value;        
 
         return (
             <FormControl
@@ -56,7 +56,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
                 autoFocus={this.props.zCampoState.autoFocus}
                 maxLength={zCampoState.lon}
                 readOnly={zCampoState.readOnly || this.props.estaProcesandoRequestServidor}
-                disabled={zCampoState.noArrivable || (zCampoState.fi && zFormaTabla.indexFilaMultiSeleccionada != zCampoState.fi)}
+                disabled={zCampoState.noArrivable || (zCampoState.fi != undefined && zFormaTabla.indexFilaMultiSeleccionada != zCampoState.fi)}
                 style={{
                     borderColor: zCampoState.haCambiado ? '#337AB7' : '',
                     textAlign: zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO ? 'right' : 'left',
