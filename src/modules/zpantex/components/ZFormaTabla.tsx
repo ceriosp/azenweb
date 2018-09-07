@@ -36,7 +36,7 @@ export interface OwnProps {
 }
 
 export interface ConnectedDispatch {
-    onSaltarMov:(zFormaTablaState: IZFormaTablaState, regionDestino:number) => void;
+    onSaltarMov: (zFormaTablaState: IZFormaTablaState, regionDestino: number) => void;
 }
 
 export interface ConnectedState {
@@ -47,13 +47,17 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
 {
 
     constructor(props: OwnProps & ConnectedDispatch) {
-        super(props);        
+        super(props);
+        this.onZftClick = this.onZftClick.bind(this);
     }
 
     render(): any {
 
         return (
-            <div>
+            <div
+                onClick={this.onZftClick}
+                className="azn-zft-div-container"
+            >
 
                 {/*No es multi, es formulario*/}
                 {((this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREAR
@@ -103,5 +107,22 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
             </div>
         );
     }
-    
+
+
+    onZftClick(e: any) {
+
+        if (e.target.tagName.toLowerCase() != "div") {
+            return;
+        }
+
+        if (this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV) {
+
+            if (this.props.zFormaTabla.esRegionActiva) {
+                return;
+            }
+
+            this.props.onSaltarMov(this.props.zFormaTabla, (this.props.zftIndex + 1));
+        }
+    }
+
 }

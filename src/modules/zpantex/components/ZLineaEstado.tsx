@@ -54,7 +54,7 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
                             <Button
                                 key={zComandoI.id}
                                 bsStyle={this.props.zFormaTablaState.esRegionActiva ? "info" : "default"}
-                                title={zComandoI.etq + "-" + zComandoI.cmd}
+                                title={zComandoI.etq}
                                 disabled={zComandoI.desh == 1}
                                 onClick={() => this.despacharComandoLineaEstado(zComandoI)}
                             >
