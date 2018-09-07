@@ -389,6 +389,24 @@ export namespace Actions {
             );
         }
         
+        export const cmDetallar = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
+
+            const buffer = `<nc>${zcampoState.nomCmp}</nc>`;
+
+            let zformaTabla: IZFormaTablaState = getStateFn().zPantexStateModule.zFormaTablaState.byId[zcampoState.idZft];
+            let zPantexState: IZPantexState = getStateFn().zPantexStateModule.pilaPantexState.byId[zcampoState.px];
+            if (zPantexState.zFormaTablaStateListIds.length == 1 || zformaTabla.esRegionActiva) { //No ocurrió un saltar
+                dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_DETALLAR, buffer));
+                return;
+            }
+
+            dispatch(onSaltarMov(zformaTabla, zcampoState.rg)).then(
+                () => {
+                    dispatch(ZAplicacionActions.despacharEventoCliente(Constants.ComandoEnum.CM_DETALLAR, buffer));
+                }
+            );
+        }
+        
         const onCampoFocusIrACmpInternal = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
 
             const buffer = `<nc>${zcampoState.nomCmp}</nc>`;

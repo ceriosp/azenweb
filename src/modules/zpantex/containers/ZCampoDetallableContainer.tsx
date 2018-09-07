@@ -20,8 +20,8 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-    despacharEventoCliente:(cmd: ZCommonConstants.ComandoEnum, buffer: string) =>
-        dispatch(ZAplicacionActions.despacharEventoCliente(cmd, buffer))
+    cmDetallar: (zcampoState: IZCampoState) =>
+        dispatch(Actions.ZPantexStateModule.cmDetallar(zcampoState))
 });
 
 export const ZCampoDetallableContainer: React.ComponentClass<OwnProps> =

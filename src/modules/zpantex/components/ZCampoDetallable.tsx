@@ -28,7 +28,7 @@ export interface ConnectedState {
 }
 
 export interface ConnectedDispatch {
-    despacharEventoCliente: (cmd: ZCommonConstants.ComandoEnum, buffer: string) => void;
+    cmDetallar: (zcampoState: IZCampoState) => void;
 }
 
 export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
@@ -92,7 +92,6 @@ export class ZCampoDetallable extends React.PureComponent<OwnProps & ConnectedSt
     }
 
     onCampoZoomClick() {
-        this.props.despacharEventoCliente(ZCommonConstants.ComandoEnum.CM_DETALLAR,
-            `<nc>${this.props.zCampoState.nomCmp}</nc>`);
+        this.props.cmDetallar(this.props.zCampoState);
     }
 }
