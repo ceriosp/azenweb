@@ -61,7 +61,8 @@ export class ZFormaTabla extends React.PureComponent<OwnProps & ConnectedDispatc
 
                 {/*No es multi, es formulario*/}
                 {((this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREAR
-                    || this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMENSAJE)
+                    || this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMENSAJE
+                    || this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREAROCULTO)
                     || (
                         this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV
                         && this.props.zFormaTabla.venState.numLinsDatos == 0
