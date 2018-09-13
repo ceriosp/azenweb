@@ -64,24 +64,31 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
         this.fechaConFormato = "";
 
         if (zCampoModel.value && zCampoModel.value != "00000000") {
-            this.fechaConFormato =
-                zCampoModel.value.substring(0, 2) + "/"
-                + zCampoModel.value.substring(2, 4) + "/"
-                + zCampoModel.value.substring(4, 8);
 
-            this.fechaMoment = moment(this.fechaConFormato, this.formato, true).format('L');
+            if (zCampoModel.value.length != 8 || (zCampoModel.value.length == 8 && zCampoModel.value.indexOf("/") != -1)) {                
+                this.fechaConFormato = zCampoModel.value;
+            }
+            else {
+                this.fechaConFormato =
+                    zCampoModel.value.substring(0, 2) + "/"
+                    + zCampoModel.value.substring(2, 4) + "/"
+                    + zCampoModel.value.substring(4, 8);
+
+                this.fechaMoment = moment(this.fechaConFormato, this.formato, true).format('L');
+            }
         } else {
+
             this.fechaMoment = this.props.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV && this.props.zFormaTabla.rg == 1
                 ? moment(new Date(this.props.parametrosActivacionObj.anio, this.props.parametrosActivacionObj.numeroMes, 15), this.formato)
                 : moment(); //Si no es encabezado de movimiento es fecha actual.
         }
 
-        const disabled = this.props.estaProcesandoRequestServidor || this.props.zCampoModel.readOnly;
+        const disabled = this.props.estaProcesandoRequestServidor || zCampoModel.noArrivable;
         return (
             <DateTime
                 dateFormat={this.formato}
                 timeFormat={false}
-                inputProps={{ title: 'formato ' + this.formato, disabled: disabled, readOnly: true }}
+                inputProps={{ title: 'formato ' + this.formato, disabled: disabled, readOnly: zCampoModel.readOnly }}
                 closeOnSelect={true}
                 value={this.fechaMoment}
                 onChange={this.onChange}
@@ -106,7 +113,7 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
                                 zCampoState={zCampoModel}
                                 zFormaTabla={this.props.zFormaTabla}
                                 valor={this.fechaConFormato}
-                                readOnly={true}
+                                maxLength={10}
                             />
                             {/*
                             <InputGroup.Addon
@@ -128,7 +135,7 @@ export class ZCampoFecha extends React.PureComponent<OwnProps & ConnectedState &
         );
     }
 
-    onChange(momentChanged: any) {
+    onChange(momentChanged: any) {        
 
         if (this.props.zCampoModel.readOnly) {
             return;

@@ -76,25 +76,28 @@ export class ZFormaTablaZoom extends React.PureComponent<OwnProps & ConnectedDis
                                     onClick={() => this.onCampoTituloClick(zcampoI)}
                                 >
                                     {(zcampoI.autoFocus) &&
-                                        <span>
+                                        <span
+                                            onClick={(e: any) => {
+                                                e.stopPropagation();
+                                                this.props.despacharComando({
+                                                    cmd: ZCommonConstants.ComandoEnum.CM_BUSCAR,
+                                                    px: zcampoI.px,
+                                                    idZft: zcampoI.idZft
+                                                } as IZComandoFormaState);
+                                            }}
+                                        >
                                             <Glyphicon
                                                 style={{
                                                     color: "rgb(51, 122, 183)",
                                                     marginRight: "3px"
                                                 }}
                                                 glyph="search"
-                                                onClick={(e: any) => {
-                                                    e.stopPropagation();
-                                                    this.props.despacharComando({
-                                                        cmd: ZCommonConstants.ComandoEnum.CM_BUSCAR,
-                                                        px: zcampoI.px,
-                                                        idZft: zcampoI.idZft
-                                                    } as IZComandoFormaState);
-                                                }}
-                                            />
+                                            /> {zcampoI.etq}
                                         </span>
                                     }
-                                    {zcampoI.etq}
+                                    {(!zcampoI.autoFocus) &&
+                                        <span>{zcampoI.etq}</span>
+                                    }
                                 </th>
                             );
                         })}

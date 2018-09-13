@@ -16,6 +16,7 @@ export interface OwnProps {
     zFormaTabla: IZFormaTablaState;
     valor?: any; //Sobreescribe el valor de zCampoModel.value: caso fechas para pintar con formato
     readOnly?: boolean; //Sobreescribe el valor de zCampoModel.readOnly: caso fechas
+    maxLength?: number; //Sobreescribe el valor de zCampoModel.lon: caso fechas
 }
 
 export interface ConnectedState {
@@ -54,7 +55,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
                 onChange={this.onChange}
                 onBlur={this.onBlur}
                 autoFocus={this.props.zCampoState.autoFocus}
-                maxLength={zCampoState.lon}
+                maxLength={this.props.maxLength ? this.props.maxLength : zCampoState.lon}
                 readOnly={zCampoState.readOnly || this.props.estaProcesandoRequestServidor}
                 disabled={zCampoState.noArrivable || (zCampoState.fi != undefined && zFormaTabla.indexFilaMultiSeleccionada != zCampoState.fi)}
                 style={{

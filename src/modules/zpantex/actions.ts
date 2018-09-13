@@ -465,6 +465,9 @@ export namespace Actions {
             if (zcampoState.tipo == Constants.TipoCampoEnum.TIPO_DINERO) {
                 valor = valor.replace(/,/g, "");
             }
+            else if(zcampoState.tipo == Constants.TipoCampoEnum.TIPO_FECHA){
+                valor = valor.replace(/\//g, "");
+            }
 
             dispatch(setZCampoHaCambiado(zcampoState.px, zcampoState.id, false, false));
             dispatch(enviarCmdCambioCmp(zcampoState, valor));
