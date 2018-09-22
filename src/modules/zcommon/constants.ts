@@ -302,18 +302,18 @@ export namespace Constants {
     }
 
     export const mesNroMes = new Map<string, number>([
-        ["enero", 0],
-        ["febrero", 1],
-        ["marzo", 2],
-        ["abril", 3],
-        ["mayo", 4],
-        ["junio", 5],
-        ["julio", 6],
-        ["agosto", 7],
-        ["septiembre", 8],
-        ["octubre", 9],
-        ["noviembre", 10],
-        ["diciembre", 11],        
+        ["Ene.", 0],
+        ["Feb.", 1],
+        ["Mar.", 2],
+        ["Abr.", 3],
+        ["May.", 4],
+        ["Jun.", 5],
+        ["Jul.", 6],
+        ["Ago.", 7],
+        ["Sept.", 8],
+        ["Oct.", 9],
+        ["Nov.", 10],
+        ["Dic.", 11],        
     ]);
 
 }

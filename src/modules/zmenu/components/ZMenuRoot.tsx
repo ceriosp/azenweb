@@ -102,7 +102,15 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
                                 <Glyphicon glyph="calendar" /> {this.props.parametrosActivacionObj.mes}, {this.props.parametrosActivacionObj.anio}
                             </NavItem>
                             <NavItem eventKey={1} href="#" onDoubleClick={this.activarLogConsola}>
-                                <Glyphicon glyph="tasks" /> {this.props.parametrosActivacionObj.bd}
+                                <Glyphicon glyph="tasks" /> 
+                                <span 
+                                    title={this.props.parametrosActivacionObj.bd}
+                                    style={{
+                                        marginLeft:"3px"
+                                    }}
+                                > 
+                                    {this.props.parametrosActivacionObj.bd.length > 4 ? this.props.parametrosActivacionObj.bd.substring(0, 5) + "..." : this.props.parametrosActivacionObj.bd}
+                                </span>
                             </NavItem>
                         </Nav>
                     )}

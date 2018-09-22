@@ -29,7 +29,7 @@ export namespace Actions {
         return new Promise<ResultadoActionConDato<IZColaEventos>>((resolve, reject) => {
             dispatch(ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
                 cmd: ZCommon.Constants.ComandoEnum.CM_APLICACION,
-                buffer: 'azen',
+                buffer: getState().zLoginModule.username,
                 tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL
             }))
                 .then(

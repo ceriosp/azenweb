@@ -811,7 +811,7 @@ export namespace CM {
     /**
      *  Responde a zcommon.Constants.ComandoEnum.CM_IRACMP - 170
      */
-    export interface iIrACmp {
+    export interface iIrACmp extends ISincBase {
         /**
          * 
          */
@@ -949,9 +949,9 @@ export namespace ContractsServices {
     }
 
     export const getSincHashKey = (sincParams: CM.ISincBase) => {
-
+        
         //Es evento de multi
-        if (sincParams.fi) {
+        if (sincParams.fi != undefined) {
             return sincParams.px + "|" + sincParams.rg + "|" + sincParams.fi + "|" + sincParams.nc;
         }
 

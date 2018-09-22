@@ -453,7 +453,9 @@ export namespace Reducers {
                             control: zcampoState.control,
                             modo: zcampoState.modo,
 
-                            autoFocus: zcampoState.autoFocus,
+                            autoFocus: zCampoEnHash.autoFocus != undefined
+                                ? zCampoEnHash.autoFocus
+                                : action.cambiaFoco ? false : zcampoState.autoFocus,
 
                         } as IZCampoState;
 
@@ -509,6 +511,18 @@ export namespace Reducers {
                             noArrivable: ContractsServices.Binario.estaPrendidoBit(zCampoActualizado.modo, ZCommonConstants.ModoCampoEnum.ZCMP_MNOARRIVABLE),
                             autoFocus: zCampoActualizado.autoFocus,
                         } as IZCampoState, zcampoState);
+                    } else { //El campo no cambió, pero probablemente perdió el foco
+                        if (action.cambiaFoco) {
+                            return u({
+                                autoFocus: false,
+                            } as IZCampoState, zcampoState);
+                        }
+                    }
+                } else {
+                    if (action.cambiaFoco) {
+                        return u({
+                            autoFocus: false,
+                        } as IZCampoState, zcampoState);
                     }
                 }
 
@@ -550,7 +564,7 @@ export namespace Reducers {
                     } as IZFormaTablaState, zFormaTabla);
                 }
 
-                if (action.irALinea != -1 
+                if (action.irALinea != -1
                     && (zFormaTabla.numPx == action.pxIrALinea && zFormaTabla.rg == action.rgIrALinea)) {
                     return u({
                         indexFilaMultiSeleccionada: action.irALinea

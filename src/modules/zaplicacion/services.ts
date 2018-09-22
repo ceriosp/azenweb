@@ -23,7 +23,7 @@ export namespace Services {
         //valores de los campos de un px: <nombreCampo, valor>         
         let hashZCampoState = new Map<string, IZCampoState>();
         let listaPxCampos: Array<number>; //Lista px para actualizar campos
-        let iIrACmpParametros: CM.IAdicionar;
+        let iIrACmpParametros: CM.iIrACmp;
 
         let cmSincCampoParametros: CM.ISincCampo;
         let cmPrenderControlParametros: CM.IPrenderControl;
@@ -43,6 +43,8 @@ export namespace Services {
         let irALinea: number;
         let pxIrALinea: number;
         let rgIrALinea: number;
+
+        let cambiaFoco: boolean;
 
         export const procesarZColaEventos = (zColaEventos: IZColaEventos, dispatch: (p: any) => any, getState: () => IZAplState) => {
 
@@ -64,6 +66,8 @@ export namespace Services {
             pxIrALinea = -1;
             rgIrALinea = -1;
 
+            cambiaFoco = false;
+
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
 
                 parseEventoDataToJSON(zColaEventos.eventos[i]);
@@ -77,6 +81,7 @@ export namespace Services {
                         break;
 
                     case ZCommonConstants.ComandoEnum.CM_IRACMP:
+                        cambiaFoco = true;
                         cmIrACmp(evento);
                         break;
 
@@ -229,6 +234,7 @@ export namespace Services {
                     pxIrALinea,
                     rgIrALinea,
                     irALinea,
+                    cambiaFoco,
                     getState().ultimoComandoEnviado));
             } else {
                 if (cmCambiarTituloVentana) {
@@ -323,9 +329,10 @@ export namespace Services {
             }
         }
 
-        const cmIrACmp = (infoEvento: IZEvento) => {
-            iIrACmpParametros = infoEvento.dato.buffer.dato as CM.ISincCampo;
-            let hashKey = ContractsServices.getSincHashKey(cmSincCampoParametros);
+        const cmIrACmp = (infoEvento: IZEvento) => {            
+
+            iIrACmpParametros = infoEvento.dato.buffer.dato as CM.iIrACmp;
+            let hashKey = ContractsServices.getSincHashKey(iIrACmpParametros);            
 
             if (!hashZCampoState.has(hashKey)) {
                 let zCampoEnHash = {

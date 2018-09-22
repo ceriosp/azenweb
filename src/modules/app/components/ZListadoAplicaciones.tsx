@@ -77,7 +77,7 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
                             <Button
                                 bsStyle="primary"
                                 value={zApl.apl}
-                                href={'?idApl=' + zApl.apl + '&nomApl=' + zApl.descr + '&lanzarMenu=1'}
+                                href={`?idApl=${zApl.apl}&nomApl=${zApl.descr}&lanzarMenu=1`}
                                 target="_blank">
                                 Ejecutar
                         </Button>

@@ -31,6 +31,8 @@ export interface ConnectedDispatch {
 
 export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
+    private ref: any;
+
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
 
@@ -43,33 +45,38 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     render() {
 
         let { zCampoState, zFormaTabla, valor } = this.props;
-        valor = valor ? valor : zCampoState.value;        
+        valor = valor ? valor : zCampoState.value;
 
         return (
             <FormControl
                 type="text"
+                inputRef={(ref: any) => {
+                    this.ref = ref;
+                }}
                 name={zCampoState.nomCmp}
                 value={valor}
                 title={valor}
                 onFocus={this.onFocus}
                 onChange={this.onChange}
                 onBlur={this.onBlur}
-                autoFocus={this.props.zCampoState.autoFocus}
+                autoFocus={zCampoState.autoFocus}
                 maxLength={this.props.maxLength ? this.props.maxLength : zCampoState.lon}
                 readOnly={zCampoState.readOnly || this.props.estaProcesandoRequestServidor}
                 disabled={zCampoState.noArrivable || (zCampoState.fi != undefined && zFormaTabla.indexFilaMultiSeleccionada != zCampoState.fi)}
                 style={{
-                    borderColor: zCampoState.haCambiado ? '#337AB7' : '',
+                    borderColor: zCampoState.haCambiado || zCampoState.autoFocus ? '#337AB7' : '',
                     textAlign: zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO ? 'right' : 'left',
                 }}
             />
         );
     }
 
-    onFocus(e: any) {
+    onFocus(e: any) {        
+
         if (this.props.zCampoState.autoFocus) {
             return;
-        }
+        }        
+
         this.props.onCampoFocusIrACmp(this.props.zCampoState);
     }
 
@@ -82,7 +89,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
 
         let valor = e.target.value;
 
-        if (valor.length == 0) {
+        if (valor.length == 0 || valor == "*") {
             return;
         }
 
@@ -139,9 +146,9 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     convertirAMoneda(n: any, c: any) {
         c = isNaN(c = Math.abs(c)) ? 2 : c;
         let d = ".";
-		let t = ",";
+        let t = ",";
         let s = n < 0 ? "-" : "";
-        let i:any = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c)));
+        let i: any = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c)));
         let j;
         j = (j = i.length) > 3 ? j % 3 : 0;
         return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
@@ -190,6 +197,14 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     }
 
     onBlur(e: any) {
-        this.props.onCampoBlur(this.props.zCampoState);
+        //if(!this.props.zCampoState.autoFocus){
+            this.props.onCampoBlur(this.props.zCampoState);    
+        //}
+    }
+
+    componentDidUpdate() {
+        if (this.props.zFormaTabla.esRegionActiva && this.props.zCampoState.autoFocus) {            
+            this.ref.focus();
+        }
     }
 }

@@ -304,6 +304,7 @@ export namespace Actions {
             pxIrALinea:number,
             rgIrALinea:number,
             irALinea:number,
+            cambiaFoco:boolean,
             ultimoComandoEnviado: Constants.ComandoEnum,
         ): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.CM_SINCPX,
@@ -319,6 +320,8 @@ export namespace Actions {
             pxIrALinea,
             rgIrALinea,
             irALinea,
+
+            cambiaFoco,
             
             ultimoComandoEnviado
         });

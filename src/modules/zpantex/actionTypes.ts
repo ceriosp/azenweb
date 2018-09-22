@@ -121,6 +121,8 @@ export namespace ActionTypes {
                 pxIrALinea:number,
                 rgIrALinea:number,
                 irALinea:number,
+
+                cambiaFoco:boolean,
                             
                 ultimoComandoEnviado:Constants.ComandoEnum
             } |
