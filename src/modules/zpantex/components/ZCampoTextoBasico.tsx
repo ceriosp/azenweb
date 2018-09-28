@@ -31,7 +31,7 @@ export interface ConnectedDispatch {
 
 export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
 {
-    private ref: any;
+    private ref: any;    
 
     constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
         super(props);
@@ -71,11 +71,13 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
         );
     }
 
-    onFocus(e: any) {        
-
-        if (this.props.zCampoState.autoFocus) {
+    onFocus(e: any) {
+        
+        /*
+        if (this.props.zCampoState.autoFocus) {         
             return;
-        }        
+        }
+        */
 
         this.props.onCampoFocusIrACmp(this.props.zCampoState);
     }
@@ -197,14 +199,12 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
     }
 
     onBlur(e: any) {
-        //if(!this.props.zCampoState.autoFocus){
-            this.props.onCampoBlur(this.props.zCampoState);    
-        //}
+        this.props.onCampoBlur(this.props.zCampoState);
     }
 
     componentDidUpdate() {
         if (this.props.zFormaTabla.esRegionActiva && this.props.zCampoState.autoFocus) {            
-            this.ref.focus();
+            //this.ref.focus();            
         }
     }
 }

@@ -459,9 +459,13 @@ export namespace Actions {
 
         const onCampoBlurInternal = (zcampoState: IZCampoState) => (dispatch: any, getStateFn: () => IZAplState) => {
 
+
+            //jcarvajal: Si el campo tiene error, asi no haya cambiado, toca 
+            //despachar el evento.
+            
             if (!zcampoState.haCambiado) {
                 return;
-            }
+            }            
 
             let valor = zcampoState.value;
 
