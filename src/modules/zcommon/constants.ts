@@ -242,6 +242,8 @@ export namespace Constants {
         CM_PXCREARMOV,
         CM_IRACMP = 179,
 
+        CM_CAMBIOCMPASTERISCO = 183,
+
         CM_APLICACION = -1,
         CM_LOGIN = -2,
         CM_ACEPTARLOGIN = -3,

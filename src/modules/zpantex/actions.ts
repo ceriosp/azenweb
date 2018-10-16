@@ -326,7 +326,17 @@ export namespace Actions {
             ultimoComandoEnviado
         });
 
-        export const onCampoChanged = (zcampoState: IZCampoState, valor: any): ActionTypes.ZPantexStateModule.Action => ({
+        export const onCampoChanged = (zcampoState: IZCampoState, valor: any) => (dispatch: any, getStateFn: () => IZAplState) => {
+
+            if(valor == "*"){
+                dispatch(onCampoChangedEnviarCmd(zcampoState, valor));                
+            }
+            else{
+                dispatch(onCampoChangedInternal(zcampoState, valor));
+            }            
+        }
+        
+        export const onCampoChangedInternal = (zcampoState: IZCampoState, valor: any): ActionTypes.ZPantexStateModule.Action => ({
             type: ActionTypes.ZPantexStateModule.ON_CAMPOCHANGE,
             zcampoState,
             valor,
@@ -437,7 +447,7 @@ export namespace Actions {
         }
 
         const onCampoChangedEnviarCmdInternal = (zcampoState: IZCampoState, valor: any) => (dispatch: any, getStateFn: () => IZAplState) => {
-            dispatch(onCampoChanged(zcampoState, valor));
+            dispatch(onCampoChangedInternal(zcampoState, valor));
             dispatch(onCampoBlur(Selectors.ZPantexStateModule.ZCampoState.getZCampoStateMap(getStateFn()).byId[zcampoState.id]));
         }
 

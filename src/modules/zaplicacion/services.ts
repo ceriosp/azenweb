@@ -77,6 +77,7 @@ export namespace Services {
 
                     //Comandos sincronizar px
                     case ZCommonConstants.ComandoEnum.CM_SINCCAMPO:
+                    case ZCommonConstants.ComandoEnum.CM_CAMBIOCMPASTERISCO:
                         cmSincCampo(evento);
                         break;
 
