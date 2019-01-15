@@ -22,7 +22,8 @@ import {
 import * as ZAplicacion from '../../zaplicacion';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
-    pilaZPantexState: ZPantexSelectors.getZPilaPantexState(appState),   
+    pilaZPantexState: ZPantexSelectors.getZPilaPantexState(appState),
+    lanzarMenu:appState.lanzarMenu
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({

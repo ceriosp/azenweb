@@ -20,7 +20,7 @@ declare let $: any;
 
 export namespace Actions {
 
-    export const lanzarAplicacion = (idApl: string, nomApl: string, username: string = "", lanzarMenu: string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
+    export const lanzarAplicacion = (idApl: string, nomApl: string, username: string = "", lanzarMenu: string, lanzarRecursoCtx:string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
 
         dispatch(App.Actions.setIdApl(idApl));
         dispatch(App.Actions.setNomApl(nomApl));
@@ -41,6 +41,10 @@ export namespace Actions {
 
                         if (lanzarMenu == '1') {
                             dispatch(ZMenu.Actions.lanzarMenu());
+                        }                        
+
+                        if(lanzarRecursoCtx){
+                            dispatch(lanzarOpcion(lanzarRecursoCtx));
                         }
                     },
                     () => { }

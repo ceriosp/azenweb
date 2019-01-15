@@ -556,7 +556,7 @@ export namespace CM {
         } as IZComandoDefinicion],
 
         [Constants.ComandoEnum.CM_ADICIONARLINEA, {
-            icono: "glyphicon glyphicon-plus"
+            icono: "glyphicon glyphicon-plus-sign"
         } as IZComandoDefinicion],
 
         [Constants.ComandoEnum.CM_INSERTARLINEA, {
@@ -865,6 +865,8 @@ export interface IZAplState {
     zPantexStateModule: IZPantexStateModule;
     zLoginModule: IZLoginModule;
     zrptModule: IZrptModule;
+
+    lanzarMenu:number
 }
 
 export interface IParametrosActivacionObj {

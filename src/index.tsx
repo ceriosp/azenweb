@@ -58,11 +58,13 @@ let idApl = ZUtils.Services.getQueryStringParameter('idApl');
 let nomApl = ZUtils.Services.getQueryStringParameter('nomApl');
 let username = sessionStorage.getItem(Constants.AZEN_USER_SESSION_KEY);
 let lanzarMenu = ZUtils.Services.getQueryStringParameter('lanzarMenu');
+let lanzarRecursoCtx = ZUtils.Services.getQueryStringParameter('ctx');
 
 let appInitialState = {} as IZAplState;
 
 const obtenerEstadoInicial = (cfgObj:CfgObj) => {
 
+    appInitialState.lanzarMenu = parseInt(lanzarMenu);
     appInitialState.azenURL = cfgObj.azenBackEndURL;
     appInitialState.parametrosActivacionObj = {
         urlIframeCargarArchivo : cfgObj.urlCargarArchivo
@@ -108,7 +110,7 @@ let cargarAplicacion: (cfgObj:CfgObj) => void = (cfgObj:CfgObj) => {
         );
 
         document.title = idApl;
-        store.dispatch(zAplicationActions.lanzarAplicacion(idApl, nomApl, username, lanzarMenu));
+        store.dispatch(zAplicationActions.lanzarAplicacion(idApl, nomApl, username, lanzarMenu, lanzarRecursoCtx));
     }
     else {
         ReactDOM.render(

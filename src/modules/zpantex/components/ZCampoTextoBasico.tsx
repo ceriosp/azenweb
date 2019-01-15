@@ -77,7 +77,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
         if (this.props.zCampoState.autoFocus) {         
             return;
         }
-        */
+        */        
 
         this.props.onCampoFocusIrACmp(this.props.zCampoState);
     }
@@ -87,7 +87,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
         this.props.onCampoChanged(this.props.zCampoState, e.target.value);
     }
 
-    darFormatoValorCampoSegunTipo(e: any) {
+    darFormatoValorCampoSegunTipo(e: any) {        
 
         let valor = e.target.value;
 
@@ -113,16 +113,19 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
             return;
         }
 
-        if (this.props.zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO) {
-
-            let valor = e.target.value;
+        if (this.props.zCampoState.tipo == ZCommonConstants.TipoCampoEnum.TIPO_DINERO) {            
 
             if (valor.length == 0) {
                 return;
             }
 
-            if (!isNaN(valor)) {
-                e.target.value = this.convertirAMoneda(valor, 0);
+            if (!isNaN(valor)) { //Es un número válido
+                if(valor === ".00" || valor === "0.0"){
+                    e.target.value = "";
+                }
+                else{
+                    e.target.value = this.convertirAMoneda(valor, 0);
+                }                
             } else {
 
                 let cuantosDecimales = 0;
@@ -198,7 +201,7 @@ export class ZCampoTextoBasico extends React.PureComponent<OwnProps & ConnectedS
         }
     }
 
-    onBlur(e: any) {
+    onBlur(e: any) {        
         this.props.onCampoBlur(this.props.zCampoState);
     }
 

@@ -45,6 +45,16 @@ export namespace Reducers {
         return state;
     }
 
+    export const lanzarMenu = (state: number = null, action: ActionTypes.Action): number => {
+
+        switch (action.type) {
+            case ActionTypes.SET_LANZARMENU:
+                return action.lanzarMenu;
+        }
+
+        return state;
+    }
+    
     export const parametrosActivacionObj = (state: IParametrosActivacionObj = {} as IParametrosActivacionObj, action: ActionTypes.Action): IParametrosActivacionObj => {
 
         switch (action.type) {
@@ -106,6 +116,7 @@ export namespace Reducers {
 
         idApl: idApl,
         nomApl: nomApl,
+        lanzarMenu: lanzarMenu,
         azenURL: azenURL,
 
         parametrosActivacionObj: parametrosActivacionObj,

@@ -1,67 +1,60 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
+import { Row, Col } from "react-bootstrap";
+
+import * as ZCommon from "../../zcommon";
 import {
-    Row,
-    Col
-} from 'react-bootstrap';
+  //State
+  ZAplicationState,
 
-import * as ZCommon from '../../zcommon';
-import {
-
-    //State
-    ZAplicationState,
-
-    //Utils
-    EntityNormalizedObj,
-    ZPantexState,
-    IZPantexState,
-
+  //Utils
+  EntityNormalizedObj,
+  ZPantexState,
+  IZPantexState
 } from "../../zcommon";
 
 import { ZMenuRootContainer } from "../../zmenu/containers/ZMenuRootContainer";
 import { ZProcesandoContainer } from "../../zaplicacion/containers/ZProcesandoContainer";
 import { ZAplicacionContainer } from "../../zaplicacion/containers/ZAplicacionContainer";
-import { ZPantexContainer } from '../../zpantex/containers/ZPantexContainer';
+import { ZPantexContainer } from "../../zpantex/containers/ZPantexContainer";
 
-export interface OwnProps {
-
-}
+export interface OwnProps {}
 
 export interface ConnectedState {
-    pilaZPantexState: Array<ZPantexState>;
+  pilaZPantexState: Array<ZPantexState>;
+  lanzarMenu: number;
 }
 
-export interface ConnectedDispatch {
+export interface ConnectedDispatch {}
 
-}
+export class ZAplicacion extends React.Component<
+  OwnProps & ConnectedState & ConnectedDispatch,
+  undefined
+> {
+  private zAplicacionDivElement: HTMLDivElement;
 
-export class ZAplicacion extends React.Component<OwnProps & ConnectedState & ConnectedDispatch, undefined>
-{
-    private zAplicacionDivElement: HTMLDivElement;
+  constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
+    super(props);
+  }
 
-    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
-        super(props);
-    }
+  render() {
+    return (
+      <div>
+        {this.props.lanzarMenu == 1 && (
+          <div>
+            <ZMenuRootContainer index={0} />
+          </div>
+        )}
 
-    render() {
-        return (
-            <div>
-                <div>
-                    <ZMenuRootContainer
-                        index={0}
-                    />
-                </div>
+        <div>
+          <ZAplicacionContainer />
+        </div>
 
-                <div>
-                    <ZAplicacionContainer />
-                </div>
-
-                <div>
-                    <ZProcesandoContainer />
-                </div>
-                
-            </div>
-        );
-    }
+        <div>
+          <ZProcesandoContainer />
+        </div>
+      </div>
+    );
+  }
 }

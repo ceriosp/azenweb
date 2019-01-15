@@ -112,6 +112,7 @@ export namespace Services {
                         irALinea = parseInt(((evento.dato.buffer.dato) as any).fi); //índice linea
                         break;
 
+                    case ZCommonConstants.ComandoEnum.CM_ADICIONAR:
                     case ZCommonConstants.ComandoEnum.CM_MODIFICAR:
                     case ZCommonConstants.ComandoEnum.CM_ACTUALIZAR:
                     case ZCommonConstants.ComandoEnum.CM_CONSULTAR:

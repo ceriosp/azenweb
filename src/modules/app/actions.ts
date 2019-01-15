@@ -22,6 +22,11 @@ export namespace Actions {
         azenURL
     });
 
+    export const setLanzarMenu = (lanzarMenu: number): ActionTypes.Action => ({
+        type: ActionTypes.SET_LANZARMENU,
+        lanzarMenu
+    });
+    
     export const setParametrosActivacionObj = (parametrosActivacionObj: IParametrosActivacionObj): ActionTypes.Action => ({
         type: ActionTypes.SET_PARAMETROSACTIVACIONOBJ,
         parametrosActivacionObj
