@@ -2,11 +2,12 @@ import {
     EntityNormalizedObj,
     IdEntityBase,
     EntityMap,
-    ZCampoState,
-    Constants as ZCommonConstants,
+    IZEvento,
+    Constants
 } from "../zcommon";
 
 const u = require('updeep');
+let xml2js = require('xml2js');
 
 export namespace Services {
     export const getQueryStringParameter = (name: string, url?: string) => {
@@ -99,4 +100,26 @@ export namespace Services {
             return newIdsList;
         }
     }
+
+        /**
+         * @param zEvento evento azen
+         * https://www.npmjs.com/package/xml2js#processing-attribute-tag-names-and-values
+         */
+        export const parseEventoDataToJSON = (zEvento: IZEvento) => {
+            if (zEvento.dato.buffer.fto == Constants.FormatoDatoEventoEnum.XML) {
+
+                let eventDataResult = (`<r>${zEvento.dato.buffer.dato}</r>`);
+
+                let parsingOptions = {
+                    trim: true, //Trim the whitespace at the beginning and end of text nodes.
+                    normalizeTags: true, //Normalize all tag names to lowercase.
+                    normalize: false, //Trim whitespaces inside text nodes.
+                    explicitArray: false //Always put child nodes in an array if true; otherwise an array is created only if there is more than one
+                }
+
+                xml2js.parseString(eventDataResult, parsingOptions, (err: any, result: any) => {
+                    zEvento.dato.buffer.dato = result.r;
+                });
+            }
+        }
 }

@@ -19,7 +19,7 @@ export namespace Actions {
             let { cmd, buffer } = parametros;
             let dominioComponentes = window.location.href.split("/");
             let dominio = dominioComponentes[0] + "//" + dominioComponentes[2];
-            let requestUrl = azenURL + `/azen/Sesion?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}&dominio=${dominio}`;
+            let requestUrl = azenURL + `/azen/Sesion2?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}&dominio=${dominio}&puerto=${sessionStorage.getItem(ZCommon.Constants.SessionStorageKeyEnum.AZEN_PUERTO)}`;
 
             if (getState().nivelLog == 1) {
                 console.log("----------------------------------------------------------------");

@@ -40,7 +40,7 @@ export class EntityMap<TEntity>{
 //#region =============================================== DOMAIN ===============================================
 export interface IZBuffer {
     fto: string;
-    dato: string | IZMenu | IZPantex | IZAplList | CM.ISincCampo | CM.IPrenderControl | CM.ISincBoton | CM.ILimpiarMulti;
+    dato: string | IZMenu | IZPantex | IZAplList | CM.ISincCampo | CM.IPrenderControl | CM.ISincBoton | CM.ILimpiarMulti | CM.ILanzarAplRpta;
 }
 
 export interface IZDatoEvento {
@@ -598,6 +598,10 @@ export namespace CM {
          * Region
          */
         rg: number;
+    }
+
+    export interface ILanzarAplRpta {
+        psc:number;
     }
 
     export interface ISincBaseValor extends ISincBase {

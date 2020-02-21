@@ -2,15 +2,12 @@ import * as ZUtils from '../zutils';
 import { ResultadoActionConDato } from "../zutils/models";
 
 import * as ZCommon from '../zcommon';
-import { IZAplState, IZColaEventos, IZMenu, IZComandoFormaState, IZFormaTablaState, IZPantex, IZPantexState } from "../zcommon/contracts";
+import { IZAplState, IZColaEventos, IZComandoFormaState, IZFormaTablaState, IZPantexState } from "../zcommon/contracts";
 
 import * as App from '../app';
 import * as ZMenu from '../zmenu';
 import * as ZComunicaciones from '../zcomunicaciones';
 import * as ZLogin from "../zlogin";
-
-import { ActionTypes } from './actionTypes';
-import { Services } from "./services";
 
 import { ZclienteResponder } from "./clientzmnjs/zclienteResponder";
 
@@ -37,7 +34,15 @@ export namespace Actions {
                         if (resultadoCmAplicacion.resultado == ZUtils.Constants.ResultadoAccionEnum.ERROR) {
                             reject(resultadoCmAplicacion);
                             return;
+                        }                        
+                        
+                        debugger
+                        if(resultadoCmAplicacion && resultadoCmAplicacion.retorno && resultadoCmAplicacion.retorno.numEventos > 0){
+                            ZUtils.Services.parseEventoDataToJSON(resultadoCmAplicacion.retorno.eventos[0]);
+                            let lanzarAppParams = resultadoCmAplicacion.retorno.eventos[0].dato.buffer.dato as ZCommon.CM.ILanzarAplRpta;
+                            sessionStorage.setItem(ZCommon.Constants.SessionStorageKeyEnum.AZEN_PUERTO, lanzarAppParams.psc.toString());
                         }
+                        
 
                         if (lanzarMenu == '1') {
                             dispatch(ZMenu.Actions.lanzarMenu());

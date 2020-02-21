@@ -23,6 +23,10 @@ export namespace Constants {
     export const CAMPO_CHECKBOX: number = 1;
     export const CAMPO_TEXTO: number = 0;
 
+    export enum SessionStorageKeyEnum {
+        AZEN_PUERTO = "azenAplPto"
+    }
+
     export enum TipoEventoEnum {
         EVT_NADA,
         EVT_TECLA,

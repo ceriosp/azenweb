@@ -7,10 +7,10 @@ import * as ZMenu from '../zmenu';
 import * as ZPantex from '../zpantex';
 import * as ZLogin from '../zlogin';
 import { Constants as ZCommonConstants } from "../zcommon";
-import { Constants as ZPantexConstants } from "../zpantex";
 
 import { Actions as ZApppActions } from "../app/actions";
-import { Constants } from '.';
+
+import { Services as ZUtilsServices } from "../zutils";
 
 let xml2js = require('xml2js');
 
@@ -70,7 +70,7 @@ export namespace Services {
 
             for (let i = 0; i < zColaEventos.eventos.length; i++) {
 
-                parseEventoDataToJSON(zColaEventos.eventos[i]);
+                ZUtilsServices.parseEventoDataToJSON(zColaEventos.eventos[i]);
 
                 const evento = zColaEventos.eventos[i];
                 switch (evento.dato.cmd) {
@@ -417,32 +417,5 @@ export namespace Services {
             }
         }
         //#endregion
-
-        //#region Private methods
-
-        /**
-         * @param zEvento evento azen
-         * https://www.npmjs.com/package/xml2js#processing-attribute-tag-names-and-values
-         */
-        const parseEventoDataToJSON = (zEvento: IZEvento) => {
-            if (zEvento.dato.buffer.fto == ZCommon.Constants.FormatoDatoEventoEnum.XML) {
-
-                let eventDataResult = (`<r>${zEvento.dato.buffer.dato}</r>`);
-
-                let parsingOptions = {
-                    trim: true, //Trim the whitespace at the beginning and end of text nodes.
-                    normalizeTags: true, //Normalize all tag names to lowercase.
-                    normalize: false, //Trim whitespaces inside text nodes.
-                    explicitArray: false //Always put child nodes in an array if true; otherwise an array is created only if there is more than one
-                }
-
-                xml2js.parseString(eventDataResult, parsingOptions, (err: any, result: any) => {
-                    zEvento.dato.buffer.dato = result.r;
-                });
-            }
-        }
-
-        //#endregion
-
     }
 }

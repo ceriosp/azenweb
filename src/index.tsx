@@ -84,7 +84,7 @@ const obtenerEstadoInicial = (cfgObj:CfgObj) => {
     return createStore(
         App.Reducers.zaplState,
         appInitialState,
-        redux.compose(redux.applyMiddleware(...middlewares))
+        redux.compose<undefined>(redux.applyMiddleware(...middlewares))
     );
 }
 
