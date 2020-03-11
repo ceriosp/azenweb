@@ -15,10 +15,12 @@ import {
     //Contracts
     IZLoginModule,
     IZApl,
+    ZPantexState,
 } from "../../zcommon";
 
 import { ZProcesandoContainer } from "../../zaplicacion/containers/ZProcesandoContainer";
 import { ZLoginContainer } from '../../zlogin/containers/ZLoginContainer';
+import { ZAplicacionContainer } from '../../zaplicacion/containers/ZAplicacionContainer';
 
 export interface OwnProps {
 
@@ -39,12 +41,24 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
     }
 
     render() {
+
+        const azenPto = sessionStorage.getItem(ZCommon.Constants.SessionStorageKeyEnum.AZEN_PUERTO);        
+
+        if(azenPto){
+            return (
+                <div>
+                    <ZAplicacionContainer/>
+                    <ZProcesandoContainer />
+                </div>
+            );
+        }
+
         return (
             <div>
-                {(!this.props.zLoginModule.zAplList.apls) || (this.props.zLoginModule.zAplList.apls.length == 0) && (
+                {(!this.props.zLoginModule.zAplList.apls) || (this.props.zLoginModule.zAplList.apls.length == 0) && (                    
                     <ZLoginContainer />
                 )}
-
+                                                    
                 {this.props.zLoginModule.zAplList.apls.length > 0 && (
                     this.renderAplList(this.props.zLoginModule)
                 )}
@@ -56,7 +70,7 @@ export class ZListadoAplicaciones extends React.Component<OwnProps & ConnectedSt
 
     private renderAplList(zLoginModule: IZLoginModule) {
 
-        let zAplCols: Array<JSX.Element> = [];
+        let zAplCols: Array<JSX.Element> = [];        
 
         zLoginModule.zAplList.apls.forEach((zApl: IZApl, index: number) => {
             zAplCols.push(

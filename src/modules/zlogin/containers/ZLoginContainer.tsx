@@ -13,13 +13,13 @@ import {
 
 import { Actions } from '../actions'
 
-const mapStateToProps = (appState: IZAplState): ConnectedState => ({
+const mapStateToProps = (appState: IZAplState): ConnectedState => ({    
     zLoginModule: appState.zLoginModule
 });
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-    despacharLogin: () =>
-        dispatch(Actions.ZLoginModule.login()),
+    despacharLogin: (idApl?:string, nombreOpcion?:string) =>
+        dispatch(Actions.ZLoginModule.login(idApl, nombreOpcion)),
 
     usernameChanged: (username: string) =>
         dispatch(Actions.ZLoginModule.setUsername(username)),

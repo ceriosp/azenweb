@@ -53,12 +53,11 @@ const middlewares = process.env.NODE_ENV != 'production' ?
 
 declare let window: any;
 
-let store = null;
 let idApl = ZUtils.Services.getQueryStringParameter('idApl');
 let nomApl = ZUtils.Services.getQueryStringParameter('nomApl');
 let username = sessionStorage.getItem(Constants.AZEN_USER_SESSION_KEY);
 let lanzarMenu = ZUtils.Services.getQueryStringParameter('lanzarMenu');
-let lanzarRecursoCtx = ZUtils.Services.getQueryStringParameter('ctx');
+let nombreOpcion = ZUtils.Services.getQueryStringParameter('opcion');
 
 let appInitialState = {} as IZAplState;
 
@@ -101,7 +100,7 @@ let cargarAplicacion: (cfgObj:CfgObj) => void = (cfgObj:CfgObj) => {
 
     let store = obtenerEstadoInicial(cfgObj);
 
-    if (idApl) {                
+    if (idApl && nomApl && lanzarMenu) {                
         ReactDOM.render(
             <Provider store={store}>
                 <ZAplicacionContainer />
@@ -110,7 +109,7 @@ let cargarAplicacion: (cfgObj:CfgObj) => void = (cfgObj:CfgObj) => {
         );
 
         document.title = idApl;
-        store.dispatch(zAplicationActions.lanzarAplicacion(idApl, nomApl, username, lanzarMenu, lanzarRecursoCtx));
+        store.dispatch(zAplicationActions.lanzarAplicacion(idApl, nomApl, username, lanzarMenu, nombreOpcion));
     }
     else {
         ReactDOM.render(

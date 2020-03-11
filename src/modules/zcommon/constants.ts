@@ -248,6 +248,9 @@ export namespace Constants {
 
         CM_CAMBIOCMPASTERISCO = 183,
 
+        CM_TERMINAR = 184,
+        CM_EJECSOLOOPCION = 185,
+
         CM_APLICACION = -1,
         CM_LOGIN = -2,
         CM_ACEPTARLOGIN = -3,

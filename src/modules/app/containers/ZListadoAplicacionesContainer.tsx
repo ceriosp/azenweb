@@ -15,9 +15,7 @@ import {
     ZListadoAplicaciones,
 } from '../components/ZListadoAplicaciones';
 
-import * as ZAplicacion from '../../zaplicacion';
-
-const mapStateToProps = (appState: IZAplState): ConnectedState => ({
+const mapStateToProps = (appState: IZAplState): ConnectedState => ({    
     zLoginModule: appState.zLoginModule
 });
 

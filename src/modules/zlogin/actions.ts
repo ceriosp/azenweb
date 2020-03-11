@@ -1,35 +1,38 @@
 import { IZAplList, IZAplState, IZEnviarComandoParams, IZColaEventos } from "../zcommon/contracts";
 
-import {
-    ResultadoActionConDato
-} from "../zutils/models";
-
+import { Actions as AppActions } from '../app/actions';
 import {
     ActionTypes,
 } from './actionTypes';
 
-import * as ZUtils from '../zutils';
 import * as ZCommon from '../zcommon';
 import * as ZAplicacion from '../zaplicacion';
-import * as ZComunicaciones from '../zcomunicaciones';
 
 import { Selectors } from './selectors';
-import { debug } from "util";
 
 export namespace Actions {
 
     export namespace ZLoginModule {
 
-        export const login = () => (dispatch: (p: any) => any, getState: () => IZAplState) => {
+        export const login = (idApl?:string, nombreOpcion?:string) => (dispatch: (p: any) => any, getState: () => IZAplState) => {
 
             let zLoginModule = Selectors.getZLoginModule(getState());
             
             window.sessionStorage.setItem(ZCommon.Constants.AZEN_USER_SESSION_KEY, `${zLoginModule.username}`);
 
-            dispatch(ZAplicacion.Actions.despacharEventoCliente(
-                ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN, 
-                `<cm>LOGIN</cm><usr>${zLoginModule.username}</usr><vc>${zLoginModule.password}</vc>`
-            ));
+            if(nombreOpcion){
+                dispatch(AppActions.setIdApl(idApl));                
+                dispatch(ZAplicacion.Actions.despacharEventoCliente(
+                    ZCommon.Constants.ComandoEnum.CM_EJECSOLOOPCION, 
+                    `<usr>${zLoginModule.username}</usr><crd>${zLoginModule.password}</crd><opc>${nombreOpcion}</opc>`
+                ));
+            }
+            else {
+                dispatch(ZAplicacion.Actions.despacharEventoCliente(
+                    ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN, 
+                    `<cm>LOGIN</cm><usr>${zLoginModule.username}</usr><vc>${zLoginModule.password}</vc>`
+                ));
+            }
         }
 
         export const setUsername = (username: string): ActionTypes.ZLoginModule.Action => ({

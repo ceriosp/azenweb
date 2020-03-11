@@ -17,7 +17,7 @@ declare let $: any;
 
 export namespace Actions {
 
-    export const lanzarAplicacion = (idApl: string, nomApl: string, username: string = "", lanzarMenu: string, lanzarRecursoCtx:string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
+    export const lanzarAplicacion = (idApl: string, nomApl: string, username: string = "", lanzarMenu: string, nombreOpcion:string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
 
         dispatch(App.Actions.setIdApl(idApl));
         dispatch(App.Actions.setNomApl(nomApl));
@@ -36,7 +36,6 @@ export namespace Actions {
                             return;
                         }                        
                         
-                        debugger
                         if(resultadoCmAplicacion && resultadoCmAplicacion.retorno && resultadoCmAplicacion.retorno.numEventos > 0){
                             ZUtils.Services.parseEventoDataToJSON(resultadoCmAplicacion.retorno.eventos[0]);
                             let lanzarAppParams = resultadoCmAplicacion.retorno.eventos[0].dato.buffer.dato as ZCommon.CM.ILanzarAplRpta;
@@ -48,8 +47,8 @@ export namespace Actions {
                             dispatch(ZMenu.Actions.lanzarMenu());
                         }                        
 
-                        if(lanzarRecursoCtx){
-                            dispatch(lanzarOpcion(lanzarRecursoCtx));
+                        if(nombreOpcion){
+                            dispatch(lanzarOpcion(nombreOpcion));
                         }
                     },
                     () => { }

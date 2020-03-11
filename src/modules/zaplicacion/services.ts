@@ -184,6 +184,12 @@ export namespace Services {
                         dispatch(ZMenu.Actions.ZMenuModule.setZMenu(zmenu));
                         break;
 
+                    case ZCommon.Constants.ComandoEnum.CM_SINCCOM:
+                        const lanzarAplPuertoObj = evento.dato.buffer.dato as CM.ILanzarAplRpta;
+                        sessionStorage.setItem(ZCommon.Constants.SessionStorageKeyEnum.AZEN_PUERTO, lanzarAplPuertoObj.psc.toString());
+                        dispatch(ZLogin.Actions.ZLoginModule.setPassword(""));
+                        break;
+
                     case ZCommon.Constants.ComandoEnum.CM_SINCPAR:
                         let parametrosActivacionComp: Array<string> = (evento.dato.buffer.dato as CM.ISincBaseValor).vc.split("|");
 
@@ -220,7 +226,7 @@ export namespace Services {
 
                 console.log("comandos px|region|fila");
                 console.log(hashZComandoState);
-            }
+            }            
 
             //Hay campos para sincronizar      
             if (hashZCampoState.size > 0 || hashZComandoState.size > 1 || numFilasVisiblesMulti > 0) {

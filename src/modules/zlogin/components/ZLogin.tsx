@@ -1,8 +1,6 @@
 import * as React from 'react';
 
-import {
-    CSSProperties
-} from 'react';
+import * as ZUtils from '../../zutils';
 
 var Modal = require('react-bootstrap-modal');
 
@@ -12,8 +10,7 @@ import {
     Form,
     FormGroup,
     FormControl,
-    Button,
-    Image
+    Button
 } from 'react-bootstrap';
 
 import {
@@ -29,7 +26,7 @@ export interface ConnectedState {
 }
 
 export interface ConnectedDispatch {
-    despacharLogin: () => void;
+    despacharLogin: (idApl?:string, nombreOpcion?:string) => void;
     usernameChanged: (username: string) => void;
     passwordChanged: (password: string) => void;
 }
@@ -45,7 +42,7 @@ export class ZLogin extends React.Component<OwnProps & ConnectedState & Connecte
         this.onPasswordChanged = this.onPasswordChanged.bind(this);
     }
 
-    public render(): any {
+    public render(): any {        
         return (
             <div className="static-modal">
                 <Modal show={true} onHide={function () { }}>
@@ -132,7 +129,9 @@ export class ZLogin extends React.Component<OwnProps & ConnectedState & Connecte
     }
 
     private onIngresarClick() {
-        this.props.despacharLogin();
+        const idApl = ZUtils.Services.getQueryStringParameter('idApl');
+        const nombreOpcion = ZUtils.Services.getQueryStringParameter('opcion');
+        this.props.despacharLogin(idApl, nombreOpcion);
     }
 
     private onUsernameChanged(e: any) {
