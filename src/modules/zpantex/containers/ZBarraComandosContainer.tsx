@@ -1,8 +1,9 @@
 import * as React from 'react';
-import * as redux from 'redux';
 import { connect } from 'react-redux';
 
-import * as ZCommon from "../../zcommon";
+import { Action } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+
 import { IZAplState, IZComandoFormaState } from "../../zcommon/contracts";
 
 import { Actions as ZAplicacionActions } from "../../zaplicacion/actions";
@@ -18,8 +19,8 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     estaProcesandoRequestServidor:appState.estaProcesandoRequestServidor
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-    despacharComandoLineaEstado: (zcomandoFormaState: IZComandoFormaState) =>
+const mapDispatchToProps = (dispatch: ThunkDispatch<IZAplState, void, Action>): ConnectedDispatch => ({
+    despacharComandoLineaEstado: (zcomandoFormaState: IZComandoFormaState) => 
         dispatch(ZAplicacionActions.despacharComandoLineaEstado(zcomandoFormaState))
 });
 

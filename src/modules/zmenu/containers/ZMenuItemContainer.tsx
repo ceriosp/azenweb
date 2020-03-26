@@ -1,12 +1,12 @@
 import * as React from 'react';
-import * as redux from 'redux';
 import { connect } from 'react-redux';
+
+import { AnyAction } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+
 
 import { IZAplState } from "../../zcommon/contracts";
 
-import {
-    Actions as ZComunicacionesActions
-} from '../../zcomunicaciones';
 
 import {
     OwnProps,
@@ -21,9 +21,8 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-    lanzarOpcion: (ctx: string) => 
-        dispatch(ZAplicacion.Actions.lanzarOpcion(ctx))
+const mapDispatchToProps = (dispatch: ThunkDispatch<IZAplState, string, AnyAction>): ConnectedDispatch => ({
+    lanzarOpcion: (ctx: string) => dispatch(ZAplicacion.Actions.lanzarOpcion(ctx))
 });
 
 export const ZMenuItemContainer: React.ComponentClass<OwnProps> =

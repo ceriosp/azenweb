@@ -160,7 +160,13 @@ export interface IZAplList {
 
 export interface IZApl {
     apl: string;
-    descr: string;
+    descr: string;    
+
+
+    //Funcionalidades atómicas
+    opc?:string;
+    descrOpc:string;
+    activo?: number;
 }
 
 //#region =============================================== Own state ===============================================

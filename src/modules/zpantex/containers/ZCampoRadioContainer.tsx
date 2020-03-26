@@ -1,10 +1,10 @@
 import * as React from 'react';
-import * as redux from 'redux';
 import { connect } from 'react-redux';
 
+import { Action } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+
 import { IZAplState, IZCampoState } from "../../zcommon/contracts";
-import { Constants as ZCommonConstants } from "../../zcommon/constants";
-import { Actions as ZAplicacionActions } from "../../zaplicacion/actions";
 
 import {
     OwnProps,
@@ -19,7 +19,7 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     estaProcesandoRequestServidor:appState.estaProcesandoRequestServidor
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<IZAplState, void, Action>): ConnectedDispatch => ({
     prenderValorBitRadio: (zcampoState: IZCampoState) =>
         dispatch(Actions.ZPantexStateModule.prenderValorBitRadio(zcampoState)),
 });

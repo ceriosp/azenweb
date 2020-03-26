@@ -1,6 +1,8 @@
 import * as React from 'react';
-import * as redux from 'redux';
 import { connect } from 'react-redux';
+
+import { Action } from "redux";
+import { ThunkDispatch } from "redux-thunk";
 
 import { IZAplState, IZFormaTablaState } from "../../zcommon/contracts";
 
@@ -19,7 +21,7 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<IZAplState, void, Action>): ConnectedDispatch => ({
     onFilaMultiSeleccionada: (zFormaTablaState: IZFormaTablaState, indexFilaMultiSeleccionada: number) =>
         dispatch(Actions.ZPantexStateModule.onFilaMultiSeleccionada(zFormaTablaState, indexFilaMultiSeleccionada))
 });

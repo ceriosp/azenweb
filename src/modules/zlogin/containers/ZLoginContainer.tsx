@@ -1,6 +1,8 @@
 import * as React from 'react';
-import * as redux from 'redux';
+
 import { connect } from 'react-redux';
+import { AnyAction } from "redux";
+import { ThunkDispatch } from "redux-thunk";
 
 import { IZAplState } from "../../zcommon/contracts";
 
@@ -17,7 +19,7 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     zLoginModule: appState.zLoginModule
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<IZAplState, {}, AnyAction>): ConnectedDispatch => ({
     despacharLogin: (idApl?:string, nombreOpcion?:string) =>
         dispatch(Actions.ZLoginModule.login(idApl, nombreOpcion)),
 

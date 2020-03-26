@@ -8,7 +8,7 @@
     </head>    
     <body>
         App externa <br/>
-        <iframe src="http://localhost/azen/azenweb/?idApl=azenctb&opcion=ter_Ejecutar" frameborder="0" height="500" width="600"></iframe>        
+        <iframe src="http://localhost/azen/azenweb/?idApl=azenctb&opcion=cta_Listar" frameborder="0" height="500" width="600"></iframe>        
     </body>
 
 </html>

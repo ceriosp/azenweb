@@ -17,7 +17,9 @@ declare let $: any;
 
 export namespace Actions {
 
-    export const lanzarAplicacion = (idApl: string, nomApl: string, username: string = "", lanzarMenu: string, nombreOpcion:string) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
+    export const lanzarAplicacion 
+        = (idApl: string, nomApl: string, username: string = "", lanzarMenu: string, nombreOpcion:string): any => 
+            (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
 
         dispatch(App.Actions.setIdApl(idApl));
         dispatch(App.Actions.setNomApl(nomApl));
@@ -67,21 +69,22 @@ export namespace Actions {
             });
     }
 
-    export const despacharComandoLineaEstado = (zcomandoFormaState: IZComandoFormaState) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
+    export const despacharComandoLineaEstado = (zcomandoFormaState: IZComandoFormaState) => 
+        (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
 
-        let zformaTabla: IZFormaTablaState = getState().zPantexStateModule.zFormaTablaState.byId[zcomandoFormaState.idZft];        
-        let zPantexState: IZPantexState = getState().zPantexStateModule.pilaPantexState.byId[zcomandoFormaState.px];
-        
-        if (zPantexState.zFormaTablaStateListIds.length == 1 || zformaTabla.esRegionActiva) {
-            return dispatch(ZclienteResponder.responderEventoCliente(zcomandoFormaState.cmd));
-        }
-
-        return dispatch(ZPantexActions.ZPantexStateModule.onSaltarMov(zformaTabla, zcomandoFormaState.rg)).then(
-            () => {
+            let zformaTabla: IZFormaTablaState = getState().zPantexStateModule.zFormaTablaState.byId[zcomandoFormaState.idZft];        
+            let zPantexState: IZPantexState = getState().zPantexStateModule.pilaPantexState.byId[zcomandoFormaState.px];
+            
+            if (zPantexState.zFormaTablaStateListIds.length == 1 || zformaTabla.esRegionActiva) {
                 return dispatch(ZclienteResponder.responderEventoCliente(zcomandoFormaState.cmd));
             }
-        );
-    }
+
+            return dispatch(ZPantexActions.ZPantexStateModule.onSaltarMov(zformaTabla, zcomandoFormaState.rg)).then(
+                () => {
+                    return dispatch(ZclienteResponder.responderEventoCliente(zcomandoFormaState.cmd));
+                }
+            );
+        }
 
     export const despacharEventoCliente = (cmd: ZCommon.Constants.ComandoEnum, buffer: string = "") => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<IZColaEventos>> => {
         return dispatch(ZclienteResponder.responderEventoCliente(cmd, buffer));
