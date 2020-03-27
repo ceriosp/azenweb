@@ -1,10 +1,6 @@
 import { createSelector } from 'reselect';
 
 import {
-
-    //State
-    ZAplicationState,
-
     //Utils
     EntityNormalizedObj,
     IZAplState,
@@ -14,7 +10,6 @@ import {
     IZComandoFormaState,
     IZVentanaState,
     IZPantex,
-    IEntityNormalizeObj,
     ZFilaCamposState,
     IZFilaCamposState,
     IZParametrosComando,
@@ -22,7 +17,6 @@ import {
     Constants as ZCommonConstants
 
 } from "../zcommon";
-import { Constants } from '../zutils/index';
 
 export namespace Selectors {
 
@@ -163,7 +157,7 @@ export namespace Selectors {
             getZCampoStateMap: EntityNormalizedObj<IZCampoState>,
             getZComandoFormaStateMap: EntityNormalizedObj<IZComandoFormaState>): Array<IZPantexState> => {
 
-            let pilaZPantexState = new Array<IZPantexState>();
+            let pilaZPantexState = new Array<IZPantexState>();                
 
             /*
             if (getZPantexStateMap.allIds.length != getPilaPx.length) {
@@ -176,17 +170,15 @@ export namespace Selectors {
 
                 let numPx = getPilaPx[i];
 
-                let zPantex = {
-                    id: numPx,
-                    tipoCmdPantex: getZPantexStateMap.byId[numPx].tipoCmdPantex,
-                    esModal:getZPantexStateMap.byId[numPx].esModal,
-                    zFormaTablaListState: []
-                } as IZPantexState;
+                const zPantex: IZPantexState = {id: numPx, zFormaTablaListState: [], ...getZPantexStateMap.byId[numPx]};
 
                 //zft's
                 for (let izft = 0; izft < getZPantexStateMap.byId[numPx].zFormaTablaStateListIds.length; izft++) {
+
                     let idZft = getZPantexStateMap.byId[numPx].zFormaTablaStateListIds[izft];
-                    zPantex.zFormaTablaListState[izft] = { ...getZFormaTablaStateMap.byId[idZft] };
+                    const zFormaTablaState:IZFormaTablaState = getZFormaTablaStateMap.byId[idZft];
+
+                    zPantex.zFormaTablaListState[izft] = { ...zFormaTablaState };
 
                     zPantex.zFormaTablaListState[izft].zCampoStateListIds = undefined;
                     zPantex.zFormaTablaListState[izft].btnsListIds = undefined;
@@ -196,7 +188,7 @@ export namespace Selectors {
                     zPantex.zFormaTablaListState[izft].venState = getZVentanaStateMap.byId[zPantex.zFormaTablaListState[izft].idZVentana];
 
                     //zcampos
-                    if (getZFormaTablaStateMap.byId[idZft].zCampoStateListIds) {
+                    if (zFormaTablaState.zCampoStateListIds) {
 
                         zPantex.zFormaTablaListState[izft].cmpsState = [];
                         zPantex.zFormaTablaListState[izft].camposFijosList = [];
@@ -209,14 +201,14 @@ export namespace Selectors {
                         }
 
                         let numFilaMulti = -1;
-                        for (let i = 0; i < (getZFormaTablaStateMap.byId[idZft].zCampoStateListIds.length - getZFormaTablaStateMap.byId[idZft].camposFijosList.length); i++) {
-                            let idZCampo = getZFormaTablaStateMap.byId[idZft].zCampoStateListIds[i];
+                        for (let i = 0; i < (zFormaTablaState.zCampoStateListIds.length - zFormaTablaState.camposFijosList.length); i++) {
+                            let idZCampo = zFormaTablaState.zCampoStateListIds[i];
 
                             //Es multi o zoom, (mov con index numLinsDatos > 0)
                             if ((getZPantexStateMap.byId[numPx].tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARZOOM
                                 || getZPantexStateMap.byId[numPx].tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV)
                                 && zPantex.zFormaTablaListState[izft].venState.numLinsDatos > 0) {
-                                if (i % (zPantex.zFormaTablaListState[izft].numCampos - getZFormaTablaStateMap.byId[idZft].camposFijosList.length) == 0) {
+                                if (i % (zPantex.zFormaTablaListState[izft].numCampos - zFormaTablaState.camposFijosList.length) == 0) {
                                     numFilaMulti++;
                                     zPantex.zFormaTablaListState[izft].filasCamposList[numFilaMulti] = new ZFilaCamposState();
                                     zPantex.zFormaTablaListState[izft].filasCamposList[numFilaMulti].cmpsState.push(getZCampoStateMap.byId[idZCampo]);
@@ -247,26 +239,30 @@ export namespace Selectors {
                         }
 
                         //Refrescar valores de campos fijos
-                        for (let i = 0; i < getZFormaTablaStateMap.byId[idZft].camposFijosList.length; i++) {
-                            let idZCampo = getZFormaTablaStateMap.byId[idZft].camposFijosList[i].id;
+                        for (let i = 0; i < zFormaTablaState.camposFijosList.length; i++) {
+                            let idZCampo = zFormaTablaState.camposFijosList[i].id;
                             zPantex.zFormaTablaListState[izft].camposFijosList.push(getZCampoStateMap.byId[idZCampo]);
                         }                        
                     }
 
                     //linEst
-                    if (getZFormaTablaStateMap.byId[idZft].linEstListIds) {
+                    if (zFormaTablaState.linEstListIds) {
                         zPantex.zFormaTablaListState[izft].linEstState = [];
-                        for (let i = 0; i < getZFormaTablaStateMap.byId[idZft].linEstListIds.length; i++) {
-                            let idZComandoForma = getZFormaTablaStateMap.byId[idZft].linEstListIds[i];
+                        for (let i = 0; i < zFormaTablaState.linEstListIds.length; i++) {
+                            let idZComandoForma = zFormaTablaState.linEstListIds[i];
                             zPantex.zFormaTablaListState[izft].linEstState[i] = getZComandoFormaStateMap.byId[idZComandoForma];
+
+                            if(zPantex.zFormaTablaListState[izft].linEstState[i].cmd === ZCommonConstants.ComandoEnum.CM_CERRAR){
+                                zPantex.cmdCerrar = zPantex.zFormaTablaListState[izft].linEstState[i];
+                            }
                         }
                     }
 
                     //btns
-                    if (getZFormaTablaStateMap.byId[idZft].btnsListIds) {
+                    if (zFormaTablaState.btnsListIds) {
                         zPantex.zFormaTablaListState[izft].btnsState = [];
-                        for (let i = 0; i < getZFormaTablaStateMap.byId[idZft].btnsListIds.length; i++) {
-                            let idZComandoForma = getZFormaTablaStateMap.byId[idZft].btnsListIds[i];
+                        for (let i = 0; i < zFormaTablaState.btnsListIds.length; i++) {
+                            let idZComandoForma = zFormaTablaState.btnsListIds[i];
                             zPantex.zFormaTablaListState[izft].btnsState[i] = getZComandoFormaStateMap.byId[idZComandoForma];
                         }
                     }

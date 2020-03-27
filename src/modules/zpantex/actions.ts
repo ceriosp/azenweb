@@ -14,11 +14,8 @@ import {
     IZPantexState,
     IZFormaTablaState,
     IZCampoState,
-    IZPantexModule,
-    ZPantexState as ZPantexStateModel,
     ZFormaTablaState as ZFormaTablaStateModel,
     ZCampoState as ZCampoStateModel,
-    ZComandoFormaState as ZComandoFormaStateModel,
     ZVentanaState as ZVentanaStateModel,
     IZFormaTabla,
     IZComandoFormaState,
@@ -26,6 +23,7 @@ import {
     ZFormaTablaState,
     ZComandoFormaState,
     IZColaEventos,
+    IZComandoForma,
 
 } from "../zcommon";
 
@@ -34,7 +32,7 @@ import * as ZMenu from '../zmenu';
 import {
     ActionTypes,
 } from './actionTypes';
-import { ResultadoAction, ResultadoActionConDato, Constants as ZUtilsConstants } from "../zutils";
+import { ResultadoActionConDato } from "../zutils";
 
 import { Actions as ZAplicacionActions } from "../zaplicacion/actions";
 import { Selectors } from "./selectors";
@@ -65,7 +63,7 @@ export namespace Actions {
                     [zPantex.numPx]: {
                         id: zPantex.numPx,
                         tipoCmdPantex: cmd,
-                        zFormaTablaStateListIds: zFormaTablaState.allIds
+                        zFormaTablaStateListIds: zFormaTablaState.allIds,
                     } as IZPantexState,
                 } as EntityMap<IZPantexState>,
                 allIds: [zPantex.numPx]

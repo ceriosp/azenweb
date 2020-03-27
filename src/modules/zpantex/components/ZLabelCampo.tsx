@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import {
-    FormGroup,
     Col,
     ControlLabel,
     Glyphicon
@@ -10,10 +9,8 @@ import {
 import {
     Constants as ZCommonConstants,
     IZCampoState,
-    IZFormaTablaState,
     IZComandoFormaState
 } from "../../zcommon";
-import { ZCampoTextoBasicoContainer } from '../containers/ZCampoTextoBasicoContainer';
 
 export interface OwnProps {
     zCampoModel: IZCampoState;

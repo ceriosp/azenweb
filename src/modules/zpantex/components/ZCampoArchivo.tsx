@@ -1,78 +1,79 @@
-import * as React from 'react';
+import * as React from "react";
+
+import { Panel } from "react-bootstrap";
 
 import {
-    Col,
-    Panel,
-    Checkbox
-} from 'react-bootstrap';
-
-import {
-    Constants as ZCommonConstants,
-    IZCampoState,
-    IZFormaTablaState,
-    IParametrosActivacionObj
+  IZCampoState,
+  IZFormaTablaState,
+  IParametrosActivacionObj
 } from "../../zcommon";
-import { ZCampoTextoBasicoContainer } from '../containers/ZCampoTextoBasicoContainer';
-
 
 declare const window: any;
 
 export interface OwnProps {
-    zCampoModel: IZCampoState;
-    zFormaTabla: IZFormaTablaState;
+  zCampoModel: IZCampoState;
+  zFormaTabla: IZFormaTablaState;
 }
 
 export interface ConnectedState {
-    parametrosActivacionObj: IParametrosActivacionObj;
+  parametrosActivacionObj: IParametrosActivacionObj;
 }
 
 export interface ConnectedDispatch {
-    enviarCmdCambioCmp: (zcampoState: IZCampoState, valor: string) => void;
+  enviarCmdCambioCmp: (zcampoState: IZCampoState, valor: string) => void;
 }
 
-export class ZCampoArchivo extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
-{
-    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
-        super(props);    
-        this.escucharMensajeArchivoCargado();    
-    }
+export class ZCampoArchivo extends React.PureComponent<
+  OwnProps & ConnectedState & ConnectedDispatch,
+  undefined
+> {
+  constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
+    super(props);
+    this.escucharMensajeArchivoCargado();
+  }
 
-    render() {
+  render() {
+    const { zCampoModel, zFormaTabla } = this.props;
 
-        const { zCampoModel, zFormaTabla } = this.props;
+    let iframeURL = `${this.props.parametrosActivacionObj.urlIframeCargarArchivo}?rutaArchivo=${zCampoModel.value}`;
 
-        let iframeURL = `${this.props.parametrosActivacionObj.urlIframeCargarArchivo}?rutaArchivo=${zCampoModel.value}`;    
+    return (
+      <Panel bsStyle="success">
+        <Panel.Heading>{zCampoModel.etq}</Panel.Heading>
+        <Panel.Body>
+          <iframe
+            src={iframeURL}
+            style={{ border: 0, maxHeight: "65px", width: "100%" }}
+          ></iframe>
+        </Panel.Body>
+      </Panel>
+    );
+  }
 
-        return (
-            <Panel header={zCampoModel.etq} bsStyle="success">
-                <iframe src={iframeURL} style={{ border: 0, maxHeight: "65px", width: "100%" }}></iframe>
-            </Panel>
-        );
-    }
+  escucharMensajeArchivoCargado() {
+    let eventMethod = window.addEventListener
+      ? "addEventListener"
+      : "attachEvent";
+    let eventer = window[eventMethod];
+    let messageEvent = eventMethod === "attachEvent" ? "onmessage" : "message";
+    eventer(messageEvent, (e: any) => {
+      try {
+        if (
+          e.origin !== this.props.parametrosActivacionObj.urlIframeCargarArchivo
+        ) {
+          this.props.enviarCmdCambioCmp(
+            this.props.zCampoModel,
+            e.data.nombreArchivo
+          );
+        }
+      } catch (e) {
+        console.error("error recibiendo evento servidor cargar archivos");
+        console.error(e);
+      }
+    });
+  }
 
-    escucharMensajeArchivoCargado() {              
-
-        let eventMethod = window.addEventListener
-            ? "addEventListener"
-            : "attachEvent";
-        let eventer = window[eventMethod];
-        let messageEvent = eventMethod === "attachEvent"
-            ? "onmessage"
-            : "message";
-        eventer(messageEvent, (e:any) => {
-            try {
-                if (e.origin !== this.props.parametrosActivacionObj.urlIframeCargarArchivo) {
-                    this.props.enviarCmdCambioCmp(this.props.zCampoModel, e.data.nombreArchivo);
-                }
-            }
-            catch (e) {
-                console.error("error recibiendo evento servidor cargar archivos");
-                console.error(e);
-            }
-        });
-    }
-
-    shouldComponentUpdate(nextProps: OwnProps, nextState: ConnectedState) {
-        return false;
-    }
+  shouldComponentUpdate(nextProps: OwnProps, nextState: ConnectedState) {
+    return false;
+  }
 }

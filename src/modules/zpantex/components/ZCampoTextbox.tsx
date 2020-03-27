@@ -3,12 +3,9 @@ import * as React from 'react';
 import {
     FormGroup,
     Col,
-    ControlLabel,
-    Glyphicon
 } from 'react-bootstrap';
 
 import {
-    Constants as ZCommonConstants,
     IZCampoState,
     IZFormaTablaState
 } from "../../zcommon";

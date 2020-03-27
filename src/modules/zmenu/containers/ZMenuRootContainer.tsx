@@ -5,18 +5,11 @@ import { connect } from 'react-redux';
 import { IZAplState } from "../../zcommon/contracts";
 
 import {
-    Actions as ZComunicacionesActions
-} from '../../zcomunicaciones';
-
-import {
     OwnProps,
     ConnectedState,
     ConnectedDispatch,
     ZMenuRoot,
 } from '../components/ZMenuRoot';
-
-import * as ZAplicacion from '../../zaplicacion';
-import { Actions } from '../../zlogin';
 
 import { Actions as AppActions } from '../../app/actions';
 

@@ -3,8 +3,6 @@ import * as React from 'react';
 import {
     Button,
     ButtonGroup,
-    ButtonToolbar,
-    Well,
     Glyphicon
 } from 'react-bootstrap';
 
@@ -49,6 +47,9 @@ export class ZLineaEstado extends React.PureComponent<OwnProperties & ConnectedS
             >
                 <ButtonGroup bsSize="small">
                     {linEst.map((zComandoI: IZComandoFormaState, index: number) => {
+                        
+                        if(zComandoI.cmd === ZCommon.Constants.ComandoEnum.CM_CERRAR) return;
+
                         const iconName = zPantexServies.getCMIcon(zComandoI);
                         return (
                             <Button

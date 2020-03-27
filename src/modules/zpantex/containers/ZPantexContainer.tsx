@@ -1,13 +1,12 @@
 import * as React from 'react';
-import * as redux from 'redux';
 import { connect } from 'react-redux';
 
-import { IZAplState } from "../../zcommon/contracts";
+import { Action } from "redux";
+import { ThunkDispatch } from "redux-thunk";
 
+import { IZAplState, IZComandoFormaState } from "../../zcommon/contracts";
 
-import {
-    Actions as ZComunicacionesActions
-} from '../../zcomunicaciones';
+import { Actions as ZAplicacionActions } from "../../zaplicacion/actions";
 
 import {
     OwnProps,
@@ -21,8 +20,9 @@ const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     ultimoComandoEnviado: appState.ultimoComandoEnviado
 });
 
-const mapDispatchToProps = (dispatch: redux.Dispatch<any>): ConnectedDispatch => ({
-
+const mapDispatchToProps = (dispatch: ThunkDispatch<IZAplState, void, Action>): ConnectedDispatch => ({
+    despacharComandoLineaEstado:(zcomandoFormaState: IZComandoFormaState) =>
+    dispatch(ZAplicacionActions.despacharComandoLineaEstado(zcomandoFormaState))
 });
 
 export const ZPantexContainer: React.ComponentClass<OwnProps> =

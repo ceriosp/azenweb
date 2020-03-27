@@ -1,7 +1,5 @@
 import {
     ZMenuModel,
-    ZMenuItemModel,
-
     ZMenuState,
     
 } from '../zcommon';

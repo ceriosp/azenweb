@@ -1,7 +1,5 @@
 import { IZAplList, IZAplState, IZEnviarComandoParams, IZColaEventos } from "../zcommon/contracts";
 
-import { ThunkAction } from 'redux-thunk';
-
 import { Actions as AppActions } from '../app/actions';
 import {
     ActionTypes,
@@ -11,8 +9,6 @@ import * as ZCommon from '../zcommon';
 import * as ZAplicacion from '../zaplicacion';
 
 import { Selectors } from './selectors';
-
-import {Dispatch} from 'redux';
 
 export namespace Actions {
 

@@ -11,8 +11,6 @@ import {
     ZProcesandoNoModal,
 } from '../components/ZProcesandoNoModal';
 
-import * as ZAplicacion from '../../zaplicacion';
-
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     show:appState.estaProcesandoRequestServidor,
     tipoAJAXIndicador: appState.tipoAJAXIndicador

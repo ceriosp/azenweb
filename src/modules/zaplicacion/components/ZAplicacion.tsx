@@ -1,28 +1,11 @@
 import * as React from 'react';
 
-import {
-    CSSProperties
-} from 'react';
+import { 
+    ZPantexState, 
+    IZPantexState 
+} from "../../zcommon";
 
-import {
-    Row,
-    Col,
-    Glyphicon,
-    Navbar,
-    Nav,
-    MenuItem,
-    NavItem,
-    NavDropdown,
-} from 'react-bootstrap';
-
-import {
-    IZMenuItem,
-    IZMenu
-} from '../../zcommon/contracts';
-import { IZPantex, IZFormaTabla, IZPantexModule, ZPantexState, IZPantexState } from "../../zcommon";
 import { ZPantexContainer } from "../../zpantex/containers/ZPantexContainer";
-
-declare const process: any;
 
 export interface OwnProps {
 

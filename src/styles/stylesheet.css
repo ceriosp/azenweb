@@ -168,11 +168,18 @@
 }
 
 .panel-body {
-    padding: 5px !important;
+    padding: 2px;
+    font-size: 13px;
 }
 
-.panel-body .panel-heading {
-    padding: 3px 5px !important;
+.panel-heading {
+    padding: 1px 15px;
+}
+
+.panel-heading h3{
+    font-size: 17px;
+    margin-top: 12px;
+    margin-bottom: 8px;
 }
 
 .well{

@@ -1,152 +1,182 @@
-import * as React from 'react';
+import * as React from "react";
+var Modal = require("react-bootstrap-modal");
 
-import {
-    CSSProperties
-} from 'react';
-
-var Modal = require('react-bootstrap-modal');
-
-import {
-    Panel,
-    Row,
-    Col
-} from 'react-bootstrap';
-
-import {
-    IZMenuItem,
-    IZMenu
-} from '../../zcommon/contracts';
+import { Panel, Row, Col, Button, Glyphicon } from "react-bootstrap";
 
 import { Constants as ZCommonConstants } from "../../zcommon/constants";
 
-import { IZPantex, IZFormaTabla, IZPantexState, IZFormaTablaState } from '../../zcommon';
+import {
+  IZPantexState,
+  IZFormaTablaState,
+  IZComandoFormaState
+} from "../../zcommon";
 import { Services as ZCommonServices } from "../../zcommon/services";
-import { ZLineaEstadoContainer } from '../containers/ZLineaEstadoContainer';
-import { ZBarraComandosContainer } from '../containers/ZBarraComandosContainer';
-import { Constants } from "../constants";
-import { ZFormaTablaContainer } from '../containers/ZFormaTablaContainer';
+import { ZLineaEstadoContainer } from "../containers/ZLineaEstadoContainer";
+import { ZBarraComandosContainer } from "../containers/ZBarraComandosContainer";
+import { ZFormaTablaContainer } from "../containers/ZFormaTablaContainer";
 
 export interface OwnProps {
-    zPantex: IZPantexState;
-    container: HTMLDivElement;
+  zPantex: IZPantexState;
+  container: HTMLDivElement;
 }
 
 export interface ConnectedState {
-    pxAlTope: number;
-    ultimoComandoEnviado: ZCommonConstants.ComandoEnum,
+  pxAlTope: number;
+  ultimoComandoEnviado: ZCommonConstants.ComandoEnum;
 }
 
 export interface ConnectedDispatch {
+  despacharComandoLineaEstado: (
+    zcomandoFormaState: IZComandoFormaState
+  ) => void;
 }
 
-export class ZPantex extends React.PureComponent<OwnProps & ConnectedState & ConnectedDispatch, undefined>
-{
-    private commonServices: ZCommonServices.ZCommonServices;
+export class ZPantex extends React.PureComponent<
+  OwnProps & ConnectedState & ConnectedDispatch,
+  undefined
+> {
+  private commonServices: ZCommonServices.ZCommonServices;
 
-    constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
-        super(props);
+  constructor(props: OwnProps & ConnectedState & ConnectedDispatch) {
+    super(props);
 
-        this.commonServices = new ZCommonServices.ZCommonServices();
+    this.commonServices = new ZCommonServices.ZCommonServices();
+  }
 
-        //console.log("creando zpantex: " + this.props.zPantex.zFormaTablaList[0].ven.descr);
-    }
+  private cerrarPantex = () => {
+    this.props.despacharComandoLineaEstado(this.props.zPantex.cmdCerrar);
+  };
 
-    render(): any {
-        const tituloHTML = (
-            <h3>
-                {this.props.zPantex.zFormaTablaListState[0].venState.descr}
-            </h3>
-        );
 
-        let titulo: any = tituloHTML;
+  render(): any {
+    const tituloHTML = (
+      <h3>{this.props.zPantex.zFormaTablaListState[0].venState.descr}</h3>
+    );
 
-        //console.log("rendering: " + this.props.zPantex.zFormaTablaListState[0].venState.descr);
+    let titulo: any = tituloHTML;
 
-        return (
-            <div>
-                <Modal
-                    onHide={null}
-                    show={true}
-                    backdrop="static"
-                    aria-labelledby="contained-modal-title-sm"
-                    container={this.props.container}
-                >
-                    <Modal.Body
-                        style={{
-                            padding: "0px",
-                        }}
+    return (
+      <div>
+        <Modal
+          onHide={this.cerrarPantex}
+          show={true}
+          backdrop="static"
+          aria-labelledby="contained-modal-title-sm"
+          container={this.props.container}
+        >
+          <Modal.Body            
+            style={{
+              padding: "0px"
+            }}
+          >
+            {this.props.zPantex.zFormaTablaListState.map(
+              (zFormaTablaI: IZFormaTablaState, zftIndex: number) => {
+                if (
+                  this.props.zPantex.tipoCmdPantex ==
+                    ZCommonConstants.ComandoEnum.CM_PXCREARMOV &&
+                  zFormaTablaI.venState.numLinsDatos > 1
+                ) {
+                  titulo = undefined;
+                } else {
+                  titulo = tituloHTML;
+                }
+
+                return (
+                  <div key={zFormaTablaI.id}>
+                    <Panel
+                      bsStyle="primary"
+                      style={{
+                        marginBottom: "0px"
+                      }}
                     >
-                        {this.props.zPantex.zFormaTablaListState.map((zFormaTablaI: IZFormaTablaState, zftIndex: number) => {
-
-                            if (this.props.zPantex.tipoCmdPantex == ZCommonConstants.ComandoEnum.CM_PXCREARMOV
-                                && zFormaTablaI.venState.numLinsDatos > 1) {
-                                titulo = undefined;
-                            } else {
-                                titulo = tituloHTML;
-                            }
-
-                            return (
-                                <div
-                                    key={zFormaTablaI.id}
+                      <Panel.Heading>
+                        {zftIndex == 0 && (
+                          <div
+                            style={{
+                              display: "inline-block",
+                              minWidth: "100%"
+                            }}
+                          >
+                            <div style={{ float: "left" }}>{titulo}</div>
+                            <div style={{ float: "right", paddingTop: "6px" }}>
+                              {this.props.zPantex.cmdCerrar && (
+                                <Button
+                                  bsStyle="info"
+                                  onClick={this.cerrarPantex}
+                                  title="Cerrar"
                                 >
-                                    <Panel
-                                        header={titulo}
-                                        bsStyle="primary"
-                                        style={{
-                                            marginBottom: "0px"
-                                        }}
-                                    >
+                                  <Glyphicon glyph="remove" />
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </Panel.Heading>
+                      <Panel.Body>
+                        {zftIndex == 0 && ( //linea estado encabezado
+                          <ZLineaEstadoContainer
+                            linEst={zFormaTablaI.linEstState}
+                            zFormaTablaState={zFormaTablaI}
+                            tipoCmdPantex={this.props.zPantex.tipoCmdPantex}
+                          />
+                        )}
 
-                                        {((zftIndex == 0)) && ( //linea estado encabezado
-                                            <ZLineaEstadoContainer
-                                                linEst={zFormaTablaI.linEstState}
-                                                zFormaTablaState={zFormaTablaI}
-                                                tipoCmdPantex={this.props.zPantex.tipoCmdPantex}
-                                            />
-                                        )}
+                        {zftIndex == 1 && ( //linea estado detalle
+                          <Row>
+                            <Col
+                              xs={12}
+                              sm={6}
+                              md={3}
+                              smOffset={6}
+                              mdOffset={9}
+                            >
+                              <ZLineaEstadoContainer
+                                linEst={zFormaTablaI.linEstState}
+                                zFormaTablaState={zFormaTablaI}
+                                tipoCmdPantex={this.props.zPantex.tipoCmdPantex}
+                              />
+                            </Col>
+                          </Row>
+                        )}
 
-                                        {((zftIndex == 1)) && ( //linea estado detalle
-                                            <Row>
-                                                <Col xs={12} sm={6} md={3} smOffset={6} mdOffset={9}>
-                                                    <ZLineaEstadoContainer
-                                                        linEst={zFormaTablaI.linEstState}
-                                                        zFormaTablaState={zFormaTablaI}
-                                                        tipoCmdPantex={this.props.zPantex.tipoCmdPantex}
-                                                    />
-                                                </Col>
-                                            </Row>
-                                        )}
+                        {zFormaTablaI.cmpsState &&
+                        zFormaTablaI.cmpsState.length > 6 && ( //Parte superior
+                            <div>
+                              <ZBarraComandosContainer
+                                zComandosList={zFormaTablaI.btnsState}
+                              />
+                            </div>
+                          )}
 
-                                        {(zFormaTablaI.cmpsState && zFormaTablaI.cmpsState.length > 6) && ( //Parte superior
-                                            <div>
-                                                <ZBarraComandosContainer
-                                                    zComandosList={zFormaTablaI.btnsState}
-                                                />
-                                            </div>
-                                        )}
+                        <ZFormaTablaContainer
+                          zPantex={this.props.zPantex}
+                          zFormaTabla={zFormaTablaI}
+                          zftIndex={zftIndex}
+                        />
 
-                                        <ZFormaTablaContainer
-                                            zPantex={this.props.zPantex}
-                                            zFormaTabla={zFormaTablaI}
-                                            zftIndex={zftIndex}
-                                        />
-
-                                        {((this.props.zPantex.zFormaTablaListState.length == 1 || zftIndex != 0)) && //Parte inferior
-                                            (
-                                                <div style={{ marginTop: "5px" }}>
-                                                    <ZBarraComandosContainer
-                                                        zComandosList={this.props.zPantex.zFormaTablaListState.length == 1 ? zFormaTablaI.btnsState : this.props.zPantex.zFormaTablaListState[0].btnsState}
-                                                    />
-                                                </div>
-                                            )}
-
-                                    </Panel>
-                                </div>
-                            );
-                        })}
-                    </Modal.Body>
-                </Modal>
-            </div>
-        );
-    }
+                        {(this.props.zPantex.zFormaTablaListState.length == 1 ||
+                          zftIndex != 0) && ( //Parte inferior
+                          <div style={{ marginTop: "5px" }}>
+                            <ZBarraComandosContainer
+                              zComandosList={
+                                this.props.zPantex.zFormaTablaListState
+                                  .length == 1
+                                  ? zFormaTablaI.btnsState
+                                  : this.props.zPantex.zFormaTablaListState[0]
+                                      .btnsState
+                              }
+                            />
+                          </div>
+                        )}
+                      </Panel.Body>
+                    </Panel>
+                  </div>
+                );
+              }
+            )}
+          </Modal.Body>
+        </Modal>
+      </div>
+    );
+  }
 }

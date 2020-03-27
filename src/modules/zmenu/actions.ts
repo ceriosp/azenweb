@@ -1,11 +1,6 @@
-import * as ZUtils from '../zutils';
-import { ResultadoActionConDato } from "../zutils/models";
-
 import * as ZCommon from '../zcommon';
 import { ZMenuItemModel, IZMenu } from '../zcommon';
-import { IZAplState, IZColaEventos } from "../zcommon/contracts";
-
-import * as ZComunicaciones from '../zcomunicaciones';
+import { IZAplState } from "../zcommon/contracts";
 
 import * as ZAplicacion from '../zaplicacion';
 

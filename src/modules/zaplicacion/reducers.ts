@@ -1,30 +1,9 @@
-import { Reducer, combineReducers } from 'redux';
-
-import * as ZCommon from '../zcommon';
 import {
-
-    //models
-    ZMenuModel,
-    ZMenuItemModel,
-
     //state
     ZAplicationState,
-
-    //Utils
-    EntityNormalizedObj
-
 } from '../zcommon';
 
-import * as ZRecursos from '../zpantex';
-
 import * as ZMenu from '../zmenu';
-
-import {
-    Services,
-    Constants
-} from "../zpantex";
-
-import * as ZAplication from './index';
 
 export namespace Reducers {
 

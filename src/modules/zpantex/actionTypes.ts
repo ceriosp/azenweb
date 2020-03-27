@@ -9,7 +9,6 @@ import {
     IZComandoFormaState,
     IZVentanaState,
     EntityNormalizedObj,
-    ZFormaTablaState
 } from "../zcommon";
 
 import * as ZMenu from '../zmenu';

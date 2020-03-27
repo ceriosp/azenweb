@@ -1,5 +1,4 @@
 import { Constants as ZPantexConstants } from "../zpantex";
-import { Constants } from "./constants";
 
 namespace Services {
         

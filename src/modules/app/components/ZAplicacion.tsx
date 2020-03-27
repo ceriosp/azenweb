@@ -1,23 +1,12 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 
-import { Row, Col } from "react-bootstrap";
-
-import * as ZCommon from "../../zcommon";
 import {
-  //State
-  ZAplicationState,
-
-  //Utils
-  EntityNormalizedObj,
-  ZPantexState,
-  IZPantexState
+  ZPantexState
 } from "../../zcommon";
 
 import { ZMenuRootContainer } from "../../zmenu/containers/ZMenuRootContainer";
 import { ZProcesandoContainer } from "../../zaplicacion/containers/ZProcesandoContainer";
 import { ZAplicacionContainer } from "../../zaplicacion/containers/ZAplicacionContainer";
-import { ZPantexContainer } from "../../zpantex/containers/ZPantexContainer";
 
 export interface OwnProps {}
 

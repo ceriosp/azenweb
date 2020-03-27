@@ -12,8 +12,6 @@ import { Actions as ZApppActions } from "../app/actions";
 
 import { Services as ZUtilsServices } from "../zutils";
 
-let xml2js = require('xml2js');
-
 export namespace Services {
 
     export namespace Responder {

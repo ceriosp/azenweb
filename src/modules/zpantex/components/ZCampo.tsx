@@ -1,22 +1,10 @@
 import * as React from 'react';
 
-import {
-    FormGroup,
-    FormControl,
-    Row,
-    Col,
-    ControlLabel,
-    Label
-} from 'react-bootstrap';
-
-
 import * as ZCommon from "../../zcommon";
 import {
     IZCampoState,
     IZFormaTablaState
 } from "../../zcommon";
-
-import * as ZRecursos from "../../zpantex";
 
 import ZCampoGrafico from './ZCampoGrafico';
 import { ZCampoRadioContainer } from '../containers/ZCampoRadioContainer';
@@ -25,7 +13,6 @@ import { ZCampoTextboxContainer } from '../containers/ZCampoTextboxContainer';
 import { ZCampoDetallableContainer } from '../containers/ZCampoDetallableContainer';
 import { ZCampoFechaContainer } from '../containers/ZCampoFechaContainer';
 import { ZCampoArchivoContainer } from '../containers/ZCampoArchivoContainer';
-import { Constants } from '../../zutils';
 
 interface OwnProperties {
     zFormaTabla: IZFormaTablaState;

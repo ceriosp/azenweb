@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import {
-    Col,
     Checkbox,
     FormGroup
 } from 'react-bootstrap';

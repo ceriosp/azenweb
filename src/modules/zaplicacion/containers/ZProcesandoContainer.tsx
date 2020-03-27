@@ -5,17 +5,11 @@ import { connect } from 'react-redux';
 import { IZAplState } from "../../zcommon/contracts";
 
 import {
-    Actions as ZComunicacionesActions
-} from '../../zcomunicaciones';
-
-import {
     OwnProps,
     ConnectedState,
     ConnectedDispatch,
     ZProcesando,
 } from '../components/ZProcesando';
-
-import * as ZAplicacion from '../../zaplicacion';
 
 const mapStateToProps = (appState: IZAplState): ConnectedState => ({
     show:appState.estaProcesandoRequestServidor,

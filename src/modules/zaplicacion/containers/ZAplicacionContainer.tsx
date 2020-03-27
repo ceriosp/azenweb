@@ -5,10 +5,6 @@ import { connect } from 'react-redux';
 import { IZAplState } from "../../zcommon/contracts";
 
 import {
-    Actions as ZComunicacionesActions,    
-} from '../../zcomunicaciones';
-
-import {
     Selectors as ZPantexSelectors
 } from '../../zpantex/selectors';
 

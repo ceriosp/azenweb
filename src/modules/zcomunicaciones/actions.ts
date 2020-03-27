@@ -6,7 +6,6 @@ import {
 
 import { IZAplState, IZColaEventos, IZEnviarComandoParams } from "../zcommon/contracts";
 import { ActionTypes } from "./actionTypes";
-import { debug } from 'util';
 
 export namespace Actions {
 

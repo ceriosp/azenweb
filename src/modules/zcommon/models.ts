@@ -1,7 +1,3 @@
-import {
-    Constants
-} from './constants';
-
 //ZMenuItemModel
 class ZMenuModel
 {

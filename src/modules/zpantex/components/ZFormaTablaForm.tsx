@@ -1,29 +1,11 @@
 import * as React from 'react';
-
-import {
-    CSSProperties
-} from 'react';
-
 import {
     Col,
     Form,
-    Table,
-    Panel
 } from 'react-bootstrap';
 
-import { Constants } from "../constants";
-
-import {
-    Constants as ZCommonConstants
-} from '../../zcommon/constants';
-
-import {
-    IZMenuItem,
-    IZMenu,
-} from '../../zcommon/contracts';
-import { IZFormaTablaState, IZCampoState, ZFilaCamposState, IZFilaCamposState, IZPantexState } from "../../zcommon";
+import { IZFormaTablaState, IZCampoState, IZPantexState } from "../../zcommon";
 import ZCampo from "./ZCampo";
-
 
 export interface OwnProps {
     zPantex: IZPantexState;

@@ -9,7 +9,6 @@ import {
     IZCampoState,
     IZFormaTablaState,
 } from "../../zcommon";
-import * as ReactDOM from 'react-dom';
 
 export interface OwnProps {
     zCampoState: IZCampoState;

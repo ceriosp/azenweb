@@ -5,9 +5,7 @@ require('moment/locale/es');
 import {
     FormGroup,
     Col,
-    ControlLabel,
     InputGroup,
-    Button,
     Glyphicon
 } from 'react-bootstrap';
 
@@ -26,7 +24,6 @@ import {
 
 import { ZLabelCampoContainer } from '../containers/ZLabelCampoContainer';
 import { ZCampoTextoBasicoContainer } from '../containers/ZCampoTextoBasicoContainer';
-import { ZFormaTabla } from './ZFormaTabla';
 
 export interface OwnProps {
     zCampoModel: IZCampoState;

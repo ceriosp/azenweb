@@ -13,8 +13,6 @@ import { ZclienteResponder } from "./clientzmnjs/zclienteResponder";
 
 import { Actions as ZPantexActions } from "../zpantex/actions";
 
-declare let $: any;
-
 export namespace Actions {
 
     export const lanzarAplicacion 

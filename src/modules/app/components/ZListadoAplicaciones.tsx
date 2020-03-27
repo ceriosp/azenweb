@@ -1,13 +1,11 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 
 import {
     Grid,
     Row,
     Col,
     Thumbnail,
-    Button,
-    Panel
+    Button
 } from 'react-bootstrap';
 
 import * as ZCommon from '../../zcommon';
@@ -15,7 +13,6 @@ import {
     //Contracts
     IZLoginModule,
     IZApl,
-    ZPantexState,
 } from "../../zcommon";
 
 import { ZProcesandoContainer } from "../../zaplicacion/containers/ZProcesandoContainer";

@@ -179,6 +179,8 @@ export interface IZPantexState extends IdEntityBase {
     tipoCmdPantex: Constants.ComandoEnum;
 
     esModal:boolean;
+
+    cmdCerrar: IZComandoFormaState;
 }
 
 export class ZPantexState implements IZPantexState {
@@ -187,6 +189,7 @@ export class ZPantexState implements IZPantexState {
         this.id = numPx;
         this.tipoCmdPantex = tipoCmdPantex;
         this.zFormaTablaStateListIds = new Array<number>();
+        this.cmdCerrar = undefined;
     }
 
     id: number; //px
@@ -194,6 +197,8 @@ export class ZPantexState implements IZPantexState {
     zFormaTablaListState: Array<IZFormaTablaState>;
     tipoCmdPantex: Constants.ComandoEnum;
     esModal:boolean;
+
+    cmdCerrar: IZComandoFormaState;
 }
 
 export interface IZFormaTablaState extends IdEntityBase { //zft

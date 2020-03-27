@@ -1,23 +1,16 @@
 import * as React from 'react';
 
 import {
-    CSSProperties
-} from 'react';
-
-import {
-    Col,
-    Form,
     Table
 } from 'react-bootstrap';
 
-import {
-    IZMenuItem,
-    IZMenu
-} from '../../zcommon/contracts';
-import { IZPantex, IZFormaTabla, IZCampo, IZComandoForma, IZFormaTablaState, IZCampoState, ZFilaCamposState, IZFilaCamposState, Constants as ZCommonConstants } from "../../zcommon";
-import ZCampo from "./ZCampo";
+import { 
+    IZFormaTablaState, 
+    IZCampoState, 
+    IZFilaCamposState, 
+    Constants as ZCommonConstants } from "../../zcommon";
 
-import { Constants } from "../constants";
+import ZCampo from "./ZCampo";
 
 export interface OwnProps {
     zFormaTabla: IZFormaTablaState;

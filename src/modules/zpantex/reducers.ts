@@ -1,16 +1,8 @@
 
-import { Reducer, combineReducers } from 'redux';
 const u = require('updeep');
 
-import * as ZCommon from '../zcommon';
 import {
-
-    //models
-    ZMenuModel,
-    ZMenuItemModel,
-
     //Utils
-    EntityMap,
     EntityNormalizedObj,
     IZPantexModule,
     IZPantex,
@@ -20,28 +12,17 @@ import {
     IZCampoState,
     IZComandoFormaState,
     IZVentanaState,
-    ZCampoState,
     Constants as ZCommonConstants,
     ContractsServices,
-    IZEnviarComandoParams,
     IZParametrosComando
 
 } from '../zcommon';
-
-import * as ZMenu from '../zmenu';
-
-import {
-    Services,
-    Constants
-} from "../zpantex";
 
 import {
     Services as ZUtilsServices
 } from "../zutils";
 
 import { ActionTypes } from './actionTypes';
-import { debug, debuglog } from 'util';
-import { start } from 'repl';
 
 export namespace Reducers {
 

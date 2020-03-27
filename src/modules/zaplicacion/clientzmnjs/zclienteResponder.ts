@@ -15,19 +15,15 @@ import {
 } from '../../zpantex/selectors';
 
 
-
 import {
-    IZEvento,
     IZAplState,
     IZColaEventos,
-    ZPantexState
 } from "../../zcommon";
 
 import * as ZComunicaciones from "../../zcomunicaciones";
 
 import { Services } from '../../zaplicacion';
 import * as zCommon from "../../zcommon";
-import { Actions } from "../../zcomunicaciones";
 
 export namespace ZclienteResponder {
 

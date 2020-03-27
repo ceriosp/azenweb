@@ -5,7 +5,6 @@ import {
 
     //Utils
 } from './models';
-import { EntityNormalizedObj } from './contracts';
 
 class ZMenuState
 {

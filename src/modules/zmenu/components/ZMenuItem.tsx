@@ -5,13 +5,7 @@ import {
 } from 'react';
 
 import {
-    Row,
-    Col,
-    Glyphicon,
-    Navbar,
-    Nav,
     MenuItem,
-    NavItem,
     NavDropdown,
 } from 'react-bootstrap';
 

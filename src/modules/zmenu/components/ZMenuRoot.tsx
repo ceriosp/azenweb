@@ -1,29 +1,16 @@
-import * as redux from 'redux';
 import * as React from 'react';
 
-import { connect } from 'react-redux';
-
 import {
-    Row,
-    Col,
     Glyphicon,
     Navbar,
     Nav,
-    MenuItem,
-    NavItem,
-    NavDropdown
-} from 'react-bootstrap';
+     NavItem
+ } from 'react-bootstrap';
 
 import * as ZCommon from '../../zcommon';
 
-import * as ZMenu from '../index';
-
 import {
-    ZMenuModel,
     ZMenuItemModel,
-
-    State,
-    ZMenuState,
     IZMenu,
     IZMenuItem,
     IParametrosActivacionObj
@@ -64,7 +51,7 @@ export class ZMenuRoot extends React.Component<OwnProps & ConnectedState & Conne
 
     render() {
 
-        let { zMenu, index, idApl } = this.props;
+        let { zMenu, idApl } = this.props;
 
         return (
             <Navbar

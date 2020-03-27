@@ -1,18 +1,8 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 
 var Modal = require('react-bootstrap-modal');
 
 import * as ZCommon from '../../zcommon';
-import {
-
-    //State
-    ZAplicationState,
-
-    //Utils
-    EntityNormalizedObj,
-
-} from "../../zcommon";
 
 export interface OwnProps {
 
