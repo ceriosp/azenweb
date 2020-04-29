@@ -250,6 +250,9 @@ export namespace Constants {
 
         CM_TERMINAR = 184,
         CM_EJECSOLOOPCION = 185,
+        CM_TKNA = 186,
+        CM_TKNS = 187,
+        CM_PUERTO = 188,
 
         CM_APLICACION = -1,
         CM_LOGIN = -2,

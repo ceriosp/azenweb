@@ -4,7 +4,7 @@ import {
     ResultadoActionConDato, ResultadoAction
 } from "../zutils";
 
-import { IZAplState, IZColaEventos, IZEnviarComandoParams } from "../zcommon/contracts";
+import { IZAplState, IZColaEventos, IZEnviarComandoParams, IZEnviarComandoParamsOptional } from "../zcommon/contracts";
 import { ActionTypes } from "./actionTypes";
 
 export namespace Actions {
@@ -12,13 +12,15 @@ export namespace Actions {
     export const enviarRequestComando = <TRetorno>(parametros: IZEnviarComandoParams) => (dispatch: (p: any) => any, getState: () => IZAplState): Promise<ResultadoActionConDato<TRetorno>> => {
         return new Promise<ResultadoActionConDato<TRetorno>>((resolve, reject) => {
 
-            let idApl = getState().idApl;
-            let azenURL = getState().azenURL;
+            const idApl = getState().idApl;
+            const azenURL = getState().azenURL;            
 
-            let { cmd, buffer } = parametros;
-            let dominioComponentes = window.location.href.split("/");
-            let dominio = dominioComponentes[0] + "//" + dominioComponentes[2];
-            let requestUrl = azenURL + `/azen/Sesion2?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}&dominio=${dominio}&puerto=${sessionStorage.getItem(ZCommon.Constants.SessionStorageKeyEnum.AZEN_PUERTO)}`;
+            const { cmd, buffer } = parametros;
+            const dominioComponentes = window.location.href.split("/");
+            const dominio = dominioComponentes[0] + "//" + dominioComponentes[2];
+            const optionalParams = getOptionalParams(parametros, { tkns: getState().zLoginModule.tkns });
+
+            const requestUrl = azenURL + `/azen/Sesion2?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}&dominio=${dominio}&puerto=${sessionStorage.getItem(ZCommon.Constants.SessionStorageKeyEnum.AZEN_PUERTO)}${optionalParams}`;
 
             if (getState().nivelLog == 1) {
                 console.log("----------------------------------------------------------------");
@@ -73,7 +75,7 @@ export namespace Actions {
         });
     }
 
-    export const cargarCfg = <CfgObj>() : Promise<CfgObj> => {
+    export const cargarCfg = <CfgObj>(): Promise<CfgObj> => {
         return new Promise<CfgObj>((resolve, reject) => {
 
             fetch('../cfg.json', {
@@ -81,13 +83,13 @@ export namespace Actions {
                     'Content-Type': 'application/json'
                 },
                 credentials: 'include',
-                method: 'GET'                
+                method: 'GET'
 
             } as any)
-                .then((response) => {                    
+                .then((response) => {
                     return response.json();
                 })
-                .then((cfgObj: any) => {                    
+                .then((cfgObj: any) => {
                     resolve(cfgObj);
                 })
                 .catch((error) => {
@@ -95,7 +97,7 @@ export namespace Actions {
                 });
         });
     }
-    
+
     export const setProcesosServidor = (estaProcesandoRequestServidor: boolean, tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum) => (dispatch: (p: any) => any, getState: () => IZAplState) => {
         dispatch(setEstaProcesandoRequestServidor(estaProcesandoRequestServidor));
         dispatch(setTipoAJAXIndicador(tipoAJAXIndicador));
@@ -111,5 +113,24 @@ export namespace Actions {
         type: ActionTypes.SET_TIPOAJAXINDICADOR,
         tipoAJAXIndicador
     });
+
+    const getOptionalParams = (parametros: IZEnviarComandoParams, optionalExternalParams:IZEnviarComandoParamsOptional): string => {        
+
+        let aditionalParams = `&`;
+
+        for(const property in parametros.optionalParams){
+            if(parametros.optionalParams[property]){
+                aditionalParams += `${property}=${parametros.optionalParams[property]}&` ;
+            }            
+        }            
+
+        for(const property in optionalExternalParams){
+            if(optionalExternalParams[property]){
+                aditionalParams += `${property}=${optionalExternalParams[property]}&` ;
+            }
+        }        
+
+        return aditionalParams.slice(0, -1);
+    }
 
 }

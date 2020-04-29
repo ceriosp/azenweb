@@ -21,7 +21,9 @@ export namespace Reducers {
             username: '',
             password: '',
             zAplList: { apls: [] } as IZAplList,
-            resultadoAction: new ResultadoAction()
+            resultadoAction: new ResultadoAction(),
+            tkna: '',
+            tkns: ''
         } as IZLoginModule;
 
         export const impl = (state: IZLoginModule = zLoginModule, action: ActionTypes.ZLoginModule.Action) => {
@@ -46,6 +48,16 @@ export namespace Reducers {
                 case ActionTypes.ZLoginModule.SET_RESULTADOACTION:
                     return u({
                         resultadoAction: action.resultadoAction
+                    } as IZLoginModule, state);
+
+                case ActionTypes.ZLoginModule.SET_TKNA:
+                    return u({
+                        tkna: action.tkna
+                    } as IZLoginModule, state);
+
+                case ActionTypes.ZLoginModule.SET_TKNS:
+                    return u({
+                        tkns: action.tkns
                     } as IZLoginModule, state);
             }
 

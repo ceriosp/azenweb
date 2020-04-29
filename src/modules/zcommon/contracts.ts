@@ -1,6 +1,7 @@
 import { Constants } from "./constants";
 import { ResultadoAction } from "../zutils/models";
 import { ZIconoBoton } from "./index";
+import { ZMenuItemContainer } from "../zmenu/containers/ZMenuItemContainer";
 
 //#region =============================================== UTILS ===============================================
 export interface CfgObj {
@@ -40,7 +41,17 @@ export class EntityMap<TEntity>{
 //#region =============================================== DOMAIN ===============================================
 export interface IZBuffer {
     fto: string;
-    dato: string | IZMenu | IZPantex | IZAplList | CM.ISincCampo | CM.IPrenderControl | CM.ISincBoton | CM.ILimpiarMulti | CM.ILanzarAplRpta;
+    dato: string | 
+        IZMenu | 
+        IZPantex | 
+        IZAplList | 
+        CM.ISincCampo | 
+        CM.IPrenderControl | 
+        CM.ISincBoton | 
+        CM.ILimpiarMulti | 
+        CM.ILanzarAplRpta | 
+        CM.SetTkna |
+        CM.SetTkns;
 }
 
 export interface IZDatoEvento {
@@ -62,10 +73,15 @@ export interface IZColaEventos {
     eventos: Array<IZEvento>;
 }
 
+export interface IZEnviarComandoParamsOptional {
+    [prop: string]: any;
+}
+
 export interface IZEnviarComandoParams {
     cmd: Constants.ComandoEnum;
     buffer: string;
     tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
+    optionalParams?:IZEnviarComandoParamsOptional;
 }
 
 export interface IZMenu {
@@ -847,6 +863,15 @@ export namespace CM {
          */
         vc: string;
     }
+
+    export interface SetTkna {
+        tkna: string;
+    }
+
+    export interface SetTkns {
+        tkns: string;
+    }
+
 }
 
 export interface IZParametrosComando extends IdEntityBase {
@@ -860,7 +885,7 @@ export interface IZParametrosComando extends IdEntityBase {
 export interface IZAplState {
     idApl: string;
     nomApl: string;
-    azenURL: string;
+    azenURL: string;    
 
     //Datos parametros: [mes:año:bd:usuario:uid]
     parametrosActivacionObj: IParametrosActivacionObj;
@@ -929,6 +954,8 @@ export interface IZLoginModule {
     password: string;
     zAplList: IZAplList;
     resultadoAction: ResultadoAction;
+    tkna:string;
+    tkns:string;
 }
 
 export interface IZrptModule {

@@ -50,5 +50,16 @@ export namespace Actions {
             type: ActionTypes.ZLoginModule.SET_ZAPLLIST,
             zAplList
         });
+
+        export const setTkna = (tkna: string): ActionTypes.ZLoginModule.Action => ({
+            type: ActionTypes.ZLoginModule.SET_TKNA,
+            tkna
+        });
+
+        export const setTkns = (tkns: string): ActionTypes.ZLoginModule.Action => ({
+            type: ActionTypes.ZLoginModule.SET_TKNS,
+            tkns
+        });
+
     }
 }

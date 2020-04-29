@@ -104,7 +104,7 @@ export namespace Services {
                         cmSincBoton(evento);
                         break;
 
-                    case ZCommonConstants.ComandoEnum.CM_IRALINEA:                        
+                    case ZCommonConstants.ComandoEnum.CM_IRALINEA:
                         pxIrALinea = parseInt(((evento.dato.buffer.dato) as any).px);
                         rgIrALinea = parseInt(((evento.dato.buffer.dato) as any).rg);
                         irALinea = parseInt(((evento.dato.buffer.dato) as any).fi); //índice linea
@@ -176,6 +176,16 @@ export namespace Services {
                         dispatch(ZPantex.Actions.ZPantexStateModule.cmPxDestruir(pxDestruir));
                         break;
 
+                    case ZCommon.Constants.ComandoEnum.CM_TKNA:
+                        const setTkna = evento.dato.buffer.dato as CM.SetTkna;
+                        dispatch(ZLogin.Actions.ZLoginModule.setTkna(setTkna.tkna));
+                        break;
+
+                    case ZCommon.Constants.ComandoEnum.CM_TKNS:
+                        const setTkns = evento.dato.buffer.dato as CM.SetTkns;
+                        dispatch(ZLogin.Actions.ZLoginModule.setTkns(setTkns.tkns));
+                        break;
+
                     //Comandos menu
                     case ZCommon.Constants.ComandoEnum.CM_DEFMENU:
                         const zmenu = evento.dato.buffer.dato as IZMenu;
@@ -212,8 +222,13 @@ export namespace Services {
                         dispatch(ZLogin.Actions.ZLoginModule.setZAplList(zAplList));
                         break;
 
+                    case ZCommon.Constants.ComandoEnum.CM_PUERTO:
+                        let lanzarAppParams = evento.dato.buffer.dato as ZCommon.CM.ILanzarAplRpta;
+                        sessionStorage.setItem(ZCommon.Constants.SessionStorageKeyEnum.AZEN_PUERTO, lanzarAppParams.psc.toString());                        
+                        break;
+
                     case ZCommon.Constants.ComandoEnum.CM_SALIR:
-                        window.close()
+                        window.close();
                         break;
                 }
             }
@@ -224,7 +239,7 @@ export namespace Services {
 
                 console.log("comandos px|region|fila");
                 console.log(hashZComandoState);
-            }            
+            }
 
             //Hay campos para sincronizar      
             if (hashZCampoState.size > 0 || hashZComandoState.size > 1 || numFilasVisiblesMulti > 0) {
@@ -335,10 +350,10 @@ export namespace Services {
             }
         }
 
-        const cmIrACmp = (infoEvento: IZEvento) => {            
+        const cmIrACmp = (infoEvento: IZEvento) => {
 
             iIrACmpParametros = infoEvento.dato.buffer.dato as CM.iIrACmp;
-            let hashKey = ContractsServices.getSincHashKey(iIrACmpParametros);            
+            let hashKey = ContractsServices.getSincHashKey(iIrACmpParametros);
 
             if (!hashZCampoState.has(hashKey)) {
                 let zCampoEnHash = {

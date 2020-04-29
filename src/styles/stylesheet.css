@@ -195,6 +195,18 @@
     margin-bottom: 5px !important;
 }
 
-.azn-seleccionar:hover{
+.azn-seleccionar:hover {
     background-color: #DFF0D8 !important;
+}
+
+.btn {
+    font-size: 12px;
+}
+
+.btn-group-xs>.btn, .btn-xs {
+    padding: 0px 5px;
+}
+
+.apls-list li {
+    list-style-type: none;
 }
