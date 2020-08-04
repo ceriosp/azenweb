@@ -100,7 +100,7 @@ let cargarAplicacion: (cfgObj:CfgObj) => void = (cfgObj:CfgObj) => {
 
     let store = obtenerEstadoInicial(cfgObj);
 
-    if (idApl && nomApl && lanzarMenu) {                
+    if ((idApl && nombreOpcion) || (idApl && nomApl && lanzarMenu)) {
         ReactDOM.render(
             <Provider store={store}>
                 <ZAplicacionContainer />

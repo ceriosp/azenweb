@@ -253,6 +253,7 @@ export namespace Constants {
         CM_TKNA = 186,
         CM_TKNS = 187,
         CM_PUERTO = 188,
+        CM_EJECSOLOOPCION_TKNA = 189,
 
         CM_APLICACION = -1,
         CM_LOGIN = -2,

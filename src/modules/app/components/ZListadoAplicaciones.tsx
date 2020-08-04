@@ -108,10 +108,13 @@ export class ZListadoAplicaciones extends React.Component<
           </Col>
 
           {opts.map((opc) => (
-            <Col md={3} xs={6}>
-              <h6>{opc.descr}</h6>
+            <Col md={3} xs={6}>              
               <a href={`?idApl=${opc.apl}&opcion=${opc.opc}&tkna=${this.props.zLoginModule.tkna}`} target="_blank">
-                <Thumbnail src="dist/img/azenLogo.jpg"></Thumbnail>
+                <Thumbnail className="azn-thumbnail" src="dist/img/azenLogo.jpg">
+                  <div className="nombre-opcion">
+                    {opc.descr}
+                  </div>
+                </Thumbnail>
               </a>
             </Col>
           ))}
