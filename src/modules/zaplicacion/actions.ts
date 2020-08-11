@@ -85,7 +85,7 @@ export namespace Actions {
   ) => {
     return dispatch(
         despacharEventoCliente(
-        ZCommon.Constants.ComandoEnum.CM_EJECSOLOOPCION_TKNA,
+        ZCommon.Constants.ComandoEnum.CM_EJECSOLOOPCION,
         '',
         {
             opcion,

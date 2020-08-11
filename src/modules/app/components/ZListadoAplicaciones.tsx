@@ -60,16 +60,32 @@ export class ZListadoAplicaciones extends React.Component<
       <div className="apls-list">
         {!apls || (apls.length == 0 && <ZLoginContainer />)}
 
-        <Grid></Grid>
-
-        {/* {apls.length > 0 && (
+        <Grid>
+          {/* {apls.length > 0 && (
                     this.renderAplList(this.props.zLoginModule)
                 )} */}
 
-        {apls.length > 0 && this.rendersApls(apls)}
-        <br />
-        {apls.length > 0 && this.rendersOpts(apls)}
+          {apls.length > 0 && this.rendersApls(apls)}
+          <hr />
+          {apls.length > 0 && this.rendersOpts(apls)}
 
+          <Row>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+                marginTop: "10px",
+              }}
+            >
+              <img
+                src="dist/img/azenLogo.jpg"
+                alt="Logo Azen"
+                style={{ marginBottom: "10px" }}
+              />
+            </div>
+          </Row>
+        </Grid>
         <ZProcesandoContainer />
       </div>
     );
@@ -79,19 +95,32 @@ export class ZListadoAplicaciones extends React.Component<
     const aplsOpts = apls.filter((apl) => !apl.opc);
     if (aplsOpts.length > 0) {
       return (
-        <Grid>
+        <Row>
           <Col md={12}>
-            <span style={{ color: "#222" }}>Aplicaciones</span>
+            <span
+              style={{
+                color: "#222",
+                margin: "5px 0 5px 0",
+                display: "inline-block",
+                fontWeight:'bold'
+              }}
+            >
+              Aplicaciones
+            </span>{" "}
+            <br />
           </Col>
 
           {aplsOpts.map((apl) => (
-            <Col md={3} xs={6}>
-              <NavItem  href={`?idApl=${apl.apl}&nomApl=${apl.descr}&lanzarMenu=1&tkna=${this.props.zLoginModule.tkna}`} target="_blank">
+            <Col xs={6} sm={4} style={{ marginTop: "10px" }}>
+              <NavItem
+                href={`?idApl=${apl.apl}&nomApl=${apl.descr}&lanzarMenu=1&tkna=${this.props.zLoginModule.tkna}`}
+                target="_blank"
+              >
                 <Glyphicon glyph="list-alt" /> {apl.descr}
               </NavItem>
             </Col>
           ))}
-        </Grid>
+        </Row>
       );
     }
 
@@ -99,6 +128,32 @@ export class ZListadoAplicaciones extends React.Component<
   };
 
   private rendersOpts = (apls: IZApl[]) => {
+    const aplsOpts = apls.filter((apl) => apl.opc);
+    if (aplsOpts.length > 0) {
+      return (
+        <Row>
+          <Col md={12}>
+            <span style={{ color: "#222", fontWeight:'bold' }}>Opciones</span>
+          </Col>
+
+          {aplsOpts.map((opc) => (
+            <Col xs={12} sm={4} style={{ marginTop: "10px" }}>
+              <NavItem
+                href={`?idApl=${opc.apl}&opcion=${opc.opc}&tkna=${this.props.zLoginModule.tkna}`}
+                target="_blank"
+              >
+                <Glyphicon glyph="list-alt" /> {opc.descrOpc}
+              </NavItem>
+            </Col>
+          ))}
+        </Row>
+      );
+    }
+
+    return <span></span>;
+  };
+
+  private rendersOptsOld = (apls: IZApl[]) => {
     const opts = apls.filter((apl) => apl.opc);
     if (opts.length > 0) {
       return (
@@ -108,12 +163,16 @@ export class ZListadoAplicaciones extends React.Component<
           </Col>
 
           {opts.map((opc) => (
-            <Col md={3} xs={6}>              
-              <a href={`?idApl=${opc.apl}&opcion=${opc.opc}&tkna=${this.props.zLoginModule.tkna}`} target="_blank">
-                <Thumbnail className="azn-thumbnail" src="dist/img/azenLogo.jpg">
-                  <div className="nombre-opcion">
-                    {opc.descr}
-                  </div>
+            <Col md={3} xs={6}>
+              <a
+                href={`?idApl=${opc.apl}&opcion=${opc.opc}&tkna=${this.props.zLoginModule.tkna}`}
+                target="_blank"
+              >
+                <Thumbnail
+                  className="azn-thumbnail"
+                  src="dist/img/azenLogo.jpg"
+                >
+                  <div className="nombre-opcion">{opc.descr}</div>
                 </Thumbnail>
               </a>
             </Col>
