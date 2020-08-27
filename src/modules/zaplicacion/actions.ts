@@ -37,6 +37,7 @@ export namespace Actions {
     dispatch(App.Actions.setIdApl(idApl));
     dispatch(App.Actions.setNomApl(nomApl));
     dispatch(ZLogin.Actions.ZLoginModule.setUsername(username));
+    dispatch(ZLogin.Actions.ZLoginModule.setTkna(tkna));
 
     if(opcion){
         return dispatch(lanzarOpcionAtomica(opcion, tkna));
@@ -48,10 +49,7 @@ export namespace Actions {
           ZComunicaciones.Actions.enviarRequestComando<IZColaEventos>({
             cmd: ZCommon.Constants.ComandoEnum.CM_APLICACION,
             buffer: getState().zLoginModule.username,
-            tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL,
-            optionalParams: {
-              tkna: tkna,
-            },
+            tipoAJAXIndicador: ZCommon.Constants.TipoAJAXIndicadorEnum.MODAL
           })
         ).then(
           (resultadoCmAplicacion: ResultadoActionConDato<IZColaEventos>) => {
@@ -88,8 +86,7 @@ export namespace Actions {
         ZCommon.Constants.ComandoEnum.CM_EJECSOLOOPCION,
         '',
         {
-            opcion,
-            tkna
+            opcion
         }
       )
     );

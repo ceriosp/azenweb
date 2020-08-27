@@ -5,877 +5,957 @@ import { ZMenuItemContainer } from "../zmenu/containers/ZMenuItemContainer";
 
 //#region =============================================== UTILS ===============================================
 export interface CfgObj {
-    azenBackEndURL:string;
-    urlCargarArchivo:string;
+  azenBackEndURL: string;
+  urlCargarArchivo: string;
 }
 //#endregion
 
 //#region =============================================== UTILS ===============================================
 
 export class IdEntityBase {
-    id: number;
+  id: number;
 }
 
 export interface IEntityNormalizeObj {
-    byId: any;
-    allIds: Array<number>
+  byId: any;
+  allIds: Array<number>;
 }
 
-export class EntityNormalizedObj<TEntity>{
+export class EntityNormalizedObj<TEntity> {
+  constructor() {
+    this.byId = {};
+    this.allIds = [];
+  }
 
-    constructor() {
-        this.byId = {};
-        this.allIds = [];
-    }
-
-    byId: EntityMap<TEntity>;
-    allIds: Array<number>
+  byId: EntityMap<TEntity>;
+  allIds: Array<number>;
 }
 
-export class EntityMap<TEntity>{
-    [id: number]: TEntity;
+export class EntityMap<TEntity> {
+  [id: number]: TEntity;
 }
 
 //#endregion
 
 //#region =============================================== DOMAIN ===============================================
+export interface ZCommandDTO {
+  tkna: string;
+  tkns: string;
+  idAp: string;
+  port: number;
+  buffer: string;
+  log: number;
+  cmd: Constants.ComandoEnum;
+  opcion: string;
+}
+
 export interface IZBuffer {
-    fto: string;
-    dato: string | 
-        IZMenu | 
-        IZPantex | 
-        IZAplList | 
-        CM.ISincCampo | 
-        CM.IPrenderControl | 
-        CM.ISincBoton | 
-        CM.ILimpiarMulti | 
-        CM.ILanzarAplRpta | 
-        CM.SetTkna |
-        CM.SetTkns;
+  fto: string;
+  dato:
+    | string
+    | IZMenu
+    | IZPantex
+    | IZAplList
+    | CM.ISincCampo
+    | CM.IPrenderControl
+    | CM.ISincBoton
+    | CM.ILimpiarMulti
+    | CM.ILanzarAplRpta
+    | CM.SetTkna
+    | CM.SetTkns;
 }
 
 export interface IZDatoEvento {
-
-    tipo: Constants.TipoEventoEnum;
-    tec: number; //tecla
-    cmd: Constants.ComandoEnum;
-    inf: string;
-    buffer: IZBuffer;
+  tipo: Constants.TipoEventoEnum;
+  tec: number; //tecla
+  cmd: Constants.ComandoEnum;
+  inf: string;
+  buffer: IZBuffer;
 }
 
 export interface IZEvento {
-    evento: number;
-    dato: IZDatoEvento;
+  evento: number;
+  dato: IZDatoEvento;
 }
 
 export interface IZColaEventos {
-    numEventos: number;
-    eventos: Array<IZEvento>;
+  numEventos: number;
+  eventos: Array<IZEvento>;
 }
 
 export interface IZEnviarComandoParamsOptional {
-    [prop: string]: any;
+  [prop: string]: any;
 }
 
 export interface IZEnviarComandoParams {
-    cmd: Constants.ComandoEnum;
-    buffer: string;
-    tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
-    optionalParams?:IZEnviarComandoParamsOptional;
+  cmd: Constants.ComandoEnum;
+  buffer: string;
+  tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
+  optionalParams?: IZEnviarComandoParamsOptional;
 }
 
 export interface IZMenu {
-    menu: Array<IZMenuItem>;
+  menu: Array<IZMenuItem>;
 }
 
 export interface IZMenuItem {
-    nom: string;
-    desc: string;
-    ctx: string;
-    desh: number;
-    menu: Array<IZMenuItem>;
+  nom: string;
+  desc: string;
+  ctx: string;
+  desh: number;
+  menu: Array<IZMenuItem>;
 }
 
 export interface IZPantex {
-    numPx: number;
-    zFormaTablaList: Array<IZFormaTabla>;
+  numPx: number;
+  zFormaTablaList: Array<IZFormaTabla>;
 }
 
 export interface IZRegion {
-    zFormaTabla: IZFormaTabla;
+  zFormaTabla: IZFormaTabla;
 }
 
-export interface IZFormaTabla { //zft
-    ven: IZVentana;
+export interface IZFormaTabla {
+  //zft
+  ven: IZVentana;
 
-    linEst: Array<IZComandoForma>;
-    btns: Array<IZComandoForma>;
+  linEst: Array<IZComandoForma>;
+  btns: Array<IZComandoForma>;
 
-    cmps: Array<IZCampo>;
+  cmps: Array<IZCampo>;
 }
 
 /**
  * ZEitem
  */
 export interface IZComandoForma {
-    etq: string;
-    tec: number;
-    cmd: Constants.ComandoEnum;
-    desh: number; //1:deshabilitado, 0:habilitado
+  etq: string;
+  tec: number;
+  cmd: Constants.ComandoEnum;
+  desh: number; //1:deshabilitado, 0:habilitado
 }
 
 export interface IZVentanaBase {
-    numPx: number;
-    descr: string;
-    nomTbl: string;
-    nomRcrZoom: string;
-    numLinsDatos: number; //Si es multi > 1
+  numPx: number;
+  descr: string;
+  nomTbl: string;
+  nomRcrZoom: string;
+  numLinsDatos: number; //Si es multi > 1
 
-    factorDivision: number;
+  factorDivision: number;
 }
 
 export interface IZVentana extends IZVentanaBase {
+  nfils: number;
+  ncols: number;
+  fil: number;
+  col: number;
+  modo: number;
+  cmdsBtn: number;
+  cmdsLE: number;
+  numLinsEnc: number;
 
-    nfils: number;
-    ncols: number;
-    fil: number;
-    col: number;
-    modo: number;
-    cmdsBtn: number;
-    cmdsLE: number;
-    numLinsEnc: number;
-
-    ctx: number;
-    nfilsrx: number;
-    ncolsrx: number;
+  ctx: number;
+  nfilsrx: number;
+  ncolsrx: number;
 }
 
 export interface IZCampoBase {
-    nomCmp: string;
-    etq: string;
-    claseInd: Constants.ClaseIndicadorEnum;
-    lon: number;
-    lonv: number;
-    control: number;
-    modo: number; //Constants.ModoCampo namespace
-    posbit: number;
+  nomCmp: string;
+  etq: string;
+  claseInd: Constants.ClaseIndicadorEnum;
+  lon: number;
+  lonv: number;
+  control: number;
+  modo: number; //Constants.ModoCampo namespace
+  posbit: number;
 
-    tipo: number; //Para campos fecha
+  tipo: number; //Para campos fecha
 }
 
 export interface IZCampo extends IZCampoBase {
-    lonv: number;
-    noEnTabla: number;
-    numDec: number;
-    cmps?: Array<IZCampo>;
+  lonv: number;
+  noEnTabla: number;
+  numDec: number;
+  cmps?: Array<IZCampo>;
 }
 
 export interface IZAplList {
-    apls: Array<IZApl>;
+  apls: Array<IZApl>;
 }
 
 export interface IZApl {
-    apl: string;
-    descr: string;    
+  apl: string;
+  descr: string;
 
-
-    //Funcionalidades atómicas
-    opc?:string;
-    descrOpc:string;
-    activo?: number;
+  //Funcionalidades atómicas
+  opc?: string;
+  descrOpc: string;
+  activo?: number;
 }
 
 //#region =============================================== Own state ===============================================
 export interface IZPantexState extends IdEntityBase {
-    id: number; //px
-    zFormaTablaStateListIds: Array<number>;
+  id: number; //px
+  zFormaTablaStateListIds: Array<number>;
 
-    //Propiedades del state
-    zFormaTablaListState: Array<IZFormaTablaState>;
-    tipoCmdPantex: Constants.ComandoEnum;
+  //Propiedades del state
+  zFormaTablaListState: Array<IZFormaTablaState>;
+  tipoCmdPantex: Constants.ComandoEnum;
 
-    esModal:boolean;
+  esModal: boolean;
 
-    cmdCerrar: IZComandoFormaState;
+  cmdCerrar: IZComandoFormaState;
 }
 
 export class ZPantexState implements IZPantexState {
+  constructor(numPx: number, tipoCmdPantex: Constants.ComandoEnum) {
+    this.id = numPx;
+    this.tipoCmdPantex = tipoCmdPantex;
+    this.zFormaTablaStateListIds = new Array<number>();
+    this.cmdCerrar = undefined;
+  }
 
-    constructor(numPx: number, tipoCmdPantex: Constants.ComandoEnum) {
-        this.id = numPx;
-        this.tipoCmdPantex = tipoCmdPantex;
-        this.zFormaTablaStateListIds = new Array<number>();
-        this.cmdCerrar = undefined;
-    }
+  id: number; //px
+  zFormaTablaStateListIds: Array<number>;
+  zFormaTablaListState: Array<IZFormaTablaState>;
+  tipoCmdPantex: Constants.ComandoEnum;
+  esModal: boolean;
 
-    id: number; //px
-    zFormaTablaStateListIds: Array<number>;
-    zFormaTablaListState: Array<IZFormaTablaState>;
-    tipoCmdPantex: Constants.ComandoEnum;
-    esModal:boolean;
-
-    cmdCerrar: IZComandoFormaState;
+  cmdCerrar: IZComandoFormaState;
 }
 
-export interface IZFormaTablaState extends IdEntityBase { //zft
-    id: number;
-    idZVentana: number;
-    zCampoStateListIds: Array<number>;
-    linEstListIds: Array<number>;
-    btnsListIds: Array<number>;
+export interface IZFormaTablaState extends IdEntityBase {
+  //zft
+  id: number;
+  idZVentana: number;
+  zCampoStateListIds: Array<number>;
+  linEstListIds: Array<number>;
+  btnsListIds: Array<number>;
 
-    venState: IZVentanaState;
-    cmpsState: Array<IZCampoState>;
-    linEstState: Array<IZComandoFormaState>;
-    btnsState: Array<IZComandoFormaState>;
+  venState: IZVentanaState;
+  cmpsState: Array<IZCampoState>;
+  linEstState: Array<IZComandoFormaState>;
+  btnsState: Array<IZComandoFormaState>;
 
-    rg: number; //región
+  rg: number; //región
 
-    //Para zfts que son multi:
-    filasCamposList: Array<IZFilaCamposState>;
-    numCampos: number;
-    indexFilaMultiSeleccionada: number;
-    numFilasVisiblesMulti: number;
+  //Para zfts que son multi:
+  filasCamposList: Array<IZFilaCamposState>;
+  numCampos: number;
+  indexFilaMultiSeleccionada: number;
+  numFilasVisiblesMulti: number;
 
-    camposFijosList: Array<IZCampoState>; //Lista de campos fijos
+  camposFijosList: Array<IZCampoState>; //Lista de campos fijos
 
-    numPx: number;
-    esRegionActiva: boolean;//si el CM_SALTAR se ubica en el zft actual = true, sino = false
+  numPx: number;
+  esRegionActiva: boolean; //si el CM_SALTAR se ubica en el zft actual = true, sino = false
 }
 
-export class ZFormaTablaState implements IZFormaTablaState { //zft
+export class ZFormaTablaState implements IZFormaTablaState {
+  //zft
 
-    constructor(id: number, numPx: number, rg: number, numCampos: number) {
-        this.id = id;
-        this.numPx = numPx;
-        this.rg = rg;
-        this.zCampoStateListIds = new Array<number>();
-        this.linEstListIds = new Array<number>();
-        this.btnsListIds = new Array<number>();
+  constructor(id: number, numPx: number, rg: number, numCampos: number) {
+    this.id = id;
+    this.numPx = numPx;
+    this.rg = rg;
+    this.zCampoStateListIds = new Array<number>();
+    this.linEstListIds = new Array<number>();
+    this.btnsListIds = new Array<number>();
 
-        this.numCampos = numCampos;
-    }
+    this.numCampos = numCampos;
+  }
 
-    id: number;
-    idZVentana: number;
+  id: number;
+  idZVentana: number;
 
-    //Propiedades IZFormaTablaState
-    zCampoStateListIds: Array<number>;
-    linEstListIds: Array<number>;
-    btnsListIds: Array<number>;
-    numFilasVisiblesMulti: number;
+  //Propiedades IZFormaTablaState
+  zCampoStateListIds: Array<number>;
+  linEstListIds: Array<number>;
+  btnsListIds: Array<number>;
+  numFilasVisiblesMulti: number;
 
-    //GUI calculated properties
-    venState: IZVentanaState;
-    cmpsState: Array<IZCampoState>;
-    linEstState: Array<IZComandoFormaState>;
-    btnsState: Array<IZComandoFormaState>;
+  //GUI calculated properties
+  venState: IZVentanaState;
+  cmpsState: Array<IZCampoState>;
+  linEstState: Array<IZComandoFormaState>;
+  btnsState: Array<IZComandoFormaState>;
 
-    rg: number; //región
+  rg: number; //región
 
-    //Para zfts que son multi:
-    filasCamposList: Array<IZFilaCamposState>;
-    numCampos: number;
-    indexFilaMultiSeleccionada: number;
+  //Para zfts que son multi:
+  filasCamposList: Array<IZFilaCamposState>;
+  numCampos: number;
+  indexFilaMultiSeleccionada: number;
 
-    camposFijosList: Array<IZCampoState>;
+  camposFijosList: Array<IZCampoState>;
 
-    numPx: number;
-    esRegionActiva: boolean;//si el CM_SALTAR se ubica en el zft actual = true, sino = false
+  numPx: number;
+  esRegionActiva: boolean; //si el CM_SALTAR se ubica en el zft actual = true, sino = false
 }
 
 export interface IZFilaCamposState {
-    cmpsState: Array<IZCampoState>;
+  cmpsState: Array<IZCampoState>;
 }
 
 export class ZFilaCamposState implements IZFilaCamposState {
+  constructor() {
+    this.cmpsState = new Array<IZCampoState>();
+  }
 
-    constructor() {
-        this.cmpsState = new Array<IZCampoState>();
-    }
-
-    cmpsState: Array<IZCampoState>;
+  cmpsState: Array<IZCampoState>;
 }
 
 export interface IZCampoState extends IdEntityBase, IZCampoBase {
+  id: number;
+  px: number;
+  rg: number; //región
+  idZft: number; //id zft en el estado
+  fi: number; //fila
+  value: any;
+  readOnly: boolean;
+  esCampoGrafico: boolean;
+  haCambiado: boolean;
+  checked: boolean;
 
-    id: number;
-    px: number;
-    rg: number; //región
-    idZft: number; //id zft en el estado
-    fi: number; //fila
-    value: any;
-    readOnly: boolean;
-    esCampoGrafico: boolean;
-    haCambiado: boolean;
-    checked: boolean;
+  esDetallable: boolean;
 
-    esDetallable: boolean;
+  //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
+  posBitsOn: Array<number>;
+  posBitsOff: Array<number>;
 
-    //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
-    posBitsOn: Array<number>;
-    posBitsOff: Array<number>;
+  //Para campos dentro de un campo gráfico
+  parentId?: number;
+  cmpsState: Array<IZCampoState>;
 
-    //Para campos dentro de un campo gráfico
-    parentId?: number;
-    cmpsState: Array<IZCampoState>;
+  //Propiedades para sincronizar valores
+  bitPrenderControl: number;
+  bitApagarControl: number;
+  bitPrenderModo: number;
+  bitApagarModo: number;
 
-    //Propiedades para sincronizar valores
-    bitPrenderControl: number;
-    bitApagarControl: number;
-    bitPrenderModo: number;
-    bitApagarModo: number;
+  autoFocus: boolean; //El campo tiene el foco
 
-    autoFocus: boolean; //El campo tiene el foco
+  esFijo: boolean; //El campo es fijo (Descripción)
 
-    esFijo: boolean; //El campo es fijo (Descripción)
+  esArchivo: boolean;
 
-    esArchivo: boolean;
-
-    noArrivable: boolean;
+  noArrivable: boolean;
 }
 
 export class ZCampoState implements IZCampoState {
+  constructor(
+    zcampo: IZCampo,
+    id: number,
+    px: number,
+    rg: number,
+    idZft: number,
+    fila: number
+  ) {
+    this.id = id;
+    this.px = px;
+    this.rg = rg;
+    this.idZft = idZft;
 
-    constructor(zcampo: IZCampo, id: number, px: number, rg: number, idZft: number, fila: number) {
+    this.fi = fila;
+    this.haCambiado = false;
 
-        this.id = id;
-        this.px = px;
-        this.rg = rg;
-        this.idZft = idZft;
+    this.nomCmp = zcampo.nomCmp;
+    this.etq = zcampo.etq;
+    this.claseInd = zcampo.claseInd;
+    this.lon = zcampo.lon;
+    this.lonv = zcampo.lonv;
+    this.posbit = zcampo.posbit;
 
-        this.fi = fila;
-        this.haCambiado = false;
+    this.control = zcampo.control;
+    this.modo = zcampo.modo;
+    this.readOnly =
+      ContractsServices.esCampoControlLectura(zcampo.control) ||
+      ContractsServices.esCampoModoLectura(zcampo.modo);
 
-        this.nomCmp = zcampo.nomCmp;
-        this.etq = zcampo.etq;
-        this.claseInd = zcampo.claseInd;
-        this.lon = zcampo.lon;
-        this.lonv = zcampo.lonv;
-        this.posbit = zcampo.posbit;
+    this.esDetallable = ContractsServices.Binario.estaPrendidoBit(
+      zcampo.modo,
+      Constants.ModoCampoEnum.ZCMP_MDETALLABLE
+    );
 
-        this.control = zcampo.control;
-        this.modo = zcampo.modo;
-        this.readOnly = ContractsServices.esCampoControlLectura(zcampo.control) || ContractsServices.esCampoModoLectura(zcampo.modo);
+    this.value = "";
+    this.checked = false;
+    this.tipo = zcampo.tipo;
 
-        this.esDetallable = ContractsServices.Binario.estaPrendidoBit(zcampo.modo, Constants.ModoCampoEnum.ZCMP_MDETALLABLE);
+    this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;
 
-        this.value = "";
-        this.checked = false;
-        this.tipo = zcampo.tipo;
+    this.autoFocus = false;
 
-        this.esCampoGrafico = zcampo.cmps != undefined && zcampo.cmps.length > 1;
+    this.esFijo = ContractsServices.Binario.estaPrendidoBit(
+      zcampo.modo,
+      Constants.ModoCampoEnum.ZCMP_MFIJO
+    );
 
-        this.autoFocus = false;
-
-        this.esFijo = ContractsServices.Binario.estaPrendidoBit(zcampo.modo, Constants.ModoCampoEnum.ZCMP_MFIJO);
-
-        if (rg == 1) {
-            this.esArchivo = ContractsServices.Binario.estaPrendidoBit(zcampo.modo, Constants.ModoCampoEnum.ZCMP_MCARGARARCHIVO);
-        } else {
-            this.esArchivo = false;
-        }        
-
-        this.noArrivable = ContractsServices.Binario.estaPrendidoBit(zcampo.modo, Constants.ModoCampoEnum.ZCMP_MNOARRIVABLE);
+    if (rg == 1) {
+      this.esArchivo = ContractsServices.Binario.estaPrendidoBit(
+        zcampo.modo,
+        Constants.ModoCampoEnum.ZCMP_MCARGARARCHIVO
+      );
+    } else {
+      this.esArchivo = false;
     }
 
-    //Propiedades para manejo de estado
-    id: number;
-    px: number;
-    rg: number;
-    idZft: number; //id zft en el estado
-    fi: number;
-    value: string;
-    readOnly: boolean;
-    esCampoGrafico: boolean;
-    haCambiado: boolean;
-    parentId?: number; //Para campos dentro de un campo gráfico
-    cmpsState: Array<IZCampoState>;
-    tipo: number;
+    this.noArrivable = ContractsServices.Binario.estaPrendidoBit(
+      zcampo.modo,
+      Constants.ModoCampoEnum.ZCMP_MNOARRIVABLE
+    );
+  }
 
-    //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
-    posBitsOn: Array<number>;
-    posBitsOff: Array<number>;
+  //Propiedades para manejo de estado
+  id: number;
+  px: number;
+  rg: number;
+  idZft: number; //id zft en el estado
+  fi: number;
+  value: string;
+  readOnly: boolean;
+  esCampoGrafico: boolean;
+  haCambiado: boolean;
+  parentId?: number; //Para campos dentro de un campo gráfico
+  cmpsState: Array<IZCampoState>;
+  tipo: number;
 
-    checked: boolean;
-    esDetallable: boolean;
+  //Para valores de campos radio/chequeo: Contiene los valores de los que están en On
+  posBitsOn: Array<number>;
+  posBitsOff: Array<number>;
 
-    //Propiedades IZCampo
-    nomCmp: string;
-    etq: string;
-    claseInd: Constants.ClaseIndicadorEnum;
-    lon: number;
-    lonv: number;
-    posbit: number;
-    control: number;
-    modo: number;
+  checked: boolean;
+  esDetallable: boolean;
 
-    //Propiedades para sincronizar valores
-    bitPrenderControl: number;
-    bitApagarControl: number;
-    bitPrenderModo: number;
-    bitApagarModo: number;
+  //Propiedades IZCampo
+  nomCmp: string;
+  etq: string;
+  claseInd: Constants.ClaseIndicadorEnum;
+  lon: number;
+  lonv: number;
+  posbit: number;
+  control: number;
+  modo: number;
 
-    autoFocus: boolean;
-    esFijo: boolean; //El campo es fijo (Descripción)
+  //Propiedades para sincronizar valores
+  bitPrenderControl: number;
+  bitApagarControl: number;
+  bitPrenderModo: number;
+  bitApagarModo: number;
 
-    esArchivo: boolean;
+  autoFocus: boolean;
+  esFijo: boolean; //El campo es fijo (Descripción)
 
-    noArrivable: boolean;
+  esArchivo: boolean;
+
+  noArrivable: boolean;
 }
 
 export interface IZComandoFormaState extends IZComandoForma {
-    id: number;
-    px: number;
-    rg: number;
+  id: number;
+  px: number;
+  rg: number;
 
-    idZft: number;
+  idZft: number;
 }
 
 export class ZComandoFormaState implements IZComandoFormaState {
+  constructor(
+    zComandoForma: IZComandoForma,
+    id: number,
+    px: number,
+    rg: number,
+    idZft: number
+  ) {
+    this.id = id;
+    this.px = px;
+    this.rg = rg;
+    this.idZft = idZft;
 
-    constructor(zComandoForma: IZComandoForma, id: number, px: number, rg: number, idZft: number) {
-
-        this.id = id;
-        this.px = px;
-        this.rg = rg;
-        this.idZft = idZft;
-
-        if (!zComandoForma) {
-            return;
-        }
-
-        this.etq = zComandoForma.etq;
-        this.tec = zComandoForma.tec;
-        this.cmd = zComandoForma.cmd;
-        this.desh = zComandoForma.desh;
+    if (!zComandoForma) {
+      return;
     }
 
-    id: number;
-    px: number;
-    rg: number;
-    idZft: number;
+    this.etq = zComandoForma.etq;
+    this.tec = zComandoForma.tec;
+    this.cmd = zComandoForma.cmd;
+    this.desh = zComandoForma.desh;
+  }
 
-    //Propiedades de IZComandoFormaState
-    etq: string;
-    tec: number;
-    cmd: Constants.ComandoEnum;
-    desh: number; //1:deshabilitado, 0:habilitado    
+  id: number;
+  px: number;
+  rg: number;
+  idZft: number;
+
+  //Propiedades de IZComandoFormaState
+  etq: string;
+  tec: number;
+  cmd: Constants.ComandoEnum;
+  desh: number; //1:deshabilitado, 0:habilitado
 }
 
 export interface IZVentanaState extends IZVentanaBase {
-    id: number; //px
+  id: number; //px
 }
 
 export class ZVentanaState implements IZVentanaState {
+  constructor(zVentana: IZVentana, id: number) {
+    this.id = id;
 
-    constructor(zVentana: IZVentana, id: number) {
+    this.numPx = zVentana.numPx;
+    this.descr = zVentana.descr;
+    this.nomTbl = zVentana.nomTbl;
+    this.nomRcrZoom = zVentana.nomRcrZoom;
+    this.numLinsDatos = zVentana.numLinsDatos;
 
-        this.id = id;
+    this.factorDivision = zVentana.factorDivision;
+  }
 
-        this.numPx = zVentana.numPx;
-        this.descr = zVentana.descr;
-        this.nomTbl = zVentana.nomTbl;
-        this.nomRcrZoom = zVentana.nomRcrZoom;
-        this.numLinsDatos = zVentana.numLinsDatos;
+  id: number;
 
-        this.factorDivision = zVentana.factorDivision;
-    }
+  //Propiedades IZVentanaBase
+  numPx: number;
+  descr: string;
+  nomTbl: string;
+  nomRcrZoom: string;
+  numLinsDatos: number; //Si es multi > 1
 
-    id: number;
-
-    //Propiedades IZVentanaBase
-    numPx: number;
-    descr: string;
-    nomTbl: string;
-    nomRcrZoom: string;
-    numLinsDatos: number; //Si es multi > 1    
-
-    factorDivision: number;
+  factorDivision: number;
 }
-
 
 //#endregion
 
 //#region =============================================== Comandos ===============================================
 /**
- * Namespace de comandos, 
+ * Namespace de comandos,
  * see: zcommon.Constants.ComandoEnum
  */
 export namespace CM {
+  export interface IZComandoDefinicion {
+    icono: string;
+  }
 
-    export interface IZComandoDefinicion {
-        icono: string;
-    }
+  export const hashInfoComandos = new Map<
+    Constants.ComandoEnum,
+    IZComandoDefinicion
+  >([
+    [
+      Constants.ComandoEnum.CM_AYUDA,
+      {
+        icono: "glyphicon glyphicon-info-sign",
+      } as IZComandoDefinicion,
+    ],
 
-    export const hashInfoComandos = new Map<Constants.ComandoEnum, IZComandoDefinicion>([
+    [
+      Constants.ComandoEnum.CM_ADICIONAR,
+      {
+        icono: "glyphicon glyphicon-plus",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_AYUDA, {
-            icono: "glyphicon glyphicon-info-sign"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_MODIFICAR,
+      {
+        icono: "glyphicon glyphicon-pencil",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_ADICIONAR, {
-            icono: "glyphicon glyphicon-plus"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_CONSULTAR,
+      {
+        icono: "glyphicon glyphicon-book",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_MODIFICAR, {
-            icono: "glyphicon glyphicon-pencil"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_CERRAR,
+      {
+        icono: "glyphicon glyphicon-remove",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_CONSULTAR, {
-            icono: "glyphicon glyphicon-book"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_PRIMERO,
+      {
+        icono: "glyphicon glyphicon-fast-backward",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_CERRAR, {
-            icono: "glyphicon glyphicon-remove"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_ANTREG,
+      {
+        icono: "glyphicon glyphicon-step-backward",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_PRIMERO, {
-            icono: "glyphicon glyphicon-fast-backward"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_SGTEREG,
+      {
+        icono: "glyphicon glyphicon-step-forward",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_ANTREG, {
-            icono: "glyphicon glyphicon-step-backward"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_ULTIMO,
+      {
+        icono: "glyphicon glyphicon-fast-forward",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_SGTEREG, {
-            icono: "glyphicon glyphicon-step-forward"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_RETOCAR,
+      {
+        icono: "glyphicon glyphicon-refresh",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_ULTIMO, {
-            icono: "glyphicon glyphicon-fast-forward"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_VISUALIZAR,
+      {
+        icono: "glyphicon glyphicon-circle-arrow-down",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_RETOCAR, {
-            icono: "glyphicon glyphicon-refresh"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_GRABAR,
+      {
+        icono: "glyphicon glyphicon-floppy-save",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_VISUALIZAR, {
-            icono: "glyphicon glyphicon-circle-arrow-down"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_BUSCAR,
+      {
+        icono: "glyphicon glyphicon-search",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_GRABAR, {
-            icono: "glyphicon glyphicon-floppy-save"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_DETALLAR,
+      {
+        icono: "glyphicon glyphicon-open",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_BUSCAR, {
-            icono: "glyphicon glyphicon-search"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_SELECCIONAR,
+      {
+        icono: "glyphicon glyphicon-list",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_DETALLAR, {
-            icono: "glyphicon glyphicon-open"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_BORRAR,
+      {
+        icono: "glyphicon glyphicon-trash",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_SELECCIONAR, {
-            icono: "glyphicon glyphicon-list"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_ANTPAG,
+      {
+        icono: "glyphicon glyphicon-step-backward",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_BORRAR, {
-            icono: "glyphicon glyphicon-trash"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_SGTEPAG,
+      {
+        icono: "glyphicon glyphicon-step-forward",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_ANTPAG, {
-            icono: "glyphicon glyphicon-step-backward"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_ADICIONARLINEA,
+      {
+        icono: "glyphicon glyphicon-plus-sign",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_SGTEPAG, {
-            icono: "glyphicon glyphicon-step-forward"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_INSERTARLINEA,
+      {
+        icono: "glyphicon glyphicon-indent-left",
+      } as IZComandoDefinicion,
+    ],
 
-        [Constants.ComandoEnum.CM_ADICIONARLINEA, {
-            icono: "glyphicon glyphicon-plus-sign"
-        } as IZComandoDefinicion],
+    [
+      Constants.ComandoEnum.CM_ELIMINARLINEA,
+      {
+        icono: "glyphicon glyphicon-minus-sign",
+      } as IZComandoDefinicion,
+    ],
+  ]);
 
-        [Constants.ComandoEnum.CM_INSERTARLINEA, {
-            icono: "glyphicon glyphicon-indent-left"
-        } as IZComandoDefinicion],
-
-        [Constants.ComandoEnum.CM_ELIMINARLINEA, {
-            icono: "glyphicon glyphicon-minus-sign"
-        } as IZComandoDefinicion],
-
-    ]);
-
+  /**
+   * parámetros comunes para los eventos:
+   * CM_SINCCAMPO
+   * CM_PRENDERMODO
+   * CM_PRENDERCONTROL
+   * CM_SINCBOTON
+   */
+  export interface ISincBase {
     /**
-     * parámetros comunes para los eventos:
-     * CM_SINCCAMPO
-     * CM_PRENDERMODO
-     * CM_PRENDERCONTROL
-     * CM_SINCBOTON
+     * Identificador de la ventana (px)
      */
-    export interface ISincBase {
-        /**
-         * Identificador de la ventana (px)
-         */
-        px: number;
-
-        /**
-         * Nombre del campo (nomCmp)
-         * campo: string
-         * boton: number (comando)
-         */
-        nc: any;
-
-        /**
-         * Fila
-         */
-        fi: number;
-
-        /**
-         * Region
-         */
-        rg: number;
-    }
-
-    export interface ILanzarAplRpta {
-        psc:number;
-    }
-
-    export interface ISincBaseValor extends ISincBase {
-
-        /**
-         * Valor del campo.
-         * Para los campos radio:
-         *  <vc> </vc>:apagado
-         *  <vc>*</vc>:prendido
-         * Para los campos check:
-         *  <vc> </vc>:apagado
-         *  <vc>X</vc>:prendido
-         * 
-         */
-        vc: string;
-
-        /**
-         * Posición del bit, cuando es radio o chequeo.
-         * Para los campos radio: el número (pb) indica el campo radio, pues todos los campos radio 
-         *      tienen el mismo nomCmp. 
-         * Para los campos check, el número (pb) indica el bit que identifica el check, que se prende o apaga.
-         *  
-         */
-        pb: number;
-    }
+    px: number;
 
     /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_SINCCAMPO - 119
-     * Sincroniza el dato del campo entre lógica y presentación
-     * Responder: zcmpResponder
-     * Estado: por implementar
+     * Nombre del campo (nomCmp)
+     * campo: string
+     * boton: number (comando)
      */
-    export interface ISincCampo extends ISincBase {
-
-        /**
-         * Valor del campo.
-         * Para los campos radio:
-         *  <vc> </vc>:apagado
-         *  <vc>*</vc>:prendido
-         * Para los campos check:
-         *  <vc> </vc>:apagado
-         *  <vc>X</vc>:prendido
-         * 
-         */
-        vc: string;
-
-        /**
-         * Posición del bit, cuando es radio o chequeo.
-         * Para los campos radio: el número (pb) indica el campo radio, pues todos los campos radio 
-         *      tienen el mismo nomCmp. 
-         * Para los campos check, el número (pb) indica el bit que identifica el check, que se prende o apaga.
-         *  
-         */
-        pb: number;
-    }
+    nc: any;
 
     /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_PXARRIVAR - 122
-     * Pone la ventana (px) al frente
-     * Estado: por implementar
+     * Fila
      */
-    export interface IPxArrivar {
+    fi: number;
 
-        /**
-         * Número de la ventana a poner al frente.
-         */
-        px: number;
-    }
-
-    export interface ICambiarTituloVentana {
-        /**
-         * Número de la ventana a cambiar título
-         */
-        px: number;
-
-        /**
-         * Título a poner a la ventana
-         */
-        vc: string;
-    }
     /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_ADICIONAR - 44
-     * Pone título a la ventana
-     * Estado: implementado
+     * Region
      */
-    export interface IAdicionar extends ICambiarTituloVentana {
+    rg: number;
+  }
 
-    }
+  export interface ILanzarAplRpta {
+    psc: number;
+  }
 
+  export interface ISincBaseValor extends ISincBase {
     /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_MODIFICAR - 45
-     * Pone título a la ventana
-     * Estado: implementado
+     * Valor del campo.
+     * Para los campos radio:
+     *  <vc> </vc>:apagado
+     *  <vc>*</vc>:prendido
+     * Para los campos check:
+     *  <vc> </vc>:apagado
+     *  <vc>X</vc>:prendido
+     *
      */
-    export interface IModificar extends ICambiarTituloVentana {
-
-    }
+    vc: string;
 
     /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_PRENDERMODO - 51
-     * Estado: Por implementar 
+     * Posición del bit, cuando es radio o chequeo.
+     * Para los campos radio: el número (pb) indica el campo radio, pues todos los campos radio
+     *      tienen el mismo nomCmp.
+     * Para los campos check, el número (pb) indica el bit que identifica el check, que se prende o apaga.
+     *
      */
-    export interface IPrenderModo extends ISincBase {
-        /**
-         * 
-         */
-        mc: number;
-    }
+    pb: number;
+  }
 
+  /**
+   * Responde a zcommon.Constants.ComandoEnum.CM_SINCCAMPO - 119
+   * Sincroniza el dato del campo entre lógica y presentación
+   * Responder: zcmpResponder
+   * Estado: por implementar
+   */
+  export interface ISincCampo extends ISincBase {
     /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_CONSULTAR - 61
-     * Pone título a la ventana
-     * Estado: implementado
+     * Valor del campo.
+     * Para los campos radio:
+     *  <vc> </vc>:apagado
+     *  <vc>*</vc>:prendido
+     * Para los campos check:
+     *  <vc> </vc>:apagado
+     *  <vc>X</vc>:prendido
+     *
      */
-    export interface IConsultar extends ICambiarTituloVentana {
-
-    }
+    vc: string;
 
     /**
-         * Responde a zcommon.Constants.ComandoEnum.CM_ARRIVARCMP - 77
-         * Pone el foco en el campo (campo actual)
-         * Estado: Por implementar 
-         */
-    export interface IArrivarCmp {
-        /**
-         * Numero de la ventana
-         */
-        px: number;
-
-        /**
-         * Número de la región
-         */
-        rg: number;
-
-        /**
-         * Nombre del campo (nomCmp) a poner el foco.
-         */
-        nc: string;
-    }
-
-    /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_PRENDERCONTROL - 96
-     *  Prende bit control del campo, según zcommon.Constants.ControlCampo
-     * Estado: por implementar
+     * Posición del bit, cuando es radio o chequeo.
+     * Para los campos radio: el número (pb) indica el campo radio, pues todos los campos radio
+     *      tienen el mismo nomCmp.
+     * Para los campos check, el número (pb) indica el bit que identifica el check, que se prende o apaga.
+     *
      */
-    export interface IPrenderControl extends ISincBase {
-        /**
-         * Modo control a poner (manejo bitwise)
-         * mc es el valor decimal del bit a prender (ej: 32 corresponde a bit 6)
-         */
-        mc: number
-    }
+    pb: number;
+  }
+
+  /**
+   * Responde a zcommon.Constants.ComandoEnum.CM_PXARRIVAR - 122
+   * Pone la ventana (px) al frente
+   * Estado: por implementar
+   */
+  export interface IPxArrivar {
+    /**
+     * Número de la ventana a poner al frente.
+     */
+    px: number;
+  }
+
+  export interface ICambiarTituloVentana {
+    /**
+     * Número de la ventana a cambiar título
+     */
+    px: number;
 
     /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_PXDESTRUIR - 121
+     * Título a poner a la ventana
      */
-    export interface IPxDestruir {
-        /**
-         * 
-         */
-        px: number
-    }
+    vc: string;
+  }
+  /**
+   * Responde a zcommon.Constants.ComandoEnum.CM_ADICIONAR - 44
+   * Pone título a la ventana
+   * Estado: implementado
+   */
+  export interface IAdicionar extends ICambiarTituloVentana {}
+
+  /**
+   * Responde a zcommon.Constants.ComandoEnum.CM_MODIFICAR - 45
+   * Pone título a la ventana
+   * Estado: implementado
+   */
+  export interface IModificar extends ICambiarTituloVentana {}
+
+  /**
+   * Responde a zcommon.Constants.ComandoEnum.CM_PRENDERMODO - 51
+   * Estado: Por implementar
+   */
+  export interface IPrenderModo extends ISincBase {
+    /**
+     *
+     */
+    mc: number;
+  }
+
+  /**
+   * Responde a zcommon.Constants.ComandoEnum.CM_CONSULTAR - 61
+   * Pone título a la ventana
+   * Estado: implementado
+   */
+  export interface IConsultar extends ICambiarTituloVentana {}
+
+  /**
+   * Responde a zcommon.Constants.ComandoEnum.CM_ARRIVARCMP - 77
+   * Pone el foco en el campo (campo actual)
+   * Estado: Por implementar
+   */
+  export interface IArrivarCmp {
+    /**
+     * Numero de la ventana
+     */
+    px: number;
 
     /**
-     *  Responde a zcommon.Constants.ComandoEnum.CM_PXARRIVAR - 122
+     * Número de la región
      */
-    export interface IPxArrivar {
-        /**
-         * 
-         */
-        px: number
-    }
+    rg: number;
 
     /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_PXVISUALIZARRPT - 123
+     * Nombre del campo (nomCmp) a poner el foco.
      */
-    export interface IPxVisualizarRpt {
-        /**
-         * 
-         */
-        vc: string
-    }
+    nc: string;
+  }
 
+  /**
+   * Responde a zcommon.Constants.ComandoEnum.CM_PRENDERCONTROL - 96
+   *  Prende bit control del campo, según zcommon.Constants.ControlCampo
+   * Estado: por implementar
+   */
+  export interface IPrenderControl extends ISincBase {
     /**
-     * Responde a zcommon.Constants.ComandoEnum.CM_SINCBOTON - 140
+     * Modo control a poner (manejo bitwise)
+     * mc es el valor decimal del bit a prender (ej: 32 corresponde a bit 6)
      */
-    export interface ISincBoton extends ISincBase {
-        vc: string;
-    }
+    mc: number;
+  }
 
+  /**
+   * Responde a zcommon.Constants.ComandoEnum.CM_PXDESTRUIR - 121
+   */
+  export interface IPxDestruir {
     /**
-     *  Responde a zcommon.Constants.ComandoEnum.CM_PONERMODAL - 169
+     *
      */
-    export interface IPonerModal {
-        /**
-         * 
-         */
-        px: number
-    }
+    px: number;
+  }
 
+  /**
+   *  Responde a zcommon.Constants.ComandoEnum.CM_PXARRIVAR - 122
+   */
+  export interface IPxArrivar {
     /**
-     *  Responde a zcommon.Constants.ComandoEnum.CM_QUITARMODAL - 170
+     *
      */
-    export interface IQuitarModal {
-        /**
-         * 
-         */
-        px: number
-    }
+    px: number;
+  }
 
+  /**
+   * Responde a zcommon.Constants.ComandoEnum.CM_PXVISUALIZARRPT - 123
+   */
+  export interface IPxVisualizarRpt {
     /**
-     *  Responde a zcommon.Constants.ComandoEnum.CM_IRACMP - 170
+     *
      */
-    export interface iIrACmp extends ISincBase {
-        /**
-         * 
-         */
-        nc: string
-    }
+    vc: string;
+  }
 
-    export interface ILimpiarMulti extends ISincBase {
+  /**
+   * Responde a zcommon.Constants.ComandoEnum.CM_SINCBOTON - 140
+   */
+  export interface ISincBoton extends ISincBase {
+    vc: string;
+  }
 
-        /**
-         * Valor del campo.
-         * Para los campos radio:
-         *  <vc> </vc>:apagado
-         *  <vc>*</vc>:prendido
-         * Para los campos check:
-         *  <vc> </vc>:apagado
-         *  <vc>X</vc>:prendido
-         * 
-         */
-        vc: string;
-    }
+  /**
+   *  Responde a zcommon.Constants.ComandoEnum.CM_PONERMODAL - 169
+   */
+  export interface IPonerModal {
+    /**
+     *
+     */
+    px: number;
+  }
 
-    export interface SetTkna {
-        tkna: string;
-    }
+  /**
+   *  Responde a zcommon.Constants.ComandoEnum.CM_QUITARMODAL - 170
+   */
+  export interface IQuitarModal {
+    /**
+     *
+     */
+    px: number;
+  }
 
-    export interface SetTkns {
-        tkns: string;
-    }
+  /**
+   *  Responde a zcommon.Constants.ComandoEnum.CM_IRACMP - 170
+   */
+  export interface iIrACmp extends ISincBase {
+    /**
+     *
+     */
+    nc: string;
+  }
 
+  export interface ILimpiarMulti extends ISincBase {
+    /**
+     * Valor del campo.
+     * Para los campos radio:
+     *  <vc> </vc>:apagado
+     *  <vc>*</vc>:prendido
+     * Para los campos check:
+     *  <vc> </vc>:apagado
+     *  <vc>X</vc>:prendido
+     *
+     */
+    vc: string;
+  }
+
+  export interface SetTkna {
+    tkna: string;
+  }
+
+  export interface SetTkns {
+    tkns: string;
+  }
 }
 
 export interface IZParametrosComando extends IdEntityBase {
-    buffer: string;
+  buffer: string;
 }
 
 //#endregion
@@ -883,84 +963,82 @@ export interface IZParametrosComando extends IdEntityBase {
 //#region =============================================== STATE ===============================================
 
 export interface IZAplState {
-    idApl: string;
-    nomApl: string;
-    azenURL: string;    
+  idApl: string;
+  nomApl: string;
+  azenURL: string;
 
-    //Datos parametros: [mes:año:bd:usuario:uid]
-    parametrosActivacionObj: IParametrosActivacionObj;
+  //Datos parametros: [mes:año:bd:usuario:uid]
+  parametrosActivacionObj: IParametrosActivacionObj;
 
-    nivelLog: number; //0:no log, 1:log de todo, 2:sólo errores.
+  nivelLog: number; //0:no log, 1:log de todo, 2:sólo errores.
 
-    //UI
-    estaProcesandoRequestServidor: boolean;
-    ultimoComandoEnviado: Constants.ComandoEnum;
-    tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
+  //UI
+  estaProcesandoRequestServidor: boolean;
+  ultimoComandoEnviado: Constants.ComandoEnum;
+  tipoAJAXIndicador: Constants.TipoAJAXIndicadorEnum;
 
-    //Menu
-    zMenuModule: IZMenuModule;
+  //Menu
+  zMenuModule: IZMenuModule;
 
-    //PX
-    zPantexModule: IZPantexModule;
-    zPantexStateModule: IZPantexStateModule;
-    zLoginModule: IZLoginModule;
-    zrptModule: IZrptModule;
+  //PX
+  zPantexModule: IZPantexModule;
+  zPantexStateModule: IZPantexStateModule;
+  zLoginModule: IZLoginModule;
+  zrptModule: IZrptModule;
 
-    lanzarMenu:number
+  lanzarMenu: number;
 }
 
 export interface IParametrosActivacionObj {
-    usuario: string;
-    uid: string;
-    anio: number;
-    mes: string;
-    numeroMes: number;
-    bd: string;
+  usuario: string;
+  uid: string;
+  anio: number;
+  mes: string;
+  numeroMes: number;
+  bd: string;
 
-    urlIframeCargarArchivo:string;
+  urlIframeCargarArchivo: string;
 }
 
 export interface IZMenuModule {
-    visible: boolean;
-    zmenu: IZMenu;
+  visible: boolean;
+  zmenu: IZMenu;
 }
 
 export interface IZPantexModule {
+  pilaPantex: Array<IZPantex>;
 
-    pilaPantex: Array<IZPantex>;
+  azenURL: string;
 
-    azenURL: string;
-
-    pxAlTope: number;
-    iconosBotonesList: Array<ZIconoBoton>;
+  pxAlTope: number;
+  iconosBotonesList: Array<ZIconoBoton>;
 }
 
 export interface IZPantexStateModule {
+  pilaPx: Array<number>;
+  pxAlTope: number;
 
-    pilaPx: Array<number>;
-    pxAlTope: number;    
+  pilaPantexState: EntityNormalizedObj<IZPantexState>;
+  zFormaTablaState: EntityNormalizedObj<IZFormaTablaState>;
+  zCampoState: EntityNormalizedObj<IZCampoState>;
+  zComandoFormaState: EntityNormalizedObj<IZComandoFormaState>;
+  zVentanaState: EntityNormalizedObj<IZVentanaState>;
 
-    pilaPantexState: EntityNormalizedObj<IZPantexState>;
-    zFormaTablaState: EntityNormalizedObj<IZFormaTablaState>;
-    zCampoState: EntityNormalizedObj<IZCampoState>;
-    zComandoFormaState: EntityNormalizedObj<IZComandoFormaState>;
-    zVentanaState: EntityNormalizedObj<IZVentanaState>;
-
-    zParametrosComando: EntityNormalizedObj<IZParametrosComando>;
+  zParametrosComando: EntityNormalizedObj<IZParametrosComando>;
 }
 
 export interface IZLoginModule {
-    username: string;
-    password: string;
-    zAplList: IZAplList;
-    resultadoAction: ResultadoAction;
-    tkna:string;
-    tkns:string;
+  username: string;
+  password: string;
+  zAplList: IZAplList;
+  resultadoAction: ResultadoAction;
+  tkna: string;
+  tkns: string;
 }
 
 export interface IZrptModule {
-    mostrarReporte: boolean;
-    rutaReporte: string;
+  mostrarReporte: boolean;
+  rutaReporte: string;
 }
 
 //#endregion
@@ -968,58 +1046,74 @@ export interface IZrptModule {
 //#region =========================================== CUSTOM DOMAIN ===========================================
 
 interface IZCamposRegion {
-    rg: number;
-    camposMap: EntityNormalizedObj<IZCampo>
+  rg: number;
+  camposMap: EntityNormalizedObj<IZCampo>;
 }
 
 interface IZPantexNormalized {
-    px: number;
-    zPantex: IZPantex;
-    zftMap: EntityNormalizedObj<IZCamposRegion>
+  px: number;
+  zPantex: IZPantex;
+  zftMap: EntityNormalizedObj<IZCamposRegion>;
 }
 
 //#endregion
 
-
 export namespace ContractsServices {
+  export const esCampoModoLectura = (modo: number): boolean => {
+    return Binario.estaPrendidoBit(
+      modo,
+      Constants.ModoCampoEnum.ZCMP_MSOLOVISUAL
+    );
+  };
 
-    export const esCampoModoLectura = (modo: number): boolean => {
-        return Binario.estaPrendidoBit(modo, Constants.ModoCampoEnum.ZCMP_MSOLOVISUAL);
+  export const esCampoControlLectura = (control: number) => {
+    return Binario.estaPrendidoBit(
+      control,
+      Constants.ControlCampoEnum.ZCMP_VISUAL
+    );
+  };
 
+  export const getSincHashKey = (sincParams: CM.ISincBase) => {
+    //Es evento de multi
+    if (sincParams.fi != undefined) {
+      return (
+        sincParams.px +
+        "|" +
+        sincParams.rg +
+        "|" +
+        sincParams.fi +
+        "|" +
+        sincParams.nc
+      );
     }
 
-    export const esCampoControlLectura = (control: number) => {
-        return Binario.estaPrendidoBit(control, Constants.ControlCampoEnum.ZCMP_VISUAL);
-    }
+    return sincParams.nc;
+  };
 
-    export const getSincHashKey = (sincParams: CM.ISincBase) => {
-        
-        //Es evento de multi
-        if (sincParams.fi != undefined) {
-            return sincParams.px + "|" + sincParams.rg + "|" + sincParams.fi + "|" + sincParams.nc;
-        }
+  export const getSincHashCampo = (zCampoState: IZCampoState) => {
+    //Es evento de multi
+    return (
+      zCampoState.px +
+      "|" +
+      zCampoState.rg +
+      "|" +
+      zCampoState.fi +
+      "|" +
+      zCampoState.nomCmp
+    );
+  };
 
-        return sincParams.nc;
-    }
+  export namespace Binario {
+    export const estaPrendidoBit = (num: number, bit: number) => {
+      return (num >> bit) % 2 != 0;
+    };
 
-    export const getSincHashCampo = (zCampoState: IZCampoState) => {
-        //Es evento de multi
-        return zCampoState.px + "|" + zCampoState.rg + "|" + zCampoState.fi + "|" + zCampoState.nomCmp;
-    }
+    export const prenderBit = (num: number, bit: number) => {
+      return num | (1 << bit);
+    };
 
-
-
-    export namespace Binario {
-        export const estaPrendidoBit = (num: number, bit: number) => {
-            return ((num >> bit) % 2 != 0);
-        }
-
-        export const prenderBit = (num: number, bit: number) => {
-            return num | 1 << bit;
-        }
-
-        export const apagarBit = (num: number, bit: number) => {
-            return num & ~(1 << bit);
-        }
-    }
+    export const apagarBit = (num: number, bit: number) => {
+      return num & ~(1 << bit);
+    };
+  }
 }

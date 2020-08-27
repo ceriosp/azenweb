@@ -7,7 +7,6 @@ import {
   IZColaEventos,
   IZEnviarComandoParams,
   IZEnviarComandoParamsOptional,
-  ZCommandDTO,
 } from "../zcommon/contracts";
 import { ActionTypes } from "./actionTypes";
 
@@ -23,26 +22,17 @@ export namespace Actions {
       const azenURL = getState().azenURL;
 
       const { cmd, buffer } = parametros;
-
-      const requestUrl =
-        cmd === ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN
-          ? `${azenURL}/command/aceptarlogin`
-          : `${azenURL}/command/${idApl}/execute`;
-
-      const port = sessionStorage.getItem(
-        ZCommon.Constants.SessionStorageKeyEnum.AZEN_PUERTO
-      );
-      const request = {
-        port: port ? parseInt(port) : 0,
-        cmd,
-        buffer,
-        log: getState().nivelLog,
-        ...parametros.optionalParams
-      } as ZCommandDTO;
-
+      const dominioComponentes = window.location.href.split("/");
+      const dominio = dominioComponentes[0] + "//" + dominioComponentes[2];
       const optionalParams = getOptionalParams(parametros, {
         tkns: getState().zLoginModule.tkns,
       });
+
+      const requestUrl =
+        azenURL +
+        `/azen/Sesion2?cmd=${cmd}&buffer=${buffer}&idApl=${idApl}&dominio=${dominio}&puerto=${sessionStorage.getItem(
+          ZCommon.Constants.SessionStorageKeyEnum.AZEN_PUERTO
+        )}${optionalParams}`;
 
       if (getState().nivelLog == 1) {
         console.log(
@@ -54,17 +44,13 @@ export namespace Actions {
 
       dispatch(setProcesosServidor(true, parametros.tipoAJAXIndicador));
       fetch(requestUrl, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${
-            cmd === ZCommon.Constants.ComandoEnum.CM_APLICACION || ZCommon.Constants.ComandoEnum.CM_EJECSOLOOPCION
-              ? getState().zLoginModule.tkna
-              : getState().zLoginModule.tkns
-          }`,
-        },
-        //credentials: "include",
-        method: "POST",
-        body: JSON.stringify(request),
+        /*
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                */
+        credentials: "include",
+        method: "GET",
         synchronous: true,
       } as any)
         .then((response) => {
