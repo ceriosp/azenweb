@@ -1,7 +1,7 @@
 import * as ZCommon from "../zcommon";
 import * as ZUtils from "../zutils";
 import { ResultadoActionConDato, ResultadoAction } from "../zutils";
-import { plainTextToCipher } from '../zcriptography/zcriptography';
+import { getCipherText } from '../zcriptography/zcriptography';
 
 import {
   IZAplState,  
@@ -35,7 +35,7 @@ export namespace Actions {
       const request = {
         port: port ? parseInt(port) : 0,
         cmd,
-        buffer: plainTextToCipher(buffer),
+        buffer: getCipherText(buffer),
         log: getState().nivelLog,
         ...parametros.optionalParams
       } as ZCommandDTO;

@@ -3,12 +3,12 @@ import * as CryptoJS from "crypto-js";
 const k = CryptoJS.enc.Utf8.parse("$B&E)H@McQfTjWnZr4u7x!A%C*F-JaNd");
 const iv = CryptoJS.enc.Utf8.parse("z%C*F-JaNdRgUkXp");
 
-export const plainTextToCipher = (textToEncrypt: string) => {
-  if (!textToEncrypt) {
-    return textToEncrypt;
+export const getCipherText = (plainText: string) => {
+  if (!plainText) {
+    return plainText;
   }
 
-  const textEncrypted = CryptoJS.AES.encrypt(textToEncrypt, k, {
+  const textEncrypted = CryptoJS.AES.encrypt(plainText, k, {
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.Pkcs7,
     iv,
@@ -17,9 +17,9 @@ export const plainTextToCipher = (textToEncrypt: string) => {
   return textEncrypted.toString();
 };
 
-export const cipherTextToPlain = (cipherText: string) => {
-  if (!cipherTextToPlain) {
-    return cipherTextToPlain;
+export const getPlainText = (cipherText: string) => {
+  if (!getPlainText) {
+    return getPlainText;
   }
   const plainText = CryptoJS.AES.decrypt(cipherText, k, {
     mode: CryptoJS.mode.CBC,
