@@ -31,7 +31,7 @@ export namespace Actions {
 
       const port = sessionStorage.getItem(
         ZCommon.Constants.SessionStorageKeyEnum.AZEN_PUERTO
-      );
+      );      
       const request = {
         port: port ? parseInt(port) : 0,
         cmd,
@@ -49,7 +49,8 @@ export namespace Actions {
           "----------------------------------------------------------------"
         );
         console.time(`${ZCommon.Constants.ComandoEnum[cmd]} = ${cmd}`);
-        console.log("request: " + requestUrl);
+        console.log({requestUrl});
+        console.log({buffer});
       }
 
       dispatch(setProcesosServidor(true, parametros.tipoAJAXIndicador));

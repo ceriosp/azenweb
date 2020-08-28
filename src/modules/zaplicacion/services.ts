@@ -136,37 +136,10 @@ export namespace Services {
             break;
 
           case ZCommonConstants.ComandoEnum.CM_PXVISUALIZARRPT:
-            downloadReport(
+            downloadReportPopup(
               evento.dato.buffer.dato as CM.IPxVisualizarRpt,
               getState
             );
-            /*
-            const visualRtpParams = evento.dato.buffer
-              .dato as CM.IPxVisualizarRpt;
-            let rptWindow = window.open(
-              `${trimLasCharacter(getState().azenURL, "/")}/downloadreport${
-                visualRtpParams.vc
-              }`,
-              "",
-              "location=0"
-            );
-
-            if (visualRtpParams.vc.endsWith(".txt")) {
-              rptWindow.addEventListener(
-                "load",
-                function () {
-                  let preElementsArray: any;
-                  preElementsArray = rptWindow.document.body.getElementsByTagName(
-                    "pre"
-                  );
-                  if (preElementsArray && preElementsArray.length > 0) {
-                    preElementsArray[0].removeAttribute("style");
-                  }
-                },
-                true
-              );
-            }
-            */
             break;
 
           case ZCommonConstants.ComandoEnum.CM_LIMPIARMULTI:
@@ -441,16 +414,15 @@ export namespace Services {
       }
     };
 
-    const downloadReport = (
+    const downloadReportForceDownload = (
       visualRtpParams: CM.IPxVisualizarRpt,
       getState: () => IZAplState
     ) => {
-
       const downloadURL = `${trimLasCharacter(
         getState().azenURL,
         "/"
       )}/api/downloadreport/${visualRtpParams.vc}`;
-     
+
       fetch(downloadURL, {
         method: "GET",
         headers: new Headers({
@@ -467,6 +439,36 @@ export namespace Services {
           a.click();
           a.remove(); //afterwards we remove the element again
         });
+    };
+
+    const downloadReportPopup = (
+      visualRtpParams: CM.IPxVisualizarRpt,
+      getState: () => IZAplState
+    ) => {
+        visualRtpParams.vc = 'file-text.txt';
+      let rptWindow = window.open(
+        `${trimLasCharacter(getState().azenURL, "/")}/downloadreport/${
+          visualRtpParams.vc
+        }`,
+        "",
+        "location=0"
+      );
+
+      if (visualRtpParams.vc.endsWith(".txt")) {
+        rptWindow.addEventListener(
+          "load",
+          function () {
+            let preElementsArray: any;
+            preElementsArray = rptWindow.document.body.getElementsByTagName(
+              "pre"
+            );
+            if (preElementsArray && preElementsArray.length > 0) {
+              preElementsArray[0].removeAttribute("style");
+            }
+          },
+          true
+        );
+      }
     };
 
     const cmIrACmp = (infoEvento: IZEvento) => {
