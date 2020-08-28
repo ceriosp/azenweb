@@ -26,8 +26,8 @@ export namespace Actions {
 
       const requestUrl =
         cmd === ZCommon.Constants.ComandoEnum.CM_ACEPTARLOGIN
-          ? `${azenURL}/command/aceptarlogin`
-          : `${azenURL}/command/${idApl}/execute`;
+          ? `${azenURL}/api/command/aceptarlogin`
+          : `${azenURL}/api/command/${idApl}/execute`;
 
       const port = sessionStorage.getItem(
         ZCommon.Constants.SessionStorageKeyEnum.AZEN_PUERTO
